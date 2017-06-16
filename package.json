@@ -1,0 +1,51 @@
+{
+  "name": "react-beat",
+  "version": "0.0.0",
+  "description": "making audio/visual with react and tone.js",
+  "main": "''",
+  "scripts": {
+    "build": "webpack --config webpack.production.config.js --progress --profile --colors",
+    "start": "webpack-dev-server --progress --profile --colors",
+    "lint": "eslint --ext js --ext jsx src || exit 0",
+    "dev": " webpack-dashboard -- webpack-dev-server --progress --profile --colors"
+  },
+  "author": "Vibert Thio",
+  "license": "MIT",
+  "dependencies": {
+    "material-ui": "^0.18.3",
+    "node-sass": "^4.3.0",
+    "react": "15.4.2",
+    "react-dom": "15.4.2",
+    "react-tap-event-plugin": "^2.0.1",
+    "sass-loader": "^6.0.2"
+  },
+  "devDependencies": {
+    "babel-core": "^6.23.1",
+    "babel-eslint": "^7.2.3",
+    "babel-loader": "^6.3.2",
+    "babel-plugin-transform-class-properties": "^6.22.0",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-plugin-transform-runtime": "^6.22.0",
+    "babel-preset-es2015": "6.22.0",
+    "babel-preset-react": "^6.23.0",
+    "babel-runtime": "^6.22.0",
+    "css-loader": "0.26.1",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb": "^14.1.0",
+    "eslint-config-airbnb-base": "^11.1.3",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^4.0.0",
+    "eslint-plugin-react": "^6.10.3",
+    "extract-text-webpack-plugin": "^v2.0.0-rc.1",
+    "file-loader": "^0.10.0",
+    "html-webpack-plugin": "^2.26.0",
+    "postcss-loader": "^1.2.2",
+    "react-hot-loader": "^3.0.0-beta.6",
+    "style-loader": "0.13.1",
+    "url-loader": "0.5.7",
+    "webpack": "^2.2.1",
+    "webpack-cleanup-plugin": "^0.4.2",
+    "webpack-dashboard": "^0.3.0",
+    "webpack-dev-server": "^2.4.1"
+  }
+}
