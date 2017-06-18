@@ -1,5 +1,5 @@
 {
-  "name": "react-beat",
+  "name": "beact",
   "version": "0.0.0",
   "description": "making audio/visual with react and tone.js",
   "main": "''",
@@ -14,10 +14,12 @@
   "dependencies": {
     "material-ui": "^0.18.3",
     "node-sass": "^4.3.0",
+    "prop-types": "^15.5.10",
     "react": "15.4.2",
     "react-dom": "15.4.2",
     "react-tap-event-plugin": "^2.0.1",
-    "sass-loader": "^6.0.2"
+    "sass-loader": "^6.0.2",
+    "uuid": "^3.0.1"
   },
   "devDependencies": {
     "babel-core": "^6.23.1",

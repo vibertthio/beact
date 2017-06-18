@@ -1,0 +1,20 @@
+.matrix {
+  width: 100%;
+  display: table;
+  border-collapse: separate;
+  border-spacing: 10px 10px;
+}
+
+.row {
+  display: table-row;
+}
+
+.rect {
+  display: table-cell;
+  height: 100px;
+  background-color: rgba(30, 139, 195, 1);
+}
+
+.clicked {
+  background-color: rgba(233, 212, 96, 1);
+}
