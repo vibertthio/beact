@@ -6,20 +6,34 @@ import Tone, { MultiPlayer, Sequence } from 'tone';
 export default class Sequencer {
   samples: Object;
   sequence: Object;
+  beat: number;
   notes: Array<String>;
   matrix: Array<Array<number>>;
 
   /**
    * [constructor description]
    * @param  {[type]} matrix [description]
+   * @param  {[type]} setCurrentBeat [description]
    */
-  constructor(matrix) {
+  constructor(matrix, setCurrentBeat) {
     this.matrix = matrix;
-
-    this.notes = ['F#', 'E', 'C#', 'A'];
+    this.number = 0;
+    this.notes = [
+      'kk',
+      'sn',
+      'hh',
+      'ho',
+      'A',
+      'F#',
+      'E',
+      'C#'];
 
     this.samples = new MultiPlayer({
       urls: {
+        kk: './audio/505/kick.mp3',
+        sn: './audio/505/snare.mp3',
+        hh: './audio/505/hh.mp3',
+        ho: './audio/505/hho.mp3',
         A: './audio/casio/A1.mp3',
         'C#': './audio/casio/Cs2.mp3',
         E: './audio/casio/E2.mp3',
@@ -30,9 +44,11 @@ export default class Sequencer {
     }).toMaster();
 
     this.sequence = new Sequence((time, col) => {
-      console.log(`time : ${time}`);
-      console.log(`col : ${col}`);
-      console.log(`matrix : ${this.matrix}`);
+      // console.log(`time : ${time}`);
+      // console.log(`col : ${col}`);
+      // console.log(`matrix : ${this.matrix}`);
+      this.beat = col;
+      setCurrentBeat(this.beat);
       const column = this.matrix[col];
       for (let i = 0; i < this.notes.length; i += 1) {
         if (column[i] === 1) {
@@ -40,10 +56,18 @@ export default class Sequencer {
           this.samples.start(this.notes[i], time, 0, '32n', 0, vel);
         }
       }
-    }, Array.from(Array(this.notes.length).keys()), '16n');
+    }, Array.from(Array(this.matrix.length).keys()), '16n');
 
     Tone.Transport.start();
     this.sequence.start();
+  }
+
+  /**
+   * get the current position of sequence
+   * @return {number} [description]
+   */
+  static getBeat() {
+    return this.beat;
   }
 
 }

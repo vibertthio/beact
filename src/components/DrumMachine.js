@@ -11,17 +11,35 @@ class DrumMachine extends Component {
    */
   constructor() {
     super();
+    const data = [];
+    for (let i = 0; i < 16; i += 1) {
+      data[i] = [];
+      for (let j = 0; j < 8; j += 1) {
+        data[i][j] = (Math.random() > 0.5) ? 0 : 1;
+      }
+    }
+
     this.state = {
-      data: [
-        [1, 0, 1, 0],
-        [0, 1, 0, 0],
-        [0, 0, 1, 0],
-        [0, 0, 0, 1],
-      ],
+      data,
+      currentBeat: 0,
     };
 
-    // console.log(`matrix : ${this.state.data[0]}`);
-    this.sequencer = new Sequencer(this.state.data);
+    this.setCurrentBeat = this.setCurrentBeat.bind(this);
+
+    this.sequencer = new Sequencer(
+      this.state.data,
+      this.setCurrentBeat,
+    );
+  }
+
+  /**
+   * [setCurrentBeat description]
+   * @param {number} currentBeat
+   */
+  setCurrentBeat(currentBeat) {
+    this.setState({
+      currentBeat,
+    });
   }
 
   /**
@@ -49,6 +67,7 @@ class DrumMachine extends Component {
         </h1>
         <Matrix
           data={this.state.data}
+          currentBeat={this.state.currentBeat}
           onClick={(i, j) => this.handleClick(i, j)}
         />
       </div>

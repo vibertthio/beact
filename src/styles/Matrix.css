@@ -9,12 +9,17 @@
   display: table-row;
 }
 
+
 .rect {
   display: table-cell;
-  height: 100px;
+  height: 20px;
   background-color: rgba(30, 139, 195, 1);
 }
 
 .clicked {
   background-color: rgba(233, 212, 96, 1);
+}
+
+.current {
+  background-color: rgba(226, 106, 106, 0.5);
 }

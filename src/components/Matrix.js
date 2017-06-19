@@ -9,12 +9,18 @@ const Matrix = (props) => {
   return (
     <div className={styles.matrix}>
       {data.map((row, i) =>
-        <div key={uuid4()} className={styles.row}>
+        <div
+          key={uuid4()}
+          className={
+            `${styles.row}`
+          }
+        >
           {row.map((d, j) =>
             <div
               key={uuid4()}
               className={
                 `${styles.rect}
+                 ${i === props.currentBeat ? styles.current : ''}
                  ${data[i][j] === 1 ? styles.clicked : ''}`
               }
               onTouchTap={() => onClick(i, j)}
@@ -32,6 +38,7 @@ Matrix.propTypes = {
       PropTypes.number,
     ).isRequired,
   ).isRequired,
+  currentBeat: PropTypes.number.isRequired,
   onClick: PropTypes.func.isRequired,
 };
 
