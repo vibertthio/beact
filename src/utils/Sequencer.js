@@ -1,8 +1,4 @@
 import Tone, { MultiPlayer, Sequence } from 'tone';
-import casioASample from '../audio/casio/A1.mp3';
-import casioCSample from '../audio/casio/Cs2.mp3';
-import casioESample from '../audio/casio/E2.mp3';
-import casioFSample from '../audio/casio/Fs2.mp3';
 
 /**
  * Sequencer
@@ -38,13 +34,13 @@ export default class Sequencer {
       console.log(`col : ${col}`);
       console.log(`matrix : ${this.matrix}`);
       const column = this.matrix[col];
-      for (let i = 0; i < 4; i += 1) {
+      for (let i = 0; i < this.notes.length; i += 1) {
         if (column[i] === 1) {
           const vel = (Math.random() * 0.5) + 0.5;
           this.samples.start(this.notes[i], time, 0, '32n', 0, vel);
         }
       }
-    }, [0, 1, 2, 3], '16n');
+    }, Array.from(Array(this.notes.length).keys()), '16n');
 
     Tone.Transport.start();
     this.sequence.start();
