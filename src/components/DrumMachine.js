@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styles from '../styles/DrumMachine.css';
 import Matrix from './Matrix';
+import Sequencer from '../utils/Sequencer';
 /**
  * DrumMachine
  */
@@ -19,7 +20,8 @@ class DrumMachine extends Component {
       ],
     };
 
-    // this.handleClick = this.handleClick.bind(this);
+    // console.log(`matrix : ${this.state.data[0]}`);
+    this.sequencer = new Sequencer(this.state.data);
   }
 
   /**
