@@ -53,5 +53,10 @@ module.exports = [
   {
     test: /\.ico$/,
     loader: 'file-loader?name=[name].[ext]'  // <-- retain original file name
-  }
+  },
+  {
+    test: /\.mp3$/,
+    exclude: /(node_modules|bower_components)/,
+    loader: 'file-loader?name=[name].[ext]'
+  },
 ];

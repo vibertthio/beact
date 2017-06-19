@@ -1,4 +1,8 @@
 import Tone, { MultiPlayer, Sequence } from 'tone';
+import casioASample from '../audio/casio/A1.mp3';
+import casioCSample from '../audio/casio/Cs2.mp3';
+import casioESample from '../audio/casio/E2.mp3';
+import casioFSample from '../audio/casio/Fs2.mp3';
 
 /**
  * Sequencer
