@@ -1,4 +1,4 @@
-import Tone, { MultiPlayer, Sequence } from 'tone';
+import { MultiPlayer, Sequence, Transport } from 'tone';
 
 /**
  * Sequencer
@@ -58,7 +58,7 @@ export default class Sequencer {
       }
     }, Array.from(Array(this.matrix.length).keys()), '16n');
 
-    Tone.Transport.start();
+    Transport.start();
     this.sequence.start();
   }
 

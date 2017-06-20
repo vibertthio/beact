@@ -38,7 +38,7 @@ Matrix.propTypes = {
       PropTypes.number,
     ).isRequired,
   ).isRequired,
-  currentBeat: PropTypes.number.isRequired,
+  // currentBeat: PropTypes.number.isRequired,
   onClick: PropTypes.func.isRequired,
 };
 

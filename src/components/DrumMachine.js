@@ -15,7 +15,7 @@ class DrumMachine extends Component {
     for (let i = 0; i < 16; i += 1) {
       data[i] = [];
       for (let j = 0; j < 8; j += 1) {
-        data[i][j] = (Math.random() > 0.5) ? 0 : 1;
+        data[i][j] = (Math.random() > 0.15) ? 0 : 1;
       }
     }
 
