@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
+import RaisedButton from 'material-ui/RaisedButton';
+
 import styles from '../styles/DrumMachine.css';
 import Matrix from './Matrix';
 import Sequencer from '../utils/Sequencer';
+
 /**
  * DrumMachine
  */
@@ -22,6 +25,7 @@ class DrumMachine extends Component {
     this.state = {
       data,
       currentBeat: 0,
+      playing: true,
     };
 
     this.setCurrentBeat = this.setCurrentBeat.bind(this);
@@ -56,20 +60,55 @@ class DrumMachine extends Component {
   }
 
   /**
+   * [startSequence description]
+   */
+  startSequencer() {
+    this.sequencer.start();
+    this.setState({
+      playing: true,
+    });
+  }
+
+  /**
+   * [stopSequencer description]
+   */
+  stopSequencer() {
+    this.sequencer.stop();
+    this.setState({
+      playing: false,
+    });
+  }
+
+  /**
    * [render description]
    * @return {Element}
    */
   render() {
+    const playing = this.sequencer.isPlaying();
     return (
       <div>
         <h1 className={styles.title}>
           Drum Machine
         </h1>
+        <RaisedButton
+          label="Start"
+          primary
+          className={styles.btn}
+          onTouchTap={() => this.startSequencer()}
+        />
+        <RaisedButton
+          label="End"
+          primary
+          className={styles.btn}
+          onTouchTap={() => this.stopSequencer()}
+        />
         <Matrix
           data={this.state.data}
+          playing={playing}
           currentBeat={this.state.currentBeat}
           onClick={(i, j) => this.handleClick(i, j)}
         />
+        <div id="sketch-holder" />
       </div>
     );
   }

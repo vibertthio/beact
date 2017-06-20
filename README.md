@@ -1,30 +1,11 @@
-# my-react-starter
-my own starter for react project.
-It would start with a simple app of todo lists to verify the usablity of this starter.
-You can simply remove the components and start it from ground.
-
-### What's in it?
-
-* eslint airbnb config
-* Webpack config dev and prod
-* CSS module loading
-* js(x) and (s)css hot loaded
-* Webpack Dashboard Plugin
-* favicon supported
+# Beact
+use react to create audio/visual in a creative way.
 
 ### To start and run
 
 First, clone the repo.
 ```
-git clone https://github.com/vibertthio/my-react-starter
-```
-
-Seconde, remove the original .git and start a new one.
-Maybe connect to your github.
-
-```
-rm -rf .git
-git init
+git clone https://github.com/vibertthio/beact
 ```
 
 * Then install the dependencies:
@@ -33,16 +14,17 @@ git init
 npm install
 ```
 
+if you want to run the program in dev mode,
+you have copy the audio files into /public manually.
+
+```
+mkdir public
+cp -R src/audio public/
+```
+
 ### To build the production package
 
 ```
 npm run build
-```
-
-### Eslint
-
-To do the actual linting, run:
-
-```
-npm run lint
+cp -R src/audio public/
 ```

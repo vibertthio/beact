@@ -1,4 +1,7 @@
 html * {
   font-family: "Helvetica";
+}
+
+body {
   background-color: rgba(218, 223, 225, 1);
 }

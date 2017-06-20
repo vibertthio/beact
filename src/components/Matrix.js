@@ -20,7 +20,8 @@ const Matrix = (props) => {
               key={uuid4()}
               className={
                 `${styles.rect}
-                 ${i === props.currentBeat ? styles.current : ''}
+                 ${(i === props.currentBeat) && props.playing ?
+                   styles.current : ''}
                  ${data[i][j] === 1 ? styles.clicked : ''}`
               }
               onTouchTap={() => onClick(i, j)}

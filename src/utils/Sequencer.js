@@ -6,8 +6,8 @@ import { MultiPlayer, Sequence, Transport } from 'tone';
 export default class Sequencer {
   samples: Object;
   sequence: Object;
-  beat: number;
-  notes: Array<String>;
+  playing: boolean;
+  beat: number; notes: Array<String>;
   matrix: Array<Array<number>>;
 
   /**
@@ -18,6 +18,7 @@ export default class Sequencer {
   constructor(matrix, setCurrentBeat) {
     this.matrix = matrix;
     this.number = 0;
+    this.playing = true;
     this.notes = [
       'kk',
       'sn',
@@ -68,6 +69,30 @@ export default class Sequencer {
    */
   static getBeat() {
     return this.beat;
+  }
+
+  /**
+   * [isPlaying description]
+   * @return {Boolean} [description]
+   */
+  isPlaying() {
+    return this.playing;
+  }
+
+  /**
+   * [start description]
+   */
+  start() {
+    this.playing = true;
+    this.sequence.start();
+  }
+
+  /**
+   * [stop description]
+   */
+  stop() {
+    this.playing = false;
+    this.sequence.stop();
   }
 
 }
