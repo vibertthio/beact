@@ -4,6 +4,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import styles from '../styles/DrumMachine.css';
 import Matrix from './Matrix';
 import Sequencer from '../utils/Sequencer';
+import '../utils/Animation';
 
 /**
  * DrumMachine
@@ -108,7 +109,6 @@ class DrumMachine extends Component {
           currentBeat={this.state.currentBeat}
           onClick={(i, j) => this.handleClick(i, j)}
         />
-        <div id="sketch-holder" />
       </div>
     );
   }
