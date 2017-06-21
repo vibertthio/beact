@@ -1,4 +1,4 @@
-.matrix {
+/*.matrix {
   width: 100%;
   display: table;
   border-collapse: separate;
@@ -13,6 +13,36 @@
 .rect {
   display: table-cell;
   height: 20px;
+  background-color: #585f60;
+}
+
+.clicked {
+  background-color: #ccedee;
+}
+
+.current {
+  background-color: #eecdcc;
+}*/
+.matrix {
+  /*position: fixed;*/
+  /*top: 0;*/
+  /*z-index: -1;*/
+}
+
+.row {
+  /*margin-bottom: 1em;*/
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.rect {
+  display: flex-block;
+  min-height: 2em;
+  min-width: 3em;
+  margin: 0.5em;
   background-color: #585f60;
 }
 

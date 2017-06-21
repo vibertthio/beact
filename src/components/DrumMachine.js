@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import RaisedButton from 'material-ui/RaisedButton';
 
 import styles from '../assets/styles/DrumMachine.css';
 import Matrix from './Matrix';
@@ -91,18 +90,20 @@ class DrumMachine extends Component {
         <h1 className={styles.title}>
           Drum Machine
         </h1>
-        <RaisedButton
-          label="Start"
-          primary
-          className={styles.btn}
-          onTouchTap={() => this.startSequencer()}
-        />
-        <RaisedButton
-          label="End"
-          primary
-          className={styles.btn}
-          onTouchTap={() => this.stopSequencer()}
-        />
+        <div className={styles.control}>
+          <div
+            className={styles.btn}
+            onTouchTap={() => this.startSequencer()}
+            >
+            start
+          </div>
+          <div
+            className={styles.btn}
+            onTouchTap={() => this.stopSequencer()}
+            >
+            stop
+          </div>
+        </div>
         <Matrix
           data={this.state.data}
           playing={playing}

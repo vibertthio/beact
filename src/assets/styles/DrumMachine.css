@@ -3,8 +3,24 @@
   /*color: rgba(37, 116, 169, 1);*/
   color: #eecdcc;
   margin: 0.1em;
+  text-align: center;
+}
+
+.control {
+  display: block;
+  width: 20em;
+  margin: 1em auto;
+  align-items: center;
 }
 
 .btn {
-  margin: 0 0.6em 0.6em 0.6em;
+  display: inline-block;
+  align-self: center;
+  text-align: center;
+  width: 5em;
+  height: 2em;
+  font-style: italic;
+  margin: 1em;
+  background-color: #eecdcc;
+  padding-top: 0.5em;
 }
