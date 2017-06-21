@@ -52,6 +52,9 @@ module.exports = {
         css: ['style.css'],
         js: ['bundle.js'],
       }
-    })
+    }),
+    new CopyWebpackPlugin([
+      { from: 'src/assets/audio', to: 'assets/audio' },
+    ]),
   ]
 };

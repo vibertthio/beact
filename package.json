@@ -7,7 +7,8 @@
     "build": "webpack --config webpack.production.config.js --progress --profile --colors",
     "start": "webpack-dev-server --progress --profile --colors",
     "lint": "eslint --ext js --ext jsx src || exit 0",
-    "dev": " webpack-dashboard -- webpack-dev-server --progress --profile --colors"
+    "dev": " webpack-dashboard -- webpack-dev-server --progress --profile --colors",
+    "load": "cp -R src/assets/audio pulic/assets/"
   },
   "author": "Vibert Thio",
   "license": "MIT",
@@ -33,6 +34,7 @@
     "babel-preset-es2015": "6.22.0",
     "babel-preset-react": "^6.23.0",
     "babel-runtime": "^6.22.0",
+    "copy-webpack-plugin": "^4.0.1",
     "css-loader": "0.26.1",
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^14.1.0",

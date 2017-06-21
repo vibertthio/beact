@@ -31,14 +31,14 @@ export default class Sequencer {
 
     this.samples = new MultiPlayer({
       urls: {
-        kk: './audio/505/kick.mp3',
-        sn: './audio/505/snare.mp3',
-        hh: './audio/505/hh.mp3',
-        ho: './audio/505/hho.mp3',
-        A: './audio/casio/A1.mp3',
-        'C#': './audio/casio/Cs2.mp3',
-        E: './audio/casio/E2.mp3',
-        'F#': './audio/casio/Fs2.mp3',
+        kk: './assets/audio/505/kick.mp3',
+        sn: './assets/audio/505/snare.mp3',
+        hh: './assets/audio/505/hh.mp3',
+        ho: './assets/audio/505/hho.mp3',
+        A: './assets/audio/casio/A1.mp3',
+        'C#': './assets/audio/casio/Cs2.mp3',
+        E: './assets/audio/casio/E2.mp3',
+        'F#': './assets/audio/casio/Fs2.mp3',
       },
       volume: -10,
       fadeOut: 0.1,
