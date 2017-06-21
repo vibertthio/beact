@@ -48,8 +48,9 @@ export default class Sequencer {
       // console.log(`time : ${time}`);
       // console.log(`col : ${col}`);
       // console.log(`matrix : ${this.matrix}`);
-      this.beat = col;
       setCurrentBeat(this.beat);
+
+      this.beat = col;
       const column = this.matrix[col];
       for (let i = 0; i < this.notes.length; i += 1) {
         if (column[i] === 1) {

@@ -22,12 +22,12 @@
 
 .clicked {
   background-color: #ccedee;
-  opacity: 0.3;
+  opacity: 0.5;
 }
 
 .current {
   background-color: #eecdcc;
-  opacity: 0.8;
+  /*opacity: 0.8;*/
 }
 
 /*.matrix {

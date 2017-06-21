@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import styles from '../assets/styles/DrumMachine.css';
 import Matrix from './Matrix';
 import Sequencer from '../utils/Sequencer';
-import '../utils/Animation';
+import Animation from '../utils/Animation';
 
 /**
  * DrumMachine
@@ -34,6 +34,14 @@ class DrumMachine extends Component {
       this.state.data,
       this.setCurrentBeat,
     );
+  }
+
+  /**
+   * [componentDidMount description]
+   */
+  componentDidMount() {
+    this.ani = new Animation();
+    this.ani.start();
   }
 
   /**
@@ -110,6 +118,7 @@ class DrumMachine extends Component {
           currentBeat={this.state.currentBeat}
           onClick={(i, j) => this.handleClick(i, j)}
         />
+        <div className={styles.animation} id="animation" />
       </div>
     );
   }

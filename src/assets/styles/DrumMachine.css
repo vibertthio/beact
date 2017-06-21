@@ -24,3 +24,9 @@
   background-color: #eecdcc;
   padding-top: 0.5em;
 }
+
+.animation {
+  position: absolute;
+  top: 0;
+  z-index: -1;
+}
