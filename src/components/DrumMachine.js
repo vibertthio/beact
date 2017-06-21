@@ -94,13 +94,13 @@ class DrumMachine extends Component {
           <div
             className={styles.btn}
             onTouchTap={() => this.startSequencer()}
-            >
+          >
             start
           </div>
           <div
             className={styles.btn}
             onTouchTap={() => this.stopSequencer()}
-            >
+          >
             stop
           </div>
         </div>

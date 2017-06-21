@@ -1,15 +1,15 @@
 .title {
-  font-size: 8em;
+  font-size: 5em;
   /*color: rgba(37, 116, 169, 1);*/
   color: #eecdcc;
-  margin: 0.1em;
+  margin: 0em;
   text-align: center;
 }
 
 .control {
   display: block;
   width: 20em;
-  margin: 1em auto;
+  margin: 0.5em auto;
   align-items: center;
 }
 

@@ -1,3 +1,35 @@
+.matrix {
+
+}
+
+.row {
+  /*margin-bottom: 1em;*/
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.rect {
+  display: flex-block;
+  min-height: 2em;
+  width: 10%;
+  margin: 0.5em;
+  background-color: #585f60;
+  opacity: 0.1;
+}
+
+.clicked {
+  background-color: #ccedee;
+  opacity: 0.3;
+}
+
+.current {
+  background-color: #eecdcc;
+  opacity: 0.8;
+}
+
 /*.matrix {
   width: 100%;
   display: table;
@@ -23,33 +55,3 @@
 .current {
   background-color: #eecdcc;
 }*/
-.matrix {
-  /*position: fixed;*/
-  /*top: 0;*/
-  /*z-index: -1;*/
-}
-
-.row {
-  /*margin-bottom: 1em;*/
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-
-.rect {
-  display: flex-block;
-  min-height: 2em;
-  min-width: 3em;
-  margin: 0.5em;
-  background-color: #585f60;
-}
-
-.clicked {
-  background-color: #ccedee;
-}
-
-.current {
-  background-color: #eecdcc;
-}
