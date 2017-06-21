@@ -1,24 +1,8 @@
 .title {
   font-size: 8em;
-  color: rgba(37, 116, 169, 1);
+  /*color: rgba(37, 116, 169, 1);*/
+  color: #eecdcc;
   margin: 0.1em;
-}
-
-
-.outer {
-  width: 100%;
-  display: table;
-  border-collapse: separate;
-  border-spacing: 10px 10px;
-}
-
-.middle {
-  display: table-row;
-}
-
-.inner {
-  display: table-cell;
-  background-color: rgba(30, 139, 195, 1);
 }
 
 .btn {

@@ -31,7 +31,8 @@ html * {
 }
 
 body {
-  background-color: rgba(218, 223, 225, 1);
+  /*background-color: rgba(218, 223, 225, 1);*/
+  background-color: #1c3435;
 }
 
 h1 {
