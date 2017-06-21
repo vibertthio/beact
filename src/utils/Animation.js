@@ -1,4 +1,4 @@
-// import Two from 'two.js/build/two.min';
+import Two from 'two.js/build/two.svg.webpack';
 
 const two = new Two({
   fullscreen: false,

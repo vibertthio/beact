@@ -1,7 +1,7 @@
 .title {
-  font-size: 5em;
+  font-size: 8em;
   color: rgba(37, 116, 169, 1);
-  margin: 20px;
+  margin: 0.1em;
 }
 
 
@@ -22,6 +22,6 @@
 }
 
 .btn {
-  margin: 0.6em;
+  margin: 0 0.6em 0.6em 0.6em;
   background-color: rgba(255, 0, 0, 1);
 }

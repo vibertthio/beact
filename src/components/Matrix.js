@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import uuid4 from 'uuid/v4';
-import styles from '../styles/Matrix.css';
+import styles from '../assets/styles/Matrix.css';
 
 
 const Matrix = (props) => {

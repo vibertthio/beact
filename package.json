@@ -20,7 +20,7 @@
     "react-tap-event-plugin": "^2.0.1",
     "sass-loader": "^6.0.2",
     "tone": "^0.10.0",
-    "two.js": "^0.6.0",
+    "two.js": "git://github.com/fixate/two.js.git#webpack-monkeypatch",
     "uuid": "^3.0.1"
   },
   "devDependencies": {
