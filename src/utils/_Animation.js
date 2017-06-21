@@ -41,7 +41,14 @@ class Animation {
       .to({ y: 400 }, 3000)
       .easing(TWEEN.Easing.Exponential.Out)
       .onComplete(() => {
-        console.log('finish ani');
+        console.log('finish in');
+        new TWEEN.Tween(this.shape.translation)
+          .to({ y: this.two.height + 250 }, 3000)
+          .easing(TWEEN.Easing.Exponential.Out)
+          .onComplete(() => {
+            console.log('finish out');
+          })
+          .start();
       })
       .start();
   }
@@ -50,13 +57,13 @@ class Animation {
    * [aniOut description]
    */
   reverse() {
-    new TWEEN.Tween(this.shape.translation)
-      .to({ y: this.two.height + 250 }, 3000)
-      .easing(TWEEN.Easing.Exponential.Out)
-      .onComplete(() => {
-        console.log('finish ani');
-      })
-      .start();
+    // new TWEEN.Tween(this.shape.translation)
+    //   .to({ y: this.two.height + 250 }, 3000)
+    //   .easing(TWEEN.Easing.Exponential.Out)
+    //   .onComplete(() => {
+    //     console.log('finish ani');
+    //   })
+    //   .start();
   }
 }
 

@@ -13,6 +13,7 @@
   "author": "Vibert Thio",
   "license": "MIT",
   "dependencies": {
+    "@tweenjs/tween.js": "^16.7.0",
     "material-ui": "^0.18.3",
     "node-sass": "^4.3.0",
     "prop-types": "^15.5.10",

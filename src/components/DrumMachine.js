@@ -25,7 +25,7 @@ class DrumMachine extends Component {
     this.state = {
       data,
       currentBeat: 0,
-      playing: true,
+      playing: false,
     };
 
     this.setCurrentBeat = this.setCurrentBeat.bind(this);
@@ -41,7 +41,6 @@ class DrumMachine extends Component {
    */
   componentDidMount() {
     this.ani = new Animation();
-    this.ani.start();
   }
 
   /**
@@ -71,6 +70,7 @@ class DrumMachine extends Component {
    * [startSequence description]
    */
   startSequencer() {
+    this.ani.start();
     this.sequencer.start();
     this.setState({
       playing: true,
@@ -81,9 +81,11 @@ class DrumMachine extends Component {
    * [stopSequencer description]
    */
   stopSequencer() {
+    this.ani.reverse();
     this.sequencer.stop();
     this.setState({
       playing: false,
+      currentBeat: 0,
     });
   }
 

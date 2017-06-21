@@ -7,7 +7,8 @@ export default class Sequencer {
   samples: Object;
   sequence: Object;
   playing: boolean;
-  beat: number; notes: Array<String>;
+  beat: number;
+  notes: Array<String>;
   matrix: Array<Array<number>>;
 
   /**
@@ -27,7 +28,8 @@ export default class Sequencer {
       'A',
       'F#',
       'E',
-      'C#'];
+      'C#',
+    ];
 
     this.samples = new MultiPlayer({
       urls: {
@@ -46,11 +48,11 @@ export default class Sequencer {
 
     this.sequence = new Sequence((time, col) => {
       // console.log(`time : ${time}`);
-      // console.log(`col : ${col}`);
       // console.log(`matrix : ${this.matrix}`);
-      setCurrentBeat(this.beat);
+      // console.log(`col : ${col}`);
 
       this.beat = col;
+      setCurrentBeat(this.beat);
       const column = this.matrix[col];
       for (let i = 0; i < this.notes.length; i += 1) {
         if (column[i] === 1) {
@@ -61,7 +63,7 @@ export default class Sequencer {
     }, Array.from(Array(this.matrix.length).keys()), '16n');
 
     Transport.start();
-    this.sequence.start();
+    // this.sequence.start();
   }
 
   /**
