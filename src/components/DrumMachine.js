@@ -82,7 +82,7 @@ class DrumMachine extends Component {
    * [stopSequencer description]
    */
   stopSequencer() {
-    this.ani.reverse();
+    this.ani.reset();
     this.sequencer.stop();
     this.setState({
       playing: false,
