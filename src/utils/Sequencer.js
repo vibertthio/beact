@@ -2,7 +2,7 @@ import { MultiPlayer, Sequence, Transport } from 'tone';
 // import axios from 'axios';
 
 let recordMatrix = [];
-const recordFull = [];
+let recordFull = [];
 
 /**
  * Sequencer
@@ -14,6 +14,7 @@ export default class Sequencer {
   beat: number;
   notes: Array<String>;
   matrix: Array<Array<number>>;
+  recording: boolean;
 
   /**
    * [constructor description]
@@ -71,24 +72,26 @@ export default class Sequencer {
         }
       }
 
-      if (recordMatrix.length < 16) {
-        recordMatrix.push(column);
-        if (recordMatrix.length === 16) {
-          recordFull.push(recordMatrix);
-          recordMatrix = [];
-          console.log(recordFull);
-          // axios.get('/api/notes/1')
-          // .then((res) => {
-          //   recordFull = res.data.content;
-          //   recordFull.push(recordMatrix);
-          //   recordMatrix = [];
-          // })
-          // .catch(err => console.log(err));
-          //
-          // axios.put('/api/notes/1', {
-          //   content: recordFull,
-          // })
-          // .catch(err => console.log(err));
+      if (this.recording === true) {
+        if (recordMatrix.length < 16) {
+          recordMatrix.push(column);
+          if (recordMatrix.length === 16) {
+            recordFull.push(recordMatrix);
+            recordMatrix = [];
+            console.log(recordFull);
+            // axios.get('/api/notes/1')
+            // .then((res) => {
+            //   recordFull = res.data.content;
+            //   recordFull.push(recordMatrix);
+            //   recordMatrix = [];
+            // })
+            // .catch(err => console.log(err));
+            //
+            // axios.put('/api/notes/1', {
+            //   content: recordFull,
+            // })
+            // .catch(err => console.log(err));
+          }
         }
       }
     }, Array.from(Array(this.matrix.length).keys()), '16n');
@@ -127,6 +130,39 @@ export default class Sequencer {
   stop() {
     this.playing = false;
     this.sequence.stop();
+  }
+
+  /**
+   * [startRecording description]
+   */
+  startRecording() {
+    this.recording = true;
+    console.log(this.recording);
+  }
+
+  /**
+   * [stopRecording description]
+   */
+  stopRecording() {
+    this.recording = false;
+    console.log(this.recording);
+  }
+
+  /**
+   * [saveRecord description]
+   */
+  saveRecord() {
+    this.sequence.stop();
+    console.log('save!!! replace by axios code');
+    recordFull = [];
+  }
+
+  /**
+   * [clearRecord description]
+   */
+  clearRecord() {
+    this.sequence.stop();
+    recordFull = [];
   }
 
 }

@@ -27,9 +27,13 @@ class DrumMachine extends Component {
       data,
       currentBeat: 0,
       playing: false,
+      recording: false,
     };
 
     this.setCurrentBeat = this.setCurrentBeat.bind(this);
+    this.recordSequencer = this.recordSequencer.bind(this);
+    this.saveRecord = this.saveRecord.bind(this);
+    this.clearRecord = this.clearRecord.bind(this);
 
     this.sequencer = new Sequencer(
       this.state.data,
@@ -102,6 +106,32 @@ class DrumMachine extends Component {
   }
 
   /**
+   * [recordSequencer description]
+   */
+  recordSequencer() {
+    if (this.state.recording === true) {
+      this.setState({ recording: false });
+      this.sequencer.stopRecording();
+    } else {
+      this.setState({ recording: true });
+      this.sequencer.startRecording();
+    }
+  }
+
+  /**
+   * [saveRecord description]
+   */
+  saveRecord() {
+    this.sequencer.saveRecord();
+  }
+
+  /**
+   * [clearRecord description]
+   */
+  clearRecord() {
+    this.sequencer.clearRecord();
+  }
+  /**
    * [render description]
    * @return {Element}
    */
@@ -123,6 +153,24 @@ class DrumMachine extends Component {
             onTouchTap={() => this.stopSequencer()}
           >
             stop
+          </div>
+          <div
+            className={styles.btn}
+            onTouchTap={() => this.recordSequencer()}
+          >
+            Record
+          </div>
+          <div
+            className={styles.btn}
+            onTouchTap={() => this.saveRecord()}
+          >
+            Save
+          </div>
+          <div
+            className={styles.btn}
+            onTouchTap={() => this.clearRecord()}
+          >
+            Clear
           </div>
         </div>
         <Matrix
