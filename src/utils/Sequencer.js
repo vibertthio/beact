@@ -1,4 +1,8 @@
 import { MultiPlayer, Sequence, Transport } from 'tone';
+// import axios from 'axios';
+
+let recordMatrix = [];
+const recordFull = [];
 
 /**
  * Sequencer
@@ -31,6 +35,12 @@ export default class Sequencer {
       'C#',
     ];
 
+    // axios.post('/api/notes', {
+    //   id: 1,
+    //   title: 'Mat',
+    //   content: [],
+    // });
+
     this.samples = new MultiPlayer({
       urls: {
         kk: './assets/audio/505/kick.mp3',
@@ -58,6 +68,27 @@ export default class Sequencer {
         if (column[i] === 1) {
           const vel = (Math.random() * 0.5) + 0.5;
           this.samples.start(this.notes[i], time, 0, '32n', 0, vel);
+        }
+      }
+
+      if (recordMatrix.length < 16) {
+        recordMatrix.push(column);
+        if (recordMatrix.length === 16) {
+          recordFull.push(recordMatrix);
+          recordMatrix = [];
+          console.log(recordFull);
+          // axios.get('/api/notes/1')
+          // .then((res) => {
+          //   recordFull = res.data.content;
+          //   recordFull.push(recordMatrix);
+          //   recordMatrix = [];
+          // })
+          // .catch(err => console.log(err));
+          //
+          // axios.put('/api/notes/1', {
+          //   content: recordFull,
+          // })
+          // .catch(err => console.log(err));
         }
       }
     }, Array.from(Array(this.matrix.length).keys()), '16n');

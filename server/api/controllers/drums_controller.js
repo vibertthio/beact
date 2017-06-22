@@ -14,8 +14,8 @@ module.exports = {
     const noteId = req.params.id;
     const noteProps = req.body;
 
-    Drum.findByIdAndUpdate({ _id: noteId }, noteProps)
-      .then(() => Drum.findById({ _id: noteId }))
+    Drum.findOneAndUpdate({ id: noteId }, noteProps)
+      .then(() => Drum.findOne({ id: noteId }))
       .then(note => res.send(note))
       .catch(next);
   },
@@ -28,15 +28,15 @@ module.exports = {
       .catch(next);
   },
 
-  getposts(req, res, next) {
+  getnotes(req, res, next) {
     Drum.find({})
       .then(notes => res.send(notes))
       .catch(next);
   },
 
-  getpost(req, res, next) {
+  getnote(req, res, next) {
     const noteId = req.params.id;
-    Drum.findOne({ _id: noteId })
+    Drum.findOne({ id: noteId })
       .then(note => res.send(note))
       .catch(next);
   },
