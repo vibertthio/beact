@@ -26,16 +26,27 @@ function Animation() {
    * @return {Object}
    */
   const veil = (function makeVeil(opacity = 1, duration = 400) {
+    const origin = { x: two.width * 0.5, y: two.height * 1.5 };
+    const destIn = { y: two.height * 0.5 };
+    const destOut = { y: two.height * -0.5 };
+
+    /**
+     * [setDirection description]
+     */
+    function setDirection() {
+      const direction = (Math.random() > 0.5);
+      origin.x = two.width * 0.5;
+      origin.y = two.height * (direction ? 1.5 : -0.5);
+      destOut.y = two.height * (direction ? -0.5 : 1.5);
+    }
+
     /**
      * [setup description]
      * @return {[type]} [description]
      */
     function setup() {
       let playing = false;
-      const origin = {
-        x: two.width / 2,
-        y: two.height * 1.5,
-      };
+
       const shape = two.makeRectangle(
         origin.x,
         origin.y,
@@ -45,37 +56,39 @@ function Animation() {
       shape.opacity = 0;
 
       const aniOut = new TWEEN.Tween(shape.translation)
-        .to({ y: two.height * (-0.5) }, duration)
+        .to(destOut, duration)
         .easing(TWEEN.Easing.Exponential.Out)
         .onComplete(() => {
           playing = false;
         });
       const aniIn = new TWEEN.Tween(shape.translation)
-        .to({ y: two.height * 0.5 }, duration)
+        .to(destIn, duration)
         .easing(TWEEN.Easing.Exponential.In)
         .onComplete(() => {
           aniOut.start();
         });
       return {
         playing,
-        origin,
         shape,
         aniIn,
         aniOut,
       };
     }
 
-    let { playing, origin, shape, aniIn, aniOut } = setup();
+    let { playing, shape, aniIn, aniOut } = setup();
 
     // methods
     const resize = () => {
-      ({ origin, shape, aniIn, aniOut } = setup());
+      setDirection();
+      two.remove(shape);
+      ({ playing, shape, aniIn, aniOut } = setup());
     };
 
     const reset = () => {
       playing = false;
       aniIn.stop();
       aniOut.stop();
+      setDirection();
       shape.opacity = 0;
       shape.translation.set(
         origin.x,
@@ -86,6 +99,7 @@ function Animation() {
     const start = () => {
       reset();
       playing = true;
+      console.log(destOut);
       shape.opacity = opacity;
       aniIn.start();
     };
