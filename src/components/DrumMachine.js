@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import { WindowResizeListener } from 'react-window-resize-listener';
 
 import styles from '../assets/styles/DrumMachine.css';
 import Matrix from './Matrix';
 import Sequencer from '../utils/Sequencer';
-import Animation from '../utils/_Animation';
+import Animation from '../utils/Animation';
 
 /**
  * DrumMachine
@@ -68,10 +69,19 @@ class DrumMachine extends Component {
   }
 
   /**
+   * [handleResize description]
+   * @param  {number} w width of window
+   * @param  {number} h height of window
+   */
+  handleResize(w, h) {
+    this.ani.resize(w, h);
+  }
+
+  /**
    * [startSequence description]
    */
   startSequencer() {
-    this.ani.start();
+    this.ani.trigger(0);
     this.sequencer.start();
     this.setState({
       playing: true,
@@ -82,7 +92,6 @@ class DrumMachine extends Component {
    * [stopSequencer description]
    */
   stopSequencer() {
-    this.ani.reset();
     this.sequencer.stop();
     this.setState({
       playing: false,
@@ -122,6 +131,9 @@ class DrumMachine extends Component {
           onClick={(i, j) => this.handleClick(i, j)}
         />
         <div className={styles.animation} id="animation" />
+        <WindowResizeListener
+          onResize={w => this.handleResize(w.windowWidth, w.windowHeight)}
+        />
       </div>
     );
   }

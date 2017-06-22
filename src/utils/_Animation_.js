@@ -26,50 +26,62 @@ function Animation() {
    * @return {Object}
    */
   const veil = (function makeVeil(opacity = 1, duration = 400) {
-    /**
-     * [setup description]
-     * @return {[type]} [description]
-     */
-    function setup() {
-      let playing = false;
-      const origin = {
+    let playing = false;
+    let origin = {
+      x: two.width / 2,
+      y: two.height * 1.5,
+    };
+    let shape = two.makeRectangle(
+      origin.x,
+      origin.y,
+      two.width,
+      two.height,
+    );
+    shape.opacity = 0;
+
+    let aniOut = new TWEEN.Tween(shape.translation)
+      .to({ y: two.height * (-0.5) }, duration)
+      .easing(TWEEN.Easing.Exponential.Out)
+      .onComplete(() => {
+        console.log('finish aniOut');
+        playing = false;
+      });
+
+    let aniIn = new TWEEN.Tween(shape.translation)
+      .to({ y: two.height * 0.5 }, duration)
+      .easing(TWEEN.Easing.Exponential.In)
+      .onComplete(() => {
+        console.log('finish aniIn');
+        aniOut.start();
+      });
+
+    const resize = () => {
+      origin = {
         x: two.width / 2,
         y: two.height * 1.5,
       };
-      const shape = two.makeRectangle(
+      two.remove(shape);
+      shape = two.makeRectangle(
         origin.x,
         origin.y,
         two.width,
         two.height,
       );
       shape.opacity = 0;
-
-      const aniOut = new TWEEN.Tween(shape.translation)
+      aniOut = new TWEEN.Tween(shape.translation)
         .to({ y: two.height * (-0.5) }, duration)
         .easing(TWEEN.Easing.Exponential.Out)
         .onComplete(() => {
+          console.log('finish aniOut');
           playing = false;
         });
-      const aniIn = new TWEEN.Tween(shape.translation)
+      aniIn = new TWEEN.Tween(shape.translation)
         .to({ y: two.height * 0.5 }, duration)
         .easing(TWEEN.Easing.Exponential.In)
         .onComplete(() => {
+          console.log('finish aniIn');
           aniOut.start();
         });
-      return {
-        playing,
-        origin,
-        shape,
-        aniIn,
-        aniOut,
-      };
-    }
-
-    let { playing, origin, shape, aniIn, aniOut } = setup();
-
-    // methods
-    const resize = () => {
-      ({ origin, shape, aniIn, aniOut } = setup());
     };
 
     const reset = () => {
@@ -96,7 +108,6 @@ function Animation() {
       reset,
       resize,
     };
-
     return EXPORT;
   }());
   animations.push(veil);
@@ -106,6 +117,8 @@ function Animation() {
   };
 
   const resize = (w, h) => {
+    console.log(`w:${w}`);
+    console.log(`h:${h}`);
     two.renderer.setSize(w, h);
     two.width = w;
     two.height = h;
