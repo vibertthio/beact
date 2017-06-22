@@ -99,6 +99,7 @@ function Animation() {
 
     return EXPORT;
   }());
+
   animations.push(veil);
 
   const trigger = (index) => {

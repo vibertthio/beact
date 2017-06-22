@@ -50,6 +50,9 @@ class DrumMachine extends Component {
    * @param {number} currentBeat
    */
   setCurrentBeat(currentBeat) {
+    if (currentBeat === 0) {
+      this.ani.trigger(0);
+    }
     this.setState({
       currentBeat,
     });
@@ -81,7 +84,6 @@ class DrumMachine extends Component {
    * [startSequence description]
    */
   startSequencer() {
-    this.ani.trigger(0);
     this.sequencer.start();
     this.setState({
       playing: true,
@@ -104,7 +106,6 @@ class DrumMachine extends Component {
    * @return {Element}
    */
   render() {
-    const playing = this.sequencer.isPlaying();
     return (
       <div>
         <h1 className={styles.title}>
@@ -126,7 +127,7 @@ class DrumMachine extends Component {
         </div>
         <Matrix
           data={this.state.data}
-          playing={playing}
+          playing={this.state.playing}
           currentBeat={this.state.currentBeat}
           onClick={(i, j) => this.handleClick(i, j)}
         />
