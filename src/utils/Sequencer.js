@@ -1,5 +1,5 @@
 import { MultiPlayer, Sequence, Transport } from 'tone';
-// import axios from 'axios';
+import axios from 'axios';
 
 let recordMatrix = [];
 let recordFull = [];
@@ -35,12 +35,6 @@ export default class Sequencer {
       'E',
       'C#',
     ];
-
-    // axios.post('/api/notes', {
-    //   id: 1,
-    //   title: 'Mat',
-    //   content: [],
-    // });
 
     this.samples = new MultiPlayer({
       urls: {
@@ -79,18 +73,6 @@ export default class Sequencer {
             recordFull.push(recordMatrix);
             recordMatrix = [];
             console.log(recordFull);
-            // axios.get('/api/notes/1')
-            // .then((res) => {
-            //   recordFull = res.data.content;
-            //   recordFull.push(recordMatrix);
-            //   recordMatrix = [];
-            // })
-            // .catch(err => console.log(err));
-            //
-            // axios.put('/api/notes/1', {
-            //   content: recordFull,
-            // })
-            // .catch(err => console.log(err));
           }
         }
       }
@@ -154,6 +136,11 @@ export default class Sequencer {
   saveRecord() {
     this.sequence.stop();
     console.log('save!!! replace by axios code');
+    axios.post('/api/notes', {
+      title: 'Notes',
+      content: recordFull,
+    })
+    .catch(err => console.log(err));
     recordFull = [];
   }
 
