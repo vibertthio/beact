@@ -4,8 +4,9 @@
   "description": "making audio/visual with react and tone.js",
   "main": "''",
   "scripts": {
-    "build": "webpack --config webpack.production.config.js --progress --profile --colors",
+    "build": "webpack --config webpack.config.js --progress --profile --colors",
     "start": "webpack-dev-server --progress --profile --colors",
+    "server": "nodemon --exec babel-node server/server.js --ignore public/",
     "lint": "eslint --ext js --ext jsx src || exit 0",
     "dev": " webpack-dashboard -- webpack-dev-server --progress --profile --colors",
     "load": "cp -R src/assets/audio pulic/assets/"
@@ -14,6 +15,10 @@
   "license": "MIT",
   "dependencies": {
     "@tweenjs/tween.js": "^16.7.0",
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "mongodb": "^2.2.27",
+    "mongoose": "^4.10.3",
     "material-ui": "^0.18.3",
     "node-sass": "^4.3.0",
     "prop-types": "^15.5.10",
@@ -27,6 +32,7 @@
     "uuid": "^3.0.1"
   },
   "devDependencies": {
+    "babel-cli": "^6.24.1",
     "babel-core": "^6.23.1",
     "babel-eslint": "^7.2.3",
     "babel-loader": "^6.3.2",
@@ -47,6 +53,7 @@
     "extract-text-webpack-plugin": "^v2.0.0-rc.1",
     "file-loader": "^0.10.0",
     "html-webpack-plugin": "^2.26.0",
+    "nodemon": "^1.11.0",
     "postcss-loader": "^1.2.2",
     "react-hot-loader": "^3.0.0-beta.6",
     "style-loader": "0.13.1",
