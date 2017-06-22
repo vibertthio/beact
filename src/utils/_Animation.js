@@ -8,6 +8,7 @@ import TWEEN from '@tweenjs/tween.js';
 class Animation {
   two: Object;
   shape: Object;
+
   /**
    * [constructor description]
    */
