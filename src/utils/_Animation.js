@@ -2,70 +2,66 @@ import Two from 'two.js/build/two.svg.webpack';
 import TWEEN from '@tweenjs/tween.js';
 
 /**
- * [two description]
- * @type {object}
+ * [animation description]
+ * @return {[type]} [description]
  */
-class Animation {
-  two: Object;
-  shape: Object;
+function Animation() {
+  const canvas = document.getElementById('animation');
+  const params = { fullscreen: true };
+  const two = new Two(params).appendTo(canvas);
 
-  /**
-   * [constructor description]
-   */
-  constructor() {
-    const canvas = document.getElementById('animation');
-    if (canvas === undefined || canvas === null) {
-      console.error('not found animation div');
-    }
-    const params = {
-      fullscreen: true,
-    };
-    this.two = new Two(params).appendTo(canvas);
-
-    this.shape = this.two.makeRectangle(
-      this.two.width / 2,
-      this.two.height + 250,
-      this.two.width,
-      500,
+  const veil =  rect(two) {
+    let playing = false;
+    // let direction = true;
+    const shape = two.makePolygon(
+      two.width / 2,
+      two.height / 2,
+      two.width,
+      two.height,
     );
 
-    this.two.bind('update', () => {
-      TWEEN.update();
-    }).play();
-  }
+    const aniOut = new TWEEN.Tween(shape.translation)
+      .to({ y: this.two.height + 250 }, 3000)
+      .easing(TWEEN.Easing.Exponential.Out)
+      .onComplete(() => {
+        console.log('finish ani');
+      });
 
-  /**
-   * [aniIn description]
-   */
-  start() {
-    new TWEEN.Tween(this.shape.translation)
+    const aniIn = new TWEEN.Tween(shape.translation)
       .to({ y: 400 }, 3000)
       .easing(TWEEN.Easing.Exponential.Out)
       .onComplete(() => {
-        console.log('finish in');
-        new TWEEN.Tween(this.shape.translation)
-          .to({ y: this.two.height + 250 }, 3000)
-          .easing(TWEEN.Easing.Exponential.Out)
-          .onComplete(() => {
-            console.log('finish out');
-          })
-          .start();
-      })
-      .start();
-  }
+        console.log('finish aniIn');
+        aniOut.start();
+      });
 
-  /**
-   * [aniOut description]
-   */
-  reverse() {
-    // new TWEEN.Tween(this.shape.translation)
-    //   .to({ y: this.two.height + 250 }, 3000)
-    //   .easing(TWEEN.Easing.Exponential.Out)
-    //   .onComplete(() => {
-    //     console.log('finish ani');
-    //   })
-    //   .start();
-  }
+    const start = () => {
+      playing = true;
+      shape.opacity = 1;
+      aniIn.start();
+    };
+
+    const reset = () => {
+      playing = false;
+      shape.opacity = 0;
+      shape.translation.set(
+        two.width / 2,
+        two.height / 2,
+      );
+      aniIn.stop();
+      aniOut.stop();
+    };
+
+    return {
+      start,
+      reset,
+    };
+  }(two));
+
+  return {
+    start: veil.start,
+    reset: veil.reset,
+  };
 }
 
 export default Animation;

@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import styles from '../assets/styles/DrumMachine.css';
 import Matrix from './Matrix';
 import Sequencer from '../utils/Sequencer';
-import Animation from '../utils/Animation';
+import Animation from '../utils/_Animation';
 
 /**
  * DrumMachine
@@ -40,7 +40,8 @@ class DrumMachine extends Component {
    * [componentDidMount description]
    */
   componentDidMount() {
-    this.ani = new Animation();
+    // this.ani = new Animation();
+    this.ani = Animation();
   }
 
   /**
