@@ -1,6 +1,18 @@
 import Two from 'two.js/build/two.svg.webpack';
 import TWEEN from '@tweenjs/tween.js';
 
+
+const pallete = [
+  'rgb(28, 52, 53)',
+  'rgb(238, 205, 204)',
+  'rgb(204, 238, 205)',
+  'rgb(204, 237, 238)',
+  'rgb(204, 237, 204)',
+  'rgb(205, 204, 238)',
+  'rgb(88, 95, 96)',
+  'rgb(238, 204, 237)',
+];
+
 /**
  * [animation description]
  * @return {[type]} [description]
@@ -54,6 +66,7 @@ function Animation() {
         two.height,
       );
       shape.opacity = 0;
+      shape.fill = pallete[4];
 
       const aniOut = new TWEEN.Tween(shape.translation)
         .to(destOut, duration)
