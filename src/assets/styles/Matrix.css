@@ -1,23 +1,51 @@
 .matrix {
-
+  /*border: solid 1px red;*/
+  /*height: 500px;*/
 }
 
 .row {
-  /*margin-bottom: 1em;*/
-  width: 100%;
+  width: 10%;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  /*border: solid 1px blue;*/
 }
-
 
 .rect {
   display: flex-block;
   min-height: 2em;
-  width: 10%;
-  margin: 0.5em;
+  margin: 0.2em;
   background-color: #585f60;
   opacity: 0.1;
+}
+
+@media only screen and (min-width: 600px) {
+  .matrix {
+    display: flex;
+    height: 600px;
+    padding: 0 1em 0;
+  }
+  .row {
+    flex-direction: column;
+  }
+  .rect {
+    height: 10%;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .row {
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+  .rect {
+    width: 10%;
+  }
+}
+
+.rect:hover {
+  cursor: pointer;
+  opacity: 1;
 }
 
 .clicked {
@@ -27,31 +55,25 @@
 
 .current {
   background-color: #eecdcc;
-  /*opacity: 0.8;*/
 }
 
-/*.matrix {
-  width: 100%;
-  display: table;
-  border-collapse: separate;
-  border-spacing: 10px 10px;
+.clicked.current {
+  animation-name: stretch;
+  animation-duration: 0.2s;
+  animation-timing-function: ease-out;
 }
 
-.row {
-  display: table-row;
+@keyframes stretch {
+  0% {
+    transform: scale(1);
+    background-color: none;
+  }
+  50% {
+    transform: scale(.6);
+    background-color: #eecdcc;
+  }
+  100% {
+    transform: scale(1.8);
+    background-color: pink;
+  }
 }
-
-
-.rect {
-  display: table-cell;
-  height: 20px;
-  background-color: #585f60;
-}
-
-.clicked {
-  background-color: #ccedee;
-}
-
-.current {
-  background-color: #eecdcc;
-}*/

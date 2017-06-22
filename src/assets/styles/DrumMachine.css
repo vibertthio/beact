@@ -1,5 +1,17 @@
+@media only screen and (min-width: 600px) {
+  .title {
+    font-size: 5em;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .title {
+    font-size: 3em;
+    margin: 1em;
+  }
+}
+
 .title {
-  font-size: 5em;
   /*color: rgba(37, 116, 169, 1);*/
   color: #eecdcc;
   margin: 0em;
@@ -7,15 +19,13 @@
 }
 
 .control {
-  display: block;
+  display: flex;
   width: 20em;
-  margin: 0.5em auto;
-  align-items: center;
+  margin: 0.3em auto;
+  justify-content: center;
 }
 
 .btn {
-  display: inline-block;
-  align-self: center;
   text-align: center;
   width: 5em;
   height: 2em;
@@ -23,6 +33,7 @@
   margin: 1em;
   background-color: #eecdcc;
   padding-top: 0.5em;
+  cursor: pointer;
 }
 
 .animation {
