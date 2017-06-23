@@ -214,9 +214,11 @@ class DrumMachine extends Component {
         <h1 className={styles.title}>
           Drum Machine
         </h1>
+        {/*
         <ul>
           {this.renderPatterns()}
         </ul>
+        */}
         <div className={styles.control}>
           <div
             className={styles.btn}
@@ -230,6 +232,7 @@ class DrumMachine extends Component {
           >
             stop
           </div>
+          {/*
           <div
             className={styles.btn}
             onTouchTap={() => this.recordSequencer()}
@@ -248,6 +251,8 @@ class DrumMachine extends Component {
           >
             Clear
           </div>
+          */}
+
         </div>
         <Matrix
           data={this.state.data}

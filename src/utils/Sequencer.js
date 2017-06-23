@@ -57,7 +57,9 @@ export default class Sequencer {
       // console.log(`col : ${col}`);
 
       this.beat = col;
+
       setCurrentBeat(this.beat);
+
       const column = this.matrix[col];
       for (let i = 0; i < this.notes.length; i += 1) {
         if (column[i] === 1) {
@@ -79,7 +81,6 @@ export default class Sequencer {
     }, Array.from(Array(this.matrix.length).keys()), '16n');
 
     Transport.start();
-    // this.sequence.start();
   }
 
   /**

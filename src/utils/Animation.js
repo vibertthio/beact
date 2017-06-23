@@ -37,7 +37,7 @@ function Animation() {
    * @param  {number} [duration = 400]
    * @return {Object}
    */
-  const veil = (function makeVeil(opacity = 1, duration = 400) {
+  (function makeVeil(opacity = 1, duration = 400) {
     const origin = { x: two.width * 0.5, y: two.height * 1.5 };
     const destIn = { y: two.height * 0.5 };
     const destOut = { y: two.height * -0.5 };
@@ -123,11 +123,11 @@ function Animation() {
       reset,
       resize,
     };
-
+    animations.push(EXPORT);
     return EXPORT;
   }());
 
-  animations.push(veil);
+  // animations.push(veil);
 
   const trigger = (index) => {
     animations[index].start();
