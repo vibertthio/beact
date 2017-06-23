@@ -16,6 +16,8 @@
 
   "rules": {
     "no-console": 0,
+    "no-tabs": 0,
+    "indent": 0,
     "no-else-return": 0,
     "valid-jsdoc": ["error", {
       "requireReturn": false,
