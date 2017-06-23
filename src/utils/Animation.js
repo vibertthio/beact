@@ -351,6 +351,13 @@ function Animation() {
     });
   }());
 
+	/**
+   * Animation #17, Glimmer
+   * random size, x, y, color circles.
+   * @param  {number} [opacity = 1]
+   * @param  {number} [duration = 400]
+   * @return {Object}
+   */
 	(function makeGlimmer(opacity = 1, duration = 400) {
     /**
      * [setup description]
