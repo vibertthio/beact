@@ -179,8 +179,14 @@ class DrumMachine extends Component {
    */
   playPattern(pattern) {
     this.sequencer.stop();
-    this.setState({ data: pattern });
-    // this.sequencer.start();
+    const data = this.state.data;
+    for (let i = 0; i < 16; i += 1) {
+      for (let j = 0; j < 8; j += 1) {
+        data[i][j] = pattern[i][j];
+      }
+    }
+    this.setState({ data });
+    this.sequencer.start();
   }
 
   /**
