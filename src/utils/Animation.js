@@ -32,7 +32,7 @@ function Animation() {
 
   /**
    * Animation #0, Veil
-   * it will have four direction, which will be decided randomly
+   * it will have two direction(u/d), which will be decided randomly
    * @param  {number} [opacity = 1]
    * @param  {number} [duration = 400]
    * @return {Object}
@@ -47,9 +47,104 @@ function Animation() {
      */
     function setDirection() {
       const direction = (Math.random() > 0.5);
-      origin.x = two.width * 0.5;
       origin.y = two.height * (direction ? 1.5 : -0.5);
       destOut.y = two.height * (direction ? -0.5 : 1.5);
+    }
+
+    /**
+     * [setup description]
+     * @return {[type]} [description]
+     */
+    function setup() {
+      let playing = false;
+
+      const shape = two.makeRectangle(
+        origin.x,
+        origin.y,
+        two.width,
+        two.height,
+      );
+      shape.opacity = 0;
+      shape.fill = pallete[4];
+
+      const aniOut = new TWEEN.Tween(shape.translation)
+        .to(destOut, duration)
+        .easing(TWEEN.Easing.Exponential.Out)
+        .onComplete(() => {
+          playing = false;
+        });
+      const aniIn = new TWEEN.Tween(shape.translation)
+        .to(destIn, duration)
+        .easing(TWEEN.Easing.Exponential.In)
+        .onComplete(() => {
+          aniOut.start();
+        });
+      return {
+        playing,
+        shape,
+        aniIn,
+        aniOut,
+      };
+    }
+
+    let { playing, shape, aniIn, aniOut } = setup();
+
+    // methods
+    const resize = () => {
+      setDirection();
+      two.remove(shape);
+      ({ playing, shape, aniIn, aniOut } = setup());
+    };
+
+    const reset = () => {
+      playing = false;
+      aniIn.stop();
+      aniOut.stop();
+      setDirection();
+      shape.opacity = 0;
+      shape.translation.set(
+        origin.x,
+        origin.y,
+      );
+    };
+
+    const start = () => {
+      reset();
+      playing = true;
+      console.log(destOut);
+      shape.opacity = opacity;
+      aniIn.start();
+    };
+
+    const EXPORT = {
+      playing,
+      start,
+      reset,
+      resize,
+    };
+    animations.push(EXPORT);
+    return EXPORT;
+  }());
+
+  /**
+   * Animation #1, Wipe
+   * it will have two direction(l/r), which will be decided randomly
+   * @param  {number} [opacity = 1]
+   * @param  {number} [duration = 400]
+   * @return {Object}
+   */
+  (function makeWipe(opacity = 1, duration = 400) {
+    const origin = { x: two.width * (-0.5), y: two.height * 0.5 };
+    const destIn = { x: two.height * 0.5 };
+    const destOut = { x: two.height * 1.5 };
+
+    /**
+     * [setDirection description]
+     */
+    function setDirection() {
+      const direction = (Math.random() > 0.5);
+      origin.x = two.width * (direction ? 1.5 : -0.5);
+      destOut.x = two.width * (direction ? -0.5 : 1.5);
     }
 
     /**
