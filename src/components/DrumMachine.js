@@ -1,11 +1,50 @@
 import React, { Component } from 'react';
 import { WindowResizeListener } from 'react-window-resize-listener';
+import _ from 'lodash';
+import uuid4 from 'uuid/v4';
 
 import styles from '../assets/styles/DrumMachine.css';
 import Matrix from './Matrix';
 import Sequencer from '../utils/Sequencer';
 import Animation from '../utils/Animation';
 
+const patternA =
+  [[1, 0, 0, 0, 0, 0, 0, 0],
+  [1, 0, 0, 0, 0, 0, 0, 0],
+  [1, 1, 0, 0, 0, 0, 0, 0],
+  [1, 1, 0, 0, 0, 0, 0, 0],
+  [1, 1, 1, 0, 0, 0, 0, 0],
+  [1, 1, 1, 0, 0, 0, 0, 0],
+  [1, 1, 1, 1, 0, 0, 0, 0],
+  [1, 1, 1, 1, 0, 0, 0, 0],
+  [1, 1, 1, 1, 1, 0, 0, 0],
+  [1, 1, 1, 1, 1, 0, 0, 0],
+  [1, 1, 1, 1, 0, 0, 0, 0],
+  [1, 1, 1, 1, 0, 0, 0, 0],
+  [1, 1, 1, 0, 0, 0, 0, 0],
+  [1, 1, 1, 0, 0, 0, 0, 0],
+  [1, 1, 0, 0, 0, 0, 0, 0],
+  [1, 1, 0, 0, 0, 0, 0, 0]];
+const patternB =
+  [[1, 0, 0, 0, 0, 0, 0, 0],
+  [1, 0, 0, 0, 0, 0, 0, 0],
+  [1, 0, 0, 0, 0, 0, 0, 0],
+  [1, 0, 0, 0, 0, 0, 0, 0],
+  [1, 1, 1, 0, 0, 0, 0, 0],
+  [1, 1, 1, 0, 0, 0, 0, 0],
+  [1, 1, 1, 0, 0, 0, 0, 0],
+  [1, 1, 1, 0, 0, 0, 0, 0],
+  [1, 1, 1, 1, 1, 0, 0, 0],
+  [1, 1, 1, 1, 1, 0, 0, 0],
+  [1, 1, 1, 1, 1, 0, 0, 0],
+  [1, 1, 1, 1, 1, 0, 0, 0],
+  [1, 1, 1, 1, 1, 1, 1, 0],
+  [1, 1, 1, 1, 1, 1, 1, 0],
+  [1, 1, 1, 1, 1, 1, 1, 0],
+  [1, 1, 1, 1, 1, 1, 1, 0]];
+const patterns = [
+  { title: 'AAA', pattern: patternA },
+  { title: 'BBB', pattern: patternB }];
 /**
  * DrumMachine
  */
@@ -34,6 +73,8 @@ class DrumMachine extends Component {
     this.recordSequencer = this.recordSequencer.bind(this);
     this.saveRecord = this.saveRecord.bind(this);
     this.clearRecord = this.clearRecord.bind(this);
+    this.playPattern = this.playPattern.bind(this);
+    this.renderPatterns = this.renderPatterns.bind(this);
 
     this.sequencer = new Sequencer(
       this.state.data,
@@ -131,6 +172,32 @@ class DrumMachine extends Component {
   clearRecord() {
     this.sequencer.clearRecord();
   }
+
+  /**
+  * @param  {object} pattern width of window
+   * [playPattern description]
+   */
+  playPattern(pattern) {
+    this.sequencer.stop();
+    this.setState({ data: pattern });
+    // this.sequencer.start();
+  }
+
+  /**
+   * [renderPatterns description]
+   * @return {Element}
+   */
+  renderPatterns() {
+    return _.map(patterns, pattern => (
+      <li
+        key={uuid4()}
+        onTouchTap={() => this.playPattern(pattern.pattern)}
+      >
+        <h4>{pattern.title}</h4>
+      </li>
+    ));
+  }
+
   /**
    * [render description]
    * @return {Element}
@@ -141,6 +208,9 @@ class DrumMachine extends Component {
         <h1 className={styles.title}>
           Drum Machine
         </h1>
+        <ul>
+          {this.renderPatterns()}
+        </ul>
         <div className={styles.control}>
           <div
             className={styles.btn}
