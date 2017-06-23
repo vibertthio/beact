@@ -240,7 +240,7 @@ function Animation() {
   }());
 
   /**
-   * Animation #3, Prism
+   * Animation #2, 3, 4, Prisms
    * @param  {number} [opacity = 1]
    * @param  {number} [duration = 400]
    * @return {Object}
@@ -350,7 +350,7 @@ function Animation() {
   }());
 
   /**
-   * Animation #4, Piston
+   * Animation #5, 6, 7, Pistons
    * @param  {number} [opacity = 1]
    * @param  {number} [duration = 400]
    * @return {Object}
@@ -358,13 +358,14 @@ function Animation() {
   (function makePistons(opacity = 1, duration = 500) {
     [0, 4, 8].forEach((amount) => {
       const param = { ending: 0, beginning: 0 };
+      const origin = { x: two.width * 0.5, y: two.height * 0.5 };
       let begin;
       let end;
 
       /**
-       * [setDirection description]
+       * [setPosition description]
        */
-      function setDirection() {
+      function setPosition() {
         origin.x = two.width * 0.5;
         origin.y = two.height * 0.5;
       }
@@ -378,10 +379,11 @@ function Animation() {
 
         const w = two.width * 0.75;
         const h = two.height * 0.5;
+        begin = -w / 2;
+        end = w / 2; // do random here
 
-        const group = two.makeGroup;
+        const group = two.makeGroup();
         group.translation.set(two.width * 0.5, two.height * 0.5);
-
 
         const shapes = range(amount).map((i) => {
           const d = (h / amount) - (h / (amount * 3));
@@ -389,12 +391,13 @@ function Animation() {
           const y = (-h / 2) + ((i + 1) * (h / (amount + 1)));
 
           const shape = two.makeRectangle(x, y, w, d);
-          shape.fill(pallete[7]);
+          shape.fill = pallete[6];
           shape.noStroke();
 
           group.add(shape);
           return shape;
         });
+
 
         const aniOut = new TWEEN.Tween(param)
           .to({ beginning: 1.0 }, duration * 0.125)
@@ -437,26 +440,40 @@ function Animation() {
 
       // methods
       const resize = () => {
-        setDirection();
+        setPosition();
+        group.remove(shapes);
         two.remove(group);
         ({ playing, group, shapes, aniIn, aniOut } = setup());
       };
 
       const reset = () => {
+        param.beginning = 0;
+        param.ending = 0;
+
+        for (let i = 0; i < amount; i += 1) {
+          const s = shapes[i];
+          s.visible = false;
+          s.vertices[0].x = begin;
+          s.vertices[1].x = begin;
+          s.vertices[2].x = begin;
+          s.vertices[3].x = begin;
+        }
+
         playing = false;
-        ani.stop();
-        setDirection();
-        group.scale = 0;
+        aniIn.stop();
+        aniOut.stop();
+        setPosition();
         group.translation.set(
           origin.x,
           origin.y,
         );
       };
 
+
       const start = () => {
         reset();
         playing = true;
-        ani.start();
+        aniIn.start();
       };
 
       const EXPORT = {
