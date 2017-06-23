@@ -2,49 +2,13 @@ import React, { Component } from 'react';
 import { WindowResizeListener } from 'react-window-resize-listener';
 import _ from 'lodash';
 import uuid4 from 'uuid/v4';
+import axios from 'axios';
 
 import styles from '../assets/styles/DrumMachine.css';
 import Matrix from './Matrix';
 import Sequencer from '../utils/Sequencer';
 import Animation from '../utils/Animation';
 
-const patternA =
-  [[1, 0, 0, 0, 0, 0, 0, 0],
-  [1, 0, 0, 0, 0, 0, 0, 0],
-  [1, 1, 0, 0, 0, 0, 0, 0],
-  [1, 1, 0, 0, 0, 0, 0, 0],
-  [1, 1, 1, 0, 0, 0, 0, 0],
-  [1, 1, 1, 0, 0, 0, 0, 0],
-  [1, 1, 1, 1, 0, 0, 0, 0],
-  [1, 1, 1, 1, 0, 0, 0, 0],
-  [1, 1, 1, 1, 1, 0, 0, 0],
-  [1, 1, 1, 1, 1, 0, 0, 0],
-  [1, 1, 1, 1, 0, 0, 0, 0],
-  [1, 1, 1, 1, 0, 0, 0, 0],
-  [1, 1, 1, 0, 0, 0, 0, 0],
-  [1, 1, 1, 0, 0, 0, 0, 0],
-  [1, 1, 0, 0, 0, 0, 0, 0],
-  [1, 1, 0, 0, 0, 0, 0, 0]];
-const patternB =
-  [[1, 0, 0, 0, 0, 0, 0, 0],
-  [1, 0, 0, 0, 0, 0, 0, 0],
-  [1, 0, 0, 0, 0, 0, 0, 0],
-  [1, 0, 0, 0, 0, 0, 0, 0],
-  [1, 1, 1, 0, 0, 0, 0, 0],
-  [1, 1, 1, 0, 0, 0, 0, 0],
-  [1, 1, 1, 0, 0, 0, 0, 0],
-  [1, 1, 1, 0, 0, 0, 0, 0],
-  [1, 1, 1, 1, 1, 0, 0, 0],
-  [1, 1, 1, 1, 1, 0, 0, 0],
-  [1, 1, 1, 1, 1, 0, 0, 0],
-  [1, 1, 1, 1, 1, 0, 0, 0],
-  [1, 1, 1, 1, 1, 1, 1, 0],
-  [1, 1, 1, 1, 1, 1, 1, 0],
-  [1, 1, 1, 1, 1, 1, 1, 0],
-  [1, 1, 1, 1, 1, 1, 1, 0]];
-const patterns = [
-  { title: 'AAA', pattern: patternA },
-  { title: 'BBB', pattern: patternB }];
 /**
  * DrumMachine
  */
@@ -67,13 +31,21 @@ class DrumMachine extends Component {
       currentBeat: 0,
       playing: false,
       recording: false,
+      patternLists: [],
+      patternTitle: '',
+      currentPatternId: '',
     };
 
     this.setCurrentBeat = this.setCurrentBeat.bind(this);
     this.recordSequencer = this.recordSequencer.bind(this);
     this.saveRecord = this.saveRecord.bind(this);
     this.clearRecord = this.clearRecord.bind(this);
+    this.handleTitleChange = this.handleTitleChange.bind(this);
+    this.savePattern = this.savePattern.bind(this);
     this.playPattern = this.playPattern.bind(this);
+    this.editPattern = this.editPattern.bind(this);
+    this.deleteCurrentPattern = this.deleteCurrentPattern.bind(this);
+    this.exitPattern = this.exitPattern.bind(this);
     this.renderPatterns = this.renderPatterns.bind(this);
 
     this.sequencer = new Sequencer(
@@ -88,6 +60,13 @@ class DrumMachine extends Component {
   componentDidMount() {
     // this.ani = new Animation();
     this.ani = Animation();
+    axios.get('/api/patterns')
+      .then((res) => {
+        this.setState({ patternLists: res.data });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   /**
@@ -175,6 +154,37 @@ class DrumMachine extends Component {
   }
 
   /**
+  * @param  {object} event width of window
+   * [playPattern description]
+   */
+  handleTitleChange(event) {
+    this.setState({ patternTitle: event.target.value });
+  }
+
+  /**
+   * [savePattern description]
+   */
+  savePattern() {
+    if (this.state.patternTitle !== '') {
+      axios.post('/api/patterns', {
+        title: this.state.patternTitle,
+        content: this.state.data,
+      })
+      .catch(err => console.log(err));
+      this.setState({ patternTitle: '' });
+      axios.get('/api/patterns')
+        .then((res) => {
+          this.setState({ patternLists: res.data });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      console.log('Please give your pattern a name!');
+    }
+  }
+
+  /**
   * @param  {object} pattern width of window
    * [playPattern description]
    */
@@ -183,11 +193,70 @@ class DrumMachine extends Component {
     const data = this.state.data;
     for (let i = 0; i < 16; i += 1) {
       for (let j = 0; j < 8; j += 1) {
-        data[i][j] = pattern[i][j];
+        data[i][j] = pattern.content[i][j];
       }
     }
-    this.setState({ data });
+    this.setState({ data, currentPatternId: pattern._id });
     this.sequencer.start();
+  }
+
+  /**
+   * [editPattern description]
+   */
+  editPattern() {
+    console.log(this.state.currentPatternId);
+    if (this.state.patternTitle !== '') {
+      axios.put(`/api/patterns/${this.state.currentPatternId}`, {
+        title: this.state.patternTitle,
+        content: this.state.data,
+      })
+      .catch(err => console.log(err));
+    } else {
+      axios.put(`/api/patterns/${this.state.currentPatternId}`, {
+        content: this.state.data,
+      })
+      .catch(err => console.log(err));
+    }
+    axios.get('/api/patterns')
+      .then((res) => {
+        this.setState({ patternLists: res.data });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  /**
+   * [exitPattern description]
+   */
+  exitPattern() {
+    const data = this.state.data;
+    for (let i = 0; i < 16; i += 1) {
+      for (let j = 0; j < 8; j += 1) {
+        data[i][j] = 0;
+      }
+    }
+    this.setState({ currentPatternId: '', data });
+  }
+
+  /**
+   * [deleteCurrentPattern description]
+   */
+  deleteCurrentPattern() {
+    if (this.state.currentPatternId !== '') {
+      axios.delete(`/api/patterns/${this.state.currentPatternId}`)
+       .catch((err) => {
+         console.log(err);
+       });
+       axios.get('/api/patterns')
+         .then((res) => {
+           this.setState({ patternLists: res.data });
+         })
+         .catch((err) => {
+           console.log(err);
+         });
+    }
+    this.exitPattern();
   }
 
   /**
@@ -195,10 +264,10 @@ class DrumMachine extends Component {
    * @return {Element}
    */
   renderPatterns() {
-    return _.map(patterns, pattern => (
+    return _.map(this.state.patternLists, pattern => (
       <li
         key={uuid4()}
-        onTouchTap={() => this.playPattern(pattern.pattern)}
+        onTouchTap={() => this.playPattern(pattern)}
       >
         <h4>{pattern.title}</h4>
       </li>
@@ -215,11 +284,9 @@ class DrumMachine extends Component {
         <h1 className={styles.title}>
           Drum Machine
         </h1>
-        {/*
         <ul>
           {this.renderPatterns()}
         </ul>
-        */}
         <div className={styles.control}>
           <div
             className={styles.btn}
@@ -233,7 +300,6 @@ class DrumMachine extends Component {
           >
             stop
           </div>
-          {/*
           <div
             className={styles.btn}
             onTouchTap={() => this.recordSequencer()}
@@ -250,9 +316,44 @@ class DrumMachine extends Component {
             className={styles.btn}
             onTouchTap={() => this.clearRecord()}
           >
-            Clear
+            Clear Current Record
           </div>
-          */}
+
+          <div>
+            <div>
+              <input
+                type="text"
+                value={this.state.patternTitle}
+                onChange={this.handleTitleChange}
+              />
+            </div>
+            <div
+              className={styles.btn}
+              onTouchTap={() => this.savePattern()}
+            >
+              Save New Pattern
+            </div>
+            <div
+              className={styles.btn}
+              onTouchTap={() => this.editPattern()}
+            >
+              Update Pattern
+            </div>
+          </div>
+
+          <div
+            className={styles.btn}
+            onTouchTap={() => this.deleteCurrentPattern()}
+          >
+            Delete Current Pattern
+          </div>
+
+          <div
+            className={styles.btn}
+            onTouchTap={() => this.exitPattern()}
+          >
+            Exit Pattern
+          </div>
 
         </div>
         <Matrix

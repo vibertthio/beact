@@ -7,5 +7,6 @@ const DrumSchema = new Schema({
 });
 
 const Drum = mongoose.model('notes', DrumSchema);
+const DrumPattern = mongoose.model('patterns', DrumSchema);
 
-module.exports = Drum;
+module.exports = { Drum, DrumPattern };
