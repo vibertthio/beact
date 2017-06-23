@@ -1,5 +1,6 @@
 import Two from 'two.js/build/two.svg.webpack';
 import TWEEN from '@tweenjs/tween.js';
+import _ from 'lodash';
 
 /**
  * Math Definition
@@ -350,6 +351,86 @@ function Animation() {
     });
   }());
 
+	(function makeGlimmer(opacity = 1, duration = 400) {
+    /**
+     * [setup description]
+     * @return {[type]} [description]
+     */
+    function setup() {
+      let playing = false;
+			const amount = 12, r1 = two.height * 20 / 900, r2 = two.height * 40 / 900;
+
+			let longest = 0;
+
+			const circles = _.map(_.range(amount), () => {
+				// const r = Math.round(map(Math.random(), 0, 1, r1, r2));
+				const r = Math.floor(Math.random() * 30);
+        const delay = Math.random() * duration * 0.5;
+				const circle = two.makeCircle(two.width * Math.random(), two.height * Math.random(), r);
+        circle.noFill();
+        circle.linewidth = 0;
+        circle.ani = new TWEEN.Tween(circle)
+          .to({ scale: 1, linewidth: 0 }, duration * 1.5)
+          .easing(TWEEN.Easing.Sinusoidal.Out)
+          .delay(delay)
+          .onComplete(() => {
+            circle.visible = false;
+          });
+
+        if (longest < delay) {
+          longest = delay;
+        }
+
+        return circle;
+			});
+
+      return {
+        playing,
+        circles,
+      };
+    }
+
+    let { playing, circles } = setup();
+
+    // methods
+    const resize = () => {
+      two.remove(circles);
+      ({ playing, circles } = setup());
+    };
+
+		// let j;
+    const reset = () => {
+      playing = false;
+			// for (j = 0; j < circles.length; j++) {
+			// 	circles[j].visible = false;
+			// }
+      circles.opacity = 0;
+    };
+
+    let i;
+    let c;
+    const start = () => {
+      reset();
+      playing = true;
+      for (i = 0; i < circles.length; i++) {
+        c = circles[i];
+				c.translation.set(two.width * Math.random(), two.height * Math.random());
+        c.visible = true;
+				c.stroke = pallete[Math.floor(Math.random() * 8)];
+				c.linewidth = 5;
+        c.ani.start();
+      }
+    };
+
+    const EXPORT = {
+      playing,
+      start,
+      reset,
+      resize,
+    };
+    animations.push(EXPORT);
+    return EXPORT;
+  }());
 
   const trigger = (index) => {
     animations[index].start();
