@@ -1,6 +1,21 @@
 import Two from 'two.js/build/two.svg.webpack';
 import TWEEN from '@tweenjs/tween.js';
 
+/**
+ * Math Definition
+ */
+const TWO_PI = Math.PI * 2;
+const cos = Math.cos;
+const sin = Math.sin;
+
+/**
+ * like range function in lodash
+ * @param  {number} n [description]
+ * @return {Array}   [description]
+ */
+function range(n) {
+  return Array.from(Array(n).keys());
+}
 
 const pallete = [
   'rgb(28, 52, 53)',
@@ -47,6 +62,7 @@ function Animation() {
      */
     function setDirection() {
       const direction = (Math.random() > 0.5);
+      origin.x = two.width * 0.5;
       origin.y = two.height * (direction ? 1.5 : -0.5);
       destOut.y = two.height * (direction ? -0.5 : 1.5);
     }
@@ -69,13 +85,13 @@ function Animation() {
 
       const aniOut = new TWEEN.Tween(shape.translation)
         .to(destOut, duration)
-        .easing(TWEEN.Easing.Exponential.Out)
+        .easing(TWEEN.Easing.Exponential.In)
         .onComplete(() => {
           playing = false;
         });
       const aniIn = new TWEEN.Tween(shape.translation)
         .to(destIn, duration)
-        .easing(TWEEN.Easing.Exponential.In)
+        .easing(TWEEN.Easing.Exponential.Out)
         .onComplete(() => {
           aniOut.start();
         });
@@ -143,6 +159,7 @@ function Animation() {
      */
     function setDirection() {
       const direction = (Math.random() > 0.5);
+      origin.y = two.height * 0.5;
       origin.x = two.width * (direction ? 1.5 : -0.5);
       destOut.x = two.width * (direction ? -0.5 : 1.5);
     }
@@ -222,7 +239,117 @@ function Animation() {
     return EXPORT;
   }());
 
-  // animations.push(veil);
+  /**
+   * Animation #3, Prism
+   * it will have two direction(l/r), which will be decided randomly
+   * @param  {number} [opacity = 1]
+   * @param  {number} [duration = 400]
+   * @return {Object}
+   */
+  (function makePrisms(opacity = 1, duration = 500) {
+    [3, 5, 7].forEach((index) => {
+      const origin = { x: two.width * 0.5, y: two.height * 0.5 };
+      const dest = { scale: two.width / 50 };
+
+      /**
+       * [setDirection description]
+       */
+      function setDirection() {
+        origin.x = two.width * 0.5;
+        origin.y = two.height * 0.5;
+      }
+
+      /**
+      * [setup description]
+      * @return {[type]} [description]
+      */
+      function setup() {
+        const playing = false;
+
+        const sides = index;
+        const rPolygon = 100;
+        const rCircle = 3;
+
+        const shape = two.makePolygon(
+          0,
+          0,
+          rPolygon,
+          sides,
+        );
+        shape.stroke = pallete[6];
+        shape.linewidth = 1;
+        shape.noFill();
+
+        const circles = range(sides).map((i) => {
+          const pct = (i + 0.5) / sides;
+          const theta = (TWO_PI * pct) + (Math.PI / 2);
+          const x = rPolygon * cos(theta);
+          const y = rPolygon * sin(theta);
+          const circle = two.makeCircle(x, y, rCircle);
+          circle.fill = pallete[6];
+          circle.noStroke();
+          return circle;
+        });
+
+
+        const group = two.makeGroup(shape).add(circles);
+        group.scale = 0;
+
+        const ani = new TWEEN.Tween(group)
+        .to(dest, duration)
+        .easing(TWEEN.Easing.Circular.In)
+        .onStart(() => {
+          console.log('start animation');
+          console.log(dest);
+        })
+        .onUpdate(() => {
+          console.log(group.scale);
+        });
+
+        return {
+          playing,
+          group,
+          ani,
+        };
+      }
+
+      let { playing, group, ani } = setup();
+
+      // methods
+      const resize = () => {
+        setDirection();
+        two.remove(group);
+        ({ playing, group, ani } = setup());
+      };
+
+      const reset = () => {
+        playing = false;
+        ani.stop();
+        setDirection();
+        group.scale = 0;
+        group.translation.set(
+          origin.x,
+          origin.y,
+        );
+      };
+
+      const start = () => {
+        reset();
+        playing = true;
+        ani.start();
+      };
+
+      const EXPORT = {
+        playing,
+        start,
+        reset,
+        resize,
+      };
+      animations.push(EXPORT);
+      return EXPORT;
+    });
+  }());
+
 
   const trigger = (index) => {
     animations[index].start();
