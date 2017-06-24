@@ -129,7 +129,7 @@ class DrumMachine extends Component {
    * [startSequence description]
    */
   startSequencer() {
-    this.ani.trigger(4);
+    this.ani.trigger(1);
     this.sequencer.start();
     this.setState({
       playing: true,

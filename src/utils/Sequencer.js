@@ -36,6 +36,7 @@ export default class Sequencer {
       'C#',
     ];
 
+
     this.samples = new MultiPlayer({
       urls: {
         kk: './assets/audio/505/kick.mp3',

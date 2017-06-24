@@ -64,6 +64,7 @@ function Animation() {
       const direction = (Math.random() > 0.5);
       origin.x = two.width * 0.5;
       origin.y = two.height * (direction ? 1.5 : -0.5);
+      destIn.y = two.height * 0.5;
       destOut.y = two.height * (direction ? -0.5 : 1.5);
     }
 
@@ -81,6 +82,7 @@ function Animation() {
         two.height,
       );
       shape.opacity = 0;
+      shape.noStroke();
       shape.fill = pallete[4];
 
       const aniOut = new TWEEN.Tween(shape.translation)
@@ -127,7 +129,7 @@ function Animation() {
     const start = () => {
       reset();
       playing = true;
-      console.log(destOut);
+      // console.log(destOut);
       shape.opacity = opacity;
       aniIn.start();
     };
@@ -178,7 +180,8 @@ function Animation() {
         two.height,
       );
       shape.opacity = 0;
-      shape.fill = pallete[4];
+      shape.noStroke();
+      shape.fill = pallete[3];
 
       const aniOut = new TWEEN.Tween(shape.translation)
         .to(destOut, duration)
@@ -355,8 +358,8 @@ function Animation() {
    * @param  {number} [duration = 400]
    * @return {Object}
    */
-  (function makePistons(opacity = 1, duration = 500) {
-    [0, 4, 8].forEach((amount) => {
+  (function makePistons(opacity = 1, duration = 2000) {
+    [1, 4, 8].forEach((amount) => {
       const param = { ending: 0, beginning: 0 };
       const origin = { x: two.width * 0.5, y: two.height * 0.5 };
       let begin;
@@ -393,11 +396,11 @@ function Animation() {
           const shape = two.makeRectangle(x, y, w, d);
           shape.fill = pallete[6];
           shape.noStroke();
+          shape.visible = false;
 
           group.add(shape);
           return shape;
         });
-
 
         const aniOut = new TWEEN.Tween(param)
           .to({ beginning: 1.0 }, duration * 0.125)
@@ -452,7 +455,7 @@ function Animation() {
 
         for (let i = 0; i < amount; i += 1) {
           const s = shapes[i];
-          s.visible = false;
+          s.visible = true;
           s.vertices[0].x = begin;
           s.vertices[1].x = begin;
           s.vertices[2].x = begin;
