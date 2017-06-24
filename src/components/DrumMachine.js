@@ -42,6 +42,8 @@ class DrumMachine extends Component {
       isPlayingChain: 0,
 
 			hidden: true,
+
+			idle: false,
     };
 
     this.setCurrentBeat = this.setCurrentBeat.bind(this);
@@ -69,6 +71,8 @@ class DrumMachine extends Component {
       this.state.drumNoteChain,
       this.state.isPlayingChain,
     );
+
+    this.toggleHidden = this.toggleHidden.bind(this);
   }
 
   /**

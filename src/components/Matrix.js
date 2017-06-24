@@ -3,6 +3,50 @@ import PropTypes from 'prop-types';
 import uuid4 from 'uuid/v4';
 import styles from '../assets/styles/Matrix.css';
 
+let timeoutID;
+let idle = false;
+/**
+ * [mouseTimerSetup description]
+ */
+function mouseTimerSetup() {
+	window.addEventListener('mousemove', resetTimer, false);
+	window.addEventListener('mousedown', resetTimer, false);
+	window.addEventListener('keypress', resetTimer, false);
+	window.addEventListener('DOMMouseScroll', resetTimer, false);
+	window.addEventListener('mousewheel', resetTimer, false);
+	window.addEventListener('touchmove', resetTimer, false);
+	window.addEventListener('MSPointerMove', resetTimer, false);
+	startTimer();
+}
+mouseTimerSetup();
+/**
+ * [goActive description]
+ */
+function goActive() {
+	startTimer();
+}
+/**
+ * [goInActive description]
+ */
+function goInactive() {
+	console.log('you have idled for 3s');
+	idle = true;
+	startTimer();
+}
+/**
+ * [startTimer description]
+ */
+function startTimer() {
+	timeoutID = window.setTimeout(goInactive, 3000);
+}
+/**
+ * [resetTimer description]
+ */
+function resetTimer() {
+	window.clearTimeout(timeoutID);
+	idle = false;
+	goActive();
+}
 
 const Matrix = (props) => {
   const { data, onClick } = props;
@@ -22,7 +66,8 @@ const Matrix = (props) => {
                 `${styles.rect}
                  ${(i === props.currentBeat) && props.playing ?
                    styles.current : ''}
-                 ${data[i][j] === 1 ? styles.clicked : ''}`
+                 ${data[i][j] === 1 ? styles.clicked : ''}
+								 ${(idle === true) ? styles.idle : ''}`
               }
               onTouchTap={() => onClick(i, j)}
             />,

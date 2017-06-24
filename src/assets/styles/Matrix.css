@@ -77,3 +77,11 @@
     background-color: pink;
   }
 }
+
+.idle.clicked.current {
+  /*border-radius: 10px;*/
+}
+
+.idle:not(.clicked) {
+  opacity: 0;
+}
