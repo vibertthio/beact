@@ -65,6 +65,7 @@ function Animation() {
       const direction = (Math.random() > 0.5);
       origin.x = two.width * 0.5;
       origin.y = two.height * (direction ? 1.5 : -0.5);
+      destIn.y = two.height * 0.5;
       destOut.y = two.height * (direction ? -0.5 : 1.5);
     }
 
@@ -82,6 +83,7 @@ function Animation() {
         two.height,
       );
       shape.opacity = 0;
+      shape.noStroke();
       shape.fill = pallete[4];
 
       const aniOut = new TWEEN.Tween(shape.translation)
@@ -128,7 +130,7 @@ function Animation() {
     const start = () => {
       reset();
       playing = true;
-      console.log(destOut);
+      // console.log(destOut);
       shape.opacity = opacity;
       aniIn.start();
     };
@@ -179,7 +181,8 @@ function Animation() {
         two.height,
       );
       shape.opacity = 0;
-      shape.fill = pallete[4];
+      shape.noStroke();
+      shape.fill = pallete[3];
 
       const aniOut = new TWEEN.Tween(shape.translation)
         .to(destOut, duration)
@@ -241,21 +244,20 @@ function Animation() {
   }());
 
   /**
-   * Animation #3, Prism
-   * it will have two direction(l/r), which will be decided randomly
+   * Animation #2, 3, 4, Prisms
    * @param  {number} [opacity = 1]
    * @param  {number} [duration = 400]
    * @return {Object}
    */
   (function makePrisms(opacity = 1, duration = 500) {
-    [3, 5, 7].forEach((index) => {
+    [3, 5, 6].forEach((index) => {
       const origin = { x: two.width * 0.5, y: two.height * 0.5 };
       const dest = { scale: two.width / 50 };
 
       /**
-       * [setDirection description]
+       * [setPosition description]
        */
-      function setDirection() {
+      function setPosition() {
         origin.x = two.width * 0.5;
         origin.y = two.height * 0.5;
       }
@@ -318,7 +320,7 @@ function Animation() {
 
       // methods
       const resize = () => {
-        setDirection();
+        setPosition();
         two.remove(group);
         ({ playing, group, ani } = setup());
       };
@@ -326,7 +328,7 @@ function Animation() {
       const reset = () => {
         playing = false;
         ani.stop();
-        setDirection();
+        setPosition();
         group.scale = 0;
         group.translation.set(
           origin.x,
@@ -351,12 +353,147 @@ function Animation() {
     });
   }());
 
-	/**
-   * Animation #17, Glimmer
-   * random size, x, y, color circles.
+  /**
+   * Animation #5, 6, 7, Pistons
    * @param  {number} [opacity = 1]
    * @param  {number} [duration = 400]
    * @return {Object}
+   */
+  (function makePistons(opacity = 1, duration = 2000) {
+   [1, 4, 8].forEach((amount) => {
+     const param = { ending: 0, beginning: 0 };
+     const origin = { x: two.width * 0.5, y: two.height * 0.5 };
+     let begin;
+     let end;
+
+     /**
+      * [setPosition description]
+      */
+     function setPosition() {
+       origin.x = two.width * 0.5;
+       origin.y = two.height * 0.5;
+     }
+
+     /**
+     * [setup description]
+     * @return {[type]} [description]
+     */
+     function setup() {
+       let playing = false;
+
+       const w = two.width * 0.75;
+       const h = two.height * 0.5;
+       begin = -w / 2;
+       end = w / 2; // do random here
+
+       const group = two.makeGroup();
+       group.translation.set(two.width * 0.5, two.height * 0.5);
+
+       const shapes = range(amount).map((i) => {
+         const d = (h / amount) - (h / (amount * 3));
+         const x = 0;
+         const y = (-h / 2) + ((i + 1) * (h / (amount + 1)));
+
+         const shape = two.makeRectangle(x, y, w, d);
+         shape.fill = pallete[6];
+         shape.noStroke();
+         shape.visible = false;
+
+         group.add(shape);
+         return shape;
+       });
+
+       const aniOut = new TWEEN.Tween(param)
+         .to({ beginning: 1.0 }, duration * 0.125)
+         .easing(TWEEN.Easing.Sinusoidal.Out)
+         .onUpdate(() => {
+           for (let i = 0; i < amount; i += 1) {
+             const points = shapes[i].vertices;
+             points[1].x = end * param.beginning;
+             points[2].x = end * param.beginning;
+           }
+         });
+
+       const aniIn = new TWEEN.Tween(param)
+         .to({ ending: 1.0 }, duration * 0.125)
+         .easing(TWEEN.Easing.Sinusoidal.Out)
+         .onStart(() => {
+           playing = true;
+         })
+         .onUpdate(() => {
+           for (let i = 0; i < amount; i += 1) {
+             const points = shapes[i].vertices;
+             points[3].x = end * param.ending;
+             points[0].x = end * param.ending;
+           }
+         })
+         .onComplete(() => {
+           aniOut.start();
+         });
+
+       return {
+         playing,
+         group,
+         shapes,
+         aniIn,
+         aniOut,
+       };
+     }
+
+     let { playing, group, shapes, aniIn, aniOut } = setup();
+
+     // methods
+     const resize = () => {
+       setPosition();
+       group.remove(shapes);
+       two.remove(group);
+       ({ playing, group, shapes, aniIn, aniOut } = setup());
+     };
+
+     const reset = () => {
+       param.beginning = 0;
+       param.ending = 0;
+
+       for (let i = 0; i < amount; i += 1) {
+         const s = shapes[i];
+         s.visible = true;
+         s.vertices[0].x = begin;
+         s.vertices[1].x = begin;
+         s.vertices[2].x = begin;
+         s.vertices[3].x = begin;
+       }
+
+       playing = false;
+       aniIn.stop();
+       aniOut.stop();
+       setPosition();
+       group.translation.set(
+         origin.x,
+         origin.y,
+       );
+     };
+
+
+     const start = () => {
+       reset();
+       playing = true;
+       aniIn.start();
+     };
+
+     const EXPORT = {
+       playing,
+       start,
+       reset,
+       resize,
+     };
+     animations.push(EXPORT);
+     return EXPORT;
+   });
+  }());
+
+	/**
+   * Animation #17, Glimmer
+   * random size, x, y, color circles.
    */
 	(function makeGlimmer(opacity = 1, duration = 400) {
     /**
@@ -364,8 +501,10 @@ function Animation() {
      * @return {[type]} [description]
      */
     function setup() {
-      let playing = false;
-			const amount = 12, r1 = two.height * 20 / 900, r2 = two.height * 40 / 900;
+      const playing = false;
+			const amount = 12;
+      // const r1 = (two.height * 20) / 900;
+      // const r2 = (two.height * 40) / 900;
 
 			let longest = 0;
 
@@ -419,7 +558,7 @@ function Animation() {
     const start = () => {
       reset();
       playing = true;
-      for (i = 0; i < circles.length; i++) {
+      for (i = 0; i < circles.length; i += 1) {
         c = circles[i];
 				c.translation.set(two.width * Math.random(), two.height * Math.random());
         c.visible = true;
@@ -438,6 +577,7 @@ function Animation() {
     animations.push(EXPORT);
     return EXPORT;
   }());
+
 
   const trigger = (index) => {
     animations[index].start();

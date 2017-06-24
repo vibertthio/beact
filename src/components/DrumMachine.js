@@ -108,7 +108,7 @@ class DrumMachine extends Component {
    * [startSequence description]
    */
   startSequencer() {
-    this.ani.trigger(4);
+    this.ani.trigger(1);
     this.sequencer.start();
     this.setState({
       playing: true,
@@ -196,7 +196,10 @@ class DrumMachine extends Component {
         data[i][j] = pattern.content[i][j];
       }
     }
-    this.setState({ data, currentPatternId: pattern._id });
+    this.setState({
+      data,
+      currentPatternId: pattern._id, // eslint-disable-line no-underscore-dangle
+    });
     this.sequencer.start();
   }
 
