@@ -3,6 +3,8 @@ import { WindowResizeListener } from 'react-window-resize-listener';
 import _ from 'lodash';
 import uuid4 from 'uuid/v4';
 import axios from 'axios';
+import NavigationMenuIcon from 'material-ui/svg-icons/navigation/menu';
+import NavigationCloseIcon from 'material-ui/svg-icons/navigation/close';
 
 import styles from '../assets/styles/DrumMachine.css';
 import Matrix from './Matrix';
@@ -38,6 +40,8 @@ class DrumMachine extends Component {
       currentChainElement: '',
 
       isPlayingChain: 0,
+
+			hidden: true,
     };
 
     this.setCurrentBeat = this.setCurrentBeat.bind(this);
@@ -366,6 +370,15 @@ class DrumMachine extends Component {
     this.sequencer.playingChain(false);
   }
 
+	/**
+   * [toggleHidden description]
+   */
+  toggleHidden() {
+    this.setState({
+      hidden: !this.state.hidden,
+    });
+  }
+
   /**
    * [renderPatterns description]
    * @return {Element}
@@ -403,20 +416,140 @@ class DrumMachine extends Component {
    * @return {Element}
    */
   render() {
+		const { hidden } = this.state;
     return (
       <div>
+				<NavigationMenuIcon
+					className={
+						`${styles.menuIcon}
+						 ${(hidden === true) ? styles.opa1 : styles.opa0}`
+					}
+					onClick={() => this.toggleHidden()}
+				/>
+
+				{hidden ? (
+					''
+				) : (
+					<div className={styles.menu}>
+						<NavigationCloseIcon
+							className={styles.closeIcon}
+							onClick={() => this.toggleHidden()} />
+						<div className={styles.patternList}>
+							renderPatterns in this div
+							<ul>
+			          {this.renderPatterns()}
+			        </ul>
+						</div>
+						<div className={styles.chainList}>
+							renderChain in this div
+							<ul>
+			          {this.renderChain()}
+			          <li style={{ color: 'yellow' }} onTouchTap={() => this.setCurrentChainElementAtLast()}>
+			            Update at here in this li
+			          </li>
+			        </ul>
+						</div>
+						<div className={styles.menuBtn}>
+		          <div
+		            className={styles.btn}
+		            onTouchTap={() => this.startSequencer()}
+		          >
+		            start
+		          </div>
+		          <div
+		            className={styles.btn}
+		            onTouchTap={() => this.stopSequencer()}
+		          >
+		            stop
+		          </div>
+		          <div
+		            className={styles.btn}
+		            onTouchTap={() => this.recordSequencer()}
+		          >
+		            Record
+		          </div>
+		          <div
+		            className={styles.btn}
+		            onTouchTap={() => this.saveRecord()}
+		          >
+		            Save
+		          </div>
+		          <div
+		            className={styles.btn}
+		            onTouchTap={() => this.clearRecord()}
+		          >
+		            Clear Current Record
+		          </div>
+
+		          <div>
+		            <div>
+		              <input
+		                type="text"
+		                value={this.state.patternTitle}
+		                onChange={this.handleTitleChange}
+		              />
+		            </div>
+		            <div
+		              className={styles.btn}
+		              onTouchTap={() => this.savePattern()}
+		            >
+		              Save New Pattern
+		            </div>
+		            <div
+		              className={styles.btn}
+		              onTouchTap={() => this.editPattern()}
+		            >
+		              Update Pattern
+		            </div>
+		          </div>
+
+		          <div
+		            className={styles.btn}
+		            onTouchTap={() => this.deleteCurrentPattern()}
+		          >
+		            Delete Current Pattern
+		          </div>
+
+		          <div
+		            className={styles.btn}
+		            onTouchTap={() => this.exitPattern()}
+		          >
+		            Exit Pattern
+		          </div>
+
+		          <div
+		            className={styles.btn}
+		            onTouchTap={() => this.updateChain()}
+		          >
+		            Update Chain
+		          </div>
+		          <div
+		            className={styles.btn}
+		            onTouchTap={() => this.deleteCurrentChainElement()}
+		          >
+		            Delete Current Chain Element
+		          </div>
+		          <div
+		            className={styles.btn}
+		            onTouchTap={() => this.playChain()}
+		          >
+		            Play Chain
+		          </div>
+		          <div
+		            className={styles.btn}
+		            onTouchTap={() => this.clearChain()}
+		          >
+		            Clear Chain
+		          </div>
+
+		        </div>
+					</div>
+				)}
+
         <h1 className={styles.title}>
           Drum Machine
         </h1>
-        <ul>
-          {this.renderPatterns()}
-        </ul>
-        <ul>
-          {this.renderChain()}
-          <li style={{ color: 'yellow' }} onTouchTap={() => this.setCurrentChainElementAtLast()}>
-            Update at here
-          </li>
-        </ul>
+
         <div className={styles.control}>
           <div
             className={styles.btn}

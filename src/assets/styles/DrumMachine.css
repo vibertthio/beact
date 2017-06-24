@@ -18,6 +18,67 @@
   text-align: center;
 }
 
+.menuIcon {
+  position: fixed;
+  margin: 1% 0 0 2%;
+  cursor: pointer;
+}
+
+.opa0 {
+  opacity: 0;
+}
+
+.opa1 {
+  opacity: 1;
+}
+
+.menu {
+  position: fixed;
+  width: 40%;
+  height: 100%;
+  z-index: 1;
+  background-color: lightgrey;
+  animation-name: toggle;
+  animation-duration: .2s;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes toggle {
+  0% {
+    width: 0%;
+  }
+  50% {
+    width: 28%;
+  }
+  100% {
+    width: 40%;
+  }
+}
+
+.closeIcon {
+  position: absolute;
+  right: 2%;
+  top: 1%;
+  cursor: pointer;
+}
+
+.patternList {
+  width: 70%;
+  /*height: 35%;*/
+  background-color: darkgrey;
+}
+
+.chainList {
+  width: 70%;
+  /*height: 35%;*/
+  background-color: grey;
+}
+
+.menuBtn {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .control {
   display: flex;
   width: 20em;
