@@ -3,6 +3,8 @@ import axios from 'axios';
 
 let recordMatrix = [];
 let recordFull = [];
+let currentMatrixInChain = 0;
+let isPlayingChain = false;
 
 /**
  * Sequencer
@@ -15,13 +17,15 @@ export default class Sequencer {
   notes: Array<String>;
   matrix: Array<Array<number>>;
   recording: boolean;
+  drumNoteChain: Array;
 
   /**
    * [constructor description]
    * @param  {[type]} matrix [description]
    * @param  {[type]} setCurrentBeat [description]
+   * @param  {[type]} drumNoteChain [description]
    */
-  constructor(matrix, setCurrentBeat) {
+  constructor(matrix, setCurrentBeat, drumNoteChain) {
     this.matrix = matrix;
     this.number = 0;
     this.playing = true;
@@ -35,7 +39,7 @@ export default class Sequencer {
       'E',
       'C#',
     ];
-
+    this.chain = drumNoteChain;
 
     this.samples = new MultiPlayer({
       urls: {
@@ -60,23 +64,40 @@ export default class Sequencer {
       this.beat = col;
 
       setCurrentBeat(this.beat);
-
-      const column = this.matrix[col];
-      for (let i = 0; i < this.notes.length; i += 1) {
-        if (column[i] === 1) {
-          const vel = (Math.random() * 0.5) + 0.5;
-          this.samples.start(this.notes[i], time, 0, '32n', 0, vel);
-        }
-      }
-
-      if (this.recording === true) {
-        if (recordMatrix.length < 16) {
-          recordMatrix.push(column);
-          if (recordMatrix.length === 16) {
-            recordFull.push(recordMatrix);
-            recordMatrix = [];
-            console.log(recordFull);
+      console.log(isPlayingChain);
+      if (isPlayingChain === false) {
+        const column = this.matrix[col];
+        for (let i = 0; i < this.notes.length; i += 1) {
+          if (column[i] === 1) {
+            const vel = (Math.random() * 0.5) + 0.5;
+            this.samples.start(this.notes[i], time, 0, '32n', 0, vel);
           }
+        }
+
+        if (this.recording === true) {
+          if (recordMatrix.length < 16) {
+            recordMatrix.push(column);
+            if (recordMatrix.length === 16) {
+              recordFull.push(recordMatrix);
+              recordMatrix = [];
+              console.log(recordFull);
+            }
+          }
+        }
+      } else if (isPlayingChain === true) {
+        if (col < 15 && currentMatrixInChain < this.chain.length) {
+          const column = this.chain[currentMatrixInChain].data[col];
+          console.log(currentMatrixInChain);
+          for (let i = 0; i < this.notes.length; i += 1) {
+            if (column[i] === 1) {
+              const vel = (Math.random() * 0.5) + 0.5;
+              this.samples.start(this.notes[i], time, 0, '32n', 0, vel);
+            }
+          }
+        } else if (col === 15 && currentMatrixInChain < this.chain.length) {
+          currentMatrixInChain += 1;
+        } else if (currentMatrixInChain === this.chain.length) {
+          currentMatrixInChain = 0;
         }
       }
     }, Array.from(Array(this.matrix.length).keys()), '16n');
@@ -152,6 +173,18 @@ export default class Sequencer {
   clearRecord() {
     this.sequence.stop();
     recordFull = [];
+  }
+
+  /**
+  * @param  {Boolean} bool width of window
+   * [changePlayingMode description]
+   */
+  playingChain(bool) {
+    isPlayingChain = bool;
+    if (bool === false) {
+      currentMatrixInChain = 0;
+      this.chain = [];
+    }
   }
 
 }

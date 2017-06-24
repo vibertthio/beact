@@ -34,6 +34,10 @@ class DrumMachine extends Component {
       patternLists: [],
       patternTitle: '',
       currentPatternId: '',
+      drumNoteChain: [],
+      currentChainElement: '',
+
+      isPlayingChain: 0,
     };
 
     this.setCurrentBeat = this.setCurrentBeat.bind(this);
@@ -47,10 +51,19 @@ class DrumMachine extends Component {
     this.deleteCurrentPattern = this.deleteCurrentPattern.bind(this);
     this.exitPattern = this.exitPattern.bind(this);
     this.renderPatterns = this.renderPatterns.bind(this);
+    this.updateChain = this.updateChain.bind(this);
+    this.renderChain = this.renderChain.bind(this);
+    this.setCurrentChainElementAtLast = this.setCurrentChainElementAtLast.bind(this);
+    this.setCurrentChainElementAtHere = this.setCurrentChainElementAtHere.bind(this);
+    this.deleteCurrentChainElement = this.deleteCurrentChainElement.bind(this);
+    this.playChain = this.playChain.bind(this);
+    this.clearChain = this.clearChain.bind(this);
 
     this.sequencer = new Sequencer(
       this.state.data,
       this.setCurrentBeat,
+      this.state.drumNoteChain,
+      this.state.isPlayingChain,
     );
   }
 
@@ -80,6 +93,32 @@ class DrumMachine extends Component {
     this.setState({
       currentBeat,
     });
+  }
+
+  /**
+   * [setCurrentChainAtLast description]
+   */
+  setCurrentChainElementAtLast() {
+    this.setState({ currentChainElement: '' });
+  }
+
+  /**
+  * @param  {String} id width of window
+   * [setCurrentChainAtHere description]
+   */
+  setCurrentChainElementAtHere(id) {
+    const drumNoteChain = this.state.drumNoteChain;
+    const data = this.state.data;
+    for (let k = 0; k < drumNoteChain.length; k += 1) {
+      if (drumNoteChain[k].id === id) {
+        for (let i = 0; i < 16; i += 1) {
+          for (let j = 0; j < 8; j += 1) {
+            data[i][j] = drumNoteChain[k].data[i][j];
+          }
+        }
+      }
+    }
+    this.setState({ currentChainElement: id, data });
   }
 
   /**
@@ -263,6 +302,71 @@ class DrumMachine extends Component {
   }
 
   /**
+   * [appendChain description]
+   */
+  updateChain() {
+    const drumNoteChain = this.state.drumNoteChain;
+    const data = [[0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0]];
+    for (let i = 0; i < 16; i += 1) {
+      for (let j = 0; j < 8; j += 1) {
+        data[i][j] = this.state.data[i][j];
+      }
+    }
+    const newChainElement = { id: uuid4(), data };
+    if (this.state.currentChainElement === '') {
+      drumNoteChain.push(newChainElement);
+    } else {
+      for (let i = 0; i < drumNoteChain.length; i += 1) {
+        if (drumNoteChain[i].id === this.state.currentChainElement) {
+          newChainElement.id = drumNoteChain[i].id;
+          drumNoteChain[i] = newChainElement;
+        }
+      }
+    }
+    this.setState({ drumNoteChain });
+  }
+
+  /**
+   * [deleteCurrentChainElement description]
+   */
+  deleteCurrentChainElement() {
+    const drumNoteChain = this.state.drumNoteChain;
+    const newDrumNoteChain = drumNoteChain.filter(
+      element => element.id !== this.state.currentChainElement);
+    this.setState({ drumNoteChain: newDrumNoteChain, currentChainElement: '' });
+  }
+
+  /**
+   * [playChain description]
+   */
+  playChain() {
+    this.sequencer.playingChain(true);
+  }
+
+  /**
+   * [clearChain description]
+   */
+  clearChain() {
+    this.setState({ drumNoteChain: [] });
+    this.sequencer.playingChain(false);
+  }
+
+  /**
    * [renderPatterns description]
    * @return {Element}
    */
@@ -271,8 +375,25 @@ class DrumMachine extends Component {
       <li
         key={uuid4()}
         onTouchTap={() => this.playPattern(pattern)}
+        style={{ color: 'white' }}
       >
         <h4>{pattern.title}</h4>
+      </li>
+    ));
+  }
+
+  /**
+   * [renderChain description]
+   * @return {Element}
+   */
+  renderChain() {
+    return _.map(this.state.drumNoteChain, chainElement => (
+      <li
+        key={chainElement.id}
+        style={{ color: 'yellow' }}
+        onTouchTap={() => this.setCurrentChainElementAtHere(chainElement.id)}
+      >
+        <h4>{chainElement.id + chainElement.data}</h4>
       </li>
     ));
   }
@@ -289,6 +410,12 @@ class DrumMachine extends Component {
         </h1>
         <ul>
           {this.renderPatterns()}
+        </ul>
+        <ul>
+          {this.renderChain()}
+          <li style={{ color: 'yellow' }} onTouchTap={() => this.setCurrentChainElementAtLast()}>
+            Update at here
+          </li>
         </ul>
         <div className={styles.control}>
           <div
@@ -356,6 +483,31 @@ class DrumMachine extends Component {
             onTouchTap={() => this.exitPattern()}
           >
             Exit Pattern
+          </div>
+
+          <div
+            className={styles.btn}
+            onTouchTap={() => this.updateChain()}
+          >
+            Update Chain
+          </div>
+          <div
+            className={styles.btn}
+            onTouchTap={() => this.deleteCurrentChainElement()}
+          >
+            Delete Current Chain Element
+          </div>
+          <div
+            className={styles.btn}
+            onTouchTap={() => this.playChain()}
+          >
+            Play Chain
+          </div>
+          <div
+            className={styles.btn}
+            onTouchTap={() => this.clearChain()}
+          >
+            Clear Chain
           </div>
 
         </div>
