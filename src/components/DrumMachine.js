@@ -353,13 +353,23 @@ class DrumMachine extends Component {
     const drumNoteChain = this.state.drumNoteChain;
     const newDrumNoteChain = drumNoteChain.filter(
       element => element.id !== this.state.currentChainElement);
-    this.setState({ drumNoteChain: newDrumNoteChain, currentChainElement: '' });
+    drumNoteChain.pop();
+    for (let k = 0; k < drumNoteChain.length; k += 1) {
+      drumNoteChain[k].id = newDrumNoteChain[k].id;
+      for (let i = 0; i < 16; i += 1) {
+        for (let j = 0; j < 8; j += 1) {
+          drumNoteChain[k].data[i][j] = newDrumNoteChain[k].data[i][j];
+        }
+      }
+    }
+    this.setState({ drumNoteChain, currentChainElement: '' });
   }
 
   /**
    * [playChain description]
    */
   playChain() {
+    // this.ani.trigger(1);
     this.sequencer.playingChain(true);
   }
 
@@ -368,6 +378,7 @@ class DrumMachine extends Component {
    */
   exitChain() {
     this.sequencer.playingChain(false);
+    this.ani.trigger(1);
   }
 
 	/**

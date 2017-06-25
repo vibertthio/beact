@@ -183,6 +183,7 @@ export default class Sequencer {
     if (bool === false) {
       currentMatrixInChain = 0;
     }
+    this.sequence.start();
   }
 
 }
