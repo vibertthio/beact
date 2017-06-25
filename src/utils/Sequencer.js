@@ -60,11 +60,10 @@ export default class Sequencer {
       // console.log(`time : ${time}`);
       // console.log(`matrix : ${this.matrix}`);
       // console.log(`col : ${col}`);
-
       this.beat = col;
 
       setCurrentBeat(this.beat);
-      console.log(isPlayingChain);
+      console.log(this.chain);
       if (isPlayingChain === false) {
         const column = this.matrix[col];
         for (let i = 0; i < this.notes.length; i += 1) {
@@ -183,7 +182,6 @@ export default class Sequencer {
     isPlayingChain = bool;
     if (bool === false) {
       currentMatrixInChain = 0;
-      this.chain = [];
     }
   }
 

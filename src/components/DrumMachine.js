@@ -39,8 +39,6 @@ class DrumMachine extends Component {
       drumNoteChain: [],
       currentChainElement: '',
 
-      isPlayingChain: 0,
-
 			hidden: true,
 
 			idle: false,
@@ -63,13 +61,12 @@ class DrumMachine extends Component {
     this.setCurrentChainElementAtHere = this.setCurrentChainElementAtHere.bind(this);
     this.deleteCurrentChainElement = this.deleteCurrentChainElement.bind(this);
     this.playChain = this.playChain.bind(this);
-    this.clearChain = this.clearChain.bind(this);
+    this.exitChain = this.exitChain.bind(this);
 
     this.sequencer = new Sequencer(
       this.state.data,
       this.setCurrentBeat,
       this.state.drumNoteChain,
-      this.state.isPlayingChain,
     );
 
     this.toggleHidden = this.toggleHidden.bind(this);
@@ -369,8 +366,7 @@ class DrumMachine extends Component {
   /**
    * [clearChain description]
    */
-  clearChain() {
-    this.setState({ drumNoteChain: [] });
+  exitChain() {
     this.sequencer.playingChain(false);
   }
 
@@ -541,9 +537,9 @@ class DrumMachine extends Component {
 		          </div>
 		          <div
 		            className={styles.btn}
-		            onTouchTap={() => this.clearChain()}
+		            onTouchTap={() => this.exitChain()}
 		          >
-		            Clear Chain
+		            Exit Chain
 		          </div>
 
 		        </div>
@@ -642,9 +638,9 @@ class DrumMachine extends Component {
           </div>
           <div
             className={styles.btn}
-            onTouchTap={() => this.clearChain()}
+            onTouchTap={() => this.exitChain()}
           >
-            Clear Chain
+            Exit Chain
           </div>
 
         </div>
