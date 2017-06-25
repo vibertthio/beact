@@ -38,6 +38,7 @@ class DrumMachine extends Component {
       currentPatternId: '',
       drumNoteChain: [],
       currentChainElement: '',
+      currentPlayingChainElement: 0,
 
 			hidden: true,
 
@@ -60,13 +61,15 @@ class DrumMachine extends Component {
     this.setCurrentChainElementAtLast = this.setCurrentChainElementAtLast.bind(this);
     this.setCurrentChainElementAtHere = this.setCurrentChainElementAtHere.bind(this);
     this.deleteCurrentChainElement = this.deleteCurrentChainElement.bind(this);
+
+    this.playNextChainElement = this.playNextChainElement.bind(this);
     this.playChain = this.playChain.bind(this);
     this.exitChain = this.exitChain.bind(this);
 
     this.sequencer = new Sequencer(
       this.state.data,
       this.setCurrentBeat,
-      this.state.drumNoteChain,
+      this.playNextChainElement,
     );
 
     this.toggleHidden = this.toggleHidden.bind(this);
@@ -104,6 +107,7 @@ class DrumMachine extends Component {
    * [setCurrentChainAtLast description]
    */
   setCurrentChainElementAtLast() {
+    this.sequencer.isPlayingChain = false;
     this.setState({ currentChainElement: '' });
   }
 
@@ -112,6 +116,7 @@ class DrumMachine extends Component {
    * [setCurrentChainAtHere description]
    */
   setCurrentChainElementAtHere(id) {
+    this.sequencer.isPlayingChain = false;
     const drumNoteChain = this.state.drumNoteChain;
     const data = this.state.data;
     for (let k = 0; k < drumNoteChain.length; k += 1) {
@@ -233,7 +238,8 @@ class DrumMachine extends Component {
    * [playPattern description]
    */
   playPattern(pattern) {
-    this.sequencer.stop();
+    this.sequencer.isPlayingChain = false;
+    this.stopSequencer();
     const data = this.state.data;
     for (let i = 0; i < 16; i += 1) {
       for (let j = 0; j < 8; j += 1) {
@@ -244,7 +250,7 @@ class DrumMachine extends Component {
       data,
       currentPatternId: pattern._id, // eslint-disable-line no-underscore-dangle
     });
-    this.sequencer.start();
+    this.startSequencer();
   }
 
   /**
@@ -302,8 +308,9 @@ class DrumMachine extends Component {
          .catch((err) => {
            console.log(err);
          });
+      this.exitPattern();
+      this.stopSequencer();
     }
-    this.exitPattern();
   }
 
   /**
@@ -363,28 +370,65 @@ class DrumMachine extends Component {
       }
     }
     this.setState({ drumNoteChain, currentChainElement: '' });
+    this.stopSequencer();
+    this.exitPattern();
   }
 
   /**
    * [playChain description]
    */
   playChain() {
-    this.sequencer.playingChain(true);
+    if (this.sequencer.isPlayingChain === false) {
+      this.setState({ currentPlayingChainElement: 0 });
+    }
+    this.sequencer.isPlayingChain = true;
+    this.stopSequencer();
+    this.exitPattern();
+    const num = this.state.currentPlayingChainElement;
+    const data = this.state.data;
+    for (let i = 0; i < 16; i += 1) {
+      for (let j = 0; j < 8; j += 1) {
+        data[i][j] = this.state.drumNoteChain[num].data[i][j];
+      }
+    }
+    this.setState({ data });
     this.ani.trigger(1);
-    this.setState({
-      playing: true,
-    });
+    this.startSequencer();
   }
 
   /**
    * [clearChain description]
    */
   exitChain() {
-    this.sequencer.playingChain(false);
-    this.ani.trigger(1);
-    this.setState({
-      playing: true,
-    });
+    if (this.sequencer.isPlayingChain === true) {
+      this.sequencer.isPlayingChain = false;
+      const data = this.state.data;
+      for (let i = 0; i < 16; i += 1) {
+        for (let j = 0; j < 8; j += 1) {
+          data[i][j] = 0;
+        }
+      }
+      this.stopSequencer();
+      this.setState({ currentPlayingChainElement: 0, data });
+    }
+  }
+
+  /**
+   * [playNextChainElement description]
+   */
+  playNextChainElement() {
+    let num = this.state.currentPlayingChainElement;
+    num += 1;
+    if (num === this.state.drumNoteChain.length) {
+      num = 0;
+    }
+    const data = this.state.data;
+    for (let i = 0; i < 16; i += 1) {
+      for (let j = 0; j < 8; j += 1) {
+        data[i][j] = this.state.drumNoteChain[num].data[i][j];
+      }
+    }
+    this.setState({ currentPlayingChainElement: num, data });
   }
 
 	/**
