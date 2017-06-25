@@ -93,7 +93,7 @@ class DrumMachine extends Component {
    */
   setCurrentBeat(currentBeat) {
     if (currentBeat === 0) {
-      this.ani.trigger(1);
+      this.ani.trigger(8);
     }
     this.setState({
       currentBeat,
@@ -152,7 +152,7 @@ class DrumMachine extends Component {
    * [startSequence description]
    */
   startSequencer() {
-    this.ani.trigger(1);
+    // this.ani.trigger(1);
     this.sequencer.start();
     this.setState({
       playing: true,
@@ -251,7 +251,7 @@ class DrumMachine extends Component {
    * [editPattern description]
    */
   editPattern() {
-    console.log(this.state.currentPatternId);
+    // console.log(this.state.currentPatternId);
     if (this.state.patternTitle !== '') {
       axios.put(`/api/patterns/${this.state.currentPatternId}`, {
         title: this.state.patternTitle,

@@ -63,7 +63,7 @@ export default class Sequencer {
       this.beat = col;
 
       setCurrentBeat(this.beat);
-      console.log(this.chain);
+      // console.log(this.chain);
       if (isPlayingChain === false) {
         const column = this.matrix[col];
         for (let i = 0; i < this.notes.length; i += 1) {
@@ -79,14 +79,14 @@ export default class Sequencer {
             if (recordMatrix.length === 16) {
               recordFull.push(recordMatrix);
               recordMatrix = [];
-              console.log(recordFull);
+              // console.log(recordFull);
             }
           }
         }
       } else if (isPlayingChain === true) {
         if (col < 15 && currentMatrixInChain < this.chain.length) {
           const column = this.chain[currentMatrixInChain].data[col];
-          console.log(currentMatrixInChain);
+          // console.log(currentMatrixInChain);
           for (let i = 0; i < this.notes.length; i += 1) {
             if (column[i] === 1) {
               const vel = (Math.random() * 0.5) + 0.5;
@@ -141,7 +141,7 @@ export default class Sequencer {
    */
   startRecording() {
     this.recording = true;
-    console.log(this.recording);
+    // console.log(this.recording);
   }
 
   /**
@@ -149,7 +149,7 @@ export default class Sequencer {
    */
   stopRecording() {
     this.recording = false;
-    console.log(this.recording);
+    // console.log(this.recording);
   }
 
   /**
@@ -157,7 +157,7 @@ export default class Sequencer {
    */
   saveRecord() {
     this.sequence.stop();
-    console.log('save!!! replace by axios code');
+    // console.log('save!!! replace by axios code');
     axios.post('/api/notes', {
       title: 'Notes',
       content: recordFull,

@@ -10,12 +10,36 @@ const cos = Math.cos;
 const sin = Math.sin;
 
 /**
+ * Range
  * like range function in lodash
  * @param  {number} n [description]
  * @return {Array}   [description]
  */
 function range(n) {
   return Array.from(Array(n).keys());
+}
+
+/**
+ * [angleBetween description]
+ * @param  {[type]} v1 [description]
+ * @param  {[type]} v2 [description]
+ * @return {[type]}    [description]
+ */
+function angleBetween(v1, v2) {
+  const dx = v2.x - v1.x;
+  const dy = v2.y - v2.y;
+  return Math.atan2(dy, dx);
+}
+
+/**
+ * lerp
+ * @param  {number} a [description]
+ * @param  {number} b [description]
+ * @param  {number} t [description]
+ * @return {number}   [description]
+ */
+function lerp(a, b, t) {
+  return ((b - a) * t) + a;
 }
 
 const pallete = [
@@ -489,6 +513,150 @@ function Animation() {
      animations.push(EXPORT);
      return EXPORT;
    });
+  }());
+
+  /**
+  * Animation #8, Clay
+  * @param  {number} [opacity = 1]
+  * @param  {number} [duration = 400]
+  * @return {Object}
+  */
+  (function makeClay(opacity = 1, duration = 1000) {
+    let playing = false;
+    const amount = (Math.floor(Math.random()) * 8) + 8;
+    const param = { ending: 0 };
+    let points = [];
+    const destinations = [];
+    let distance = two.height;
+
+    /**
+    * [setup description]
+    * @return {[type]} [description]
+    */
+    function setup() {
+      points = range(amount).map((i) => {
+        const pct = i / amount;
+        const theta = TWO_PI * pct;
+        const x = distance * Math.sin(theta);
+        const y = distance * Math.cos(theta);
+        destinations.push(new Two.Vector(x, y));
+        return new Two.Anchor(x, y);
+      });
+
+      const clay = two.makeCurve(points);
+      clay.fill = pallete[7];
+      clay.noStroke();
+      points = clay.vertices;
+
+      const ani = new TWEEN.Tween(param)
+        .to({ ending: 1 }, duration)
+        .easing(TWEEN.Easing.Circular.In)
+        .onUpdate(() => {
+          const t = param.ending;
+          console.log(t);
+          for (let i = 0; i < amount; i += 1) {
+            const v = points[i];
+            const d = destinations[i];
+            const x = lerp(v.x, d.x, t);
+            const y = lerp(v.y, d.y, t);
+            v.set(x, y);
+          }
+        })
+        .onComplete(() => {
+          clay.visible = false;
+        });
+
+      return {
+        clay,
+        ani,
+      };
+    }
+
+    const { clay, ani } = setup();
+
+    // methods
+    const resize = () => {};
+
+    const reset = () => {
+      clay.visible = false;
+      const impact = new Two.Vector(
+        Math.random() * two.width,
+        Math.random() * two.height,
+      );
+      let x;
+      let y;
+      const pos = Math.random() * 8;
+
+      if (pos > 7) {
+        // north
+        x = two.width / 2;
+        y = 0;
+      } else if (pos > 6) {
+        // north-west
+        x = 0;
+        y = 0;
+      } else if (pos > 5) {
+        // west
+        x = 0;
+        y = two.height / 2;
+      } else if (pos > 4) {
+        // south-west
+        x = 0;
+        y = two.height;
+      } else if (pos > 3) {
+        // south
+        x = two.width / 2;
+        y = two.height;
+      } else if (pos > 2) {
+        // south-east
+        x = two.width;
+        y = two.height;
+      } else if (pos > 1) {
+        // east
+        x = two.width;
+        y = two.height / 2;
+      } else {
+        x = two.width;
+        y = 0;
+      }
+
+      clay.translation.set(x, y);
+      param.ending = 0;
+      distance = two.height;
+
+      for (let i = 0; i < amount; i += 1) {
+        const v = points[i];
+        const pct = i / amount;
+        const ptheta = pct * TWO_PI;
+        v.set(distance * Math.cos(ptheta), distance * Math.sin(ptheta));
+        const theta = angleBetween(v, impact) - ptheta;
+        const d = v.distanceTo(impact);
+        const a = (10 * distance) / Math.sqrt(d);
+        x = (a * Math.cos(theta)) + v.x;
+        y = (a * Math.sin(theta)) + v.y;
+        destinations[i].set(x, y);
+      }
+
+      ani.stop();
+      playing = false;
+    };
+
+    const start = () => {
+      reset();
+      playing = true;
+      clay.visible = true;
+      ani.start();
+    };
+
+    reset();
+    const EXPORT = {
+      playing,
+      start,
+      reset,
+      resize,
+    };
+    animations.push(EXPORT);
+    return EXPORT;
   }());
 
 	/**
