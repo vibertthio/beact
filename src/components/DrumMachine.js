@@ -32,13 +32,15 @@ class DrumMachine extends Component {
       data,
       currentBeat: 0,
       playing: false,
-      recording: false,
       patternLists: [],
       patternTitle: '',
       currentPatternId: '',
       drumNoteChain: [],
       currentChainElement: '',
       currentPlayingChainElement: 0,
+      records: [],
+      currentPlayingRecord: [],
+      currentPlayingRecordElement: 0,
 
 			hidden: true,
 			idle: false,
@@ -48,6 +50,12 @@ class DrumMachine extends Component {
     this.recordSequencer = this.recordSequencer.bind(this);
     this.saveRecord = this.saveRecord.bind(this);
     this.clearRecord = this.clearRecord.bind(this);
+
+    this.storeRecord = this.storeRecord.bind(this);
+    this.playRecord = this.playRecord.bind(this);
+    this.playNextRecordElement = this.playNextRecordElement.bind(this);
+    this.exitPlayRecord = this.exitPlayRecord.bind(this);
+
     this.handleTitleChange = this.handleTitleChange.bind(this);
     this.savePattern = this.savePattern.bind(this);
     this.playPattern = this.playPattern.bind(this);
@@ -69,6 +77,8 @@ class DrumMachine extends Component {
       this.state.data,
       this.setCurrentBeat,
       this.playNextChainElement,
+      this.storeRecord,
+      this.playNextRecordElement,
     );
 
     this.toggleHidden = this.toggleHidden.bind(this);
@@ -83,6 +93,13 @@ class DrumMachine extends Component {
     axios.get('/api/patterns')
       .then((res) => {
         this.setState({ patternLists: res.data });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    axios.get('/api/notes')
+      .then((res) => {
+        this.setState({ records: res.data });
       })
       .catch((err) => {
         console.log(err);
@@ -185,11 +202,9 @@ class DrumMachine extends Component {
    * [recordSequencer description]
    */
   recordSequencer() {
-    if (this.state.recording === true) {
-      this.setState({ recording: false });
+    if (this.sequencer.recording === true) {
       this.sequencer.stopRecording();
     } else {
-      this.setState({ recording: true });
       this.sequencer.startRecording();
     }
   }
@@ -198,6 +213,7 @@ class DrumMachine extends Component {
    * [saveRecord description]
    */
   saveRecord() {
+    // add title as a paramater (feature)
     this.sequencer.saveRecord();
   }
 
@@ -206,6 +222,70 @@ class DrumMachine extends Component {
    */
   clearRecord() {
     this.sequencer.clearRecord();
+  }
+
+  /**
+  * @param  {Array} records width of window
+   * [storeRecord description]
+   */
+  storeRecord(records) {
+    this.setState({ records });
+    console.log(this.state.records);
+  }
+
+  /**
+  * @param  {Array} record width of window
+   * [playRecord description]
+   */
+  playRecord(record) {
+    console.log(record);
+    this.sequencer.isPlayingChain = false;
+    this.sequencer.isPlayingRecord = true;
+    this.stopSequencer();
+    this.exitPattern();
+    const data = this.state.data;
+    for (let i = 0; i < 16; i += 1) {
+      for (let j = 0; j < 8; j += 1) {
+        data[i][j] = record[0][i][j];
+      }
+    }
+    this.setState({ data, currentPlayingRecord: record, currentPlayingRecordElement: 0 });
+    this.startSequencer();
+  }
+
+  /**
+   * [exitPlayRecord description]
+   */
+  exitPlayRecord() {
+    if (this.sequencer.isPlayingRecord === true) {
+      this.sequencer.isPlayingRecord = false;
+      const data = this.state.data;
+      for (let i = 0; i < 16; i += 1) {
+        for (let j = 0; j < 8; j += 1) {
+          data[i][j] = 0;
+        }
+      }
+      this.setState({ data, currentPlayingRecord: [], currentPlayingRecordElement: 0 });
+      this.stopSequencer();
+    }
+  }
+  /**
+   * [playNextRecordElement description]
+   */
+  playNextRecordElement() {
+    let num = this.state.currentPlayingRecordElement;
+    num += 1;
+    // we can configure it to no replay mode
+    if (num === this.state.currentPlayingRecord.length) {
+      num = 0;
+    }
+    const data = this.state.data;
+    for (let i = 0; i < 16; i += 1) {
+      for (let j = 0; j < 8; j += 1) {
+        data[i][j] = this.state.currentPlayingRecord[num][i][j];
+      }
+    }
+    this.setState({ currentPlayingRecordElement: num, data });
   }
 
   /**
@@ -244,6 +324,7 @@ class DrumMachine extends Component {
    * [playPattern description]
    */
   playPattern(pattern) {
+    this.sequencer.isPlayingRecord = false;
     this.sequencer.isPlayingChain = false;
     this.stopSequencer();
     const data = this.state.data;
@@ -288,14 +369,16 @@ class DrumMachine extends Component {
    * [exitPattern description]
    */
   exitPattern() {
-    const data = this.state.data;
-    for (let i = 0; i < 16; i += 1) {
-      for (let j = 0; j < 8; j += 1) {
-        data[i][j] = 0;
+    if (this.state.currentPatternId !== '') {
+      const data = this.state.data;
+      for (let i = 0; i < 16; i += 1) {
+        for (let j = 0; j < 8; j += 1) {
+          data[i][j] = 0;
+        }
       }
+      this.setState({ currentPatternId: '', data });
+      this.stopSequencer();
     }
-    this.setState({ currentPatternId: '', data });
-    this.stopSequencer();
   }
 
   /**
@@ -386,6 +469,7 @@ class DrumMachine extends Component {
    * [playChain description]
    */
   playChain() {
+    this.sequencer.isPlayingRecord = false;
     this.sequencer.isPlayingChain = true;
     this.stopSequencer();
     this.exitPattern();
@@ -422,6 +506,7 @@ class DrumMachine extends Component {
   playNextChainElement() {
     let num = this.state.currentPlayingChainElement;
     num += 1;
+    // we can configure it to no replay mode
     if (num === this.state.drumNoteChain.length) {
       num = 0;
     }
@@ -455,6 +540,22 @@ class DrumMachine extends Component {
         style={{ color: 'white' }}
       >
         <h4>{pattern.title}</h4>
+      </li>
+    ));
+  }
+
+  /**
+   * [renderRecords description]
+   * @return {Element}
+   */
+  renderRecords() {
+    return _.map(this.state.records, record => (
+      <li
+        key={uuid4()}
+        onTouchTap={() => this.playRecord(record.content)}
+        style={{ color: 'black' }}
+      >
+        <h4>{record.title}</h4>
       </li>
     ));
   }
@@ -514,6 +615,12 @@ class DrumMachine extends Component {
 		          </li>
 		        </ul>
           </div>
+          <div className={styles.patternList}>
+            renderRecords in this div
+            <ul>
+              {this.renderRecords()}
+            </ul>
+          </div>
           <div className={styles.menuBtn}>
             <div
               className={styles.btn}
@@ -545,6 +652,12 @@ class DrumMachine extends Component {
             >
 	            Clear Current Record
 	          </div>
+            <div
+              className={styles.btn}
+              onTouchTap={() => this.exitPlayRecord()}
+            >
+              Exit Playing Record
+            </div>
 
             <div>
               <div>

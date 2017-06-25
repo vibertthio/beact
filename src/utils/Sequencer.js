@@ -1,31 +1,32 @@
 import { MultiPlayer, Sequence, Transport } from 'tone';
 import axios from 'axios';
 
-let recordMatrix = [];
-let recordFull = [];
-
 /**
  * Sequencer
  */
 export default class Sequencer {
   samples: Object;
   sequence: Object;
-  playing: boolean;
-  beat: number;
+  playing: Boolean;
+  beat: Number;
   notes: Array<String>;
   matrix: Array<Array<number>>;
-  recording: boolean;
+  recording: Boolean;
   drumNoteChain: Array;
-  isPlayingChain: false;
+  isPlayingChain: Boolean;
+  recordMatrix: Array;
+  recordFull: Array;
+  isPlayingRecord: Array;
 
   /**
    * [constructor description]
    * @param  {[type]} matrix [description]
    * @param  {[type]} setCurrentBeat [description]
    * @param  {[type]} playNextChainElement [description]
-   * @param  {[type]} isPlayingChain [description]
+   * @param  {[type]} storeRecord [description]
+   * @param  {[type]} playNextRecordElement [description]
    */
-  constructor(matrix, setCurrentBeat, playNextChainElement) {
+  constructor(matrix, setCurrentBeat, playNextChainElement, storeRecord, playNextRecordElement) {
     this.matrix = matrix;
     this.number = 0;
     this.playing = true;
@@ -39,8 +40,11 @@ export default class Sequencer {
       'E',
       'C#',
     ];
-    // this.chain = drumNoteChain;
-
+    this.isPlayingChain = false;
+    this.recordMatrix = [];
+    this.recordFull = [];
+    this.isPlayingRecord = false;
+    this.storeRecord = record => storeRecord(record);
     this.samples = new MultiPlayer({
       urls: {
         kk: './assets/audio/505/kick.mp3',
@@ -73,18 +77,42 @@ export default class Sequencer {
       }
 
       if (this.recording === true) {
-        if (recordMatrix.length < 16) {
-          recordMatrix.push(column);
-          if (recordMatrix.length === 16) {
-            recordFull.push(recordMatrix);
-            recordMatrix = [];
-            console.log(recordFull);
+        if (this.recordMatrix.length < 16) {
+          this.recordMatrix.push(column);
+          if (this.recordMatrix.length === 16) {
+            const recordMatrix = [[0, 0, 0, 0, 0, 0, 0, 0],
+              [0, 0, 0, 0, 0, 0, 0, 0],
+              [0, 0, 0, 0, 0, 0, 0, 0],
+              [0, 0, 0, 0, 0, 0, 0, 0],
+              [0, 0, 0, 0, 0, 0, 0, 0],
+              [0, 0, 0, 0, 0, 0, 0, 0],
+              [0, 0, 0, 0, 0, 0, 0, 0],
+              [0, 0, 0, 0, 0, 0, 0, 0],
+              [0, 0, 0, 0, 0, 0, 0, 0],
+              [0, 0, 0, 0, 0, 0, 0, 0],
+              [0, 0, 0, 0, 0, 0, 0, 0],
+              [0, 0, 0, 0, 0, 0, 0, 0],
+              [0, 0, 0, 0, 0, 0, 0, 0],
+              [0, 0, 0, 0, 0, 0, 0, 0],
+              [0, 0, 0, 0, 0, 0, 0, 0],
+              [0, 0, 0, 0, 0, 0, 0, 0]];
+            for (let i = 0; i < 16; i += 1) {
+              for (let j = 0; j < 8; j += 1) {
+                recordMatrix[i][j] = this.recordMatrix[i][j];
+              }
+            }
+            this.recordFull.push(recordMatrix);
+            this.recordMatrix = [];
+            console.log(this.recordFull);
           }
         }
       }
 
       if (col === 15 && this.isPlayingChain === true) {
         playNextChainElement();
+      }
+      if (col === 15 && this.isPlayingRecord === true) {
+        playNextRecordElement();
       }
     }, Array.from(Array(this.matrix.length).keys()), '16n');
 
@@ -144,13 +172,19 @@ export default class Sequencer {
    */
   saveRecord() {
     this.sequence.stop();
-    console.log('save!!! replace by axios code');
     axios.post('/api/notes', {
       title: 'Notes',
-      content: recordFull,
+      content: this.recordFull,
     })
     .catch(err => console.log(err));
-    recordFull = [];
+    axios.get('/api/notes')
+      .then((res) => {
+        this.storeRecord(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    this.recordFull = [];
   }
 
   /**
@@ -158,6 +192,6 @@ export default class Sequencer {
    */
   clearRecord() {
     this.sequence.stop();
-    recordFull = [];
+    this.recordFull = [];
   }
 }

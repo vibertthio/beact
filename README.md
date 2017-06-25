@@ -75,17 +75,19 @@ npm run server
 * **stop** ：將當下播放的 data 停止。若於 stop 後重新按 start，則會再從頭播當下的data。
 
 ### Recorder
-* **Record**
-* **Save**
-* **Clear Current Record**
+* **{RecordList}** ：列出當前所有的 Record。可透過點選來播放。
+* **Record** ：按下後進入錄音模式，再按一下會暫停錄音。錄製的內容為有在播放時撥出的內容。
+* **Save** ：將錄製的內容儲存，並更新至 RecordList
+* **Clear Current Record** ：若當下有在錄音，不論錄音暫停與否，會清除當前錄製但尚未儲存的片段。
+* **Exit Playing Record** ：若當前正在播放錄音，將停止播放並清空版面。
 
 ### Pattern
-* **{PatternList}** ：列出當前所有的 Pattern。可透過點選來選擇當下要 Update 或 Delete 的 Pattern
+* **{PatternList}** ：列出當前所有的 Pattern。可透過點選來選擇當下要 Update 或 Delete 的 Pattern。
 * **{input tag}** ：可在此輸入欄裡頭輸入任意 Pattern 名，並點選 Save New Pattern 來將當下的 data 以新的 Pattern 的形式儲存至資料庫。若當下已點選特定 Pattern，則亦可點選 Update Pattern 來更改該 Pattern 的名稱。
 * **Save New Pattern** ：將當下的 data 以新的 Pattern 的形式儲存至資料庫。須在輸入欄事先輸入至少一個字母的名稱，否則無效。
 * **Update Pattern** ：若當下有點選特定 Pattern 且有輸入標題，則會將任何該 Pattern 的內容和標題更新。若沒輸入標題，則只更新內容。
 * **Delete Current Pattern** ：若當下有點選特定 Pattern，將從資料庫刪除該 Pattern。若沒選定 Pattern，則無效。
-* **Exit Pattern** ：可跳出 Pattern 模式，也就是進入尚未點選任何 Pattern 的狀態。此舉亦會停止播放並將版面清空。
+* **Exit Pattern** ：若當下有點選特定 Pattern，可跳出 Pattern 模式，也就是進入尚未點選任何 Pattern 的狀態。此舉亦會停止播放並將版面清空。
 
 ### Chain
 * **{ChainList}** ：按撥出順序列出當前 Chain 裡頭的所有的 Chain Element。可透過點選來顯示並選擇當下要 Update 或 Delete 的 Chain Element。若點選最後一行的 Update at here in this li 字樣，則可透過 Update Chain 將新的 Chain Element 新增至 ChainList 的末端。
