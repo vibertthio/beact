@@ -93,7 +93,7 @@ class DrumMachine extends Component {
    */
   setCurrentBeat(currentBeat) {
     if (currentBeat === 0) {
-      this.ani.trigger(8);
+      this.ani.trigger(12);
     }
     this.setState({
       currentBeat,
@@ -152,7 +152,7 @@ class DrumMachine extends Component {
    * [startSequence description]
    */
   startSequencer() {
-    this.ani.trigger(9);
+    // this.ani.trigger(9);
     this.sequencer.start();
     this.setState({
       playing: true,
@@ -370,7 +370,7 @@ class DrumMachine extends Component {
    */
   playChain() {
     this.sequencer.playingChain(true);
-    this.ani.trigger(1);
+    // this.ani.trigger(1);
     this.setState({
       playing: true,
     });
@@ -381,7 +381,7 @@ class DrumMachine extends Component {
    */
   exitChain() {
     this.sequencer.playingChain(false);
-    this.ani.trigger(1);
+    // this.ani.trigger(1);
     this.setState({
       playing: true,
     });

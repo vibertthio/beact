@@ -8,6 +8,7 @@ import _ from 'lodash';
 const TWO_PI = Math.PI * 2;
 const cos = Math.cos;
 const sin = Math.sin;
+const min = Math.min;
 
 /**
  * Range
@@ -41,6 +42,20 @@ function angleBetween(v1, v2) {
 function lerp(a, b, t) {
   return ((b - a) * t) + a;
 }
+
+/**
+ * [map description]
+ * @param  {[type]} v  [description]
+ * @param  {[type]} i1 [description]
+ * @param  {[type]} i2 [description]
+ * @param  {[type]} o1 [description]
+ * @param  {[type]} o2 [description]
+ * @return {[type]}    [description]
+ */
+function map(v, i1, i2, o1, o2) {
+  return o1 + ((o2 - o1) * ((v - i1) / (i2 - i1)));
+}
+
 
 const pallete = [
   'rgb(28, 52, 53)',
@@ -666,7 +681,7 @@ function Animation() {
    * @param  {number} [duration = 400]
    * @return {Object}
    */
-  (function makeFlash(opacity = 1, duration = 400) {
+  (function makeFlashes(opacity = 1, duration = 400) {
     range(3).map(() => {
       let playing = false;
       const param = { t: 0 };
@@ -726,6 +741,118 @@ function Animation() {
       animations.push(EXPORT);
       return EXPORT;
     });
+  }());
+
+  /**
+  * Animation #12, Splash
+  * @param  {number} [opacity = 1]
+  * @param  {number} [duration = 400]
+  * @return {Object}
+  */
+  (function makeSplash(opacity = 1, duration = 1000) {
+    let playing = false;
+    const amount = 16;
+    const param = { t: 0 };
+    let circles = [];
+    const destinations = [];
+
+    /**
+    * [setup description]
+    * @return {[type]} [description]
+    */
+    function setup() {
+      const rMin = min(two.width, two.height) * (12 / 900);
+      const rMax = min(two.width, two.height) * (20 / 900);
+
+      const group = two.makeGroup();
+      group.translation.set(two.width * 0.5, two.height * 0.5);
+
+      circles = range(amount).map(() => {
+        const r = Math.round(map(Math.random(), 0, 1, rMin, rMax));
+        const circle = two.makeCircle(0, 0, r);
+        circle.fill = pallete[4];
+        circle.noStroke();
+        destinations.push(new Two.Vector());
+
+        group.add(circle);
+        return circle;
+      });
+
+      group.visible = false;
+
+      const ani = new TWEEN.Tween(param)
+      .to({ t: 1.0 }, duration)
+      .easing(TWEEN.Easing.Sinusoidal.Out)
+      .onUpdate(() => {
+        const t = param.t;
+        for (let i = 0; i < amount; i += 1) {
+          const c = circles[i];
+          const d = destinations[i];
+          const x = lerp(c.translation.x, d.x, t);
+          const y = lerp(c.translation.y, d.y, t);
+          c.translation.set(x, y);
+        }
+      })
+      .onComplete(() => {
+        group.visible = false;
+      });
+
+      return {
+        group,
+        ani,
+      };
+    }
+
+    let { group, ani } = setup();
+
+    // methods
+    const resize = () => {
+      group.remove(circles);
+      two.remove(group);
+      ({ group, ani } = setup());
+    };
+
+    const reset = () => {
+      playing = false;
+      group.visible = false;
+      ani.stop();
+      const theta = Math.random() * TWO_PI;
+      const deviation = map(Math.random(), 0, 1, Math.PI / 4, Math.PI / 2);
+      param.t = 0;
+      for (let i = 0; i < amount; i += 1) {
+        const c = circles[i];
+        const t = theta + (((Math.random() * 2) - 1) * deviation);
+        const a = Math.random() * two.height;
+        const x = a * Math.cos(t);
+        const y = a * Math.sin(t);
+        destinations[i].set(x, y);
+
+        c.visible = false;
+        c.translation.set(0, 0);
+      }
+
+      group.translation.set(
+        two.width * 0.5,
+        two.height * 0.5,
+      );
+    };
+
+
+    const start = () => {
+      reset();
+      playing = true;
+      group.visible = true;
+      ani.start();
+    };
+
+    const EXPORT = {
+      playing,
+      start,
+      reset,
+      resize,
+    };
+    animations.push(EXPORT);
+    return EXPORT;
   }());
 
 	/**
