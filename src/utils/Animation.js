@@ -659,6 +659,75 @@ function Animation() {
     return EXPORT;
   }());
 
+  /**
+   * Animation #9, 10, 11, Flash
+   * it will have two direction(u/d), which will be decided randomly
+   * @param  {number} [opacity = 1]
+   * @param  {number} [duration = 400]
+   * @return {Object}
+   */
+  (function makeFlash(opacity = 1, duration = 400) {
+    range(3).map(() => {
+      let playing = false;
+      const param = { t: 0 };
+
+      /**
+      * [setup description]
+      * @return {[type]} [description]
+      */
+      function setup() {
+        const shape = two.makeRectangle(
+          two.width * 0.5,
+          two.height * 0.5,
+          two.width,
+          two.height,
+        );
+        shape.visible = 0;
+        shape.noStroke();
+        shape.fill = pallete[5];
+
+        const ani = new TWEEN.Tween(param)
+          .to({ t: 1 }, duration)
+          .easing(TWEEN.Easing.Linear.None)
+          .onUpdate(() => {
+            shape.visible = Math.random() > 0.5;
+          })
+          .onComplete(() => {
+            shape.visible = false;
+          });
+
+        return { shape, ani };
+      }
+
+      let { shape, ani } = setup();
+
+      // methods
+      const resize = () => {
+        two.remove(shape);
+        ({ shape, ani } = setup());
+      };
+
+      const reset = () => {
+        ani.stop();
+      };
+
+      const start = () => {
+        reset();
+        playing = true;
+        ani.start();
+      };
+
+      const EXPORT = {
+        playing,
+        start,
+        reset,
+        resize,
+      };
+      animations.push(EXPORT);
+      return EXPORT;
+    });
+  }());
+
 	/**
    * Animation #17, Glimmer
    * random size, x, y, color circles.
