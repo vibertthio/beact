@@ -369,8 +369,11 @@ class DrumMachine extends Component {
    * [playChain description]
    */
   playChain() {
-    // this.ani.trigger(1);
     this.sequencer.playingChain(true);
+    this.ani.trigger(1);
+    this.setState({
+      playing: true,
+    });
   }
 
   /**
@@ -379,6 +382,9 @@ class DrumMachine extends Component {
   exitChain() {
     this.sequencer.playingChain(false);
     this.ani.trigger(1);
+    this.setState({
+      playing: true,
+    });
   }
 
 	/**
