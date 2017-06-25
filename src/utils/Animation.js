@@ -98,17 +98,6 @@ function Animation() {
     const destOut = { y: two.height * -0.5 };
 
     /**
-     * [setDirection description]
-     */
-    function setDirection() {
-      const direction = (Math.random() > 0.5);
-      origin.x = two.width * 0.5;
-      origin.y = two.height * (direction ? 1.5 : -0.5);
-      destIn.y = two.height * 0.5;
-      destOut.y = two.height * (direction ? -0.5 : 1.5);
-    }
-
-    /**
      * [setup description]
      * @return {[type]} [description]
      */
@@ -146,6 +135,17 @@ function Animation() {
     }
 
     let { playing, shape, aniIn, aniOut } = setup();
+
+    /**
+     * [setDirection description]
+     */
+    function setDirection() {
+      const direction = (Math.random() > 0.5);
+      origin.x = two.width * 0.5;
+      origin.y = two.height * (direction ? 1.5 : -0.5);
+      destIn.y = two.height * 0.5;
+      destOut.y = two.height * (direction ? -0.5 : 1.5);
+    }
 
     // methods
     const resize = () => {
@@ -1076,6 +1076,124 @@ function Animation() {
     const start = () => {
       reset();
       playing = true;
+      aniIn.start();
+    };
+
+    const EXPORT = {
+      playing,
+      start,
+      reset,
+      resize,
+    };
+    animations.push(EXPORT);
+    return EXPORT;
+  }());
+
+  /**
+   * Animation #15, Timer
+   * @param  {number} [opacity = 1]
+   * @param  {number} [duration = 400]
+   * @return {Object}
+   */
+  (function makeTimer(opacity = 1, duration = 400) {
+    let playing = false;
+    let direction = true;
+    const amount = 32;
+    let radius = min(two.width, two.height) * 0.33;
+    const options = { beginning: 0, ending: 0 };
+
+    /**
+     * [setup description]
+     * @return {[type]} [description]
+     */
+    function setup() {
+      const points = range(amount).map((i) => {
+        const pct = i / (amount - 1);
+        const theta = pct * TWO_PI;
+        return new Two.Anchor(
+          radius * cos(theta),
+          radius * sin(theta),
+        );
+      });
+
+      points.push(
+        points[0].clone(),
+        // points[1].clone(),
+      );
+
+      const timer = two.makeCurve(points, true);
+      timer.stroke = pallete[4];
+      timer.cap = 'butt';
+      timer.linewidth = min(two.width, two.height) / 10;
+      timer.noFill();
+      timer.translation.set(two.width * 0.5, two.height * 0.5);
+      timer.visible = false;
+
+      const aniOut = new TWEEN.Tween(options)
+        .to({ beginning: 1 }, duration)
+        .easing(TWEEN.Easing.Sinusoidal.In)
+        .onUpdate(() => {
+          if (direction) {
+            timer.beginning = options.beginning;
+          } else {
+            timer.ending = 1 - options.beginning;
+          }
+        })
+        .onComplete(() => {
+          playing = false;
+        });
+      const aniIn = new TWEEN.Tween(options)
+        .to({ ending: 1 }, duration)
+        .easing(TWEEN.Easing.Sinusoidal.Out)
+        .onUpdate(() => {
+          if (direction) {
+            timer.ending = options.ending;
+          } else {
+            timer.beginning = 1 - options.ending;
+          }
+        })
+        .onComplete(() => {
+          aniOut.start();
+        });
+      return {
+        timer,
+        aniIn,
+        aniOut,
+      };
+    }
+
+    let { timer, aniIn, aniOut } = setup();
+
+    /**
+     * [setDirection description]
+     */
+    function setDirection() {
+      direction = (Math.random() > 0.5);
+    }
+
+    // methods
+    const resize = () => {
+      two.remove(timer);
+      radius = min(two.width, two.height) * 0.33;
+      ({ timer, aniIn, aniOut } = setup());
+    };
+
+    const reset = () => {
+      playing = false;
+      setDirection();
+      timer.visible = false;
+      aniIn.stop();
+      aniOut.stop();
+      options.beginning = 0;
+      options.ending = 0;
+      timer.beginning = direction ? 0 : 1;
+      timer.ending = direction ? 0 : 1;
+    };
+
+    const start = () => {
+      reset();
+      playing = true;
+      timer.visible = true;
       aniIn.start();
     };
 
