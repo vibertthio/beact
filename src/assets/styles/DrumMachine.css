@@ -22,14 +22,12 @@
   position: fixed;
   margin: 1% 0 0 2%;
   cursor: pointer;
+  z-index: 2;
 }
 
-.opa0 {
+.displayHide {
+  visibility: hidden;
   opacity: 0;
-}
-
-.opa1 {
-  opacity: 1;
 }
 
 .menu {
@@ -38,21 +36,15 @@
   height: 100%;
   z-index: 1;
   background-color: lightgrey;
-  animation-name: toggle;
-  animation-duration: .2s;
-  animation-timing-function: ease-in-out;
+  transition: margin 700ms ease-in-out;
 }
 
-@keyframes toggle {
-  0% {
-    width: 0%;
-  }
-  50% {
-    width: 28%;
-  }
-  100% {
-    width: 40%;
-  }
+.toggleMenu {
+  margin-left: 0%;
+}
+
+.toggleRevMenu {
+  margin-left: -40%;
 }
 
 .closeIcon {

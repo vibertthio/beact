@@ -53,7 +53,11 @@ function resetTimer() {
 const Matrix = (props) => {
   const { data, onClick } = props;
   return (
-    <div className={styles.matrix}>
+    <div
+      className={
+			`${styles.matrix}
+			 ${(idle === true) ? styles.idle : ''}`}
+			 >
       {data.map((row, i) =>
         <div
           key={uuid4()}
@@ -68,8 +72,7 @@ const Matrix = (props) => {
                 `${styles.rect}
                  ${(i === props.currentBeat) && props.playing ?
                    styles.current : ''}
-                 ${data[i][j] === 1 ? styles.clicked : ''}
-								 ${(idle === true) ? styles.idle : ''}`
+                 ${data[i][j] === 1 ? styles.clicked : ''}`
               }
               onTouchTap={() => onClick(i, j)}
             />,
