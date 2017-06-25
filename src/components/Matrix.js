@@ -5,6 +5,7 @@ import styles from '../assets/styles/Matrix.css';
 
 let timeoutID;
 let idle = false;
+/* eslint-disable no-use-before-define */
 /**
  * [mouseTimerSetup description]
  */
@@ -47,6 +48,7 @@ function resetTimer() {
 	idle = false;
 	goActive();
 }
+/* eslint-enable no-use-before-define */
 
 const Matrix = (props) => {
   const { data, onClick } = props;

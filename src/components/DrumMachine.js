@@ -436,135 +436,132 @@ class DrumMachine extends Component {
 		const { hidden } = this.state;
     return (
       <div>
-				<NavigationMenuIcon
-					className={
+        <NavigationMenuIcon
+          className={
 						`${styles.menuIcon}
 						 ${(hidden === true) ? styles.opa1 : styles.opa0}`
 					}
-					onClick={() => this.toggleHidden()}
-				/>
+          onClick={() => this.toggleHidden()}
+        />
 
-				{hidden ? (
-					''
-				) : (
-					<div className={styles.menu}>
-						<NavigationCloseIcon
-							className={styles.closeIcon}
-							onClick={() => this.toggleHidden()} />
-						<div className={styles.patternList}>
+        {hidden ? '' : (
+          <div className={styles.menu}>
+            <NavigationCloseIcon
+              className={styles.closeIcon}
+              onClick={() => this.toggleHidden()}
+            />
+            <div className={styles.patternList}>
 							renderPatterns in this div
-							<ul>
-			          {this.renderPatterns()}
-			        </ul>
-						</div>
-						<div className={styles.chainList}>
+              <ul>
+                {this.renderPatterns()}
+              </ul>
+            </div>
+            <div className={styles.chainList}>
 							renderChain in this div
-							<ul>
-			          {this.renderChain()}
-			          <li style={{ color: 'yellow' }} onTouchTap={() => this.setCurrentChainElementAtLast()}>
+							<ul>{this.renderChain()}<li style={{ color: 'yellow' }} onTouchTap={() => this.setCurrentChainElementAtLast()}>
 			            Update at here in this li
 			          </li>
 			        </ul>
-						</div>
-						<div className={styles.menuBtn}>
-		          <div
-		            className={styles.btn}
-		            onTouchTap={() => this.startSequencer()}
-		          >
+            </div>
+            <div className={styles.menuBtn}>
+              <div
+                className={styles.btn}
+                onTouchTap={() => this.startSequencer()}
+              >
 		            start
 		          </div>
-		          <div
-		            className={styles.btn}
-		            onTouchTap={() => this.stopSequencer()}
-		          >
+              <div
+                className={styles.btn}
+                onTouchTap={() => this.stopSequencer()}
+              >
 		            stop
 		          </div>
-		          <div
-		            className={styles.btn}
-		            onTouchTap={() => this.recordSequencer()}
-		          >
+              <div
+                className={styles.btn}
+                onTouchTap={() => this.recordSequencer()}
+              >
 		            Record
 		          </div>
-		          <div
-		            className={styles.btn}
-		            onTouchTap={() => this.saveRecord()}
-		          >
+              <div
+                className={styles.btn}
+                onTouchTap={() => this.saveRecord()}
+              >
 		            Save
 		          </div>
-		          <div
-		            className={styles.btn}
-		            onTouchTap={() => this.clearRecord()}
-		          >
+              <div
+                className={styles.btn}
+                onTouchTap={() => this.clearRecord()}
+              >
 		            Clear Current Record
 		          </div>
 
-		          <div>
-		            <div>
-		              <input
-		                type="text"
-		                value={this.state.patternTitle}
-		                onChange={this.handleTitleChange}
-		              />
-		            </div>
-		            <div
-		              className={styles.btn}
-		              onTouchTap={() => this.savePattern()}
-		            >
-		              Save New Pattern
-		            </div>
-		            <div
-		              className={styles.btn}
-		              onTouchTap={() => this.editPattern()}
-		            >
-		              Update Pattern
-		            </div>
-		          </div>
+              <div>
+                <div>
+                  <input
+                    type="text"
+                    value={this.state.patternTitle}
+                    onChange={this.handleTitleChange}
+                  />
+                </div>
+                <div
+                  className={styles.btn}
+                  onTouchTap={() => this.savePattern()}
+                >
+                  Save New Pattern
+                </div>
+                <div
+                  className={styles.btn}
+                  onTouchTap={() => this.editPattern()}
+                >
+                  Update Pattern
+                </div>
+              </div>
 
-		          <div
-		            className={styles.btn}
-		            onTouchTap={() => this.deleteCurrentPattern()}
-		          >
-		            Delete Current Pattern
-		          </div>
+              <div
+                className={styles.btn}
+                onTouchTap={() => this.deleteCurrentPattern()}
+              >
+                Delete Current Pattern
+              </div>
 
-		          <div
-		            className={styles.btn}
-		            onTouchTap={() => this.exitPattern()}
-		          >
-		            Exit Pattern
-		          </div>
+              <div
+                className={styles.btn}
+                onTouchTap={() => this.exitPattern()}
+              >
+                Exit Pattern
+              </div>
 
-		          <div
-		            className={styles.btn}
-		            onTouchTap={() => this.updateChain()}
-		          >
-		            Update Chain
-		          </div>
-		          <div
-		            className={styles.btn}
-		            onTouchTap={() => this.deleteCurrentChainElement()}
-		          >
-		            Delete Current Chain Element
-		          </div>
-		          <div
-		            className={styles.btn}
-		            onTouchTap={() => this.playChain()}
-		          >
-		            Play Chain
-		          </div>
-		          <div
-		            className={styles.btn}
-		            onTouchTap={() => this.exitChain()}
-		          >
-		            Exit Chain
-		          </div>
+              <div
+                className={styles.btn}
+                onTouchTap={() => this.updateChain()}
+              >
+                Update Chain
+              </div>
+              <div
+                className={styles.btn}
+                onTouchTap={() => this.deleteCurrentChainElement()}
+              >
+                Delete Current Chain Element
+              </div>
+              <div
+                className={styles.btn}
+                onTouchTap={() => this.playChain()}
+              >
+                Play Chain
+              </div>
+              <div
+                className={styles.btn}
+                onTouchTap={() => this.exitChain()}
+              >
+                Exit Chain
+              </div>
 
-		        </div>
-					</div>
+            </div>
+          </div>
 				)}
 
         <h1 className={styles.title}>
-          Drum Machine
+					Drum Machine
         </h1>
 
         <div className={styles.control}>
