@@ -93,7 +93,7 @@ class DrumMachine extends Component {
    */
   setCurrentBeat(currentBeat) {
     if (currentBeat === 0) {
-      this.ani.trigger(12);
+      this.ani.trigger(13);
     }
     this.setState({
       currentBeat,
