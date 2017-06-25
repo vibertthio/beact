@@ -257,7 +257,6 @@ class DrumMachine extends Component {
    * [editPattern description]
    */
   editPattern() {
-    console.log(this.state.currentPatternId);
     if (this.state.patternTitle !== '') {
       axios.put(`/api/patterns/${this.state.currentPatternId}`, {
         title: this.state.patternTitle,
@@ -290,6 +289,7 @@ class DrumMachine extends Component {
       }
     }
     this.setState({ currentPatternId: '', data });
+    this.stopSequencer();
   }
 
   /**
@@ -357,42 +357,39 @@ class DrumMachine extends Component {
    * [deleteCurrentChainElement description]
    */
   deleteCurrentChainElement() {
-    const drumNoteChain = this.state.drumNoteChain;
-    const newDrumNoteChain = drumNoteChain.filter(
-      element => element.id !== this.state.currentChainElement);
-    drumNoteChain.pop();
-    for (let k = 0; k < drumNoteChain.length; k += 1) {
-      drumNoteChain[k].id = newDrumNoteChain[k].id;
-      for (let i = 0; i < 16; i += 1) {
-        for (let j = 0; j < 8; j += 1) {
-          drumNoteChain[k].data[i][j] = newDrumNoteChain[k].data[i][j];
+    if (this.state.currentChainElement !== '') {
+      const drumNoteChain = this.state.drumNoteChain;
+      const newDrumNoteChain = drumNoteChain.filter(
+        element => element.id !== this.state.currentChainElement);
+      drumNoteChain.pop();
+      for (let k = 0; k < drumNoteChain.length; k += 1) {
+        drumNoteChain[k].id = newDrumNoteChain[k].id;
+        for (let i = 0; i < 16; i += 1) {
+          for (let j = 0; j < 8; j += 1) {
+            drumNoteChain[k].data[i][j] = newDrumNoteChain[k].data[i][j];
+          }
         }
       }
+      this.setState({ drumNoteChain, currentChainElement: '' });
+      this.stopSequencer();
+      this.exitPattern();
     }
-    this.setState({ drumNoteChain, currentChainElement: '' });
-    this.stopSequencer();
-    this.exitPattern();
   }
 
   /**
    * [playChain description]
    */
   playChain() {
-    if (this.sequencer.isPlayingChain === false) {
-      this.setState({ currentPlayingChainElement: 0 });
-    }
     this.sequencer.isPlayingChain = true;
     this.stopSequencer();
     this.exitPattern();
-    const num = this.state.currentPlayingChainElement;
     const data = this.state.data;
     for (let i = 0; i < 16; i += 1) {
       for (let j = 0; j < 8; j += 1) {
-        data[i][j] = this.state.drumNoteChain[num].data[i][j];
+        data[i][j] = this.state.drumNoteChain[0].data[i][j];
       }
     }
     this.setState({ data });
-    this.ani.trigger(1);
     this.startSequencer();
   }
 
@@ -409,7 +406,7 @@ class DrumMachine extends Component {
         }
       }
       this.stopSequencer();
-      this.setState({ currentPlayingChainElement: 0, data });
+      this.setState({ currentPlayingChainElement: 0, data, currentChainElement: '' });
     }
   }
 
