@@ -11,12 +11,19 @@
   }
 }
 
-.title {
-  /*color: rgba(37, 116, 169, 1);*/
+.hideDOM {
+  display: none;
+}
+
+.showDOM {
+  height: 100%;
+}
+
+/*.title {
   color: #eecdcc;
   margin: 0em;
   text-align: center;
-}
+}*/
 
 .menuIcon {
   position: fixed;
@@ -36,7 +43,7 @@
   height: 100%;
   z-index: 1;
   background-color: lightgrey;
-  transition: margin 700ms ease-in-out;
+  transition: margin .7s ease-in-out;
 }
 
 .toggleMenu {
@@ -56,7 +63,7 @@
 
 .patternList {
   width: 70%;
-  /*height: 35%;*/
+  height: 35%;
   background-color: darkgrey;
 }
 
@@ -87,6 +94,24 @@
   background-color: #eecdcc;
   padding-top: 0.5em;
   cursor: pointer;
+}
+
+.mask {
+  position: fixed;
+  width: 60%;
+  height: 100%;
+  background-color: black;
+  opacity: 0.3;
+  z-index: 1;
+  transition: margin .7s ease-in-out;
+}
+
+.hideMask {
+  margin-left: 100%;
+}
+
+.showMask {
+  margin-left: 40%;
 }
 
 .animation {

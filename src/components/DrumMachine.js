@@ -11,6 +11,7 @@ import Matrix from './Matrix';
 import Sequencer from '../utils/Sequencer';
 import Animation from '../utils/Animation';
 
+let fadeoutID;
 /**
  * DrumMachine
  */
@@ -41,6 +42,7 @@ class DrumMachine extends Component {
       currentPlayingChainElement: 0,
 
 			hidden: true,
+			wait: true,
 			idle: false,
     };
 
@@ -72,6 +74,8 @@ class DrumMachine extends Component {
     );
 
     this.toggleHidden = this.toggleHidden.bind(this);
+		this.hideSpinner = this.hideSpinner.bind(this);
+		this.showDOM = this.showDOM.bind(this);
   }
 
   /**
@@ -88,12 +92,16 @@ class DrumMachine extends Component {
         console.log(err);
       });
 		/**
-	   * hide loading spinner after DOM is loaded.
+	   * hide loading spinner and wait 3.5s after DOM is loaded.
 	   */
-		const loadingTitle = document.getElementById('loadingTitle');
-		loadingTitle.classList.add('loaded');
-		const spinner = document.getElementById('spinner');
-		spinner.classList.add('loaded');
+	  const outShowDOM = this.hideSpinner;
+		/**
+	   * [startTimer description]
+	   */
+		function startTimer() {
+			fadeoutID = window.setTimeout(outShowDOM, 3500);
+		}
+		startTimer();
   }
 
   /**
@@ -136,6 +144,25 @@ class DrumMachine extends Component {
     }
     this.setState({ currentChainElement: id, data });
   }
+	/**
+   * [showDOM description]
+   */
+	showDOM() {
+		const rootDiv = document.getElementById('root');
+		rootDiv.classList.add('fullHeight');
+		this.setState({ wait: false });
+	}
+	/**
+   * [hideSpinner description]
+   */
+	hideSpinner() {
+		const spinner = document.getElementById('spinner');
+		spinner.classList.add('loaded');
+ 		const loadingTitle = document.getElementById('loadingTitle');
+ 		loadingTitle.classList.add('loaded');
+ 		window.clearTimeout(fadeoutID);
+		fadeoutID = window.setTimeout(this.showDOM, 1500);
+ 	}
 
   /**
    * [handleClick description]
@@ -480,9 +507,9 @@ class DrumMachine extends Component {
    * @return {Element}
    */
   render() {
-		const { hidden } = this.state;
+		const { hidden, wait } = this.state;
     return (
-      <div>
+      <div className={(wait === true) ? styles.hideDOM : styles.showDOM}>
         <NavigationMenuIcon
           className={
 						`${styles.menuIcon}
@@ -614,105 +641,23 @@ class DrumMachine extends Component {
 						user guide
 					</div>
         </div>
-
-        {/* <h1 className={styles.title}>
-					Beact
-        </h1> */}
-
-        {/* <div className={styles.control}>
-          <div
-            className={styles.btn}
-            onTouchTap={() => this.startSequencer()}
-          >
-            start
-          </div>
-          <div
-            className={styles.btn}
-            onTouchTap={() => this.stopSequencer()}
-          >
-            stop
-          </div>
-          <div
-            className={styles.btn}
-            onTouchTap={() => this.recordSequencer()}
-          >
-            Record
-          </div>
-          <div
-            className={styles.btn}
-            onTouchTap={() => this.saveRecord()}
-          >
-            Save
-          </div>
-          <div
-            className={styles.btn}
-            onTouchTap={() => this.clearRecord()}
-          >
-            Clear Current Record
-          </div>
-
-          <div>
-            <div>
-              <input
-                type="text"
-                value={this.state.patternTitle}
-                onChange={this.handleTitleChange}
-              />
-            </div>
-            <div
-              className={styles.btn}
-              onTouchTap={() => this.savePattern()}
-            >
-              Save New Pattern
-            </div>
-            <div
-              className={styles.btn}
-              onTouchTap={() => this.editPattern()}
-            >
-              Update Pattern
-            </div>
-          </div>
-
-          <div
-            className={styles.btn}
-            onTouchTap={() => this.deleteCurrentPattern()}
-          >
-            Delete Current Pattern
-          </div>
-
-          <div
-            className={styles.btn}
-            onTouchTap={() => this.exitPattern()}
-          >
-            Exit Pattern
-          </div>
-
-          <div
-            className={styles.btn}
-            onTouchTap={() => this.updateChain()}
-          >
-            Update Chain
-          </div>
-          <div
-            className={styles.btn}
-            onTouchTap={() => this.deleteCurrentChainElement()}
-          >
-            Delete Current Chain Element
-          </div>
-          <div
-            className={styles.btn}
-            onTouchTap={() => this.playChain()}
-          >
-            Play Chain
-          </div>
-          <div
-            className={styles.btn}
-            onTouchTap={() => this.exitChain()}
-          >
-            Exit Chain
-          </div>
-
+        {/* <div
+          role="presentation"
+          className={
+						`${styles.mask}
+						 ${(hidden === false ? styles.showMask : styles.hideMask)}`}
+          onClick={() => this.toggleHidden()}
+        >
+          <button>no</button>
         </div> */}
+        <div
+          role="button"
+          tabIndex="0"
+          className={
+						`${styles.mask}
+						 ${(hidden === false ? styles.showMask : styles.hideMask)}`}
+          onClick={() => this.toggleHidden()}
+        />
         <Matrix
           data={this.state.data}
           playing={this.state.playing}

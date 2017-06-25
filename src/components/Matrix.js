@@ -17,7 +17,8 @@ function mouseTimerSetup() {
 	window.addEventListener('mousewheel', resetTimer, false);
 	window.addEventListener('touchmove', resetTimer, false);
 	window.addEventListener('MSPointerMove', resetTimer, false);
-	startTimer();
+	timeoutID = window.setTimeout(firstGoInactive, 12000);
+	// startTimer();
 }
 mouseTimerSetup();
 /**
@@ -31,6 +32,15 @@ function goActive() {
  */
 function goInactive() {
 	console.log('you have idled for 3s');
+	idle = true;
+	startTimer();
+}
+/**
+ * [firstGoInActive description]
+ * wait 12s if mouse idle at first
+ */
+function firstGoInactive() {
+	console.log('you have idled for 12s');
 	idle = true;
 	startTimer();
 }

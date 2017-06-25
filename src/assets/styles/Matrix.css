@@ -1,47 +1,51 @@
 .matrix {
-  transition: opacity .3s ease-out;
+  display: flex;
+  height: 100%;
+  transition: opacity 1s ease-out;
   /*border: solid 1px red;*/
-  /*height: 500px;*/
 }
 
 .row {
-  width: 10%;
   display: flex;
   /*border: solid 1px blue;*/
 }
 
 .rect {
   display: flex-block;
-  min-height: 2em;
+  /*min-height: 2em;*/
   margin: 0.2em;
   background-color: #585f60;
   opacity: 0.1;
   transition: opacity .3s ease-in-out;
 }
 
-@media only screen and (min-width: 600px) {
+@media only screen and (min-aspect-ratio: 1/1) {
   .matrix {
-    display: flex;
-    height: 600px;
-    padding: 0 1em 0;
+    height: 99%;
+    padding: 0.5%;
   }
   .row {
+    width: 10%;
     flex-direction: column;
   }
   .rect {
-    height: 10%;
+    height: 20%;
   }
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-aspect-ratio: 1/1) {
+  .matrix {
+    flex-direction: column;
+    height: 99%;
+    padding: 0.5%;
+  }
   .row {
-    width: 100%;
     flex-direction: row;
-    align-items: center;
-    justify-content: center;
+    width: 100%;
+    height: 10%;
   }
   .rect {
-    width: 10%;
+    width: 20%;
   }
 }
 

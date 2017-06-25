@@ -28,11 +28,13 @@
 
 html * {
   font-family: "Open Sans";
+  /*height: 100%;*/
 }
 
 body {
   /*background-color: rgba(218, 223, 225, 1);*/
   background-color: #1c3435;
+  height: 100%;
 }
 
 h1 {

@@ -8,31 +8,23 @@
 		html, body {
 			background-color: #1c3435;
 		}
-		@font-face {
-		  font-family: 'Open Sans';
-		  font-style: italic;
-		  font-weight: 700;
-		  src: local('Open Sans Bold Italic'), local('OpenSans-BoldItalic'),
-		       url('./assets/fonts/open-sans-v14-latin/open-sans-v14-latin-700italic.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
-		       url('./assets/fonts/open-sans-v14-latin/open-sans-v14-latin-700italic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
-		}
 		#loadingTitle {
 			color: #eecdcc;
-			font-family: "Open Sans";
+			font-family: "";
 			font-style: italic;
 			font-weight: 700;
 			font-size: 10em;
 			font-variant: normal;
 			text-align: center;
 			margin-top: .4em;
+			transition: opacity 1s ease-out;
 		}
 		#spinner {
 			margin: 10% auto;
-			width: 200px;
-			height: 200px;
+			width: 120px;
+			height: 120px;
 			position: relative;
 			text-align: center;
-
 			-webkit-animation: sk-rotate 2.0s infinite linear;
 			animation: sk-rotate 2.0s infinite linear;
 		}
@@ -75,7 +67,11 @@
 			}
 		}
 		.loaded {
-			display: none;
+			opacity: 0;
+			/*display: none;*/
+		}
+		.fullHeight {
+			height: 100%;
 		}
 		</style>
     <!--
