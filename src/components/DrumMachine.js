@@ -75,12 +75,15 @@ class DrumMachine extends Component {
     this.playChain = this.playChain.bind(this);
     this.exitChain = this.exitChain.bind(this);
 
+    this.playDrumAni = this.playDrumAni.bind(this);
+
     this.sequencer = new Sequencer(
       this.state.data,
       this.setCurrentBeat,
       this.playNextChainElement,
       this.storeRecord,
       this.playNextRecordElement,
+      this.playDrumAni,
     );
 
     this.toggleHidden = this.toggleHidden.bind(this);
@@ -257,7 +260,6 @@ class DrumMachine extends Component {
    */
   storeRecord(records) {
     this.setState({ records });
-    console.log(this.state.records);
   }
 
   /**
@@ -546,6 +548,18 @@ class DrumMachine extends Component {
     this.setState({ currentPlayingChainElement: num, data });
   }
 
+  /**
+   * @param  {Array} column width of window
+   * [playRecord description]
+   */
+  playDrumAni(column) {
+    for (let i = 0; i < column.length; i += 1) {
+      if (column[i] < 5) {
+        this.ani.trigger(column[i]);
+      }
+    }
+  }
+
 	/**
    * [toggleHidden description]
    */
@@ -582,7 +596,7 @@ class DrumMachine extends Component {
         onTouchTap={() => this.playRecord(record.content)}
         style={{ color: 'black' }}
       >
-        <h4>{record.title}</h4>
+        <h4>{record.title}{record.content.length}</h4>
       </li>
     ));
   }

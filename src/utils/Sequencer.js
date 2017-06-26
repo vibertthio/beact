@@ -17,6 +17,7 @@ export default class Sequencer {
   recordMatrix: Array;
   recordFull: Array;
   isPlayingRecord: Array;
+  nowPlayingAni: Array;
 
   /**
    * [constructor description]
@@ -25,8 +26,10 @@ export default class Sequencer {
    * @param  {[type]} playNextChainElement [description]
    * @param  {[type]} storeRecord [description]
    * @param  {[type]} playNextRecordElement [description]
+   * @param  {[type]} playDrumAni [description]
    */
-  constructor(matrix, setCurrentBeat, playNextChainElement, storeRecord, playNextRecordElement) {
+  constructor(matrix, setCurrentBeat, playNextChainElement,
+    storeRecord, playNextRecordElement, playDrumAni) {
     this.matrix = matrix;
     this.number = 0;
     this.playing = true;
@@ -59,6 +62,7 @@ export default class Sequencer {
       volume: -10,
       fadeOut: 0.1,
     }).toMaster();
+    // this.nowPlayingAni = [];
 
     this.sequence = new Sequence((time, col) => {
       // console.log(`time : ${time}`);
@@ -69,10 +73,15 @@ export default class Sequencer {
       setCurrentBeat(this.beat);
 
       const column = this.matrix[col];
+      const nowPlayingAni = [];
       for (let i = 0; i < this.notes.length; i += 1) {
         if (column[i] === 1) {
           const vel = (Math.random() * 0.5) + 0.5;
           this.samples.start(this.notes[i], time, 0, '32n', 0, vel);
+          nowPlayingAni.push(i);
+        }
+        if (i === 7) {
+          playDrumAni(nowPlayingAni);
         }
       }
 
@@ -115,7 +124,6 @@ export default class Sequencer {
         playNextRecordElement();
       }
     }, Array.from(Array(this.matrix.length).keys()), '16n');
-
     Transport.start();
   }
 
