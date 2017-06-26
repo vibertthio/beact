@@ -5,11 +5,11 @@ import axios from 'axios';
  * Sequencer
  */
 export class Sequencer {
+  notes: Array<String>;
   samples: Object;
   sequence: Object;
   playing: Boolean;
   beat: Number;
-  notes: Array<String>;
   matrix: Array<Array<number>>;
   recording: Boolean;
   drumNoteChain: Array;
@@ -18,6 +18,7 @@ export class Sequencer {
   recordFull: Array;
   isPlayingRecord: Array;
   nowPlayingAni: Array;
+  startTime: Number;
 
   /**
    * [constructor description]
@@ -47,6 +48,8 @@ export class Sequencer {
     this.recordMatrix = [];
     this.recordFull = [];
     this.isPlayingRecord = false;
+    this.startTime = 0;
+    this.checkStart = false;
     this.storeRecord = record => storeRecord(record);
     this.samples = new MultiPlayer({
       urls: {
@@ -75,6 +78,10 @@ export class Sequencer {
       const column = this.matrix[col];
       const nowPlayingAni = [];
       for (let i = 0; i < this.notes.length; i += 1) {
+        if (col === 0 && i === 0 && this.checkStart === false) {
+          this.checkStart = true;
+          this.startTime = time;
+        }
         if (column[i] === 1) {
           const vel = (Math.random() * 0.5) + 0.5;
           this.samples.start(this.notes[i], time, 0, '32n', 0, vel);
@@ -208,5 +215,51 @@ export class Sequencer {
  * Keyboard
  */
 export class Keyboard {
+  notes: Array<String>;
+  samples: Object;
 
+  /**
+   * [constructor description]
+   * @param  {[type]} currentKey [description]
+   * @param  {[type]} clearCurrentKey [description]
+   */
+  constructor() {
+    this.currentKey = null;
+    this.notes = [
+      'kk',
+      'sn',
+      'hh',
+      'ho',
+      'A',
+      'F#',
+      'E',
+      'C#',
+    ];
+    this.samples = new MultiPlayer({
+      urls: {
+        kk: './assets/audio/505/kick.mp3',
+        sn: './assets/audio/505/snare.mp3',
+        hh: './assets/audio/505/hh.mp3',
+        ho: './assets/audio/505/hho.mp3',
+        A: './assets/audio/casio/A1.mp3',
+        'C#': './assets/audio/casio/Cs2.mp3',
+        E: './assets/audio/casio/E2.mp3',
+        'F#': './assets/audio/casio/Fs2.mp3',
+      },
+      volume: -10,
+      fadeOut: 0.1,
+    }).toMaster();
+  }
+
+  /**
+   * [playKey description]
+   */
+  playKey() {
+    if (this.currentKey !== null) {
+      console.log(Transport.seconds);
+      console.log(this.currentKey);
+      this.samples.start(this.notes[this.currentKey]);
+      this.currentKey = null;
+    }
+  }
 }
