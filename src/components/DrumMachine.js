@@ -173,7 +173,8 @@ class DrumMachine extends Component {
     }
     this.setState({ currentChainElement: id, data });
   }
-	/**
+
+  /**
    * [showDOM description]
    */
 	showDOM() {
@@ -262,8 +263,10 @@ class DrumMachine extends Component {
   recordSequencer() {
     if (this.sequencer.recording === true) {
       this.sequencer.stopRecording();
+      this.keyboard.stopRecording();
     } else {
       this.sequencer.startRecording();
+      this.keyboard.startRecording();
     }
   }
 
@@ -272,7 +275,8 @@ class DrumMachine extends Component {
    */
   saveRecord() {
     // add title as a paramater (feature)
-    this.sequencer.saveRecord();
+    this.sequencer.stopRecording();
+    this.sequencer.saveRecord(this.keyboard.saveRecord);
   }
 
   /**
