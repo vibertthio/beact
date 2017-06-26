@@ -1021,7 +1021,7 @@ class DrumMachine extends Component {
 						user guide
           </div>
         </div> */}
-        <div
+        <button
           className={
 						`${styles.mask}
 						 ${(hidden === false ? styles.showMask : styles.hideMask)}`}

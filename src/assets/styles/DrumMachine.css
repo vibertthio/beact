@@ -112,6 +112,8 @@
   opacity: 0.3;
   z-index: 1;
   transition: margin .7s ease-in-out;
+  border: none;
+  outline: none;
 }
 
 .hideMask {
