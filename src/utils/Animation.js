@@ -1169,6 +1169,7 @@ function Animation() {
      */
     function setDirection() {
       direction = (Math.random() > 0.5);
+      timer.rotation = Math.random() * TWO_PI;
     }
 
     // methods
@@ -1207,6 +1208,156 @@ function Animation() {
     return EXPORT;
   }());
 
+  /**
+   * Animation #16, Pinwheel
+   * @param  {number} [opacity = 1]
+   * @param  {number} [duration = 400]
+   * @return {Object}
+   */
+  (function makePinwheel(opacity = 1, duration = 400) {
+    let playing = false;
+    let distance = two.height / 5;
+    const amount = 8;
+    const startAngle = 0;
+    const endAngle = TWO_PI;
+    const drift = Math.random() * TWO_PI;
+
+    /**
+     * [setup description]
+     * @return {[type]} [description]
+     */
+    function setup() {
+      const points = _.map(_.range(amount), () => new Two.Anchor(
+        distance * Math.cos(startAngle),
+        distance * Math.sin(startAngle),
+      ));
+      console.log(points);
+
+      const shape = two.makeShape(points);
+      shape.fill = pallete[4];
+      shape.noStroke();
+      shape.translation.set(two.width * 0.5, two.height * 0.5);
+      // shape.visible = false;
+
+      const sequence = [];
+
+      const aniOut = new TWEEN.Tween(shape)
+        .to({ scale: 0 }, duration)
+        .easing(TWEEN.Easing.Sinusoidal.Out)
+        .onComplete(() => {
+          playing = false;
+        });
+
+      _.each(_.range(amount), (i) => {
+        const index = i + 1;
+        const center = Math.PI * (index / amount);
+        const parallel = [];
+        _.each(_.range(amount), (j) => {
+          const pct = min(j / index, 1.0);
+          const theta = (pct * endAngle) + startAngle + center + drift;
+          const p = points[j];
+          const xpos = distance * Math.cos(theta);
+          const ypos = distance * Math.sin(theta);
+
+          const tween = new TWEEN.Tween(p)
+            .to({ x: xpos, y: ypos }, duration)
+            .onStart(() => {
+              if (j === 0) {
+                console.log(`${i} animation start`);
+              } else {
+                console.log(j);
+              }
+            })
+            .onUpdate(() => {
+              if (j === 0) {
+                // console.log(`x : ${p.x}`);
+                console.log(`y : ${p.y}`);
+              }
+            })
+            .easing(TWEEN.Easing.Sinusoidal.Out);
+
+          parallel.push(tween);
+        });
+        const tween = parallel[0];
+        tween.onComplete(() => {
+          const paral = sequence[index];
+          if (_.isArray(paral)) {
+            _.each(paral, p => p.start());
+          } else {
+            aniOut.start();
+          }
+        });
+        sequence.push(parallel);
+      });
+
+      console.log(sequence);
+
+      const aniIn = {
+        start: () => {
+          console.log('aniIn start');
+          for (let i = 0, n = sequence[0].length; i < n; i += 1) {
+            const tween = sequence[0][i];
+            tween.start();
+          }
+        },
+        stop: () => {
+          sequence.forEach((p) => {
+            p.forEach((t) => {
+              t.stop();
+            });
+          });
+        },
+      };
+
+      return {
+        shape,
+        points,
+        aniIn,
+        aniOut,
+      };
+    }
+
+    let { shape, points, aniIn, aniOut } = setup();
+
+    // methods
+    const resize = () => {
+      two.remove(shape);
+      distance = two.height / 5;
+      ({ shape, points, aniIn, aniOut } = setup());
+    };
+
+    const reset = () => {
+      playing = false;
+      points.forEach((p) => {
+        p.set(
+          distance * Math.cos(startAngle),
+          distance * Math.sin(startAngle),
+        );
+      });
+      shape.visible = false;
+      shape.rotation = Math.random() * TWO_PI;
+      shape.scale = 1;
+      shape._update();
+      aniIn.stop();
+      aniOut.stop();
+    };
+
+    const start = () => {
+      reset();
+      playing = true;
+      shape.visible = true;
+      aniIn.start();
+    };
+
+    const EXPORT = {
+      playing,
+      start,
+      reset,
+      resize,
+    };
+    animations.push(EXPORT);
+    return EXPORT;
+  }());
 
 	/**
    * Animation #17, Glimmer
