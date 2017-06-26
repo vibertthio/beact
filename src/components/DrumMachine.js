@@ -611,7 +611,7 @@ class DrumMachine extends Component {
     key('a', () => {
       this.keyboard.currentKey = 1;
       this.keyboard.playKey();
-      this.ani.trigger(22);
+      this.ani.trigger(23);
     });
     key('s', () => {
       this.keyboard.currentKey = 2;
