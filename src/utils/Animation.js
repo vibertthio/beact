@@ -1936,6 +1936,435 @@ function Animation() {
     return EXPORT;
   }());
 
+  /**
+   * Animation #22, Sinwave
+   * @param  {number} [opacity = 1]
+   * @param  {number} [duration = 400]
+   * @return {Object}
+   */
+  (function makeSinwave(opacity = 1, duration = 400) {
+    let playing = false;
+    const amount = 200;
+    let points;
+
+    /**
+     * [setPoints description]
+     */
+    function setPoints() {
+      const phi = Math.round(Math.random() * 6) + 1;
+      const offset = Math.PI / 2;
+
+      for (let i = 0; i < amount; i += 1) {
+        const v = points[i];
+        const pct = i / amount;
+        const theta = (TWO_PI * phi * pct) + offset;
+        const w = two.width * 0.5;
+        const h = two.height * 0.33;
+        v.set(
+          map(pct, 0, 1, -w / 2, w / 2),
+          h * Math.sin(theta),
+        );
+      }
+    }
+    /**
+     * [setup description]
+     * @return {[type]} [description]
+     */
+    function setup() {
+      // first hemisphere
+      const sinewave = two.makePolygon(
+        two.width * 0.5,
+        two.height * 0.5,
+        0,
+        amount,
+      );
+      points = sinewave.vertices;
+      sinewave.noFill();
+      sinewave.stroke = pallete[4];
+      sinewave.linewidth = min(two.width, two.height) * 0.025;
+      sinewave.cap = 'round';
+      sinewave.join = 'round';
+      sinewave.closed = false;
+      sinewave.visible = false;
+      sinewave.noFill();
+      setPoints();
+
+      const aniOut = new TWEEN.Tween(sinewave)
+        .to({ beginning: 1.0 }, duration)
+        .easing(TWEEN.Easing.Sinusoidal.In)
+        .onComplete(() => {
+          sinewave.visible = false;
+        })
+        ;
+
+      const aniIn = new TWEEN.Tween(sinewave)
+        .to({ ending: 1.0 }, duration)
+        .easing(TWEEN.Easing.Sinusoidal.Out)
+        .onComplete(() => {
+          aniOut.start();
+        });
+
+      return {
+        sinewave,
+        aniIn,
+        aniOut,
+      };
+    }
+
+    let { sinewave, aniIn, aniOut } = setup();
+
+    // methods
+    const resize = () => {
+      two.remove(sinewave);
+      ({ sinewave, aniIn, aniOut } = setup());
+    };
+
+    const reset = () => {
+      playing = false;
+      sinewave.visible = false;
+      sinewave.beginning = 0;
+      sinewave.ending = 0;
+      setPoints();
+      aniIn.stop();
+      aniOut.stop();
+    };
+
+    const start = () => {
+      reset();
+      playing = true;
+      sinewave.visible = true;
+      aniIn.start();
+    };
+
+    const EXPORT = {
+      playing,
+      start,
+      reset,
+      resize,
+    };
+    animations.push(EXPORT);
+    return EXPORT;
+  }());
+
+  /**
+   * Animation #23, Bubbles
+   * @param  {number} [opacity = 1]
+   * @param  {number} [duration = 400]
+   * @return {Object}
+   */
+  (function makeBubbles(opacity = 1, duration = 250) {
+    let playing = false;
+    const amount = 24;
+    const last = amount - 1;
+    let radius = min(two.width, two.height) * 0.33;
+    let bubbleRadius = min(two.width, two.height) / 90;
+    let direction = false;
+
+    /**
+     * [setPoints description]
+     */
+    function setCircles() {
+
+    }
+    /**
+     * [setup description]
+     * @return {[type]} [description]
+     */
+    function setup() {
+      const circles = range(amount).map((i) => {
+        const pct = i / last;
+        const circle = two.makeCircle(radius, 0, bubbleRadius);
+        circle.theta = 0;
+        circle.destination = pct * TWO_PI;
+        return circle;
+      });
+      setCircles();
+      const group = two.makeGroup(circles);
+      group.noStroke();
+      group.fill = pallete[4];
+      group.translation.set(two.width * 0.5, two.height * 0.5);
+      group.visible = false;
+      const aniOuts = _.map(circles, (c, i) => {
+        console.log(`#${i} out ani init`);
+        const next =
+          (!circles[i + 1]) ?
+          TWO_PI : (circles[i + 1].destination);
+
+        return new TWEEN.Tween(c)
+          .to({ theta: next }, duration / (amount - (i)))
+          // .easing(Easing.Circular.Out)
+          .onStart(() => {
+            console.log(`#${i} out ani start`);
+          })
+          .onUpdate(() => {
+            const theta = direction ? c.theta : -c.theta;
+            const x = radius * Math.cos(theta);
+            const y = radius * Math.sin(theta);
+            c.translation.set(x, y);
+          })
+          .onComplete(() => {
+            circles[i].visible = false;
+            if (i < last) {
+              aniOuts[i + 1].start();
+              if (i === last - 1) {
+                group.visible = false;
+              }
+            }
+          });
+      });
+
+      const aniIns = _.map(circles, (c, i) =>
+        new TWEEN.Tween(c)
+          .to({ theta: c.destination }, duration / (i + 1))
+          .onStart(() => {
+            circles[i].visible = true;
+          })
+          .onUpdate(() => {
+            const theta = direction ? c.theta : -c.theta;
+            const x = radius * Math.cos(theta);
+            const y = radius * Math.sin(theta);
+            c.translation.set(x, y);
+          })
+          .onComplete(() => {
+            console.log(`#${i} in ani complete`);
+            console.log(`last:${last}`);
+            if (i >= last) {
+              aniOuts[0].start();
+              return;
+            }
+
+            const next = circles[i + 1];
+            const tween = aniIns[i + 1];
+            next.theta = c.theta;
+            next.translation.copy(c.translation);
+            tween.start();
+          }),
+      );
+
+
+      const aniOut = {
+        stop: () => {
+          aniOuts.forEach(a => a.stop());
+        },
+      };
+
+      const aniIn = {
+        start: () => {
+          aniIns[0].start();
+        },
+        stop: () => {
+          aniIns.forEach(a => a.stop());
+        },
+      };
+
+
+      return {
+        group,
+        circles,
+        aniIn,
+        aniOut,
+      };
+    }
+
+    let { group, circles, aniIn, aniOut } = setup();
+
+    // methods
+    const resize = () => {
+      group.remove(circles);
+      two.remove(group);
+      radius = min(two.width, two.height) * 0.33;
+      bubbleRadius = min(two.width, two.height) / 90;
+      direction = TWO_PI * Math.random() > 0.5;
+      ({ group, circles, aniIn, aniOut } = setup());
+    };
+
+    const reset = () => {
+      playing = false;
+      group.visible = false;
+      group.rotation = TWO_PI * Math.random();
+      for (let i = 0; i < amount; i += 1) {
+        const pct = i / last;
+        const circle = circles[i];
+        circle.translation.set(radius, 0);
+        circle.theta = 0;
+        circle.destination = pct * TWO_PI;
+      }
+      aniIn.stop();
+      aniOut.stop();
+    };
+
+    const start = () => {
+      reset();
+      playing = true;
+      group.visible = true;
+      aniIn.start();
+    };
+
+    const EXPORT = {
+      playing,
+      start,
+      reset,
+      resize,
+    };
+    animations.push(EXPORT);
+    return EXPORT;
+  }());
+
+  /**
+   * Animation #24, Corona
+   * @param  {number} [opacity = 1]
+   * @param  {number} [duration = 400]
+   * @return {Object}
+   */
+  (function makeCorona(opacity = 1, duration = 250) {
+    let playing = false;
+    const amount = 24;
+    const last = amount - 1;
+    let radius = min(two.width, two.height) * 0.33;
+    let bubbleRadius = min(two.width, two.height) / 30;
+    let direction = false;
+
+    /**
+     * [setup description]
+     * @return {[type]} [description]
+     */
+    function setup() {
+      const circles = range(amount).map((i) => {
+        const pct = i / last;
+
+        const circle = two.makePolygon(radius, 0, bubbleRadius, 3);
+        circle.rotation = TWO_PI * 0.25;
+        circle.theta = 0;
+        circle.destination = pct * TWO_PI;
+        return circle;
+      });
+      const group = two.makeGroup(circles);
+      group.noStroke();
+      group.fill = pallete[4];
+      group.translation.set(two.width * 0.5, two.height * 0.5);
+      group.visible = false;
+      const aniOuts = _.map(circles, (c, i) => {
+        // console.log(`#${i} out ani init`);
+        const next =
+          (!circles[i + 1]) ?
+          TWO_PI : (circles[i + 1].destination);
+
+        return new TWEEN.Tween(c)
+          .to({ theta: next }, duration / (amount - (i)))
+          .onUpdate(() => {
+            const theta = direction ? c.theta : -c.theta;
+            const x = radius * Math.cos(theta);
+            const y = radius * Math.sin(theta);
+            c.translation.set(x, y);
+            circles[i].rotation = theta + (TWO_PI * 0.25);
+          })
+          .onComplete(() => {
+            circles[i].visible = false;
+            if (i < last) {
+              aniOuts[i + 1].start();
+              if (i === last - 1) {
+                group.visible = false;
+              }
+            }
+          });
+      });
+
+      const aniIns = _.map(circles, (c, i) =>
+        new TWEEN.Tween(c)
+          .to({ theta: c.destination }, duration / (i + 1))
+          .onStart(() => {
+            circles[i].visible = true;
+          })
+          .onUpdate(() => {
+            const theta = direction ? c.theta : -c.theta;
+            const x = radius * Math.cos(theta);
+            const y = radius * Math.sin(theta);
+            c.translation.set(x, y);
+            circles[i].rotation = theta + (TWO_PI * 0.25);
+          })
+          .onComplete(() => {
+            if (i >= last) {
+              aniOuts[0].start();
+              return;
+            }
+
+            const next = circles[i + 1];
+            const tween = aniIns[i + 1];
+            next.theta = c.theta;
+            next.translation.copy(c.translation);
+            tween.start();
+          }),
+      );
+
+
+      const aniOut = {
+        stop: () => {
+          aniOuts.forEach(a => a.stop());
+        },
+      };
+
+      const aniIn = {
+        start: () => {
+          aniIns[0].start();
+        },
+        stop: () => {
+          aniIns.forEach(a => a.stop());
+        },
+      };
+
+      return {
+        group,
+        circles,
+        aniIn,
+        aniOut,
+      };
+    }
+
+    let { group, circles, aniIn, aniOut } = setup();
+
+    // methods
+    const resize = () => {
+      group.remove(circles);
+      two.remove(group);
+      radius = min(two.width, two.height) * 0.33;
+      bubbleRadius = min(two.width, two.height) / 90;
+      direction = TWO_PI * Math.random() > 0.5;
+      ({ group, circles, aniIn, aniOut } = setup());
+    };
+
+    const reset = () => {
+      playing = false;
+      group.visible = false;
+      group.rotation = TWO_PI * Math.random();
+      for (let i = 0; i < amount; i += 1) {
+        const pct = i / last;
+        const circle = circles[i];
+        circle.translation.set(radius, 0);
+        circle.rotation = TWO_PI * 0.25;
+        circle.theta = 0;
+        circle.destination = pct * TWO_PI;
+      }
+      aniIn.stop();
+      aniOut.stop();
+    };
+
+    const start = () => {
+      reset();
+      playing = true;
+      group.visible = true;
+      aniIn.start();
+    };
+
+    const EXPORT = {
+      playing,
+      start,
+      reset,
+      resize,
+    };
+    animations.push(EXPORT);
+    return EXPORT;
+  }());
+
 
   const trigger = (index) => {
     animations[index].start();
