@@ -57,7 +57,7 @@ class DrumMachine extends Component {
       currentPlayingRecord: [],
       currentPlayingRecordElement: 0,
 
-			hidden: false,
+			hidden: true,
 			wait: true,
 			idle: false,
     };
