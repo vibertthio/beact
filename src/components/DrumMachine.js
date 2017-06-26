@@ -3,6 +3,7 @@ import { WindowResizeListener } from 'react-window-resize-listener';
 import _ from 'lodash';
 import uuid4 from 'uuid/v4';
 import axios from 'axios';
+import key from 'keymaster';
 import NavigationMenuIcon from 'material-ui/svg-icons/navigation/menu';
 import NavigationCloseIcon from 'material-ui/svg-icons/navigation/close';
 
@@ -77,6 +78,8 @@ class DrumMachine extends Component {
 
     this.playDrumAni = this.playDrumAni.bind(this);
 
+    this.detectKeyboard = this.detectKeyboard.bind(this);
+
     this.sequencer = new Sequencer(
       this.state.data,
       this.setCurrentBeat,
@@ -95,6 +98,7 @@ class DrumMachine extends Component {
    * [componentDidMount description]
    */
   componentDidMount() {
+    this.detectKeyboard();
     // this.ani = new Animation();
     this.ani = Animation();
     axios.get('/api/patterns')
@@ -142,6 +146,7 @@ class DrumMachine extends Component {
    */
   setCurrentChainElementAtLast() {
     this.sequencer.isPlayingChain = false;
+    this.sequencer.isPlayingRecord = false;
     this.setState({ currentChainElement: '' });
   }
 
@@ -151,6 +156,7 @@ class DrumMachine extends Component {
    */
   setCurrentChainElementAtHere(id) {
     this.sequencer.isPlayingChain = false;
+    this.sequencer.isPlayingRecord = false;
     const drumNoteChain = this.state.drumNoteChain;
     const data = this.state.data;
     for (let k = 0; k < drumNoteChain.length; k += 1) {
@@ -558,6 +564,23 @@ class DrumMachine extends Component {
     }
   }
 
+  /**
+   * [detectKeyboard description]
+   */
+  detectKeyboard() {
+    key('a', () => this.ani.trigger(1));
+    key('s', () => this.ani.trigger(2));
+    key('d', () => this.ani.trigger(3));
+    key('f', () => this.ani.trigger(4));
+    key('q', () => this.ani.trigger(5));
+    key('w', () => this.ani.trigger(6));
+    key('e', () => this.ani.trigger(7));
+    key('r', () => this.ani.trigger(8));
+    key('t', () => this.ani.trigger(9));
+    key('z', () => this.ani.trigger(10));
+    key('x', () => this.ani.trigger(11));
+  }
+
 	/**
    * [toggleHidden description]
    */
@@ -793,6 +816,12 @@ class DrumMachine extends Component {
         <WindowResizeListener
           onResize={w => this.handleResize(w.windowWidth, w.windowHeight)}
         />
+        <div>
+          <input
+            type="text" id="one"
+            onKeyPress={this.detectKeyboard}
+          />
+        </div>
       </div>
     );
   }
