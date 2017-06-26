@@ -71,14 +71,12 @@ npm run server
 ## 按鈕功能
 
 ### start/stop
-* **start** ：循環播放當下的data。若在按下 start 前最後有選取過特定 Pattern，則會播放該 Pattern。若最後選取的是特定的 Chain Element，則會播放該 Chain Element。若最後有按下 Play Chain 且沒有 Exit Chain，則會播放整個 Chain。若以上行為皆不滿足，則直接播放當下的 data。
-* **stop** ：將當下播放的 data 停止。若於 stop 後重新按 start，則會再從頭播當下的data。
+* **start** ：循環播放當下的data。若在按下 start 前最後有選取過特定 Pattern，則會播放該 Pattern。若最後選取的是特定的 Chain Element，則會播放該 Chain Element。若最後有按下 Play Chain 且沒有 Exit Chain，則會播放整個 Chain。若最後有按下 Record 且沒重複按偶數次，則進入錄音模式。若以上行為皆不滿足，則直接播放當下的 data。
+* **stop** ：將當下播放的 data 停止。若於 stop 後重新按 start，則會再從頭播當下的data。當進入錄音模式時，stop 將暫時無功能。
 
 ### Recorder
 * **{RecordList}** ：列出當前所有的 Record。可透過點選來播放。
-* **Record** ：按下後進入錄音模式，再按一下會暫停錄音。錄製的內容為有在播放時撥出的內容。
-* **Save** ：將 Record 停止，並將錄製的內容儲存，並更新至 RecordList。
-* **Clear Current Record** ：若當下有在錄音，不論錄音暫停與否，會清除當前錄製但尚未儲存的片段。
+* **Record** ：按下後進入準備錄音模式，此時按 start 會開始錄音。再按一次 Record 會停止錄音並將錄製的內容儲存至資料庫。錄製的內容為有在播放時撥出的內容。
 * **Exit Playing Record** ：若當前正在播放錄音，將停止播放並清空版面。
 
 ### Pattern
