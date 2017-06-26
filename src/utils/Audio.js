@@ -1,6 +1,8 @@
 import { MultiPlayer, Sequence, Transport } from 'tone';
 import axios from 'axios';
+import uuid4 from 'uuid/v4';
 
+let temperId = uuid4();
 /**
  * Sequencer
  */
@@ -51,6 +53,7 @@ export class Sequencer {
     this.startTime = 0;
     this.checkStart = false;
     this.storeRecord = record => storeRecord(record);
+    // this.setTemperId = Id => setTemperId(Id);
     this.samples = new MultiPlayer({
       urls: {
         kk: './assets/audio/505/kick.mp3',
@@ -119,7 +122,6 @@ export class Sequencer {
             }
             this.recordFull.push(recordMatrix);
             this.recordMatrix = [];
-            console.log(this.recordFull);
           }
         }
       }
@@ -171,7 +173,6 @@ export class Sequencer {
    */
   startRecording() {
     this.recording = true;
-    // console.log(this.recording);
   }
 
   /**
@@ -179,26 +180,35 @@ export class Sequencer {
    */
   stopRecording() {
     this.recording = false;
-    // console.log(this.recording);
+    this.sequence.stop();
   }
 
   /**
-   * [saveRecord description]
+  * @param  {Function} saveKeyboardRecord width of window
+   * [storeRecord description]
    */
-  saveRecord() {
-    this.sequence.stop();
-    axios.post('/api/notes', {
-      title: 'Notes',
-      content: this.recordFull,
-    })
-    .catch(err => console.log(err));
-    axios.get('/api/notes')
-      .then((res) => {
-        this.storeRecord(res.data);
+  saveRecord(saveKeyboardRecord) {
+    if (this.recordFull.length > 0) {
+      console.log(this.recordFull);
+      axios.post('/api/notes', {
+        id: temperId,
+        title: 'Notes',
+        content: this.recordFull,
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .then(
+        axios.get('/api/notes')
+          .then((res) => {
+            console.log(res.data);
+            this.storeRecord(res.data);
+            saveKeyboardRecord(temperId);
+            temperId = uuid4();
+          })
+          .catch((err) => {
+            console.log(err);
+          }),
+      )
+      .catch(err => console.log(err));
+    }
     this.recordFull = [];
   }
 
@@ -215,16 +225,17 @@ export class Sequencer {
  * Keyboard
  */
 export class Keyboard {
+  currentKey: Number;
+  record: Array;
   notes: Array<String>;
   samples: Object;
-
+  recording: Boolean;
   /**
    * [constructor description]
-   * @param  {[type]} currentKey [description]
-   * @param  {[type]} clearCurrentKey [description]
    */
   constructor() {
     this.currentKey = null;
+    this.record = [];
     this.notes = [
       'kk',
       'sn',
@@ -249,6 +260,8 @@ export class Keyboard {
       volume: -10,
       fadeOut: 0.1,
     }).toMaster();
+    this.recording = false;
+    this.saveRecord = this.saveRecord.bind(this);
   }
 
   /**
@@ -256,10 +269,37 @@ export class Keyboard {
    */
   playKey() {
     if (this.currentKey !== null) {
-      console.log(Transport.seconds);
-      console.log(this.currentKey);
       this.samples.start(this.notes[this.currentKey]);
+      if (this.recording === true) {
+        this.record.push({ time: Transport.seconds, key: this.currentKey });
+        console.log(this.record);
+      }
       this.currentKey = null;
     }
+  }
+
+  /**
+   * [startRecording description]
+   */
+  startRecording() {
+    this.recording = true;
+  }
+
+  /**
+   * [stopRecording description]
+   */
+  stopRecording() {
+    this.recording = false;
+  }
+
+  /**
+  * @param  {String} recordId width of window
+   * [saveRecord description]
+   */
+  saveRecord(recordId) {
+    const keyBoardRecord = {
+      content: this.record,
+      id: recordId,
+    };
   }
 }

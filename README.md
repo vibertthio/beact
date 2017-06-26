@@ -77,7 +77,7 @@ npm run server
 ### Recorder
 * **{RecordList}** ：列出當前所有的 Record。可透過點選來播放。
 * **Record** ：按下後進入錄音模式，再按一下會暫停錄音。錄製的內容為有在播放時撥出的內容。
-* **Save** ：將錄製的內容儲存，並更新至 RecordList
+* **Save** ：將 Record 停止，並將錄製的內容儲存，並更新至 RecordList。
 * **Clear Current Record** ：若當下有在錄音，不論錄音暫停與否，會清除當前錄製但尚未儲存的片段。
 * **Exit Playing Record** ：若當前正在播放錄音，將停止播放並清空版面。
 

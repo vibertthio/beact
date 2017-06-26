@@ -1,7 +1,7 @@
 import mongoose, { Schema } from 'mongoose';
 
 const DrumSchema = new Schema({
-  id: Number,
+  id: String,
   title: String,
   content: Array,
 });
