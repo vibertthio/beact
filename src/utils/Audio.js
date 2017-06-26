@@ -51,7 +51,6 @@ export class Sequencer {
     this.recordFull = [];
     this.isPlayingRecord = false;
     this.startTime = 0;
-    this.checkStart = false;
     this.storeRecord = record => storeRecord(record);
     this.samples = new MultiPlayer({
       urls: {
@@ -67,7 +66,9 @@ export class Sequencer {
       volume: -10,
       fadeOut: 0.1,
     }).toMaster();
+    this.checkStart = false;
     // this.nowPlayingAni = [];
+    this.saveRecord = this.saveRecord.bind(this);
 
     this.sequence = new Sequence((time, col) => {
       // console.log(`time : ${time}`);
@@ -120,7 +121,8 @@ export class Sequencer {
               }
             }
             this.recordFull.push(recordMatrix);
-            console.log(this.startTime);
+            console.log(`startTime: ${this.startTime}`);
+            console.log(`recordFull: ${this.recordFull}`);
             this.recordMatrix = [];
           }
         }
@@ -180,7 +182,7 @@ export class Sequencer {
    */
   stopRecording() {
     this.recording = false;
-    this.sequence.stop();
+    this.stop();
   }
 
   /**
@@ -190,7 +192,6 @@ export class Sequencer {
   saveRecord(saveKeyboardRecord) {
     this.checkStart = false;
     if (this.recordFull.length > 0) {
-      console.log(this.recordFull);
       axios.post('/api/notes', {
         id: temperId,
         title: 'Notes',
@@ -198,11 +199,15 @@ export class Sequencer {
         startTime: this.startTime,
       })
       .then(
+        saveKeyboardRecord(temperId),
+      )
+      .then(
+        this.recordFull = [],
+      )
+      .then(
         axios.get('/api/notes')
           .then((res) => {
-            console.log(res.data);
             this.storeRecord(res.data);
-            saveKeyboardRecord(temperId);
             temperId = uuid4();
           })
           .catch((err) => {
@@ -211,16 +216,6 @@ export class Sequencer {
       )
       .catch(err => console.log(err));
     }
-    this.recordFull = [];
-  }
-
-  /**
-   * [clearRecord description]
-   */
-  clearRecord() {
-    this.sequence.stop();
-    this.checkStart = false;
-    this.recordFull = [];
   }
 }
 
@@ -237,11 +232,6 @@ export class Keyboard {
    * [constructor description]
    */
   constructor() {
-    this.startRecordingTime = 0;
-    this.stopRecordingTime = 0;
-    this.gapTimeCorrection = 0;
-    this.recordStatusChange = false;
-    this.haveClearRecord = false;
     this.currentKey = null;
     this.record = [];
     this.notes = [
@@ -279,9 +269,9 @@ export class Keyboard {
     if (this.currentKey !== null) {
       this.samples.start(this.notes[this.currentKey]);
       if (this.recording === true) {
-        const time = Transport.seconds - this.gapTimeCorrection;
+        const time = Transport.seconds;
         this.record.push({ time, key: this.currentKey });
-        console.log(this.record);
+        console.log(`keyBoardRecord: ${this.record}`);
       }
       this.currentKey = null;
     }
@@ -292,20 +282,6 @@ export class Keyboard {
    */
   startRecording() {
     this.recording = true;
-    if (this.stopRecordingTime > this.startRecordingTime || this.startRecordingTime === 0) {
-      this.startRecordingTime = Transport.seconds;
-    }
-    if (this.stopRecordingTime < this.startRecordingTime && this.stopRecordingTime !== 0
-      && this.haveClearRecord === false) {
-      const gapTime = this.startRecordingTime - this.stopRecordingTime;
-      this.gapTimeCorrection += gapTime;
-      console.log(this.gapTimeCorrection);
-    } else if (this.haveClearRecord === true) {
-      this.gapTimeCorrection = 0;
-      this.haveClearRecord = false;
-      console.log('gap');
-      console.log(this.gapTimeCorrection);
-    }
   }
 
   /**
@@ -313,9 +289,6 @@ export class Keyboard {
    */
   stopRecording() {
     this.recording = false;
-    if (this.stopRecordingTime < this.startRecordingTime) {
-      this.stopRecordingTime = Transport.seconds;
-    }
   }
 
   /**
@@ -323,11 +296,11 @@ export class Keyboard {
    * [saveRecord description]
    */
   saveRecord(recordId) {
-    this.gapTimeCorrection = 0;
     const keyBoardRecord = {
       content: this.record,
       id: recordId,
     };
+    console.log(`keyBoardRecord: ${keyBoardRecord}`);
     this.record = [];
   }
 }

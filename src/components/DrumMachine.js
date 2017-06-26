@@ -54,7 +54,6 @@ class DrumMachine extends Component {
     this.setCurrentBeat = this.setCurrentBeat.bind(this);
     this.recordSequencer = this.recordSequencer.bind(this);
     this.saveRecord = this.saveRecord.bind(this);
-    this.clearRecord = this.clearRecord.bind(this);
 
     this.storeRecord = this.storeRecord.bind(this);
     this.playRecord = this.playRecord.bind(this);
@@ -262,10 +261,8 @@ class DrumMachine extends Component {
     this.setState({
       playing: true,
     });
-    console.log(this.keyboard.recordStatusChange);
-    if (this.sequencer.recording === true || this.keyboard.recordStatusChange === true) {
+    if (this.sequencer.recording === true) {
       this.keyboard.startRecording();
-      this.keyboard.recordStatusChange = false;
     }
   }
 
@@ -273,35 +270,30 @@ class DrumMachine extends Component {
    * [stopSequencer description]
    */
   stopSequencer() {
-    this.sequencer.stop();
-    if (this.keyboard.recording === true) {
-      this.keyboard.stopRecording();
-      this.keyboard.recordStatusChange = true;
+    if (this.sequencer.recording !== true) {
+      this.sequencer.stop();
+      this.setState({
+        playing: false,
+        currentBeat: 0,
+      });
     }
-    this.setState({
-      playing: false,
-      currentBeat: 0,
-    });
   }
 
   /**
    * [recordSequencer description]
    */
   recordSequencer() {
-    if (this.sequencer.recording === true && this.keyboard.recordStatusChange === true) {
-      this.keyboard.recordStatusChange = false;
-    }
     if (this.sequencer.recording === true) {
-      console.log('stop');
       this.sequencer.stopRecording();
       this.keyboard.stopRecording();
       this.setState({
         playing: false,
         currentBeat: 0,
       });
+      this.saveRecord();
     } else {
+      // countDown 3 seconds
       this.sequencer.startRecording();
-      console.log('start');
       if (this.state.playing === true) {
         this.keyboard.startRecording();
       }
@@ -313,25 +305,7 @@ class DrumMachine extends Component {
    */
   saveRecord() {
     // add title as a paramater (feature)
-    this.sequencer.stopRecording();
     this.sequencer.saveRecord(this.keyboard.saveRecord);
-    if (this.state.playing === true) {
-      this.keyboard.startRecording();
-    }
-  }
-
-  /**
-   * [clearRecord description]
-   */
-  clearRecord() {
-    this.sequencer.clearRecord();
-    this.setState({
-      playing: false,
-      currentBeat: 0,
-    });
-    this.keyboard.stopRecording();
-    this.keyboard.haveClearRecord = true;
-    this.keyboard.record = [];
   }
 
   /**
@@ -347,7 +321,6 @@ class DrumMachine extends Component {
    * [playRecord description]
    */
   playRecord(record) {
-    console.log(record);
     this.sequencer.isPlayingChain = false;
     this.sequencer.isPlayingRecord = true;
     this.stopSequencer();
@@ -593,7 +566,7 @@ class DrumMachine extends Component {
   }
 
   /**
-   * [clearChain description]
+   * [exitChain description]
    */
   exitChain() {
     if (this.sequencer.isPlayingChain === true) {
@@ -829,18 +802,6 @@ class DrumMachine extends Component {
               onTouchTap={() => this.recordSequencer()}
             >
 	            Record
-	          </div>
-            <div
-              className={styles.btn}
-              onTouchTap={() => this.saveRecord()}
-            >
-	            Save
-	          </div>
-            <div
-              className={styles.btn}
-              onTouchTap={() => this.clearRecord()}
-            >
-	            Clear Current Record
 	          </div>
             <div
               className={styles.btn}
