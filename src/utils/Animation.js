@@ -1214,7 +1214,7 @@ function Animation() {
    * @param  {number} [duration = 400]
    * @return {Object}
    */
-  (function makePinwheel(opacity = 1, duration = 400) {
+  (function makePinwheel(opacity = 1, duration = 300) {
     let playing = false;
     let distance = two.height / 5;
     const amount = 8;
@@ -1227,17 +1227,16 @@ function Animation() {
      * @return {[type]} [description]
      */
     function setup() {
-      const points = _.map(_.range(amount), () => new Two.Anchor(
-        distance * Math.cos(startAngle),
-        distance * Math.sin(startAngle),
-      ));
-      console.log(points);
-
-      const shape = two.makeShape(points);
+      const shape = two.makePolygon(
+        two.width * 0.5,
+        two.height * 0.5,
+        distance,
+        amount,
+      );
       shape.fill = pallete[4];
       shape.noStroke();
-      shape.translation.set(two.width * 0.5, two.height * 0.5);
-      // shape.visible = false;
+      const points = shape.vertices;
+      shape.visible = false;
 
       const sequence = [];
 
@@ -1260,7 +1259,7 @@ function Animation() {
           const ypos = distance * Math.sin(theta);
 
           const tween = new TWEEN.Tween(p)
-            .to({ x: xpos, y: ypos }, duration)
+            .to({ x: xpos, y: ypos }, duration * 0.3)
             .onStart(() => {
               if (j === 0) {
                 console.log(`${i} animation start`);
@@ -1337,7 +1336,7 @@ function Animation() {
       shape.visible = false;
       shape.rotation = Math.random() * TWO_PI;
       shape.scale = 1;
-      shape._update();
+      // shape._update();
       aniIn.stop();
       aniOut.stop();
     };
