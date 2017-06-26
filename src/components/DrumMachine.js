@@ -9,7 +9,7 @@ import NavigationCloseIcon from 'material-ui/svg-icons/navigation/close';
 
 import styles from '../assets/styles/DrumMachine.css';
 import Matrix from './Matrix';
-import { Sequencer, Keyboard } from '../utils/Sound';
+import { Sequencer, Keyboard } from '../utils/Audio';
 import Animation from '../utils/Animation';
 
 let fadeoutID;

@@ -4,7 +4,7 @@ import axios from 'axios';
 /**
  * Sequencer
  */
-export default class Sequencer {
+export class Sequencer {
   samples: Object;
   sequence: Object;
   playing: Boolean;
@@ -202,4 +202,11 @@ export default class Sequencer {
     this.sequence.stop();
     this.recordFull = [];
   }
+}
+
+/**
+ * Keyboard
+ */
+export class Keyboard {
+
 }
