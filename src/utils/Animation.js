@@ -575,6 +575,7 @@ function Animation() {
       const clay = two.makeCurve(points);
       clay.fill = pallete[7];
       clay.noStroke();
+      clay.visible = false;
       points = clay.vertices;
 
       const ani = new TWEEN.Tween(param)
@@ -600,10 +601,13 @@ function Animation() {
       };
     }
 
-    const { clay, ani } = setup();
+    let { clay, ani } = setup();
 
     // methods
-    const resize = () => {};
+    const resize = () => {
+      two.remove(clay);
+      ({ clay, ani } = setup());
+    };
 
     const reset = () => {
       clay.visible = false;
