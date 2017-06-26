@@ -156,7 +156,7 @@ export default class Sequencer {
    */
   startRecording() {
     this.recording = true;
-    console.log(this.recording);
+    // console.log(this.recording);
   }
 
   /**
@@ -164,7 +164,7 @@ export default class Sequencer {
    */
   stopRecording() {
     this.recording = false;
-    console.log(this.recording);
+    // console.log(this.recording);
   }
 
   /**
