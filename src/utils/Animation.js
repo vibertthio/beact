@@ -56,6 +56,21 @@ function map(v, i1, i2, o1, o2) {
   return o1 + ((o2 - o1) * ((v - i1) / (i2 - i1)));
 }
 
+/**
+ * [ease description]
+ * @param  {[type]} cur  [description]
+ * @param  {[type]} dest [description]
+ * @param  {[type]} t    [description]
+ * @return {[type]}      [description]
+ */
+function ease(cur, dest, t) {
+  const d = dest - cur;
+  if (Math.abs(d) <= 0.0001) {
+    return dest;
+  } else {
+    return cur + (d * t);
+  }
+}
 
 const pallete = [
   'rgb(28, 52, 53)',
@@ -169,7 +184,6 @@ function Animation() {
     const start = () => {
       reset();
       playing = true;
-      // console.log(destOut);
       shape.opacity = opacity;
       aniIn.start();
     };
@@ -1289,8 +1303,6 @@ function Animation() {
         sequence.push(parallel);
       });
 
-      console.log(sequence);
-
       const aniIn = {
         start: () => {
           console.log('aniIn start');
@@ -1433,6 +1445,143 @@ function Animation() {
 				c.linewidth = 5;
         c.ani.start();
       }
+    };
+
+    const EXPORT = {
+      playing,
+      start,
+      reset,
+      resize,
+    };
+    animations.push(EXPORT);
+    return EXPORT;
+  }());
+
+  /**
+   * Animation #18, Split
+   * @param  {number} [opacity = 1]
+   * @param  {number} [duration = 400]
+   * @return {Object}
+   */
+  (function makeSplit(opacity = 1, duration = 500) {
+    let playing = false;
+    let distance = two.height / 5;
+    const amount = 25;
+    const last = amount - 1;
+    const param = { ending: 0, beginning: 0 };
+
+    /**
+     * [setup description]
+     * @return {[type]} [description]
+     */
+    function setup() {
+      const shapes = [];
+      let points;
+      const radius = min(two.width, two.height) * 0.33;
+
+      // first hemisphere
+      shapes[0] = two.makePolygon(
+        0,
+        0,
+        distance,
+        amount,
+      );
+
+
+      points = shapes[0].vertices;
+      points.forEach((p, i) => {
+        const pct = i / last;
+        const theta = pct * Math.PI;
+        p.set(
+          radius * Math.cos(theta),
+          radius * Math.sin(theta),
+        );
+      });
+      shapes[0].origin = new Two.Vector().copy(shapes[0].translation);
+
+      // second hemisphere
+      shapes[1] = two.makePolygon(
+        0,
+        0,
+        distance,
+        amount,
+      );
+
+      points = shapes[1].vertices;
+      points.forEach((p, i) => {
+        const pct = i / last;
+        const theta = (pct + 1) * Math.PI;
+        p.set(
+          radius * Math.cos(theta),
+          radius * Math.sin(theta),
+        );
+      });
+      shapes[1].origin = new Two.Vector().copy(shapes[1].translation);
+
+      const group = two.makeGroup(shapes);
+      group.translation.set(two.width * 0.5, two.height * 0.5);
+      group.fill = pallete[4];
+      group.stroke = pallete[4];
+      group.visible = false;
+      const aniOut = new TWEEN.Tween(param)
+        .to({ beginning: 0 }, duration)
+        .easing(TWEEN.Easing.Circular.Out)
+        .delay(duration * 0.5)
+        .onUpdate((t) => {
+          shapes[0].translation.y =
+            ease(shapes[0].translation.y, shapes[0].origin.y + distance, 0.3);
+          shapes[1].translation.y =
+            ease(shapes[1].translation.y, shapes[1].origin.y - distance, 0.3);
+          group.opacity = 1 - t;
+        });
+
+      const aniIn = new TWEEN.Tween(param)
+        .to({ ending: 1.0 }, duration)
+        .easing(TWEEN.Easing.Circular.In)
+        .onUpdate((t) => {
+          group.visible = Math.random() < t;
+        })
+        .onComplete(() => {
+          group.visible = true;
+          aniOut.start();
+        });
+
+      return {
+        group,
+        shapes,
+        aniIn,
+        aniOut,
+      };
+    }
+
+    let { group, shapes, aniIn, aniOut } = setup();
+
+    // methods
+    const resize = () => {
+      group.remove(shapes);
+      two.remove(group);
+      distance = two.height / 5;
+      ({ group, shapes, aniIn, aniOut } = setup());
+    };
+
+    const reset = () => {
+      playing = false;
+      param.ending = 0;
+      param.beginning = 0;
+      group.rotation = Math.random() * TWO_PI;
+      group.visible = false;
+      group.opacity = 1;
+      shapes[0].translation.copy(shapes[0].origin);
+      shapes[1].translation.copy(shapes[1].origin);
+      aniIn.stop();
+      aniOut.stop();
+    };
+
+    const start = () => {
+      reset();
+      playing = true;
+      group.visible = true;
+      aniIn.start();
     };
 
     const EXPORT = {
