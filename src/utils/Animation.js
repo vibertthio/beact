@@ -1936,6 +1936,116 @@ function Animation() {
     return EXPORT;
   }());
 
+  /**
+   * Animation #22, Sinwave
+   * @param  {number} [opacity = 1]
+   * @param  {number} [duration = 400]
+   * @return {Object}
+   */
+  (function makeSinwave(opacity = 1, duration = 400) {
+    let playing = false;
+    const amount = 200;
+    let points;
+
+    /**
+     * [setPoints description]
+     */
+    function setPoints() {
+      const phi = Math.round(Math.random() * 6) + 1;
+      const offset = Math.PI / 2;
+
+      for (let i = 0; i < amount; i += 1) {
+        const v = points[i];
+        const pct = i / amount;
+        const theta = (TWO_PI * phi * pct) + offset;
+        const w = two.width * 0.5;
+        const h = two.height * 0.33;
+        v.set(
+          map(pct, 0, 1, -w / 2, w / 2),
+          h * Math.sin(theta),
+        );
+      }
+    }
+    /**
+     * [setup description]
+     * @return {[type]} [description]
+     */
+    function setup() {
+      // first hemisphere
+      const sinewave = two.makePolygon(
+        two.width * 0.5,
+        two.height * 0.5,
+        0,
+        amount,
+      );
+      points = sinewave.vertices;
+      sinewave.noFill();
+      sinewave.stroke = pallete[4];
+      sinewave.linewidth = min(two.width, two.height) * 0.025;
+      sinewave.cap = 'round';
+      sinewave.join = 'round';
+      sinewave.closed = false;
+      sinewave.visible = false;
+      sinewave.noFill();
+      setPoints();
+
+      const aniOut = new TWEEN.Tween(sinewave)
+        .to({ beginning: 1.0 }, duration)
+        .easing(TWEEN.Easing.Sinusoidal.In)
+        .onComplete(() => {
+          sinewave.visible = false;
+        })
+        ;
+
+      const aniIn = new TWEEN.Tween(sinewave)
+        .to({ ending: 1.0 }, duration)
+        .easing(TWEEN.Easing.Sinusoidal.Out)
+        .onComplete(() => {
+          aniOut.start();
+        });
+
+      return {
+        sinewave,
+        aniIn,
+        aniOut,
+      };
+    }
+
+    let { sinewave, aniIn, aniOut } = setup();
+
+    // methods
+    const resize = () => {
+      two.remove(sinewave);
+      ({ sinewave, aniIn, aniOut } = setup());
+    };
+
+    const reset = () => {
+      playing = false;
+      sinewave.visible = false;
+      sinewave.beginning = 0;
+      sinewave.ending = 0;
+      setPoints();
+      aniIn.stop();
+      aniOut.stop();
+    };
+
+    const start = () => {
+      reset();
+      playing = true;
+      sinewave.visible = true;
+      aniIn.start();
+    };
+
+    const EXPORT = {
+      playing,
+      start,
+      reset,
+      resize,
+    };
+    animations.push(EXPORT);
+    return EXPORT;
+  }());
+
 
   const trigger = (index) => {
     animations[index].start();
