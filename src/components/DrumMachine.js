@@ -7,6 +7,7 @@ import key from 'keymaster';
 import NavigationMenuIcon from 'material-ui/svg-icons/navigation/menu';
 import NavigationRefreshIcon from 'material-ui/svg-icons/navigation/refresh';
 import NavigationCloseIcon from 'material-ui/svg-icons/navigation/close';
+import AVShuffleIcon from 'material-ui/svg-icons/av/shuffle';
 
 import styles from '../assets/styles/DrumMachine.css';
 import Matrix from './Matrix';
@@ -211,7 +212,24 @@ class DrumMachine extends Component {
 			data,
 		});
 	}
-
+  /**
+   * [clearClicked description]
+   * @param  {number} i first index
+   * @param  {number} j second index
+   */
+	randomClicked() {
+		const data = this.state.data;
+		let i;
+		let j;
+		for (i = 0; i < 16; i += 1) {
+			for (j = 0; j < 8; j += 1) {
+				data[i][j] = (Math.random() > 0.8) ? 1 : 0;
+			}
+		}
+		this.setState({
+			data,
+		});
+	}
   /**
    * [handleClick description]
    * @param  {number} i first index
@@ -704,7 +722,8 @@ class DrumMachine extends Component {
       <div className={(wait === true) ? styles.hideDOM : styles.showDOM}>
         <NavigationMenuIcon
           className={
-						`${styles.menuIcon}
+						`${styles.icon}
+						 ${styles.menuIcon}
 						 ${(hidden === true) ? '' : styles.displayHide}`
 					}
           onClick={() => this.toggleHidden()}
@@ -712,12 +731,23 @@ class DrumMachine extends Component {
         />
         <NavigationRefreshIcon
           className={
-						`${styles.clearIcon}
+						`${styles.icon}
+						 ${styles.clearIcon}
 						 ${(hidden === true) ? '' : styles.displayHide}`
 					}
           onClick={() => this.clearClicked()}
           style={{ color: '#eecdcc' }}
         />
+        <AVShuffleIcon
+          className={
+						`${styles.icon}
+						 ${styles.randomIcon}
+						 ${(hidden === true) ? '' : styles.displayHide}`
+					}
+          onClick={() => this.randomClicked()}
+          style={{ color: '#eecdcc' }}
+        />
+
         <div
           className={
 					`${styles.menu}
