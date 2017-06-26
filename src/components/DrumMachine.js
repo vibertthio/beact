@@ -10,7 +10,7 @@ import NavigationCloseIcon from 'material-ui/svg-icons/navigation/close';
 
 import styles from '../assets/styles/DrumMachine.css';
 import Matrix from './Matrix';
-import Sequencer from '../utils/Sequencer';
+import { Sequencer, Keyboard } from '../utils/Audio';
 import Animation from '../utils/Animation';
 
 let fadeoutID;
@@ -89,6 +89,8 @@ class DrumMachine extends Component {
       this.playNextRecordElement,
       this.playDrumAni,
     );
+
+    this.keyboard = new Keyboard();
 
     this.toggleHidden = this.toggleHidden.bind(this);
 		this.hideSpinner = this.hideSpinner.bind(this);
@@ -588,17 +590,51 @@ class DrumMachine extends Component {
    * [detectKeyboard description]
    */
   detectKeyboard() {
-    key('a', () => this.ani.trigger(1));
-    key('s', () => this.ani.trigger(2));
-    key('d', () => this.ani.trigger(3));
-    key('f', () => this.ani.trigger(4));
-    key('q', () => this.ani.trigger(5));
-    key('w', () => this.ani.trigger(6));
-    key('e', () => this.ani.trigger(7));
-    key('r', () => this.ani.trigger(8));
-    key('t', () => this.ani.trigger(9));
-    key('z', () => this.ani.trigger(10));
-    key('x', () => this.ani.trigger(11));
+    key('a', () => {
+      this.keyboard.currentKey = 1;
+      this.keyboard.playKey();
+      this.ani.trigger(1);
+    });
+    key('s', () => {
+      this.keyboard.currentKey = 2;
+      this.keyboard.playKey();
+      this.ani.trigger(2);
+    });
+    key('d', () => {
+      this.keyboard.currentKey = 3;
+      this.keyboard.playKey();
+      this.ani.trigger(3);
+    });
+    key('f', () => {
+      this.keyboard.currentKey = 4;
+      this.keyboard.playKey();
+      this.ani.trigger(4);
+    });
+    key('q', () => {
+      this.keyboard.currentKey = 5;
+      this.keyboard.playKey();
+      this.ani.trigger(5);
+    });
+    key('w', () => {
+      this.keyboard.currentKey = 6;
+      this.keyboard.playKey();
+      this.ani.trigger(6);
+    });
+    key('e', () => {
+      this.keyboard.currentKey = 7;
+      this.keyboard.playKey();
+      this.ani.trigger(7);
+    });
+    key('r', () => {
+      this.keyboard.currentKey = 8;
+      this.keyboard.playKey();
+      this.ani.trigger(8);
+    });
+    key('t', () => {
+      this.keyboard.currentKey = 9;
+      this.keyboard.playKey();
+      this.ani.trigger(9);
+    });
   }
 
 	/**
