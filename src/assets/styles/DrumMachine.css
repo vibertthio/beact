@@ -19,20 +19,25 @@
   height: 100%;
 }
 
-.menuIcon {
+.icon {
   position: fixed;
-  top: 3%;
-  left: 2%;
   cursor: pointer;
   z-index: 2;
 }
 
+.menuIcon {
+  top: 3%;
+  left: 2%;
+}
+
 .clearIcon {
-  position: fixed;
   top: 3%;
   right: 2%;
-  cursor: pointer;
-  z-index: 2;
+}
+
+.randomIcon {
+  top: 6%;
+  right: 2%;
 }
 
 .displayHide {
