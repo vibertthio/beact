@@ -13,6 +13,17 @@ import styles from '../assets/styles/DrumMachine.css';
 import Matrix from './Matrix';
 import { Sequencer, Keyboard } from '../utils/Audio';
 import Animation from '../utils/Animation';
+import menu1 from '../assets/svg/menu/menu1.svg';
+import menu2 from '../assets/svg/menu/menu2.svg';
+import menu3 from '../assets/svg/menu/menu3.svg';
+import menu4 from '../assets/svg/menu/menu4.svg';
+import menu5 from '../assets/svg/menu/menu5.svg';
+import menu6 from '../assets/svg/menu/menu6.svg';
+import menu7 from '../assets/svg/menu/menu7.svg';
+import menu8 from '../assets/svg/menu/menu8.svg';
+import menu9 from '../assets/svg/menu/menu9.svg';
+import menu10 from '../assets/svg/menu/menu10.svg';
+import menu11 from '../assets/svg/menu/menu11.svg';
 
 let fadeoutID;
 /**
@@ -46,7 +57,7 @@ class DrumMachine extends Component {
       currentPlayingRecord: [],
       currentPlayingRecordElement: 0,
 
-			hidden: true,
+			hidden: false,
 			wait: true,
 			idle: false,
     };
@@ -752,7 +763,136 @@ class DrumMachine extends Component {
           style={{ color: '#eecdcc' }}
         />
 
+        {/* sidebar menu (only css) */}
+
         <div
+          className={
+					`${styles.menu}
+					 ${(hidden === true) ? styles.toggleRevMenu : styles.toggleMenu}`
+				  }
+        >
+          <div className={styles.colorMenu}>
+            {/* 1 */}
+            <div className={`${styles.row1} ${styles.row}`}>
+              <div className={styles.row1l} onClick={() => console.log('Start Button clicked')}>
+								<img src={menu1} alt="Start Button" />
+              </div>
+              <div className={styles.row1r} onClick={() => console.log('Stop Button clicked')}>
+                <img src={menu2} alt="Stop Button" />
+              </div>
+            </div>
+            {/* 2 */}
+            <div className={`${styles.evenrow} ${styles.row}`}>
+              <img src={menu3} alt="Patten Icon" />
+            </div>
+            {/* 3 */}
+            <div className={`${styles.row3} ${styles.row}`}>
+              <div className={styles.row3l}>
+                <div className={styles.row3lu} onClick={() => console.log('Save New Pattern clicked')}>
+                  <img src={menu4} alt="Save New Pattern" />
+                </div>
+                <div className={styles.row3ld} onClick={() => console.log('Exit Pattern clicked')}>
+                  <img src={menu5} alt="Exit Pattern" />
+                </div>
+              </div>
+              <div className={styles.row3r}>
+                <div className={styles.row3ru} onClick={() => console.log('input pattern name clicked')}>
+                  <input
+                    type="text"
+                    className={styles.row3input}
+                    placeholder="input pattern name..."
+                  />
+                </div>
+                <div className={styles.row3rd}>
+                  <ul>
+                    {/* alt Delete Pattern Icon */}
+                    <li>raggae</li>
+                    <li>jazz hip-hop</li>
+                    <li>rock pattern</li>
+                    <li>rock pattern</li>
+                    <li>rock pattern</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            {/* 4 */}
+            <div className={`${styles.evenrow} ${styles.row}`}>
+              <img src={menu6} alt="Chain Icon" />
+            </div>
+            {/* 5 */}
+            <div className={`${styles.row5} ${styles.row}`}>
+              <div className={styles.row5l}>
+                <div className={styles.row5lu}>
+                  <div className={styles.row5lul} onClick={() => console.log('Play Chain Button clicked')}>
+                    <img src={menu7} alt="Play Chain Button" />
+                  </div>
+                  <div className={styles.row5lur} onClick={() => console.log('Update Chain Button clicked')}>
+                    <img src={menu8} alt="Update Chain Button" />
+                  </div>
+                </div>
+                <div className={styles.row5ld}>
+                  <div className={styles.row5ldl} onClick={() => console.log('Delete Current Chain Element Button clicked')}>
+                    <img src={menu5} alt="Delete Current Chain Element Button" />
+                  </div>
+                  <div className={styles.row5ldr} onClick={() => console.log('Exit Chain Button Chain clicked')}>
+                    <img src={menu9} alt="Exit Chain Button Chain Index" />
+                  </div>
+                </div>
+              </div>
+              <div className={styles.row5r}>
+                <span className={styles.chainIndex}>2</span>
+                <span className={styles.chainDivider}>/</span>
+                <span className={styles.chainLength}>4</span>
+              </div>
+            </div>
+            {/* 6 */}
+            <div className={`${styles.evenrow} ${styles.row}`}>
+              <img src={menu10} alt="Record Icon" />
+            </div>
+            {/* 7 */}
+            <div className={`${styles.row7} ${styles.row}`}>
+              <div className={styles.row7l}>
+                <div className={styles.row7lu}>
+                  <div className={styles.row7lul} onClick={() => console.log('Record Button clicked')}>
+                    <img src={menu11} alt="Record Button" />
+                  </div>
+                  <div className={styles.row7lur} onClick={() => console.log('Save Button clicked')}>
+                    <img src={menu2} alt="Save Button" />
+                  </div>
+                </div>
+                <div className={styles.row7ld}>
+                  <div className={styles.row7ldl} onClick={() => console.log('Clear Current Record Button clicked')}>
+                    <img src={menu5} alt="Clear Current Record Button" />
+                  </div>
+                  <div className={styles.row7ldr} onClick={() => console.log('Exit Playing Record Button clicked')}>
+                    <img src={menu9} alt="Exit Playing Record Button" />
+                  </div>
+                </div>
+              </div>
+              <div className={styles.row7r}>
+                <ul>
+                  {/* alt Delete Pattern Icon */}
+                  <li>raggae</li>
+                  <li>vibert</li>
+                  <li>joey</li>
+                  <li>scya</li>
+                  <li>ric</li>
+                  <li>...</li>
+                  <li>...</li>
+                  <li>...</li>
+                </ul>
+              </div>
+            </div>
+            {/* 8 */}
+            <div className={`${styles.evenrow} ${styles.row}`}>
+              <span>User Guide</span>
+            </div>
+            {/* 9 */}
+            <div className={`${styles.row9} ${styles.row}`}>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do</div>
+          </div>
+        </div>
+
+        {/* <div
           className={
 					`${styles.menu}
 					 ${(hidden === true) ? styles.toggleRevMenu : styles.toggleMenu}`
@@ -770,7 +910,7 @@ class DrumMachine extends Component {
           </div>
           <div className={styles.chainList}>
 						renderChain in this div
-						<ul>{this.renderChain()}<li style={{ color: 'yellow' }} onTouchTap={() => this.setCurrentChainElementAtLast()}>
+            <ul>{this.renderChain()}<li style={{ color: 'yellow' }} onTouchTap={() => this.setCurrentChainElementAtLast()}>
 		            Update at here in this li
 		          </li>
 		        </ul>
@@ -873,8 +1013,8 @@ class DrumMachine extends Component {
             <br />
             <br />
 						user guide
-					</div>
-        </div>
+          </div>
+        </div> */}
         <div
           role="button"
           tabIndex="0"
