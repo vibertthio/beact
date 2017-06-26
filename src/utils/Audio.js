@@ -53,7 +53,6 @@ export class Sequencer {
     this.startTime = 0;
     this.checkStart = false;
     this.storeRecord = record => storeRecord(record);
-    // this.setTemperId = Id => setTemperId(Id);
     this.samples = new MultiPlayer({
       urls: {
         kk: './assets/audio/505/kick.mp3',
@@ -121,6 +120,7 @@ export class Sequencer {
               }
             }
             this.recordFull.push(recordMatrix);
+            console.log(this.startTime);
             this.recordMatrix = [];
           }
         }
@@ -188,12 +188,14 @@ export class Sequencer {
    * [storeRecord description]
    */
   saveRecord(saveKeyboardRecord) {
+    this.checkStart = false;
     if (this.recordFull.length > 0) {
       console.log(this.recordFull);
       axios.post('/api/notes', {
         id: temperId,
         title: 'Notes',
         content: this.recordFull,
+        startTime: this.startTime,
       })
       .then(
         axios.get('/api/notes')
@@ -217,6 +219,7 @@ export class Sequencer {
    */
   clearRecord() {
     this.sequence.stop();
+    this.checkStart = false;
     this.recordFull = [];
   }
 }
@@ -234,6 +237,11 @@ export class Keyboard {
    * [constructor description]
    */
   constructor() {
+    this.startRecordingTime = 0;
+    this.stopRecordingTime = 0;
+    this.gapTimeCorrection = 0;
+    this.recordStatusChange = false;
+    this.haveClearRecord = false;
     this.currentKey = null;
     this.record = [];
     this.notes = [
@@ -271,7 +279,8 @@ export class Keyboard {
     if (this.currentKey !== null) {
       this.samples.start(this.notes[this.currentKey]);
       if (this.recording === true) {
-        this.record.push({ time: Transport.seconds, key: this.currentKey });
+        const time = Transport.seconds - this.gapTimeCorrection;
+        this.record.push({ time, key: this.currentKey });
         console.log(this.record);
       }
       this.currentKey = null;
@@ -283,6 +292,20 @@ export class Keyboard {
    */
   startRecording() {
     this.recording = true;
+    if (this.stopRecordingTime > this.startRecordingTime || this.startRecordingTime === 0) {
+      this.startRecordingTime = Transport.seconds;
+    }
+    if (this.stopRecordingTime < this.startRecordingTime && this.stopRecordingTime !== 0
+      && this.haveClearRecord === false) {
+      const gapTime = this.startRecordingTime - this.stopRecordingTime;
+      this.gapTimeCorrection += gapTime;
+      console.log(this.gapTimeCorrection);
+    } else if (this.haveClearRecord === true) {
+      this.gapTimeCorrection = 0;
+      this.haveClearRecord = false;
+      console.log('gap');
+      console.log(this.gapTimeCorrection);
+    }
   }
 
   /**
@@ -290,6 +313,9 @@ export class Keyboard {
    */
   stopRecording() {
     this.recording = false;
+    if (this.stopRecordingTime < this.startRecordingTime) {
+      this.stopRecordingTime = Transport.seconds;
+    }
   }
 
   /**
@@ -297,9 +323,11 @@ export class Keyboard {
    * [saveRecord description]
    */
   saveRecord(recordId) {
+    this.gapTimeCorrection = 0;
     const keyBoardRecord = {
       content: this.record,
       id: recordId,
     };
+    this.record = [];
   }
 }

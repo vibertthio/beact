@@ -4,6 +4,7 @@ const DrumSchema = new Schema({
   id: String,
   title: String,
   content: Array,
+  startTime: Number,
 });
 
 const Drum = mongoose.model('notes', DrumSchema);
