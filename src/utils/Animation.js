@@ -281,7 +281,6 @@ function Animation() {
     const start = () => {
       reset();
       playing = true;
-      console.log(destOut);
       shape.opacity = opacity;
       aniIn.start();
     };
@@ -355,11 +354,6 @@ function Animation() {
         .to(dest, duration)
         .easing(TWEEN.Easing.Circular.In)
         .onStart(() => {
-          console.log('start animation');
-          console.log(dest);
-        })
-        .onUpdate(() => {
-          console.log(group.scale);
         });
 
         return {
@@ -412,7 +406,7 @@ function Animation() {
    * @param  {number} [duration = 400]
    * @return {Object}
    */
-  (function makePistons(opacity = 1, duration = 2000) {
+  (function makePistons(opacity = 1, duration = 200) {
    [1, 4, 8].forEach((amount) => {
      const param = { ending: 0, beginning: 0 };
      const origin = { x: two.width * 0.5, y: two.height * 0.5 };
@@ -436,8 +430,6 @@ function Animation() {
 
        const w = two.width * 0.75;
        const h = two.height * 0.5;
-       begin = -w / 2;
-       end = w / 2; // do random here
 
        const group = two.makeGroup();
        group.translation.set(two.width * 0.5, two.height * 0.5);
@@ -457,7 +449,7 @@ function Animation() {
        });
 
        const aniOut = new TWEEN.Tween(param)
-         .to({ beginning: 1.0 }, duration * 0.125)
+         .to({ beginning: 1.0 }, duration)
          .easing(TWEEN.Easing.Sinusoidal.Out)
          .onUpdate(() => {
            for (let i = 0; i < amount; i += 1) {
@@ -468,7 +460,7 @@ function Animation() {
          });
 
        const aniIn = new TWEEN.Tween(param)
-         .to({ ending: 1.0 }, duration * 0.125)
+         .to({ ending: 1.0 }, duration)
          .easing(TWEEN.Easing.Sinusoidal.Out)
          .onStart(() => {
            playing = true;
@@ -506,6 +498,14 @@ function Animation() {
      const reset = () => {
        param.beginning = 0;
        param.ending = 0;
+       const w = two.width * 0.75;
+       if (Math.random() > 0.5) {
+         begin = -w / 2;
+         end = w / 2;
+       } else {
+         begin = w / 2;
+         end = -w / 2;
+       }
 
        for (let i = 0; i < amount; i += 1) {
          const s = shapes[i];
@@ -575,6 +575,7 @@ function Animation() {
       const clay = two.makeCurve(points);
       clay.fill = pallete[7];
       clay.noStroke();
+      clay.visible = false;
       points = clay.vertices;
 
       const ani = new TWEEN.Tween(param)
@@ -582,7 +583,6 @@ function Animation() {
         .easing(TWEEN.Easing.Circular.In)
         .onUpdate(() => {
           const t = param.ending;
-          console.log(t);
           for (let i = 0; i < amount; i += 1) {
             const v = points[i];
             const d = destinations[i];
@@ -601,10 +601,13 @@ function Animation() {
       };
     }
 
-    const { clay, ani } = setup();
+    let { clay, ani } = setup();
 
     // methods
-    const resize = () => {};
+    const resize = () => {
+      two.remove(clay);
+      ({ clay, ani } = setup());
+    };
 
     const reset = () => {
       clay.visible = false;
@@ -1051,11 +1054,6 @@ function Animation() {
         .easing(TWEEN.Easing.Circular.Out)
         .onStart(() => {
           circle.scale = 1;
-          console.log('circle start');
-          console.log(`opacity : ${circle.opacity}`);
-          console.log(`scale : ${circle.scale}`);
-          console.log(`x : ${circle.translation.x}`);
-          console.log(`y : ${circle.translation.y}`);
         })
         .onComplete(() => {
           aniOut.start();
@@ -1274,19 +1272,6 @@ function Animation() {
 
           const tween = new TWEEN.Tween(p)
             .to({ x: xpos, y: ypos }, duration * 0.3)
-            .onStart(() => {
-              if (j === 0) {
-                console.log(`${i} animation start`);
-              } else {
-                console.log(j);
-              }
-            })
-            .onUpdate(() => {
-              if (j === 0) {
-                // console.log(`x : ${p.x}`);
-                console.log(`y : ${p.y}`);
-              }
-            })
             .easing(TWEEN.Easing.Sinusoidal.Out);
 
           parallel.push(tween);
@@ -1305,7 +1290,6 @@ function Animation() {
 
       const aniIn = {
         start: () => {
-          console.log('aniIn start');
           for (let i = 0, n = sequence[0].length; i < n; i += 1) {
             const tween = sequence[0][i];
             tween.start();
@@ -2085,17 +2069,12 @@ function Animation() {
       group.translation.set(two.width * 0.5, two.height * 0.5);
       group.visible = false;
       const aniOuts = _.map(circles, (c, i) => {
-        console.log(`#${i} out ani init`);
         const next =
           (!circles[i + 1]) ?
           TWO_PI : (circles[i + 1].destination);
 
         return new TWEEN.Tween(c)
           .to({ theta: next }, duration / (amount - (i)))
-          // .easing(Easing.Circular.Out)
-          .onStart(() => {
-            console.log(`#${i} out ani start`);
-          })
           .onUpdate(() => {
             const theta = direction ? c.theta : -c.theta;
             const x = radius * Math.cos(theta);
@@ -2126,8 +2105,6 @@ function Animation() {
             c.translation.set(x, y);
           })
           .onComplete(() => {
-            console.log(`#${i} in ani complete`);
-            console.log(`last:${last}`);
             if (i >= last) {
               aniOuts[0].start();
               return;
@@ -2244,7 +2221,6 @@ function Animation() {
       group.translation.set(two.width * 0.5, two.height * 0.5);
       group.visible = false;
       const aniOuts = _.map(circles, (c, i) => {
-        // console.log(`#${i} out ani init`);
         const next =
           (!circles[i + 1]) ?
           TWO_PI : (circles[i + 1].destination);
@@ -2371,6 +2347,7 @@ function Animation() {
   };
 
   const resize = (w, h) => {
+    two.clear();
     two.renderer.setSize(w, h);
     two.width = w;
     two.height = h;
