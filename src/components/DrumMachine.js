@@ -6,7 +6,7 @@ import axios from 'axios';
 import key from 'keymaster';
 import NavigationMenuIcon from 'material-ui/svg-icons/navigation/menu';
 import NavigationRefreshIcon from 'material-ui/svg-icons/navigation/refresh';
-import NavigationCloseIcon from 'material-ui/svg-icons/navigation/close';
+// import NavigationCloseIcon from 'material-ui/svg-icons/navigation/close';
 import AVShuffleIcon from 'material-ui/svg-icons/av/shuffle';
 
 import styles from '../assets/styles/DrumMachine.css';
@@ -57,7 +57,7 @@ class DrumMachine extends Component {
       currentPlayingRecord: [],
       currentPlayingRecordElement: 0,
 
-			hidden: false,
+			hidden: true,
 			wait: true,
 			idle: false,
     };
@@ -770,12 +770,15 @@ class DrumMachine extends Component {
           <div className={styles.colorMenu}>
             {/* 1 */}
             <div className={`${styles.row1} ${styles.row}`}>
-              <div className={styles.row1l} onClick={() => console.log('Start Button clicked')}>
-								<img src={menu1} alt="Start Button" />
-              </div>
-              <div className={styles.row1r} onClick={() => console.log('Stop Button clicked')}>
+              <button className={styles.row1l} onClick={() => console.log('Start Button clicked')}>
+                {/* <div className={styles.row1l}> */}
+                <img src={menu1} alt="Start Button" />
+                {/* </div> */}
+              </button>
+
+              <button className={styles.row1r} onClick={() => console.log('Stop Button clicked')}>
                 <img src={menu2} alt="Stop Button" />
-              </div>
+              </button>
             </div>
             {/* 2 */}
             <div className={`${styles.evenrow} ${styles.row}`}>
@@ -784,15 +787,15 @@ class DrumMachine extends Component {
             {/* 3 */}
             <div className={`${styles.row3} ${styles.row}`}>
               <div className={styles.row3l}>
-                <div className={styles.row3lu} onClick={() => console.log('Save New Pattern clicked')}>
+                <button className={styles.row3lu} onClick={() => console.log('Save New Pattern clicked')}>
                   <img src={menu4} alt="Save New Pattern" />
-                </div>
-                <div className={styles.row3ld} onClick={() => console.log('Exit Pattern clicked')}>
+                </button>
+                <button className={styles.row3ld} onClick={() => console.log('Exit Pattern clicked')}>
                   <img src={menu5} alt="Exit Pattern" />
-                </div>
+                </button>
               </div>
               <div className={styles.row3r}>
-                <div className={styles.row3ru} onClick={() => console.log('input pattern name clicked')}>
+                <div className={styles.row3ru}>
                   <input
                     type="text"
                     className={styles.row3input}
@@ -819,20 +822,20 @@ class DrumMachine extends Component {
             <div className={`${styles.row5} ${styles.row}`}>
               <div className={styles.row5l}>
                 <div className={styles.row5lu}>
-                  <div className={styles.row5lul} onClick={() => console.log('Play Chain Button clicked')}>
+                  <button className={styles.row5lul} onClick={() => console.log('Play Chain Button clicked')}>
                     <img src={menu7} alt="Play Chain Button" />
-                  </div>
-                  <div className={styles.row5lur} onClick={() => console.log('Update Chain Button clicked')}>
+                  </button>
+                  <button className={styles.row5lur} onClick={() => console.log('Update Chain Button clicked')}>
                     <img src={menu8} alt="Update Chain Button" />
-                  </div>
+                  </button>
                 </div>
                 <div className={styles.row5ld}>
-                  <div className={styles.row5ldl} onClick={() => console.log('Delete Current Chain Element Button clicked')}>
+                  <button className={styles.row5ldl} onClick={() => console.log('Delete Current Chain Element Button clicked')}>
                     <img src={menu5} alt="Delete Current Chain Element Button" />
-                  </div>
-                  <div className={styles.row5ldr} onClick={() => console.log('Exit Chain Button Chain clicked')}>
+                  </button>
+                  <button className={styles.row5ldr} onClick={() => console.log('Exit Chain Button Chain clicked')}>
                     <img src={menu9} alt="Exit Chain Button Chain Index" />
-                  </div>
+                  </button>
                 </div>
               </div>
               <div className={styles.row5r}>
@@ -849,20 +852,20 @@ class DrumMachine extends Component {
             <div className={`${styles.row7} ${styles.row}`}>
               <div className={styles.row7l}>
                 <div className={styles.row7lu}>
-                  <div className={styles.row7lul} onClick={() => console.log('Record Button clicked')}>
+                  <button className={styles.row7lul} onClick={() => console.log('Record Button clicked')}>
                     <img src={menu11} alt="Record Button" />
-                  </div>
-                  <div className={styles.row7lur} onClick={() => console.log('Save Button clicked')}>
+                  </button>
+                  <button className={styles.row7lur} onClick={() => console.log('Save Button clicked')}>
                     <img src={menu2} alt="Save Button" />
-                  </div>
+                  </button>
                 </div>
                 <div className={styles.row7ld}>
-                  <div className={styles.row7ldl} onClick={() => console.log('Clear Current Record Button clicked')}>
+                  <button className={styles.row7ldl} onClick={() => console.log('Clear Current Record Button clicked')}>
                     <img src={menu5} alt="Clear Current Record Button" />
-                  </div>
-                  <div className={styles.row7ldr} onClick={() => console.log('Exit Playing Record Button clicked')}>
+                  </button>
+                  <button className={styles.row7ldr} onClick={() => console.log('Exit Playing Record Button clicked')}>
                     <img src={menu9} alt="Exit Playing Record Button" />
-                  </div>
+                  </button>
                 </div>
               </div>
               <div className={styles.row7r}>
@@ -906,7 +909,10 @@ class DrumMachine extends Component {
           </div>
           <div className={styles.chainList}>
 						renderChain in this div
-            <ul>{this.renderChain()}<li style={{ color: 'yellow' }} onTouchTap={() => this.setCurrentChainElementAtLast()}>
+            <ul>{this.renderChain()}
+              <li
+                style={{ color: 'yellow' }}
+                onTouchTap={() => this.setCurrentChainElementAtLast()}>
 		            Update at here in this li
 		          </li>
 		        </ul>
@@ -1024,8 +1030,6 @@ class DrumMachine extends Component {
           </div>
         </div> */}
         <div
-          role="button"
-          tabIndex="0"
           className={
 						`${styles.mask}
 						 ${(hidden === false ? styles.showMask : styles.hideMask)}`}

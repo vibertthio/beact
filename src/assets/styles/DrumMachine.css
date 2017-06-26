@@ -136,6 +136,12 @@
   height: 100%;
 }
 
+.colorMenu button {
+  width: 100%;
+  border: none;
+  outline: none;
+}
+
 .row {
 
 }
@@ -146,7 +152,7 @@
   height: 16%;
 }
 
-.row1 div {
+.row1 button {
   width: calc(50% - 20px);
   height: 100%;
   position: relative;
@@ -165,7 +171,7 @@
   float: right;
 }
 
-.row1 div::after {
+.row1 button::after {
   position: absolute;
   top: 0;
   content: '';
@@ -188,7 +194,7 @@
   transform: skewX(-20deg);
 }
 
-.row1 div img {
+.row1 button img {
   z-index: 1;
   height: 40%;
 }
@@ -205,7 +211,7 @@
   height: 100%;
 }
 
-.row3l div {
+.row3l button {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -221,8 +227,9 @@
   background: #73676b;
 }
 
-.row3l div img {
-  height: 70%;
+.row3l button img {
+  height: 50%;
+  width: 50%;
 }
 
 .row3r {
@@ -273,22 +280,18 @@
   flex-direction: column;
   width: 60%;
   height: 100%;
-  background: #73676b;
-}
-
-.row5l div div {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.row5l div div img {
-  height: 50%;
 }
 
 .row5lu {
   display: flex;
   height: 50%;
+}
+
+.row5l div button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 }
 
 .row5lul {
@@ -297,6 +300,12 @@
 }
 
 .row5lur {
+  width: 50%;
+  background: #73676b;
+}
+
+.row5l div button img {
+  height: 50%;
   width: 50%;
 }
 
@@ -307,10 +316,12 @@
 
 .row5ldl {
   width: 50%;
+  background: #73676b;
 }
 
 .row5ldr {
   width: 50%;
+  background: #73676b;
 }
 
 .row5r {
@@ -336,21 +347,22 @@
   background: #73676b;
 }
 
-.row7l div div {
+.row7l div button {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.row7l div div img {
+.row7l div button img {
   height: 50%;
+  width: 50%;
 }
 
 .row7lu {
   height: 50%;
 }
 
-.row7lu div {
+.row7lu button {
   width: calc(50% - 13px);
   height: 100%;
   position: relative;
@@ -369,7 +381,7 @@
   float: right;
 }
 
-.row7lu div::after {
+.row7lu button::after {
   position: absolute;
   top: 0;
   content: '';
@@ -391,7 +403,8 @@
   transform: skewX(-20deg);
 }
 
-.row7lu div img {
+.row7lu button img {
+  /*height: 50%;*/
   z-index: 1;
 }
 
@@ -400,12 +413,14 @@
   height: 50%;
 }
 
-.row7ldl {
+.row7ld button {
+  height: 100%;
   width: 50%;
+  background: #73676b;
 }
 
-.row7ldr {
-  width: 50%;
+.row7ld button img {
+  height: 50%;
 }
 
 .row7r {
@@ -431,6 +446,8 @@
 .evenrow img {
   height: 70%;
 }
+
+/* row9 */
 
 .row9 {
   background: #724a59;
