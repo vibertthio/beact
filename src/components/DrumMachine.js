@@ -5,6 +5,7 @@ import uuid4 from 'uuid/v4';
 import axios from 'axios';
 import key from 'keymaster';
 import NavigationMenuIcon from 'material-ui/svg-icons/navigation/menu';
+import NavigationRefreshIcon from 'material-ui/svg-icons/navigation/refresh';
 import NavigationCloseIcon from 'material-ui/svg-icons/navigation/close';
 
 import styles from '../assets/styles/DrumMachine.css';
@@ -189,6 +190,25 @@ class DrumMachine extends Component {
  		window.clearTimeout(fadeoutID);
 		fadeoutID = window.setTimeout(this.showDOM, 1500);
  	}
+
+	/**
+   * [clearClicked description]
+   * @param  {number} i first index
+   * @param  {number} j second index
+   */
+	clearClicked() {
+		const data = this.state.data;
+		let i;
+		let j;
+		for (i = 0; i < 16; i += 1) {
+			for (j = 0; j < 8; j += 1) {
+				data[i][j] = 0;
+			}
+		}
+		this.setState({
+			data,
+		});
+	}
 
   /**
    * [handleClick description]
@@ -652,8 +672,16 @@ class DrumMachine extends Component {
 						 ${(hidden === true) ? '' : styles.displayHide}`
 					}
           onClick={() => this.toggleHidden()}
+          style={{ color: '#eecdcc' }}
         />
-
+        <NavigationRefreshIcon
+          className={
+						`${styles.clearIcon}
+						 ${(hidden === true) ? '' : styles.displayHide}`
+					}
+          onClick={() => this.clearClicked()}
+          style={{ color: '#eecdcc' }}
+        />
         <div
           className={
 					`${styles.menu}
@@ -789,15 +817,6 @@ class DrumMachine extends Component {
 						user guide
 					</div>
         </div>
-        {/* <div
-          role="presentation"
-          className={
-						`${styles.mask}
-						 ${(hidden === false ? styles.showMask : styles.hideMask)}`}
-          onClick={() => this.toggleHidden()}
-        >
-          <button>no</button>
-        </div> */}
         <div
           role="button"
           tabIndex="0"

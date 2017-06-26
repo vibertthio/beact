@@ -19,15 +19,18 @@
   height: 100%;
 }
 
-/*.title {
-  color: #eecdcc;
-  margin: 0em;
-  text-align: center;
-}*/
-
 .menuIcon {
   position: fixed;
-  margin: 1% 0 0 2%;
+  top: 3%;
+  left: 2%;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.clearIcon {
+  position: fixed;
+  top: 3%;
+  right: 2%;
   cursor: pointer;
   z-index: 2;
 }
