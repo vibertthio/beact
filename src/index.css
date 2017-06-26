@@ -33,7 +33,9 @@ html * {
 
 body {
   /*background-color: rgba(218, 223, 225, 1);*/
+  color: #78b19a;
   background-color: #1c3435;
+  font-style: italic;
   height: 100%;
 }
 
