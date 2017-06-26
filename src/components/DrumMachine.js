@@ -554,9 +554,7 @@ class DrumMachine extends Component {
    */
   playDrumAni(column) {
     for (let i = 0; i < column.length; i += 1) {
-      if (column[i] < 5) {
-        this.ani.trigger(column[i]);
-      }
+      this.ani.trigger(column[i]);
     }
   }
 
