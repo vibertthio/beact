@@ -1,7 +1,7 @@
-import Two from 'two.js/build/two.svg.webpack';
+import Two from 'two.js/build/two';
+// import Two from 'two.js/build/two.svg.webpack';
 import TWEEN from '@tweenjs/tween.js';
 import _ from 'lodash';
-// import Two from '../lib/two';
 import {
   TWO_PI,
   cos,
@@ -274,8 +274,8 @@ function Animation() {
         const circles = range(sides).map((i) => {
           const pct = (i + 0.5) / sides;
           const theta = (TWO_PI * pct) + (Math.PI / 2);
-          const x = rPolygon * cos(theta);
-          const y = rPolygon * sin(theta);
+          const x = 2 * rPolygon * cos(theta);
+          const y = 2 * rPolygon * sin(theta);
           const circle = two.makeCircle(x, y, rCircle);
           circle.fill = colors[6];
           circle.noStroke();
@@ -1543,6 +1543,7 @@ function Animation() {
       );
       moon.fill = colors[2];
       moon.noStroke();
+      moon.visible = false;
 
       const points = moon.vertices;
       const destinations = [];
