@@ -514,7 +514,7 @@ class DrumMachine extends Component {
     }
     this.setState({
       data,
-      currentPatternId: pattern._id, // eslint-disable-line no-underscore-dangle
+      currentPatternId: pattern.id, // eslint-disable-line no-underscore-dangle
     });
     this.startSequencer();
   }
@@ -566,18 +566,44 @@ class DrumMachine extends Component {
   deleteCurrentPattern() {
     if (this.state.currentPatternId !== '') {
       axios.delete(`/api/patterns/${this.state.currentPatternId}`)
+       .then(
+         axios.get('/api/patterns')
+           .then((res) => {
+             this.setState({ patternLists: res.data });
+           })
+           .catch((err) => {
+             console.log(err);
+           }),
+       )
        .catch((err) => {
          console.log(err);
        });
-       axios.get('/api/patterns')
-         .then((res) => {
-           this.setState({ patternLists: res.data });
-         })
-         .catch((err) => {
-           console.log(err);
-         });
       this.exitPattern();
       this.stopSequencer();
+    }
+  }
+
+  /**
+  * @param  {Number} id width of window
+   * [deletePattern description]
+   */
+  deletePattern(id) {
+    if (id === this.state.currentPatternId) {
+      this.deleteCurrentPattern();
+    } else {
+      axios.delete(`/api/patterns/${id}`)
+       .then(
+         axios.get('/api/patterns')
+           .then((res) => {
+             this.setState({ patternLists: res.data });
+           })
+           .catch((err) => {
+             console.log(err);
+           }),
+       )
+       .catch((err) => {
+         console.log(err);
+       });
     }
   }
 
@@ -702,7 +728,7 @@ class DrumMachine extends Component {
 
   /**
    * @param  {Array} column width of window
-   * [playRecord description]
+   * [playDrumAni description]
    */
   playDrumAni(column) {
     for (let i = 0; i < column.length; i += 1) {
@@ -776,13 +802,19 @@ class DrumMachine extends Component {
    */
   renderPatterns() {
     return _.map(this.state.patternLists, pattern => (
-      <li
-        key={pattern.id}
-        onTouchTap={() => this.playPattern(pattern)}
-        style={{ color: 'white' }}
-      >
-        <h4>{pattern.title}</h4>
-      </li>
+      <div key={uuid4()}>
+        <li
+          key={pattern.id}
+          onTouchTap={() => this.playPattern(pattern)}
+          style={{ color: 'white' }}
+        >
+          <h4>{pattern.title}</h4>
+        </li>
+        <h4 onClick={() => this.deletePattern(pattern.id)}>
+          X
+        </h4>
+      </div>
+
     ));
   }
 

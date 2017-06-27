@@ -62,7 +62,7 @@ module.exports = {
   deletePattern(req, res, next) {
     const noteId = req.params.id;
 
-    DrumPattern.findByIdAndRemove({ _id: noteId })
+    DrumPattern.findOneAndRemove({ id: noteId })
       .then(note => res.status(204).send(note))
       .catch(next);
   },
