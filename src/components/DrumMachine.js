@@ -694,7 +694,7 @@ class DrumMachine extends Component {
           data[i][j] = this.state.drumNoteChain[0].data[i][j];
         }
       }
-      this.setState({ data });
+      this.setState({ data, currentPlayingChainElement: 0 });
       this.startSequencer();
     }
   }
