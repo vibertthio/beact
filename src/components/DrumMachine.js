@@ -386,6 +386,7 @@ class DrumMachine extends Component {
         }
       }
       this.setState({ data, currentPlayingRecord: [], currentPlayingRecordElement: 0 });
+      this.keyboard.clearSchedule();
       this.stopSequencer();
     }
   }

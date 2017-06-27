@@ -81,7 +81,7 @@ export class Sequencer {
       const column = this.matrix[col];
       const nowPlayingAni = [];
       for (let i = 0; i < this.notes.length; i += 1) {
-        if (col === 0 && i === 0 && this.checkStart === false) {
+        if (col === 0 && i === 0 && this.checkStart === false && this.recording === true) {
           this.checkStart = true;
           this.startTime = time;
         }
@@ -333,10 +333,14 @@ export class Keyboard {
         aniTrigger(record.content[i].key);
       }, time - 0.4);
     }
-    // if (this.recording === true) {
-    //   const time = Transport.seconds;
-    //   this.record.push({ time, key: this.currentKey });
-    //   console.log(`keyBoardRecord: ${this.record}`);
-    // }
+  }
+
+  /**
+ * [clearSchedule description]
+ */
+ clearSchedule() {
+   const time = Transport.seconds + 1;
+   this.samples.stopAll([time]);
+   // Transport.cancel([time]);
   }
 }
