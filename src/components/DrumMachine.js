@@ -394,16 +394,21 @@ class DrumMachine extends Component {
    * [playNextRecordElement description]
    */
   playNextRecordElement() {
+    const data = this.state.data;
+    let stopDrum = false;
     let num = this.state.currentPlayingRecordElement;
     num += 1;
     // we can configure it to no replay mode
     if (num === this.state.currentPlayingRecord.length) {
       num = 0;
+      stopDrum = true;
+      this.exitPlayRecord();
     }
-    const data = this.state.data;
-    for (let i = 0; i < 16; i += 1) {
-      for (let j = 0; j < 8; j += 1) {
-        data[i][j] = this.state.currentPlayingRecord[num][i][j];
+    if (stopDrum === false) {
+      for (let i = 0; i < 16; i += 1) {
+        for (let j = 0; j < 8; j += 1) {
+          data[i][j] = this.state.currentPlayingRecord[num][i][j];
+        }
       }
     }
     this.setState({ currentPlayingRecordElement: num, data });
