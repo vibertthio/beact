@@ -640,6 +640,15 @@ class DrumMachine extends Component {
 			this.keyboard.currentKey = index;
 			this.keyboard.playKey();
     });
+
+		// start / stop
+		key('space', () => {
+			if (!this.state.playing) {
+				this.startSequencer();
+			} else {
+				this.topSequencer();
+			}
+		});
   }
 
 	/**
