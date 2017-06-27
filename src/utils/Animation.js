@@ -305,7 +305,7 @@ function Animation() {
   (function makePrisms(opacity = 1, duration = 500) {
     [3, 5, 6].forEach((index) => {
       const origin = { x: two.width * 0.5, y: two.height * 0.5 };
-      const dest = { scale: max(two.width, two.height) / 50 };
+      const dest = { scale: max(two.width, two.height) / 40 };
 
       /**
        * [setPosition description]
