@@ -17,6 +17,8 @@
   background-color: #585f60;
   opacity: 0.1;
   transition: opacity .3s ease-in-out;
+  outline: none;
+  border: none;
 }
 
 @media only screen and (min-aspect-ratio: 1/1) {
