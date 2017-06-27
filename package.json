@@ -31,7 +31,7 @@
     "react-window-resize-listener": "^1.1.0",
     "sass-loader": "^6.0.2",
     "tone": "^0.10.0",
-    "two.js": "git://github.com/fixate/two.js.git#webpack-monkeypatch",
+    "two.js": "git://github.com/jonobr1/two.js.git#dev",
     "uuid": "^3.0.1"
   },
   "devDependencies": {

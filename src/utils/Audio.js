@@ -1,6 +1,7 @@
 import { MultiPlayer, Sequence, Transport } from 'tone';
 import axios from 'axios';
 import uuid4 from 'uuid/v4';
+import { urls, notes } from './samples.config';
 
 let temperId = uuid4();
 /**
@@ -234,27 +235,9 @@ export class Keyboard {
   constructor() {
     this.currentKey = null;
     this.record = [];
-    this.notes = [
-      'kk',
-      'sn',
-      'hh',
-      'ho',
-      'A',
-      'F#',
-      'E',
-      'C#',
-    ];
+    this.notes = notes;
     this.samples = new MultiPlayer({
-      urls: {
-        kk: './assets/audio/505/kick.mp3',
-        sn: './assets/audio/505/snare.mp3',
-        hh: './assets/audio/505/hh.mp3',
-        ho: './assets/audio/505/hho.mp3',
-        A: './assets/audio/casio/A1.mp3',
-        'C#': './assets/audio/casio/Cs2.mp3',
-        E: './assets/audio/casio/E2.mp3',
-        'F#': './assets/audio/casio/Fs2.mp3',
-      },
+      urls,
       volume: -10,
       fadeOut: 0.1,
     }).toMaster();
