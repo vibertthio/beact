@@ -636,17 +636,10 @@ class DrumMachine extends Component {
   detectKeyboard() {
     key(keys, (e, h) => {
 			const index = animationKey2IndexMapping[h.shortcut];
-      this.keyboard.currentKey = index;
-      this.keyboard.playKey();
-      this.ani.trigger(
-        animationKey2IndexMapping[h.shortcut],
-      );
+      this.ani.trigger(index);
+			this.keyboard.currentKey = index;
+			this.keyboard.playKey();
     });
-    // key('s', () => {
-    //   this.keyboard.currentKey = 2;
-    //   this.keyboard.playKey();
-    //   this.ani.trigger(2);
-		// });
   }
 
 	/**
