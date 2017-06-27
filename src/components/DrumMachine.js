@@ -60,11 +60,13 @@ class DrumMachine extends Component {
       drumNoteChain: [],
       currentChainElement: '',
       currentPlayingChainElement: 0,
-      records: [],
+      drumRecords: [],
+      keyRecords: [],
+      recordTitle: '',
       currentPlayingRecord: [],
       currentPlayingRecordElement: 0,
       keyStartTimeCorrection: 0,
-			hidden: true,
+			hidden: false,
 			wait: true,
 			idle: false,
     };
@@ -72,11 +74,13 @@ class DrumMachine extends Component {
     this.setCurrentBeat = this.setCurrentBeat.bind(this);
     this.recordSequencer = this.recordSequencer.bind(this);
     this.saveRecord = this.saveRecord.bind(this);
-
-    this.storeRecord = this.storeRecord.bind(this);
+    this.handleRecordTitleChange = this.handleRecordTitleChange.bind(this);
+    this.storeDrumRecord = this.storeDrumRecord.bind(this);
+    this.storeKeyRecord = this.storeKeyRecord.bind(this);
     this.playRecord = this.playRecord.bind(this);
     this.playNextRecordElement = this.playNextRecordElement.bind(this);
     this.exitPlayRecord = this.exitPlayRecord.bind(this);
+    this.deleteRecord = this.deleteRecord.bind(this);
 
     this.handleTitleChange = this.handleTitleChange.bind(this);
     this.savePattern = this.savePattern.bind(this);
@@ -103,12 +107,12 @@ class DrumMachine extends Component {
       this.state.data,
       this.setCurrentBeat,
       this.playNextChainElement,
-      this.storeRecord,
+      this.storeDrumRecord,
       this.playNextRecordElement,
       this.playDrumAni,
     );
 
-    this.keyboard = new Keyboard();
+    this.keyboard = new Keyboard(this.storeKeyRecord);
 
     this.toggleHidden = this.toggleHidden.bind(this);
 		this.hideSpinner = this.hideSpinner.bind(this);
@@ -131,7 +135,14 @@ class DrumMachine extends Component {
       });
     axios.get('/api/notes')
       .then((res) => {
-        this.setState({ records: res.data });
+        this.setState({ drumRecords: res.data });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    axios.get('/api/keys')
+      .then((res) => {
+        this.setState({ keyRecords: res.data });
       })
       .catch((err) => {
         console.log(err);
@@ -197,7 +208,8 @@ class DrumMachine extends Component {
 		rootDiv.classList.add('fullHeight');
 		this.setState({ wait: false });
 	}
-	/**
+
+  /**
    * [hideSpinner description]
    */
 	hideSpinner() {
@@ -227,6 +239,7 @@ class DrumMachine extends Component {
 			data,
 		});
 	}
+
   /**
    * [clearClicked description]
    * @param  {number} i first index
@@ -245,6 +258,7 @@ class DrumMachine extends Component {
 			data,
 		});
 	}
+
   /**
    * [handleClick description]
    * @param  {number} i first index
@@ -298,16 +312,21 @@ class DrumMachine extends Component {
    * [recordSequencer description]
    */
   recordSequencer() {
-    if (this.sequencer.recording === true) {
+    if (this.state.recordTitle === '') {
+      console.log('Please give your record a title');
+    } else if (this.sequencer.recording === true) {
       this.sequencer.stopRecording();
       this.keyboard.stopRecording();
       this.setState({
         playing: false,
         currentBeat: 0,
+        recordTitle: '',
       });
       this.saveRecord();
+      console.log('stopRecording');
     } else {
       // countDown 3 seconds
+      console.log('startRecording');
       this.sequencer.startRecording();
       if (this.state.playing === true) {
         this.keyboard.startRecording();
@@ -316,19 +335,37 @@ class DrumMachine extends Component {
   }
 
   /**
+  * @param  {object} event width of window
+   * [playPattern description]
+   */
+  handleRecordTitleChange(event) {
+    this.setState({ recordTitle: event.target.value });
+  }
+
+  /**
    * [saveRecord description]
    */
   saveRecord() {
     // add title as a paramater (feature)
-    this.sequencer.saveRecord(this.keyboard.saveRecord);
+    this.sequencer.saveRecord(this.keyboard.saveRecord,
+       this.keyboard.storeRecord,
+      this.state.recordTitle);
   }
 
   /**
   * @param  {Array} records width of window
-   * [storeRecord description]
+   * [storeDrumRecord description]
    */
-  storeRecord(records) {
-    this.setState({ records });
+  storeDrumRecord(records) {
+    this.setState({ drumRecords: records });
+  }
+
+  /**
+  * @param  {Array} records width of window
+   * [storeKeyRecord description]
+   */
+  storeKeyRecord(records) {
+    this.setState({ keyRecords: records });
   }
 
   /**
@@ -338,6 +375,7 @@ class DrumMachine extends Component {
   playRecord(record) {
     this.sequencer.isPlayingChain = false;
     this.sequencer.isPlayingRecord = true;
+    this.keyboard.isPlayingRecord = true;
     this.stopSequencer();
     this.exitPattern();
     const data = this.state.data;
@@ -350,7 +388,12 @@ class DrumMachine extends Component {
       currentPlayingRecord: record.content,
       currentPlayingRecordElement: 0,
       keyStartTimeCorrection: record.startTime });
-    this.startSequencer();
+    for (let i = 0; i < this.state.keyRecords.length; i += 1) {
+      if (this.state.keyRecords[i].id === record.id) {
+        this.startSequencer();
+        this.keyboard.playRecord(this.state.keyRecords[i], this.ani.trigger);
+      }
+    }
   }
 
   /**
@@ -359,6 +402,7 @@ class DrumMachine extends Component {
   exitPlayRecord() {
     if (this.sequencer.isPlayingRecord === true) {
       this.sequencer.isPlayingRecord = false;
+      this.keyboard.isPlayingRecord = false;
       const data = this.state.data;
       for (let i = 0; i < 16; i += 1) {
         for (let j = 0; j < 8; j += 1) {
@@ -366,23 +410,64 @@ class DrumMachine extends Component {
         }
       }
       this.setState({ data, currentPlayingRecord: [], currentPlayingRecordElement: 0 });
+      this.keyboard.clearSchedule();
       this.stopSequencer();
     }
   }
+
+  /**
+  * @param  {Number} recordId width of window
+   * [deleteRecord description]
+   */
+  deleteRecord(recordId) {
+    axios.delete(`/api/notes/${recordId}`)
+     .then(
+       axios.get('/api/notes')
+         .then((res) => {
+           this.setState({ drumRecords: res.data });
+         })
+         .catch((err) => {
+           console.log(err);
+         }),
+     )
+     .catch((err) => {
+       console.log(err);
+     });
+     axios.delete(`/api/keys/${recordId}`)
+      .then(
+        axios.get('/api/keys')
+          .then((res) => {
+            this.setState({ keyRecords: res.data });
+          })
+          .catch((err) => {
+            console.log(err);
+          }),
+      )
+      .catch((err) => {
+        console.log(err);
+      });
+    console.log(recordId);
+  }
+
   /**
    * [playNextRecordElement description]
    */
   playNextRecordElement() {
+    const data = this.state.data;
+    let stopDrum = false;
     let num = this.state.currentPlayingRecordElement;
     num += 1;
     // we can configure it to no replay mode
     if (num === this.state.currentPlayingRecord.length) {
       num = 0;
+      stopDrum = true;
+      this.exitPlayRecord();
     }
-    const data = this.state.data;
-    for (let i = 0; i < 16; i += 1) {
-      for (let j = 0; j < 8; j += 1) {
-        data[i][j] = this.state.currentPlayingRecord[num][i][j];
+    if (stopDrum === false) {
+      for (let i = 0; i < 16; i += 1) {
+        for (let j = 0; j < 8; j += 1) {
+          data[i][j] = this.state.currentPlayingRecord[num][i][j];
+        }
       }
     }
     this.setState({ currentPlayingRecordElement: num, data });
@@ -406,15 +491,17 @@ class DrumMachine extends Component {
         content: this.state.data,
         id: uuid4(),
       })
+        .then(
+          axios.get('/api/patterns')
+            .then((res) => {
+              this.setState({ patternLists: res.data });
+            })
+            .catch((err) => {
+              console.log(err);
+            }),
+        )
         .catch(err => console.log(err));
       this.setState({ patternTitle: '' });
-      axios.get('/api/patterns')
-        .then((res) => {
-          this.setState({ patternLists: res.data });
-        })
-        .catch((err) => {
-          console.log(err);
-        });
     } else {
       console.log('Please give your pattern a name!');
     }
@@ -436,7 +523,7 @@ class DrumMachine extends Component {
     }
     this.setState({
       data,
-      currentPatternId: pattern._id, // eslint-disable-line no-underscore-dangle
+      currentPatternId: pattern.id, // eslint-disable-line no-underscore-dangle
     });
     this.startSequencer();
   }
@@ -488,18 +575,44 @@ class DrumMachine extends Component {
   deleteCurrentPattern() {
     if (this.state.currentPatternId !== '') {
       axios.delete(`/api/patterns/${this.state.currentPatternId}`)
+       .then(
+         axios.get('/api/patterns')
+           .then((res) => {
+             this.setState({ patternLists: res.data });
+           })
+           .catch((err) => {
+             console.log(err);
+           }),
+       )
        .catch((err) => {
          console.log(err);
        });
-       axios.get('/api/patterns')
-         .then((res) => {
-           this.setState({ patternLists: res.data });
-         })
-         .catch((err) => {
-           console.log(err);
-         });
       this.exitPattern();
       this.stopSequencer();
+    }
+  }
+
+  /**
+  * @param  {Number} id width of window
+   * [deletePattern description]
+   */
+  deletePattern(id) {
+    if (id === this.state.currentPatternId) {
+      this.deleteCurrentPattern();
+    } else {
+      axios.delete(`/api/patterns/${id}`)
+       .then(
+         axios.get('/api/patterns')
+           .then((res) => {
+             this.setState({ patternLists: res.data });
+           })
+           .catch((err) => {
+             console.log(err);
+           }),
+       )
+       .catch((err) => {
+         console.log(err);
+       });
     }
   }
 
@@ -570,18 +683,20 @@ class DrumMachine extends Component {
    * [playChain description]
    */
   playChain() {
-    this.sequencer.isPlayingRecord = false;
-    this.sequencer.isPlayingChain = true;
-    this.stopSequencer();
-    this.exitPattern();
-    const data = this.state.data;
-    for (let i = 0; i < 16; i += 1) {
-      for (let j = 0; j < 8; j += 1) {
-        data[i][j] = this.state.drumNoteChain[0].data[i][j];
+    if (this.state.drumNoteChain.length > 0) {
+      this.sequencer.isPlayingRecord = false;
+      this.sequencer.isPlayingChain = true;
+      this.stopSequencer();
+      this.exitPattern();
+      const data = this.state.data;
+      for (let i = 0; i < 16; i += 1) {
+        for (let j = 0; j < 8; j += 1) {
+          data[i][j] = this.state.drumNoteChain[0].data[i][j];
+        }
       }
+      this.setState({ data });
+      this.startSequencer();
     }
-    this.setState({ data });
-    this.startSequencer();
   }
 
   /**
@@ -622,7 +737,7 @@ class DrumMachine extends Component {
 
   /**
    * @param  {Array} column width of window
-   * [playRecord description]
+   * [playDrumAni description]
    */
   playDrumAni(column) {
     for (let i = 0; i < column.length; i += 1) {
@@ -666,13 +781,19 @@ class DrumMachine extends Component {
    */
   renderPatterns() {
     return _.map(this.state.patternLists, pattern => (
-      <li
-        key={pattern.id}
-        onTouchTap={() => this.playPattern(pattern)}
-        style={{ color: 'white' }}
-      >
-        <h4>{pattern.title}</h4>
-      </li>
+      <div key={uuid4()}>
+        <li
+          key={pattern.id}
+          onTouchTap={() => this.playPattern(pattern)}
+          style={{ color: 'white' }}
+        >
+          <h4>{pattern.title}</h4>
+        </li>
+        <h4 onClick={() => this.deletePattern(pattern.id)}>
+          X
+        </h4>
+      </div>
+
     ));
   }
 
@@ -681,14 +802,19 @@ class DrumMachine extends Component {
    * @return {Element}
    */
   renderRecords() {
-    return _.map(this.state.records, record => (
-      <li
-        key={uuid4()}
-        onTouchTap={() => this.playRecord(record)}
-        style={{ color: 'black' }}
-      >
-        <h4>{record.title}{record.content.length}</h4>
-      </li>
+    return _.map(this.state.drumRecords, drumRecord => (
+      <div key={uuid4()}>
+        <li
+          key={drumRecord.id}
+          onTouchTap={() => this.playRecord(drumRecord)}
+          style={{ color: 'black' }}
+        >
+          <h4>{drumRecord.title}{drumRecord.content.length}</h4>
+        </li>
+        <h4 onClick={() => this.deleteRecord(drumRecord.id)}>
+          X
+        </h4>
+      </div>
     ));
   }
 
@@ -755,13 +881,21 @@ class DrumMachine extends Component {
           <div className={styles.colorMenu}>
             {/* 1 */}
             <div className={`${styles.row1} ${styles.row}`}>
-              <button className={styles.row1l} onClick={() => console.log('Start Button clicked')}>
+              <button
+                className={styles.row1l}
+                onClick={() => console.log('Start Button clicked')}
+                onTouchTap={() => this.startSequencer()}
+              >
                 {/* <div className={styles.row1l}> */}
                 <img src={menu1} alt="Start Button" />
                 {/* </div> */}
               </button>
 
-              <button className={styles.row1r} onClick={() => console.log('Stop Button clicked')}>
+              <button
+                className={styles.row1r}
+                onClick={() => console.log('Stop Button clicked')}
+                onTouchTap={() => this.stopSequencer()}
+              >
                 <img src={menu2} alt="Stop Button" />
               </button>
             </div>
@@ -772,10 +906,18 @@ class DrumMachine extends Component {
             {/* 3 */}
             <div className={`${styles.row3} ${styles.row}`}>
               <div className={styles.row3l}>
-                <button className={styles.row3lu} onClick={() => console.log('Save New Pattern clicked')}>
+                <button
+                  className={styles.row3lu}
+                  onClick={() => console.log('Save New Pattern clicked')}
+                  onTouchTap={() => this.savePattern()}
+                >
                   <img src={menu4} alt="Save New Pattern" />
                 </button>
-                <button className={styles.row3ld} onClick={() => console.log('Exit Pattern clicked')}>
+                <button
+                  className={styles.row3ld}
+                  onClick={() => console.log('Exit Pattern clicked')}
+                  onTouchTap={() => this.exitPattern()}
+                >
                   <img src={menu5} alt="Exit Pattern" />
                 </button>
               </div>
@@ -784,11 +926,14 @@ class DrumMachine extends Component {
                   <input
                     type="text"
                     className={styles.row3input}
+                    value={this.state.patternTitle}
+                    onChange={this.handleTitleChange}
                     placeholder="input pattern name..."
                   />
                 </div>
                 <div className={styles.row3rd}>
                   <ul>
+                    {this.renderPatterns()}
                     {/* alt Delete Pattern Icon */}
                     <li>raggae</li>
                     <li>jazz hip-hop</li>
@@ -812,18 +957,34 @@ class DrumMachine extends Component {
             <div className={`${styles.row5} ${styles.row}`}>
               <div className={styles.row5l}>
                 <div className={styles.row5lu}>
-                  <button className={styles.row5lul} onClick={() => console.log('Play Chain Button clicked')}>
+                  <button
+                    className={styles.row5lul}
+                    onClick={() => console.log('Play Chain Button clicked')}
+                    onTouchTap={() => this.playChain()}
+                  >
                     <img src={menu7} alt="Play Chain Button" />
                   </button>
-                  <button className={styles.row5lur} onClick={() => console.log('Update Chain Button clicked')}>
+                  <button
+                    className={styles.row5lur}
+                    onClick={() => console.log('Update Chain Button clicked')}
+                    onTouchTap={() => this.updateChain()}
+                  >
                     <img src={menu8} alt="Update Chain Button" />
                   </button>
                 </div>
                 <div className={styles.row5ld}>
-                  <button className={styles.row5ldl} onClick={() => console.log('Delete Current Chain Element Button clicked')}>
+                  <button
+                    className={styles.row5ldl}
+                    onClick={() => console.log('Delete Current Chain Element Button clicked')}
+                    onTouchTap={() => this.deleteCurrentChainElement()}
+                  >
                     <img src={menu5} alt="Delete Current Chain Element Button" />
                   </button>
-                  <button className={styles.row5ldr} onClick={() => console.log('Exit Chain Button Chain clicked')}>
+                  <button
+                    className={styles.row5ldr}
+                    onClick={() => console.log('Exit Chain Button Chain clicked')}
+                    onTouchTap={() => this.exitChain()}
+                  >
                     <img src={menu9} alt="Exit Chain Button Chain Index" />
                   </button>
                 </div>
@@ -842,7 +1003,11 @@ class DrumMachine extends Component {
             <div className={`${styles.row7} ${styles.row}`}>
               <div className={styles.row7l}>
                 <div className={styles.row7lu}>
-                  <button className={styles.row7lul} onClick={() => console.log('Record Button clicked')}>
+                  <button
+                    className={styles.row7lul}
+                    onClick={() => console.log('Record Button clicked')}
+                    onTouchTap={() => this.recordSequencer()}
+                  >
                     <img src={menu11} alt="Record Button" />
                   </button>
                   <button className={styles.row7lur} onClick={() => console.log('Save Button clicked')}>
@@ -853,14 +1018,26 @@ class DrumMachine extends Component {
                   <button className={styles.row7ldl} onClick={() => console.log('Clear Current Record Button clicked')}>
                     <img src={menu5} alt="Clear Current Record Button" />
                   </button>
-                  <button className={styles.row7ldr} onClick={() => console.log('Exit Playing Record Button clicked')}>
+                  <button
+                    className={styles.row7ldr}
+                    onClick={() => console.log('Exit Playing Record Button clicked')}
+                    onTouchTap={() => this.exitPlayRecord()}
+                  >
                     <img src={menu9} alt="Exit Playing Record Button" />
                   </button>
                 </div>
               </div>
-              <div className={styles.row7r}>
+              <div className={styles.row10r}>
+                <input
+                  type="text"
+                  className={styles.row3input}
+                  value={this.state.recordTitle}
+                  onChange={this.handleRecordTitleChange}
+                  placeholder="input record name..."
+                />
                 <ul>
                   {/* alt Delete Pattern Icon */}
+                  {this.renderRecords()}
                   <li>raggae</li>
                   <li>vibert</li>
                   <li>joey</li>
@@ -1012,7 +1189,21 @@ class DrumMachine extends Component {
 						`${styles.mask}
 						 ${(hidden === false ? styles.showMask : styles.hideMask)}`}
           onClick={() => this.toggleHidden()}
-        />
+        >
+          <div className={styles.btn} onClick={() => console.log('update pattern')} onTouchTap={() => this.editPattern()}>
+						Update Pattern
+					</div>
+          <div className={styles.btn} onClick={() => console.log('delete current pattern')} onTouchTap={() => this.deleteCurrentPattern()}>
+						Delete Current Pattern
+					</div>
+          <div className={styles.chainList}>
+						renderChain in this div
+						<ul>{this.renderChain()}<li style={{ color: 'yellow' }} onTouchTap={() => this.setCurrentChainElementAtLast()}>
+								Update at here in this li
+							</li>
+						</ul>
+          </div>
+        </button>
         <Matrix
           data={this.state.data}
           playing={this.state.playing}

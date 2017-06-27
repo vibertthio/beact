@@ -1,4 +1,4 @@
-@media only screen and (min-width: 600px) {
+/*@media only screen and (min-width: 600px) {
   .title {
     font-size: 5em;
   }
@@ -9,7 +9,7 @@
     font-size: 3em;
     margin: 1em;
   }
-}
+}*/
 
 .hideDOM {
   display: none;
@@ -51,23 +51,68 @@
   height: 100%;
   z-index: 1;
   background-color: #724a59;
-  transition: margin .7s ease-in-out;
+  transition: all .7s ease-in-out;
+  /*transition: width .7s ease-in-out;*/
+  /*transition: margin .7s ease-in-out;*/
 }
 
 .toggleMenu {
   margin-left: 0%;
 }
 
-.toggleRevMenu {
-  margin-left: -40%;
+/* mask */
+
+.mask {
+  position: fixed;
+  height: 100%;
+  background-color: black;
+  opacity: 0.7;
+  z-index: 1;
+  transition: margin .7s ease-in-out;
+  border: none;
+  outline: none;
 }
 
-.closeIcon {
+.hideMask {
+  margin-left: 100%;
+}
+
+@media only screen and (min-aspect-ratio: 1/1) {
+  .menu {
+    width: 40%;
+  }
+  .toggleRevMenu {
+    margin-left: -40%;
+  }
+  .mask {
+    width: 60%;
+  }
+  .showMask {
+    margin-left: 40%;
+  }
+}
+
+@media only screen and (max-aspect-ratio: 1/1) {
+  .menu {
+    width: 80%;
+  }
+  .toggleRevMenu {
+    margin-left: -80%;
+  }
+  .mask {
+    width: 20%;
+  }
+  .showMask {
+    margin-left: 80%;
+  }
+}
+
+/*.closeIcon {
   position: absolute;
   right: 2%;
   top: 1%;
   cursor: pointer;
-}
+}*/
 
 .patternList {
   width: 70%;
@@ -104,25 +149,7 @@
   cursor: pointer;
 }
 
-.mask {
-  position: fixed;
-  width: 60%;
-  height: 100%;
-  background-color: black;
-  opacity: 0.3;
-  z-index: 1;
-  transition: margin .7s ease-in-out;
-  border: none;
-  outline: none;
-}
-
-.hideMask {
-  margin-left: 100%;
-}
-
-.showMask {
-  margin-left: 40%;
-}
+/* animation */
 
 .animation {
   position: absolute;
@@ -142,7 +169,20 @@
   width: 100%;
   border: none;
   outline: none;
+  cursor: pointer;
+  transition: all .3s ease-in-out;
 }
+
+.colorMenu button:hover {
+}
+
+.colorMenu img {
+  /*z-index: 2;*/
+}
+
+/*.colorMenu img:hover {
+  opacity: 1;
+}*/
 
 .row {
 
@@ -155,7 +195,7 @@
 }
 
 .row1 button {
-  width: calc(50% - 20px);
+  width: calc(48%);
   height: 100%;
   position: relative;
   display: flex;
@@ -184,6 +224,7 @@
 
 .row1l::after {
   right: 0;
+  z-index: 1;
   background: #78b19a;
   transform-origin: bottom right;
   transform: skewX(-20deg);
@@ -196,8 +237,24 @@
   transform: skewX(-20deg);
 }
 
+.row1l:hover {
+  background: #83d3b3;
+}
+
+.row1l:hover::after {
+  background: #83d3b3;
+}
+
+.row1r:hover {
+  background: #d8b98a;
+}
+
+.row1r:hover::after {
+  background: #d8b98a;
+}
+
 .row1 button img {
-  z-index: 1;
+  z-index: 2;
   height: 40%;
 }
 
@@ -209,24 +266,23 @@
 }
 
 .row3l {
+  display: flex;
+  flex-direction: column;
   width: 30%;
   height: 100%;
 }
 
 .row3l button {
   display: flex;
-  flex-direction: column;
+  /*flex-direction: column;*/
   align-items: center;
   justify-content: center;
   height: 50%;
-}
-
-.row3lu {
-  background: #725862;
-}
-
-.row3ld {
   background: #73676b;
+}
+
+.row3l button:hover {
+  background: #725862;
 }
 
 .row3l button img {
@@ -282,7 +338,7 @@
 
 .row5 {
   display: flex;
-  background: #724a59;
+  /*background: #724a59;*/
   height: 19%;
 }
 
@@ -303,16 +359,12 @@
   align-items: center;
   justify-content: center;
   height: 100%;
-}
-
-.row5lul {
-  width: 50%;
-  background: #725862;
-}
-
-.row5lur {
   width: 50%;
   background: #73676b;
+}
+
+.row5l div button:hover {
+  background: #725862;
 }
 
 .row5l div button img {
@@ -384,7 +436,7 @@
 }
 
 .row7lu button {
-  width: calc(50% - 13px);
+  width: calc(48%);
   height: 100%;
   position: relative;
   display: flex;
@@ -429,6 +481,22 @@
   z-index: 1;
 }
 
+.row7lul:hover {
+  background: #83d3b3;
+}
+
+.row7lul:hover::after {
+  background: #83d3b3;
+}
+
+.row7lur:hover {
+  background: #d8b98a;
+}
+
+.row7lur:hover::after {
+  background: #d8b98a;
+}
+
 .row7ld {
   display: flex;
   height: 50%;
@@ -438,6 +506,10 @@
   height: 100%;
   width: 50%;
   background: #73676b;
+}
+
+.row7ld button:hover {
+  background: #725862;
 }
 
 .row7ld button img {
@@ -495,4 +567,38 @@
 }
 :-moz-placeholder { /* Firefox 18- */
   color: #78b19a;
+}
+
+@media only screen and (max-height: 500px) {
+  .evenrow {
+    display: none;
+  }
+  .row3 {
+    display: none;
+  }
+  .row5 {
+    display: none;
+  }
+  .row7 {
+    display: none;
+  }
+  .row9 {
+    display: none;
+  }
+  .row1 {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+  }
+  .row1 button {
+    width: 100%;
+    height: 50%;
+  }
+  .row1l::after {
+    transform: none;
+  }
+  .row1r::after {
+    transform: none;
+  }
 }

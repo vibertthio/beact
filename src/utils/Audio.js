@@ -82,7 +82,7 @@ export class Sequencer {
       const column = this.matrix[col];
       const nowPlayingAni = [];
       for (let i = 0; i < this.notes.length; i += 1) {
-        if (col === 0 && i === 0 && this.checkStart === false) {
+        if (col === 0 && i === 0 && this.checkStart === false && this.recording === true) {
           this.checkStart = true;
           this.startTime = time;
         }
@@ -188,14 +188,16 @@ export class Sequencer {
 
   /**
   * @param  {Function} saveKeyboardRecord width of window
+  * @param  {Function} storeKeyboardRecord width of window
+  * @param  {String} recordTitle width of window
    * [storeRecord description]
    */
-  saveRecord(saveKeyboardRecord) {
+  saveRecord(saveKeyboardRecord, storeKeyboardRecord, recordTitle) {
     this.checkStart = false;
     if (this.recordFull.length > 0) {
       axios.post('/api/notes', {
         id: temperId,
-        title: 'Notes',
+        title: recordTitle,
         content: this.recordFull,
         startTime: this.startTime,
       })
@@ -215,7 +217,18 @@ export class Sequencer {
             console.log(err);
           }),
       )
+      .then(
+        axios.get('/api/keys')
+          .then((res) => {
+            storeKeyboardRecord(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          }),
+      )
       .catch(err => console.log(err));
+    } else {
+      console.log('you should at least play one rounds of drum');
     }
   }
 }
@@ -231,11 +244,13 @@ export class Keyboard {
   recording: Boolean;
   /**
    * [constructor description]
+   * @param  {[type]} storeRecord [description]
    */
-  constructor() {
+  constructor(storeRecord) {
     this.currentKey = null;
     this.record = [];
     this.notes = notes;
+    this.storeRecord = record => storeRecord(record);
     this.samples = new MultiPlayer({
       urls,
       volume: -10,
@@ -288,5 +303,30 @@ export class Keyboard {
     axios.post('/api/keys', keyBoardRecord)
       .catch(err => console.log(err));
     this.record = [];
+  }
+
+  /**
+  * @param  {Object} record width of window
+  * @param  {Function} aniTrigger width of window
+   * [playRecord description]
+   */
+  playRecord(record, aniTrigger) {
+    const currentTime = Transport.seconds;
+    for (let i = 0; i < record.content.length; i += 1) {
+      const time = currentTime + (record.content[i].time - record.startTime);
+      this.samples.start(this.notes[record.content[i].key], time);
+      Transport.schedule(() => {
+        aniTrigger(record.content[i].key);
+      }, time - 0.4);
+    }
+  }
+
+/**
+ * [clearSchedule description]
+ */
+ clearSchedule() {
+   const time = Transport.seconds + 1;
+   this.samples.stopAll([time]);
+   // Transport.cancel([time]);
   }
 }
