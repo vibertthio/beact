@@ -76,7 +76,7 @@ const Matrix = (props) => {
           }
         >
           {row.map((d, j) =>
-            <div
+            <button
               key={uuid4()}
               className={
                 `${styles.rect}

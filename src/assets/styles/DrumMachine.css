@@ -269,6 +269,15 @@
   margin: 0;
 }
 
+/* row4 */
+.chain {
+  display: block;
+  max-width:179px;
+  max-height:26px;
+  width: auto;
+  height: auto;
+}
+
 /* row5 */
 
 .row5 {
@@ -331,6 +340,19 @@
   justify-content: center;
   align-items: center;
   width: 40%;
+}
+
+.row5r .chainIndex {
+  font-size: 8em;
+  font-weight: 300;
+}
+.row5r .chainDivider {
+  font-size: 8em;
+  font-weight: 300;
+}
+.row5r .chainLength {
+  font-size: 8em;
+  font-weight: 300;
 }
 
 /* row7 */

@@ -811,6 +811,11 @@ class DrumMachine extends Component {
                     {/* alt Delete Pattern Icon */}
                     <li>raggae</li>
                     <li>jazz hip-hop</li>
+                    <li>nice ass</li>
+                    <li>vibert</li>
+                    <li>undone</li>
+                    <li>rock pattern</li>
+                    <li>rock pattern</li>
                     <li>rock pattern</li>
                     <li>rock pattern</li>
                     <li>rock pattern</li>
@@ -820,7 +825,7 @@ class DrumMachine extends Component {
             </div>
             {/* 4 */}
             <div className={`${styles.evenrow} ${styles.row}`}>
-              <img src={menu6} alt="Chain Icon" />
+              <img className={styles.chain} src={menu6} alt="Chain Icon" />
             </div>
             {/* 5 */}
             <div className={`${styles.row5} ${styles.row}`}>

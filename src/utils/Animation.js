@@ -9,6 +9,7 @@ const TWO_PI = Math.PI * 2;
 const cos = Math.cos;
 const sin = Math.sin;
 const min = Math.min;
+const max = Math.max;
 
 /**
  * Range
@@ -304,7 +305,7 @@ function Animation() {
   (function makePrisms(opacity = 1, duration = 500) {
     [3, 5, 6].forEach((index) => {
       const origin = { x: two.width * 0.5, y: two.height * 0.5 };
-      const dest = { scale: two.width / 50 };
+      const dest = { scale: max(two.width, two.height) / 50 };
 
       /**
        * [setPosition description]
