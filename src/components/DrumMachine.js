@@ -53,7 +53,8 @@ class DrumMachine extends Component {
       drumNoteChain: [],
       currentChainElement: '',
       currentPlayingChainElement: 0,
-      records: [],
+      drumRecords: [],
+      keyRecords: [],
       currentPlayingRecord: [],
       currentPlayingRecordElement: 0,
       keyStartTimeCorrection: 0,
@@ -66,7 +67,8 @@ class DrumMachine extends Component {
     this.recordSequencer = this.recordSequencer.bind(this);
     this.saveRecord = this.saveRecord.bind(this);
 
-    this.storeRecord = this.storeRecord.bind(this);
+    this.storeDrumRecord = this.storeDrumRecord.bind(this);
+    this.storeKeyRecord = this.storeKeyRecord.bind(this);
     this.playRecord = this.playRecord.bind(this);
     this.playNextRecordElement = this.playNextRecordElement.bind(this);
     this.exitPlayRecord = this.exitPlayRecord.bind(this);
@@ -96,12 +98,12 @@ class DrumMachine extends Component {
       this.state.data,
       this.setCurrentBeat,
       this.playNextChainElement,
-      this.storeRecord,
+      this.storeDrumRecord,
       this.playNextRecordElement,
       this.playDrumAni,
     );
 
-    this.keyboard = new Keyboard();
+    this.keyboard = new Keyboard(this.storeKeyRecord);
 
     this.toggleHidden = this.toggleHidden.bind(this);
 		this.hideSpinner = this.hideSpinner.bind(this);
@@ -124,7 +126,14 @@ class DrumMachine extends Component {
       });
     axios.get('/api/notes')
       .then((res) => {
-        this.setState({ records: res.data });
+        this.setState({ drumRecords: res.data });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    axios.get('/api/keys')
+      .then((res) => {
+        this.setState({ keyRecords: res.data });
       })
       .catch((err) => {
         console.log(err);
@@ -190,7 +199,8 @@ class DrumMachine extends Component {
 		rootDiv.classList.add('fullHeight');
 		this.setState({ wait: false });
 	}
-	/**
+
+  /**
    * [hideSpinner description]
    */
 	hideSpinner() {
@@ -220,6 +230,7 @@ class DrumMachine extends Component {
 			data,
 		});
 	}
+
   /**
    * [clearClicked description]
    * @param  {number} i first index
@@ -238,6 +249,7 @@ class DrumMachine extends Component {
 			data,
 		});
 	}
+
   /**
    * [handleClick description]
    * @param  {number} i first index
@@ -313,15 +325,23 @@ class DrumMachine extends Component {
    */
   saveRecord() {
     // add title as a paramater (feature)
-    this.sequencer.saveRecord(this.keyboard.saveRecord);
+    this.sequencer.saveRecord(this.keyboard.saveRecord, this.keyboard.storeRecord);
   }
 
   /**
   * @param  {Array} records width of window
-   * [storeRecord description]
+   * [storeDrumRecord description]
    */
-  storeRecord(records) {
-    this.setState({ records });
+  storeDrumRecord(records) {
+    this.setState({ drumRecords: records });
+  }
+
+  /**
+  * @param  {Array} records width of window
+   * [storeKeyRecord description]
+   */
+  storeKeyRecord(records) {
+    this.setState({ keyRecords: records });
   }
 
   /**
@@ -331,6 +351,7 @@ class DrumMachine extends Component {
   playRecord(record) {
     this.sequencer.isPlayingChain = false;
     this.sequencer.isPlayingRecord = true;
+    this.keyboard.isPlayingRecord = true;
     this.stopSequencer();
     this.exitPattern();
     const data = this.state.data;
@@ -343,7 +364,12 @@ class DrumMachine extends Component {
       currentPlayingRecord: record.content,
       currentPlayingRecordElement: 0,
       keyStartTimeCorrection: record.startTime });
-    this.startSequencer();
+    for (let i = 0; i < this.state.keyRecords.length; i += 1) {
+      if (this.state.keyRecords[i].id === record.id) {
+        this.startSequencer();
+        this.keyboard.playRecord(this.state.keyRecords[i], this.ani.trigger);
+      }
+    }
   }
 
   /**
@@ -352,6 +378,7 @@ class DrumMachine extends Component {
   exitPlayRecord() {
     if (this.sequencer.isPlayingRecord === true) {
       this.sequencer.isPlayingRecord = false;
+      this.keyboard.isPlayingRecord = false;
       const data = this.state.data;
       for (let i = 0; i < 16; i += 1) {
         for (let j = 0; j < 8; j += 1) {
@@ -362,6 +389,7 @@ class DrumMachine extends Component {
       this.stopSequencer();
     }
   }
+
   /**
    * [playNextRecordElement description]
    */
@@ -393,22 +421,23 @@ class DrumMachine extends Component {
    * [savePattern description]
    */
   savePattern() {
-    console.log('click');
     if (this.state.patternTitle !== '') {
       axios.post('/api/patterns', {
         title: this.state.patternTitle,
         content: this.state.data,
         id: uuid4(),
       })
+        .then(
+          axios.get('/api/patterns')
+            .then((res) => {
+              this.setState({ patternLists: res.data });
+            })
+            .catch((err) => {
+              console.log(err);
+            }),
+        )
         .catch(err => console.log(err));
       this.setState({ patternTitle: '' });
-      axios.get('/api/patterns')
-        .then((res) => {
-          this.setState({ patternLists: res.data });
-        })
-        .catch((err) => {
-          console.log(err);
-        });
     } else {
       console.log('Please give your pattern a name!');
     }
@@ -564,7 +593,7 @@ class DrumMachine extends Component {
    * [playChain description]
    */
   playChain() {
-    if (this.state.drumNoteChain.length > 0){
+    if (this.state.drumNoteChain.length > 0) {
       this.sequencer.isPlayingRecord = false;
       this.sequencer.isPlayingChain = true;
       this.stopSequencer();
@@ -707,13 +736,13 @@ class DrumMachine extends Component {
    * @return {Element}
    */
   renderRecords() {
-    return _.map(this.state.records, record => (
+    return _.map(this.state.drumRecords, drumRecord => (
       <li
         key={uuid4()}
-        onTouchTap={() => this.playRecord(record)}
+        onTouchTap={() => this.playRecord(drumRecord)}
         style={{ color: 'black' }}
       >
-        <h4>{record.title}{record.content.length}</h4>
+        <h4>{drumRecord.title}{drumRecord.content.length}</h4>
       </li>
     ));
   }
