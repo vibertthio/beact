@@ -28,7 +28,7 @@ function Animation() {
    * setup
    */
   const animations = [];
-  const colors = pallete[1].map(toRGB);
+  const colors = pallete[2].map(toRGB);
   const canvas = document.getElementById('animation');
   const params = { fullscreen: true };
   const two = new Two(params).appendTo(canvas);
