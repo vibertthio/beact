@@ -51,7 +51,9 @@
   height: 100%;
   z-index: 1;
   background-color: #724a59;
-  transition: margin .7s ease-in-out;
+  transition: all .7s ease-in-out;
+  /*transition: width .7s ease-in-out;*/
+  /*transition: margin .7s ease-in-out;*/
 }
 
 .toggleMenu {
@@ -168,7 +170,19 @@
   border: none;
   outline: none;
   cursor: pointer;
+  transition: all .3s ease-in-out;
 }
+
+.colorMenu button:hover {
+}
+
+.colorMenu img {
+  /*z-index: 2;*/
+}
+
+/*.colorMenu img:hover {
+  opacity: 1;
+}*/
 
 .row {
 
@@ -210,6 +224,7 @@
 
 .row1l::after {
   right: 0;
+  z-index: 1;
   background: #78b19a;
   transform-origin: bottom right;
   transform: skewX(-20deg);
@@ -222,8 +237,24 @@
   transform: skewX(-20deg);
 }
 
+.row1l:hover {
+  background: #83d3b3;
+}
+
+.row1l:hover::after {
+  background: #83d3b3;
+}
+
+.row1r:hover {
+  background: #d8b98a;
+}
+
+.row1r:hover::after {
+  background: #d8b98a;
+}
+
 .row1 button img {
-  z-index: 1;
+  z-index: 2;
   height: 40%;
 }
 
@@ -247,14 +278,11 @@
   align-items: center;
   justify-content: center;
   height: 50%;
-}
-
-.row3lu {
-  background: #725862;
-}
-
-.row3ld {
   background: #73676b;
+}
+
+.row3l button:hover {
+  background: #725862;
 }
 
 .row3l button img {
@@ -310,7 +338,7 @@
 
 .row5 {
   display: flex;
-  background: #724a59;
+  /*background: #724a59;*/
   height: 19%;
 }
 
@@ -331,16 +359,12 @@
   align-items: center;
   justify-content: center;
   height: 100%;
-}
-
-.row5lul {
-  width: 50%;
-  background: #725862;
-}
-
-.row5lur {
   width: 50%;
   background: #73676b;
+}
+
+.row5l div button:hover {
+  background: #725862;
 }
 
 .row5l div button img {
@@ -457,6 +481,22 @@
   z-index: 1;
 }
 
+.row7lul:hover {
+  background: #83d3b3;
+}
+
+.row7lul:hover::after {
+  background: #83d3b3;
+}
+
+.row7lur:hover {
+  background: #d8b98a;
+}
+
+.row7lur:hover::after {
+  background: #d8b98a;
+}
+
 .row7ld {
   display: flex;
   height: 50%;
@@ -466,6 +506,10 @@
   height: 100%;
   width: 50%;
   background: #73676b;
+}
+
+.row7ld button:hover {
+  background: #725862;
 }
 
 .row7ld button img {
