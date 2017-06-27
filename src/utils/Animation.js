@@ -17,7 +17,7 @@ import {
   pallete,
   animationNameList,
   animationKey2IndexMapping,
-} from './AnimationUtility';
+} from './animation.config';
 
 /**
  * [animation description]
