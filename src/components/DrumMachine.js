@@ -877,18 +877,6 @@ class DrumMachine extends Component {
                   </ul>
                 </div>
               </div>
-              <div
-                className={styles.btn}
-                onTouchTap={() => this.editPattern()}
-              >
-                Update Pattern
-              </div>
-              <div
-                className={styles.btn}
-                onTouchTap={() => this.deleteCurrentPattern()}
-              >
-                Delete Current Pattern
-              </div>
             </div>
             {/* 4 */}
             <div className={`${styles.evenrow} ${styles.row}`}>
@@ -928,18 +916,6 @@ class DrumMachine extends Component {
                   >
                     <img src={menu9} alt="Exit Chain Button Chain Index" />
                   </button>
-                </div>
-                <div className={styles.chainList}>
-                  renderChain in this div
-                  <ul>
-                    {this.renderChain()}
-                    <li
-                      style={{ color: 'yellow' }}
-                      onTouchTap={() => this.setCurrentChainElementAtLast()}
-                    >
-                      Update at here in this li
-                    </li>
-                  </ul>
                 </div>
               </div>
               <div className={styles.row5r}>
@@ -1135,7 +1111,21 @@ class DrumMachine extends Component {
 						`${styles.mask}
 						 ${(hidden === false ? styles.showMask : styles.hideMask)}`}
           onClick={() => this.toggleHidden()}
-        />
+        >
+          <div className={styles.btn} onClick={() => console.log('update pattern')} onTouchTap={() => this.editPattern()}>
+						Update Pattern
+					</div>
+          <div className={styles.btn} onClick={() => console.log('delete current pattern')} onTouchTap={() => this.deleteCurrentPattern()}>
+						Delete Current Pattern
+					</div>
+          <div className={styles.chainList}>
+						renderChain in this div
+						<ul>{this.renderChain()}<li style={{ color: 'yellow' }} onTouchTap={() => this.setCurrentChainElementAtLast()}>
+								Update at here in this li
+							</li>
+						</ul>
+          </div>
+        </button>
         <Matrix
           data={this.state.data}
           playing={this.state.playing}
