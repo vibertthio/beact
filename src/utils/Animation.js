@@ -1,5 +1,5 @@
-import Two from 'two.js/build/two';
 // import Two from 'two.js/build/two.svg.webpack';
+import Two from 'two.js/build/two';
 import TWEEN from '@tweenjs/tween.js';
 import _ from 'lodash';
 import {
@@ -175,13 +175,13 @@ function Animation() {
 
       const aniOut = new TWEEN.Tween(shape.translation)
         .to(destOut, duration)
-        .easing(TWEEN.Easing.Exponential.Out)
+        .easing(TWEEN.Easing.Exponential.In)
         .onComplete(() => {
           playing = false;
         });
       const aniIn = new TWEEN.Tween(shape.translation)
         .to(destIn, duration)
-        .easing(TWEEN.Easing.Exponential.In)
+        .easing(TWEEN.Easing.Exponential.Out)
         .onComplete(() => {
           aniOut.start();
         });
@@ -1388,7 +1388,7 @@ function Animation() {
   (function makeSplit(opacity = 1, duration = 500) {
     let playing = false;
     let distance = two.height / 5;
-    const amount = 25;
+    const amount = 30;
     const last = amount - 1;
     const param = { ending: 0, beginning: 0 };
 
@@ -1402,42 +1402,29 @@ function Animation() {
       const radius = min(two.width, two.height) * 0.33;
 
       // first hemisphere
-      shapes[0] = two.makePolygon(
-        0,
-        0,
-        distance,
-        amount,
-      );
-
-
-      points = shapes[0].vertices;
-      points.forEach((p, i) => {
+      points = [];
+      for (let i = 0; i < amount; i += 1) {
         const pct = i / last;
         const theta = pct * Math.PI;
-        p.set(
-          radius * Math.cos(theta),
-          radius * Math.sin(theta),
-        );
-      });
+        const x = radius * cos(theta);
+        const y = radius * sin(theta);
+        const p = new Two.Anchor(x, y);
+        points.push(p);
+      }
+      shapes[0] = two.makePath(points);
       shapes[0].origin = new Two.Vector().copy(shapes[0].translation);
 
       // second hemisphere
-      shapes[1] = two.makePolygon(
-        0,
-        0,
-        distance,
-        amount,
-      );
-
-      points = shapes[1].vertices;
-      points.forEach((p, i) => {
+      points = [];
+      for (let i = 0; i < amount; i += 1) {
         const pct = i / last;
         const theta = (pct + 1) * Math.PI;
-        p.set(
-          radius * Math.cos(theta),
-          radius * Math.sin(theta),
-        );
-      });
+        const x = radius * cos(theta);
+        const y = radius * sin(theta);
+        const p = new Two.Anchor(x, y);
+        points.push(p);
+      }
+      shapes[1] = two.makePath(points);
       shapes[1].origin = new Two.Vector().copy(shapes[1].translation);
 
       const group = two.makeGroup(shapes);
@@ -1480,6 +1467,7 @@ function Animation() {
 
     // methods
     const resize = () => {
+      console.log('resizing..');
       group.remove(shapes);
       two.remove(group);
       distance = two.height / 5;
