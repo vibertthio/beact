@@ -55,6 +55,7 @@ class DrumMachine extends Component {
       currentPlayingChainElement: 0,
       drumRecords: [],
       keyRecords: [],
+      recordTitle: '',
       currentPlayingRecord: [],
       currentPlayingRecordElement: 0,
       keyStartTimeCorrection: 0,
@@ -66,12 +67,13 @@ class DrumMachine extends Component {
     this.setCurrentBeat = this.setCurrentBeat.bind(this);
     this.recordSequencer = this.recordSequencer.bind(this);
     this.saveRecord = this.saveRecord.bind(this);
-
+    this.handleRecordTitleChange = this.handleRecordTitleChange.bind(this);
     this.storeDrumRecord = this.storeDrumRecord.bind(this);
     this.storeKeyRecord = this.storeKeyRecord.bind(this);
     this.playRecord = this.playRecord.bind(this);
     this.playNextRecordElement = this.playNextRecordElement.bind(this);
     this.exitPlayRecord = this.exitPlayRecord.bind(this);
+    this.deleteRecord = this.deleteRecord.bind(this);
 
     this.handleTitleChange = this.handleTitleChange.bind(this);
     this.savePattern = this.savePattern.bind(this);
@@ -303,14 +305,17 @@ class DrumMachine extends Component {
    * [recordSequencer description]
    */
   recordSequencer() {
-    if (this.sequencer.recording === true) {
+    if (this.sequencer.recording === true && this.state.recordTitle !== '') {
       this.sequencer.stopRecording();
       this.keyboard.stopRecording();
       this.setState({
         playing: false,
         currentBeat: 0,
+        recordTitle: '',
       });
       this.saveRecord();
+    } else if (this.sequencer.recording === true && this.state.recordTitle === '') {
+      alert('Please give your record a title');
     } else {
       // countDown 3 seconds
       this.sequencer.startRecording();
@@ -321,11 +326,21 @@ class DrumMachine extends Component {
   }
 
   /**
+  * @param  {object} event width of window
+   * [playPattern description]
+   */
+  handleRecordTitleChange(event) {
+    this.setState({ recordTitle: event.target.value });
+  }
+
+  /**
    * [saveRecord description]
    */
   saveRecord() {
     // add title as a paramater (feature)
-    this.sequencer.saveRecord(this.keyboard.saveRecord, this.keyboard.storeRecord);
+    this.sequencer.saveRecord(this.keyboard.saveRecord,
+       this.keyboard.storeRecord,
+      this.state.recordTitle);
   }
 
   /**
@@ -389,6 +404,40 @@ class DrumMachine extends Component {
       this.keyboard.clearSchedule();
       this.stopSequencer();
     }
+  }
+
+  /**
+  * @param  {Number} recordId width of window
+   * [deleteRecord description]
+   */
+  deleteRecord(recordId) {
+    axios.delete(`/api/notes/${recordId}`)
+     .then(
+       axios.get('/api/notes')
+         .then((res) => {
+           this.setState({ drumRecords: res.data });
+         })
+         .catch((err) => {
+           console.log(err);
+         }),
+     )
+     .catch((err) => {
+       console.log(err);
+     });
+     axios.delete(`/api/keys/${recordId}`)
+      .then(
+        axios.get('/api/keys')
+          .then((res) => {
+            this.setState({ keyRecords: res.data });
+          })
+          .catch((err) => {
+            console.log(err);
+          }),
+      )
+      .catch((err) => {
+        console.log(err);
+      });
+    console.log(recordId);
   }
 
   /**
@@ -743,13 +792,18 @@ class DrumMachine extends Component {
    */
   renderRecords() {
     return _.map(this.state.drumRecords, drumRecord => (
-      <li
-        key={uuid4()}
-        onTouchTap={() => this.playRecord(drumRecord)}
-        style={{ color: 'black' }}
-      >
-        <h4>{drumRecord.title}{drumRecord.content.length}</h4>
-      </li>
+      <div key={uuid4()}>
+        <li
+          key={drumRecord.id}
+          onTouchTap={() => this.playRecord(drumRecord)}
+          style={{ color: 'black' }}
+        >
+          <h4>{drumRecord.title}{drumRecord.content.length}</h4>
+        </li>
+        <h4 onClick={() => this.deleteRecord(drumRecord.id)}>
+          X
+        </h4>
+      </div>
     ));
   }
 
@@ -962,7 +1016,14 @@ class DrumMachine extends Component {
                   </button>
                 </div>
               </div>
-              <div className={styles.row7r}>
+              <div className={styles.row10r}>
+                <input
+                  type="text"
+                  className={styles.row3input}
+                  value={this.state.recordTitle}
+                  onChange={this.handleRecordTitleChange}
+                  placeholder="input record name..."
+                />
                 <ul>
                   {/* alt Delete Pattern Icon */}
                   {this.renderRecords()}

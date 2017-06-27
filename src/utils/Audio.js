@@ -188,14 +188,15 @@ export class Sequencer {
   /**
   * @param  {Function} saveKeyboardRecord width of window
   * @param  {Function} storeKeyboardRecord width of window
+  * @param  {String} recordTitle width of window
    * [storeRecord description]
    */
-  saveRecord(saveKeyboardRecord, storeKeyboardRecord) {
+  saveRecord(saveKeyboardRecord, storeKeyboardRecord, recordTitle) {
     this.checkStart = false;
     if (this.recordFull.length > 0) {
       axios.post('/api/notes', {
         id: temperId,
-        title: 'Notes',
+        title: recordTitle,
         content: this.recordFull,
         startTime: this.startTime,
       })
@@ -335,7 +336,7 @@ export class Keyboard {
     }
   }
 
-  /**
+/**
  * [clearSchedule description]
  */
  clearSchedule() {
