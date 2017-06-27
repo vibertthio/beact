@@ -15,6 +15,8 @@ import {
   ease,
   toRGB,
   pallete,
+  animationNameList,
+  animationKey2IndexMapping,
 } from './AnimationUtility';
 
 /**
@@ -2456,143 +2458,6 @@ function Animation() {
     trigger,
   };
 }
-
-const animationNameList = [
-  // #0
-  {
-    name: 'veil',
-    key: 's',
-  },
-  // #1
-  {
-    name: 'wipe',
-    key: 'x',
-  },
-  // #2
-  {
-    name: 'prism-1',
-    key: 'u',
-  },
-  // #3
-  {
-    name: 'prism-2',
-    key: 'j',
-  },
-  // #4
-  {
-    name: 'prism-3',
-    key: 'm',
-  },
-  // #5
-  {
-    name: 'piston-1',
-    key: 'r',
-  },
-  // #6
-  {
-    name: 'piston-2',
-    key: 'f',
-  },
-  // #7
-  {
-    name: 'piston-3',
-    key: 'v',
-  },
-  // #8
-  {
-    name: 'clay',
-    key: 'w',
-  },
-  // #9
-  {
-    name: 'flash-1',
-    key: 'q',
-  },
-  // #10
-  {
-    name: 'flash-2',
-    key: 'a',
-  },
-  // #11
-  {
-    name: 'flash-3',
-    key: 'z',
-  },
-  // #12
-  {
-    name: 'splash',
-    key: 'y',
-  },
-  // #13
-  {
-    name: 'splash-color',
-    key: 'n',
-  },
-  // #14
-  {
-    name: 'sunrise',
-    key: 'd',
-  },
-  // #15
-  {
-    name: 'timer',
-    key: 't',
-  },
-  // #16
-  {
-    name: 'pinwheel',
-    key: 'k',
-  },
-  // #17
-  {
-    name: 'glimmer',
-    key: 'o',
-  },
-  // #18
-  {
-    name: 'splits',
-    key: 'c',
-  },
-  // #19
-  {
-    name: 'moon',
-    key: 'e',
-  },
-  // #20
-  {
-    name: 'strike',
-    key: 'h',
-  },
-  // #21
-  {
-    name: 'zigzag',
-    key: 'l',
-  },
-  // #22
-  {
-    name: 'sinewave',
-    key: 'i',
-  },
-  // #23
-  {
-    name: 'bubbles',
-    key: 'g',
-  },
-  // #24
-  {
-    name: 'corona',
-    key: 'b',
-  },
-  // #25
-  {
-    name: 'corona-2',
-    key: 'p',
-  },
-];
-const animationKey2IndexMapping = {};
-animationNameList.forEach((l, i) => {
-  animationKey2IndexMapping[l.key] = i;
-});
 
 export {
   animationNameList,

@@ -1,4 +1,4 @@
-import { animationNameList } from './Animation';
+import { animationNameList } from './animation.config';
 
 const head = './assets/audio/papatap/A/';
 const notes = animationNameList.map(ls => ls.name);
