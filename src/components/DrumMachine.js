@@ -45,7 +45,7 @@ class DrumMachine extends Component {
       records: [],
       currentPlayingRecord: [],
       currentPlayingRecordElement: 0,
-
+      keyStartTimeCorrection: 0,
 			hidden: true,
 			wait: true,
 			idle: false,
@@ -325,10 +325,13 @@ class DrumMachine extends Component {
     const data = this.state.data;
     for (let i = 0; i < 16; i += 1) {
       for (let j = 0; j < 8; j += 1) {
-        data[i][j] = record[0][i][j];
+        data[i][j] = record.content[0][i][j];
       }
     }
-    this.setState({ data, currentPlayingRecord: record, currentPlayingRecordElement: 0 });
+    this.setState({ data,
+      currentPlayingRecord: record.content,
+      currentPlayingRecordElement: 0,
+      keyStartTimeCorrection: record.startTime });
     this.startSequencer();
   }
 
@@ -383,8 +386,9 @@ class DrumMachine extends Component {
       axios.post('/api/patterns', {
         title: this.state.patternTitle,
         content: this.state.data,
+        id: uuid4(),
       })
-      .catch(err => console.log(err));
+        .catch(err => console.log(err));
       this.setState({ patternTitle: '' });
       axios.get('/api/patterns')
         .then((res) => {
@@ -675,7 +679,7 @@ class DrumMachine extends Component {
   renderPatterns() {
     return _.map(this.state.patternLists, pattern => (
       <li
-        key={uuid4()}
+        key={pattern.id}
         onTouchTap={() => this.playPattern(pattern)}
         style={{ color: 'white' }}
       >
@@ -692,7 +696,7 @@ class DrumMachine extends Component {
     return _.map(this.state.records, record => (
       <li
         key={uuid4()}
-        onTouchTap={() => this.playRecord(record.content)}
+        onTouchTap={() => this.playRecord(record)}
         style={{ color: 'black' }}
       >
         <h4>{record.title}{record.content.length}</h4>

@@ -199,7 +199,7 @@ export class Sequencer {
         startTime: this.startTime,
       })
       .then(
-        saveKeyboardRecord(temperId),
+        saveKeyboardRecord(temperId, this.startTime),
       )
       .then(
         this.recordFull = [],
@@ -293,14 +293,17 @@ export class Keyboard {
 
   /**
   * @param  {String} recordId width of window
+  * @param  {Number} startTime width of window
    * [saveRecord description]
    */
-  saveRecord(recordId) {
+  saveRecord(recordId, startTime) {
     const keyBoardRecord = {
       content: this.record,
       id: recordId,
+      startTime,
     };
-    console.log(`keyBoardRecord: ${keyBoardRecord}`);
+    axios.post('/api/keys', keyBoardRecord)
+      .catch(err => console.log(err));
     this.record = [];
   }
 }

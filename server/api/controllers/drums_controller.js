@@ -75,7 +75,7 @@ module.exports = {
 
   getPattern(req, res, next) {
     const noteId = req.params.id;
-    Drum.findOne({ _id: noteId })
+    DrumPattern.findOne({ id: noteId })
       .then(note => res.send(note))
       .catch(next);
   },
