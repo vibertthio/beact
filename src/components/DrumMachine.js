@@ -305,7 +305,9 @@ class DrumMachine extends Component {
    * [recordSequencer description]
    */
   recordSequencer() {
-    if (this.sequencer.recording === true && this.state.recordTitle !== '') {
+    if (this.state.recordTitle === '') {
+      console.log('Please give your record a title');
+    } else if (this.sequencer.recording === true) {
       this.sequencer.stopRecording();
       this.keyboard.stopRecording();
       this.setState({
@@ -314,10 +316,10 @@ class DrumMachine extends Component {
         recordTitle: '',
       });
       this.saveRecord();
-    } else if (this.sequencer.recording === true && this.state.recordTitle === '') {
-      alert('Please give your record a title');
+      console.log('stopRecording');
     } else {
       // countDown 3 seconds
+      console.log('startRecording');
       this.sequencer.startRecording();
       if (this.state.playing === true) {
         this.keyboard.startRecording();

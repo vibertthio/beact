@@ -226,6 +226,8 @@ export class Sequencer {
           }),
       )
       .catch(err => console.log(err));
+    } else {
+      console.log('you should at least play one rounds of drum');
     }
   }
 }
