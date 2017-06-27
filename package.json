@@ -31,7 +31,7 @@
     "react-window-resize-listener": "^1.1.0",
     "sass-loader": "^6.0.2",
     "tone": "^0.10.0",
-    "two.js": "git://github.com/fixate/two.js.git#webpack-monkeypatch",
+    "two.js": "github:vibertthio/two.js#dev",
     "uuid": "^3.0.1"
   },
   "devDependencies": {
@@ -56,6 +56,7 @@
     "extract-text-webpack-plugin": "^v2.0.0-rc.1",
     "file-loader": "^0.10.0",
     "html-webpack-plugin": "^2.26.0",
+    "imports-loader": "^0.7.1",
     "nodemon": "^1.11.0",
     "postcss-loader": "^1.2.2",
     "react-hot-loader": "^3.0.0-beta.6",

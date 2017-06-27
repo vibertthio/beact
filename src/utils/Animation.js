@@ -1,88 +1,23 @@
-import Two from 'two.js/build/two.svg.webpack';
+// import Two from 'two.js/build/two.svg.webpack';
+import Two from 'two.js/build/two';
 import TWEEN from '@tweenjs/tween.js';
 import _ from 'lodash';
-
-/**
- * Math Definition
- */
-const TWO_PI = Math.PI * 2;
-const cos = Math.cos;
-const sin = Math.sin;
-const min = Math.min;
-const max = Math.max;
-
-/**
- * Range
- * like range function in lodash
- * @param  {number} n [description]
- * @return {Array}   [description]
- */
-function range(n) {
-  return Array.from(Array(n).keys());
-}
-
-/**
- * [angleBetween description]
- * @param  {[type]} v1 [description]
- * @param  {[type]} v2 [description]
- * @return {[type]}    [description]
- */
-function angleBetween(v1, v2) {
-  const dx = v2.x - v1.x;
-  const dy = v2.y - v2.y;
-  return Math.atan2(dy, dx);
-}
-
-/**
- * lerp
- * @param  {number} a [description]
- * @param  {number} b [description]
- * @param  {number} t [description]
- * @return {number}   [description]
- */
-function lerp(a, b, t) {
-  return ((b - a) * t) + a;
-}
-
-/**
- * [map description]
- * @param  {[type]} v  [description]
- * @param  {[type]} i1 [description]
- * @param  {[type]} i2 [description]
- * @param  {[type]} o1 [description]
- * @param  {[type]} o2 [description]
- * @return {[type]}    [description]
- */
-function map(v, i1, i2, o1, o2) {
-  return o1 + ((o2 - o1) * ((v - i1) / (i2 - i1)));
-}
-
-/**
- * [ease description]
- * @param  {[type]} cur  [description]
- * @param  {[type]} dest [description]
- * @param  {[type]} t    [description]
- * @return {[type]}      [description]
- */
-function ease(cur, dest, t) {
-  const d = dest - cur;
-  if (Math.abs(d) <= 0.0001) {
-    return dest;
-  } else {
-    return cur + (d * t);
-  }
-}
-
-const pallete = [
-  'rgb(28, 52, 53)',
-  'rgb(238, 205, 204)',
-  'rgb(204, 238, 205)',
-  'rgb(204, 237, 238)',
-  'rgb(204, 237, 204)',
-  'rgb(205, 204, 238)',
-  'rgb(88, 95, 96)',
-  'rgb(238, 204, 237)',
-];
+import {
+  TWO_PI,
+  cos,
+  sin,
+  min,
+  max,
+  range,
+  angleBetween,
+  lerp,
+  map,
+  ease,
+  toRGB,
+  pallete,
+  animationNameList,
+  animationKey2IndexMapping,
+} from './animation.config';
 
 /**
  * [animation description]
@@ -93,13 +28,13 @@ function Animation() {
    * setup
    */
   const animations = [];
+  const colors = pallete[2].map(toRGB);
   const canvas = document.getElementById('animation');
   const params = { fullscreen: true };
   const two = new Two(params).appendTo(canvas);
   two.bind('update', () => {
     TWEEN.update();
   }).play();
-
 
   /**
    * Animation #0, Veil
@@ -128,7 +63,7 @@ function Animation() {
       );
       shape.opacity = 0;
       shape.noStroke();
-      shape.fill = pallete[4];
+      shape.fill = colors[1];
 
       const aniOut = new TWEEN.Tween(shape.translation)
         .to(destOut, duration)
@@ -236,17 +171,17 @@ function Animation() {
       );
       shape.opacity = 0;
       shape.noStroke();
-      shape.fill = pallete[3];
+      shape.fill = colors[3];
 
       const aniOut = new TWEEN.Tween(shape.translation)
         .to(destOut, duration)
-        .easing(TWEEN.Easing.Exponential.Out)
+        .easing(TWEEN.Easing.Exponential.In)
         .onComplete(() => {
           playing = false;
         });
       const aniIn = new TWEEN.Tween(shape.translation)
         .to(destIn, duration)
-        .easing(TWEEN.Easing.Exponential.In)
+        .easing(TWEEN.Easing.Exponential.Out)
         .onComplete(() => {
           aniOut.start();
         });
@@ -332,17 +267,17 @@ function Animation() {
           rPolygon,
           sides,
         );
-        shape.stroke = pallete[6];
+        shape.stroke = colors[6];
         shape.linewidth = 1;
         shape.noFill();
 
         const circles = range(sides).map((i) => {
           const pct = (i + 0.5) / sides;
           const theta = (TWO_PI * pct) + (Math.PI / 2);
-          const x = rPolygon * cos(theta);
-          const y = rPolygon * sin(theta);
+          const x = 2 * rPolygon * cos(theta);
+          const y = 2 * rPolygon * sin(theta);
           const circle = two.makeCircle(x, y, rCircle);
-          circle.fill = pallete[6];
+          circle.fill = colors[6];
           circle.noStroke();
           return circle;
         });
@@ -441,7 +376,7 @@ function Animation() {
          const y = (-h / 2) + ((i + 1) * (h / (amount + 1)));
 
          const shape = two.makeRectangle(x, y, w, d);
-         shape.fill = pallete[6];
+         shape.fill = colors[5];
          shape.noStroke();
          shape.visible = false;
 
@@ -574,7 +509,7 @@ function Animation() {
       });
 
       const clay = two.makeCurve(points);
-      clay.fill = pallete[7];
+      clay.fill = colors[1];
       clay.noStroke();
       clay.visible = false;
       points = clay.vertices;
@@ -700,7 +635,7 @@ function Animation() {
    * @return {Object}
    */
   (function makeFlashes(opacity = 1, duration = 400) {
-    range(3).map(() => {
+    range(3).map((i) => {
       let playing = false;
       const param = { t: 0 };
 
@@ -717,7 +652,8 @@ function Animation() {
         );
         shape.visible = 0;
         shape.noStroke();
-        shape.fill = pallete[5];
+        const colorIndex = [4, 5, 2];
+        shape.fill = colors[colorIndex[i]];
 
         const ani = new TWEEN.Tween(param)
           .to({ t: 1 }, duration)
@@ -788,7 +724,7 @@ function Animation() {
       circles = range(amount).map(() => {
         const r = Math.round(map(Math.random(), 0, 1, rMin, rMax));
         const circle = two.makeCircle(0, 0, r);
-        circle.fill = pallete[4];
+        circle.fill = colors[5];
         circle.noStroke();
         destinations.push(new Two.Vector());
 
@@ -900,7 +836,7 @@ function Animation() {
       circles = range(amount).map((i) => {
         const r = Math.round(map(Math.random(), 0, 1, rMin, rMax));
         const circle = two.makeCircle(0, 0, r);
-        circle.fill = pallete[i % pallete.length];
+        circle.fill = colors[i % colors.length];
         circle.noStroke();
         destinations.push(new Two.Vector());
 
@@ -1042,7 +978,7 @@ function Animation() {
 
       const circle = two.makeCircle(origin.x, origin.y, radius);
       circle.noStroke();
-      circle.fill = pallete[4];
+      circle.fill = colors[4];
 
       const aniOut = new TWEEN.Tween(circle)
         .to({ scale: 0 }, duration)
@@ -1135,7 +1071,7 @@ function Animation() {
       );
 
       const timer = two.makeCurve(points, true);
-      timer.stroke = pallete[4];
+      timer.stroke = colors[3];
       timer.cap = 'butt';
       timer.linewidth = min(two.width, two.height) / 10;
       timer.noFill();
@@ -1246,7 +1182,7 @@ function Animation() {
         distance,
         amount,
       );
-      shape.fill = pallete[4];
+      shape.fill = colors[3];
       shape.noStroke();
       const points = shape.vertices;
       shape.visible = false;
@@ -1360,32 +1296,31 @@ function Animation() {
    * random size, x, y, color circles.
    */
 	(function makeGlimmer(opacity = 1, duration = 400) {
+    let playing = false;
     /**
      * [setup description]
      * @return {[type]} [description]
      */
     function setup() {
-      const playing = false;
 			const amount = 12;
-      // const r1 = (two.height * 20) / 900;
-      // const r2 = (two.height * 40) / 900;
-
 			let longest = 0;
+
+      const anis = [];
 
 			const circles = _.map(_.range(amount), () => {
 				// const r = Math.round(map(Math.random(), 0, 1, r1, r2));
-				const r = Math.floor(Math.random() * 30);
+				const r = Math.floor(
+          min(two.width, two.height) *
+          ((1 + (Math.random() * 0.5)) / 40));
         const delay = Math.random() * duration * 0.5;
 				const circle = two.makeCircle(two.width * Math.random(), two.height * Math.random(), r);
         circle.noFill();
         circle.linewidth = 0;
-        circle.ani = new TWEEN.Tween(circle)
+        anis.push(new TWEEN.Tween(circle)
           .to({ scale: 1, linewidth: 0 }, duration * 1.5)
           .easing(TWEEN.Easing.Sinusoidal.Out)
-          .delay(delay)
-          .onComplete(() => {
-            circle.visible = false;
-          });
+          .delay(delay),
+        );
 
         if (longest < delay) {
           longest = delay;
@@ -1393,43 +1328,45 @@ function Animation() {
 
         return circle;
 			});
+      const ani = {
+        start: () => {
+          anis.forEach(a => a.start());
+        },
+        stop: () => {
+          anis.forEach(a => a.stop());
+        },
+      };
 
       return {
-        playing,
         circles,
+        ani,
       };
     }
 
-    let { playing, circles } = setup();
+    let { circles, ani } = setup();
 
     // methods
     const resize = () => {
       two.remove(circles);
-      ({ playing, circles } = setup());
+      ({ circles, ani } = setup());
     };
 
-		// let j;
     const reset = () => {
       playing = false;
-			// for (j = 0; j < circles.length; j++) {
-			// 	circles[j].visible = false;
-			// }
-      circles.opacity = 0;
+      ani.stop();
+      for (let i = 0; i < circles.length; i += 1) {
+        const c = circles[i];
+        c.translation.set(two.width * Math.random(), two.height * Math.random());
+        c.stroke = colors[i % colors.length];
+        c.scale = (Math.random() * 0.5) + 0.2;
+        c.linewidth = ((Math.random() + 0.5) + 1) * 8;
+      }
     };
 
-    let i;
-    let c;
     const start = () => {
       reset();
       playing = true;
-      for (i = 0; i < circles.length; i += 1) {
-        c = circles[i];
-				c.translation.set(two.width * Math.random(), two.height * Math.random());
-        c.visible = true;
-				c.stroke = pallete[Math.floor(Math.random() * 8)];
-				c.linewidth = 5;
-        c.ani.start();
-      }
+      ani.start();
     };
 
     const EXPORT = {
@@ -1451,7 +1388,7 @@ function Animation() {
   (function makeSplit(opacity = 1, duration = 500) {
     let playing = false;
     let distance = two.height / 5;
-    const amount = 25;
+    const amount = 30;
     const last = amount - 1;
     const param = { ending: 0, beginning: 0 };
 
@@ -1465,48 +1402,35 @@ function Animation() {
       const radius = min(two.width, two.height) * 0.33;
 
       // first hemisphere
-      shapes[0] = two.makePolygon(
-        0,
-        0,
-        distance,
-        amount,
-      );
-
-
-      points = shapes[0].vertices;
-      points.forEach((p, i) => {
+      points = [];
+      for (let i = 0; i < amount; i += 1) {
         const pct = i / last;
         const theta = pct * Math.PI;
-        p.set(
-          radius * Math.cos(theta),
-          radius * Math.sin(theta),
-        );
-      });
+        const x = radius * cos(theta);
+        const y = radius * sin(theta);
+        const p = new Two.Anchor(x, y);
+        points.push(p);
+      }
+      shapes[0] = two.makePath(points);
       shapes[0].origin = new Two.Vector().copy(shapes[0].translation);
 
       // second hemisphere
-      shapes[1] = two.makePolygon(
-        0,
-        0,
-        distance,
-        amount,
-      );
-
-      points = shapes[1].vertices;
-      points.forEach((p, i) => {
+      points = [];
+      for (let i = 0; i < amount; i += 1) {
         const pct = i / last;
         const theta = (pct + 1) * Math.PI;
-        p.set(
-          radius * Math.cos(theta),
-          radius * Math.sin(theta),
-        );
-      });
+        const x = radius * cos(theta);
+        const y = radius * sin(theta);
+        const p = new Two.Anchor(x, y);
+        points.push(p);
+      }
+      shapes[1] = two.makePath(points);
       shapes[1].origin = new Two.Vector().copy(shapes[1].translation);
 
       const group = two.makeGroup(shapes);
       group.translation.set(two.width * 0.5, two.height * 0.5);
-      group.fill = pallete[4];
-      group.stroke = pallete[4];
+      group.fill = colors[2];
+      group.stroke = colors[2];
       group.visible = false;
       const aniOut = new TWEEN.Tween(param)
         .to({ beginning: 0 }, duration)
@@ -1543,6 +1467,7 @@ function Animation() {
 
     // methods
     const resize = () => {
+      console.log('resizing..');
       group.remove(shapes);
       two.remove(group);
       distance = two.height / 5;
@@ -1604,8 +1529,9 @@ function Animation() {
         radius,
         amount,
       );
-      moon.fill = pallete[4];
+      moon.fill = colors[2];
       moon.noStroke();
+      moon.visible = false;
 
       const points = moon.vertices;
       const destinations = [];
@@ -1723,7 +1649,7 @@ function Animation() {
       );
       points = line.vertices;
       line.noFill();
-      line.stroke = pallete[4];
+      line.stroke = colors[6];
       line.cap = 'round';
       line.visible = false;
 
@@ -1824,7 +1750,7 @@ function Animation() {
       points = zigzag.vertices;
       zigzag.noFill();
       zigzag.closed = false;
-      zigzag.stroke = pallete[4];
+      zigzag.stroke = colors[6];
       zigzag.linewidth = min(two.width, two.height) * 0.033;
       zigzag.join = 'miter';
       zigzag.miter = 4;
@@ -1965,7 +1891,7 @@ function Animation() {
       );
       points = sinewave.vertices;
       sinewave.noFill();
-      sinewave.stroke = pallete[4];
+      sinewave.stroke = colors[4];
       sinewave.linewidth = min(two.width, two.height) * 0.025;
       sinewave.cap = 'round';
       sinewave.join = 'round';
@@ -2066,7 +1992,7 @@ function Animation() {
       setCircles();
       const group = two.makeGroup(circles);
       group.noStroke();
-      group.fill = pallete[4];
+      group.fill = colors[6];
       group.translation.set(two.width * 0.5, two.height * 0.5);
       group.visible = false;
       const aniOuts = _.map(circles, (c, i) => {
@@ -2218,7 +2144,163 @@ function Animation() {
       });
       const group = two.makeGroup(circles);
       group.noStroke();
-      group.fill = pallete[4];
+      group.fill = colors[5];
+      group.translation.set(two.width * 0.5, two.height * 0.5);
+      group.visible = false;
+      const aniOuts = _.map(circles, (c, i) => {
+        const next =
+          (!circles[i + 1]) ?
+          TWO_PI : (circles[i + 1].destination);
+
+        return new TWEEN.Tween(c)
+          .to({ theta: next }, duration / (amount - (i)))
+          .onUpdate(() => {
+            const theta = direction ? c.theta : -c.theta;
+            const x = radius * Math.cos(theta);
+            const y = radius * Math.sin(theta);
+            c.translation.set(x, y);
+            circles[i].rotation = theta + (TWO_PI * 0.25);
+          })
+          .onComplete(() => {
+            circles[i].visible = false;
+            if (i < last) {
+              aniOuts[i + 1].start();
+              if (i === last - 1) {
+                group.visible = false;
+              }
+            }
+          });
+      });
+
+      const aniIns = _.map(circles, (c, i) =>
+        new TWEEN.Tween(c)
+          .to({ theta: c.destination }, duration / (i + 1))
+          .onStart(() => {
+            circles[i].visible = true;
+          })
+          .onUpdate(() => {
+            const theta = direction ? c.theta : -c.theta;
+            const x = radius * Math.cos(theta);
+            const y = radius * Math.sin(theta);
+            c.translation.set(x, y);
+            circles[i].rotation = theta + (TWO_PI * 0.25);
+          })
+          .onComplete(() => {
+            if (i >= last) {
+              aniOuts[0].start();
+              return;
+            }
+
+            const next = circles[i + 1];
+            const tween = aniIns[i + 1];
+            next.theta = c.theta;
+            next.translation.copy(c.translation);
+            tween.start();
+          }),
+      );
+
+
+      const aniOut = {
+        stop: () => {
+          aniOuts.forEach(a => a.stop());
+        },
+      };
+
+      const aniIn = {
+        start: () => {
+          aniIns[0].start();
+        },
+        stop: () => {
+          aniIns.forEach(a => a.stop());
+        },
+      };
+
+      return {
+        group,
+        circles,
+        aniIn,
+        aniOut,
+      };
+    }
+
+    let { group, circles, aniIn, aniOut } = setup();
+
+    // methods
+    const resize = () => {
+      group.remove(circles);
+      two.remove(group);
+      radius = min(two.width, two.height) * 0.33;
+      bubbleRadius = min(two.width, two.height) / 90;
+      direction = TWO_PI * Math.random() > 0.5;
+      ({ group, circles, aniIn, aniOut } = setup());
+    };
+
+    const reset = () => {
+      playing = false;
+      group.visible = false;
+      group.rotation = TWO_PI * Math.random();
+      for (let i = 0; i < amount; i += 1) {
+        const pct = i / last;
+        const circle = circles[i];
+        circle.translation.set(radius, 0);
+        circle.rotation = TWO_PI * 0.25;
+        circle.theta = 0;
+        circle.destination = pct * TWO_PI;
+      }
+      aniIn.stop();
+      aniOut.stop();
+    };
+
+    const start = () => {
+      reset();
+      playing = true;
+      group.visible = true;
+      aniIn.start();
+    };
+
+    const EXPORT = {
+      playing,
+      start,
+      reset,
+      resize,
+    };
+    animations.push(EXPORT);
+    return EXPORT;
+  }());
+
+  // TOOD
+
+  /**
+   * Animation #25, Corona
+   * @param  {number} [opacity = 1]
+   * @param  {number} [duration = 400]
+   * @return {Object}
+   */
+  (function makeCorona(opacity = 1, duration = 250) {
+    let playing = false;
+    const amount = 24;
+    const last = amount - 1;
+    let radius = min(two.width, two.height) * 0.33;
+    let bubbleRadius = min(two.width, two.height) / 30;
+    let direction = false;
+
+    /**
+     * [setup description]
+     * @return {[type]} [description]
+     */
+    function setup() {
+      const circles = range(amount).map((i) => {
+        const pct = i / last;
+
+        const circle = two.makePolygon(radius, 0, bubbleRadius, 3);
+        circle.rotation = TWO_PI * 0.25;
+        circle.theta = 0;
+        circle.destination = pct * TWO_PI;
+        return circle;
+      });
+      const group = two.makeGroup(circles);
+      group.noStroke();
+      group.fill = colors[5];
       group.translation.set(two.width * 0.5, two.height * 0.5);
       group.visible = false;
       const aniOuts = _.map(circles, (c, i) => {
@@ -2365,5 +2447,10 @@ function Animation() {
     trigger,
   };
 }
+
+export {
+  animationNameList,
+	animationKey2IndexMapping,
+};
 
 export default Animation;

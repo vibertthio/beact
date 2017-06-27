@@ -32,9 +32,11 @@ html * {
 }
 
 body {
-  /*background-color: rgba(218, 223, 225, 1);*/
   color: #78b19a;
-  background-color: #1c3435;
+  /*color: #AAAAAA;*/
+  /*background-color: #1c3435;*/
+  /*background-color: rgba(215, 205, 190, 1);*/
+  background-color: rgba(39, 6, 54, 1);
   font-style: italic;
   height: 100%;
 }

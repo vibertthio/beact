@@ -16,6 +16,11 @@ loaders.push({
   exclude: ['node_modules']
 });
 
+loaders.push({
+  test: require.resolve('two.js'),
+  loader: 'imports-loader?this=>window',
+});
+
 module.exports = {
   entry: [
     'react-hot-loader/patch',
