@@ -69,6 +69,7 @@ class DrumMachine extends Component {
 			hidden: false,
 			wait: true,
 			idle: false,
+			currentSample: 'A',
     };
 
     this.setCurrentBeat = this.setCurrentBeat.bind(this);
@@ -102,6 +103,7 @@ class DrumMachine extends Component {
     this.playDrumAni = this.playDrumAni.bind(this);
 
     this.detectKeyboard = this.detectKeyboard.bind(this);
+		this.setSample = this.setSample.bind(this);
 
     this.sequencer = new Sequencer(
       this.state.data,
@@ -767,6 +769,15 @@ class DrumMachine extends Component {
   }
 
 	/**
+  * @param  {String} sample width of window
+   * [deleteRecord description]
+   */
+	setSample(sample) {
+		this.sequencer.currentSample = sample;
+		this.setState({ currentSample: sample });
+	}
+
+	/**
    * [toggleHidden description]
    */
   toggleHidden() {
@@ -880,6 +891,10 @@ class DrumMachine extends Component {
         >
           <div className={styles.colorMenu}>
             {/* 1 */}
+            <h3 onTouchTap={() => this.setSample('A')}>A</h3>
+            <h3 onTouchTap={() => this.setSample('B')}>B</h3>
+            <h3 onTouchTap={() => this.setSample('C')}>C</h3>
+            <h3 onTouchTap={() => this.setSample('D')}>D</h3>
             <div className={`${styles.row1} ${styles.row}`}>
               <button
                 className={styles.row1l}

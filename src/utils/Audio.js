@@ -2,6 +2,7 @@ import { MultiPlayer, Sequence, Transport } from 'tone';
 import axios from 'axios';
 import uuid4 from 'uuid/v4';
 import { urls, notes } from './samples.config';
+import { drumUrls } from './drum.config';
 
 let temperId = uuid4();
 /**
@@ -52,21 +53,33 @@ export class Sequencer {
     this.recordFull = [];
     this.isPlayingRecord = false;
     this.startTime = 0;
+    this.currentSample = 'A';
     this.storeRecord = record => storeRecord(record);
-    this.samples = new MultiPlayer({
-      urls: {
-        kk: './assets/audio/505/kick.mp3',
-        sn: './assets/audio/505/snare.mp3',
-        hh: './assets/audio/505/hh.mp3',
-        ho: './assets/audio/505/hho.mp3',
-        A: './assets/audio/casio/A1.mp3',
-        'C#': './assets/audio/casio/Cs2.mp3',
-        E: './assets/audio/casio/E2.mp3',
-        'F#': './assets/audio/casio/Fs2.mp3',
-      },
+
+    this.samplesA = new MultiPlayer({
+      urls: drumUrls.A,
       volume: -10,
       fadeOut: 0.1,
     }).toMaster();
+
+    this.samplesB = new MultiPlayer({
+      urls: drumUrls.B,
+      volume: -10,
+      fadeOut: 0.1,
+    }).toMaster();
+
+    this.samplesC = new MultiPlayer({
+      urls: drumUrls.C,
+      volume: -10,
+      fadeOut: 0.1,
+    }).toMaster();
+
+    this.samplesD = new MultiPlayer({
+      urls: drumUrls.D,
+      volume: -10,
+      fadeOut: 0.1,
+    }).toMaster();
+
     this.checkStart = false;
     // this.nowPlayingAni = [];
     this.saveRecord = this.saveRecord.bind(this);
@@ -88,7 +101,19 @@ export class Sequencer {
         }
         if (column[i] === 1) {
           const vel = (Math.random() * 0.5) + 0.5;
-          this.samples.start(this.notes[i], time, 0, '32n', 0, vel);
+          if (this.currentSample === 'A') {
+            console.log('a');
+            this.samplesA.start(this.notes[i], time, 0, '32n', 0, vel);
+          } else if (this.currentSample === 'B') {
+            console.log('b');
+            this.samplesB.start(this.notes[i], time, 0, '32n', 0, vel);
+          } else if (this.currentSample === 'C') {
+            console.log('c');
+            this.samplesC.start(this.notes[i], time, 0, '32n', 0, vel);
+          } else if (this.currentSample === 'D') {
+            console.log('d');
+            this.samplesD.start(this.notes[i], time, 0, '32n', 0, vel);
+          }
           nowPlayingAni.push(i);
         }
         if (i === 7) {
@@ -321,12 +346,12 @@ export class Keyboard {
     }
   }
 
-/**
- * [clearSchedule description]
- */
- clearSchedule() {
-   const time = Transport.seconds + 1;
-   this.samples.stopAll([time]);
-   // Transport.cancel([time]);
-  }
+  /**
+   * [clearSchedule description]
+   */
+   clearSchedule() {
+     const time = Transport.seconds + 1;
+     this.samples.stopAll([time]);
+     // Transport.cancel([time]);
+    }
 }
