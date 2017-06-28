@@ -11,7 +11,7 @@ import AVShuffleIcon from 'material-ui/svg-icons/av/shuffle';
 
 import styles from '../assets/styles/DrumMachine.css';
 import Matrix from './Matrix';
-import { Sequencer, Keyboard } from '../utils/Audio';
+import { Sequencer, Keyboard, changeBPM, presets } from '../utils/Audio';
 import Animation, {
 	animationKey2IndexMapping,
 } from '../utils/Animation';
@@ -237,10 +237,8 @@ class DrumMachine extends Component {
    */
 	randomClicked() {
 		const data = this.state.data;
-		let i;
-		let j;
-		for (i = 0; i < 16; i += 1) {
-			for (j = 0; j < 8; j += 1) {
+		for (let i = 0; i < 16; i += 1) {
+			for (let j = 0; j < 8; j += 1) {
 				data[i][j] = (Math.random() > 0.8) ? 1 : 0;
 			}
 		}
@@ -755,6 +753,36 @@ class DrumMachine extends Component {
 				this.stopSequencer();
 			}
 		});
+
+		// speed
+		key('up', () => {
+			changeBPM(10);
+		});
+		key('down', () => {
+			changeBPM(-10);
+		});
+
+		// change sound bank
+		key('right', () => {
+			this.sequencer.changeSampleSet(true);
+		});
+		key('left', () => {
+			this.sequencer.changeSampleSet(false);
+		});
+
+		// loading presets
+		key('1, 2, 3, 4, 5, 6, 7, 8', (e, h) => {
+			const index = h.shortcut.charCodeAt(0) - 49;
+			const data = this.state.data;
+			for (let i = 0; i < 16; i += 1) {
+				for (let j = 0; j < 8; j += 1) {
+					data[i][j] = presets[index][i][j];
+				}
+			}
+			this.setState({
+				data,
+			});
+		}); 
   }
 
   /**

@@ -2,7 +2,7 @@ import { MultiPlayer, Sequence, Transport } from 'tone';
 import axios from 'axios';
 import uuid4 from 'uuid/v4';
 import { keysUrls, keysNotes } from './keys.config';
-import { drumUrls, drumNotes } from './drum.config';
+import { drumUrls, drumNotes, presets } from './drum.config';
 
 let temperId = uuid4();
 /**
@@ -172,6 +172,25 @@ export class Sequencer {
   }
 
   /**
+   * [changeSampleSet description]
+   * @param  {[type]} up [description]
+   */
+  changeSampleSet(up) {
+    this.currentSampleIndex =
+      (this.currentSampleIndex + (up ? 1 : -1)) % drumUrls.length;
+    if (this.currentSampleIndex < 0) {
+      this.currentSampleIndex += drumUrls.length;
+    }
+
+    console.log(`drum sound bank : ${this.currentSampleIndex}`);
+    this.samples = new MultiPlayer({
+      urls: drumUrls[this.currentSampleIndex],
+      volume: -10,
+      fadeOut: 0.4,
+    }).toMaster();
+  }
+
+  /**
   * @param  {Function} saveKeyboardRecord width of window
   * @param  {Function} storeKeyboardRecord width of window
   * @param  {String} recordTitle width of window
@@ -216,6 +235,7 @@ export class Sequencer {
       console.log('you should at least play one rounds of drum');
     }
   }
+
 }
 
 /**
@@ -309,9 +329,19 @@ export class Keyboard {
   /**
    * [clearSchedule description]
    */
-   clearSchedule() {
+  clearSchedule() {
      const time = Transport.seconds + 1;
      this.samples.stopAll([time]);
      // Transport.cancel([time]);
     }
 }
+
+const changeBPM = (value) => {
+    Transport.bpm.value += value;
+    console.log(`bpm:${Transport.bpm.value}`);
+};
+
+export {
+  changeBPM,
+  presets,
+};
