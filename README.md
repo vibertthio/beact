@@ -1,6 +1,14 @@
 # Beact
 use react to create audio/visual in a creative way.
 
+## quick start
+1.   press space to start/stop
+2.   click any block to trigger drum machine note
+3.   press any alphabet to trigger keyboard note
+4.   up/down to change bpm
+5.   left/right to change sound bank of drum machine
+6.   press 1 ~ 8 for different presets
+
 ## dev mode
 
 ### To start and run
