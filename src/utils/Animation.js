@@ -151,8 +151,9 @@ function Animation() {
      */
     function setDirection() {
       const direction = (Math.random() > 0.5);
-      origin.y = two.height * 0.5;
       origin.x = two.width * (direction ? 1.5 : -0.5);
+      origin.y = two.height * 0.5;
+      destIn.x = two.width * 0.5;
       destOut.x = two.width * (direction ? -0.5 : 1.5);
     }
 
