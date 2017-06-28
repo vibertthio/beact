@@ -1,6 +1,6 @@
 import { animationNameList } from './animation.config';
 
-const head = './assets/audio/papatap/A/';
+const head = './assets/audio/keys/A/';
 const notes = animationNameList.map(ls => ls.name);
 const urls = {};
 animationNameList.forEach((ls) => {
