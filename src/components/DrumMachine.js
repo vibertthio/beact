@@ -761,7 +761,7 @@ class DrumMachine extends Component {
 			if (!this.state.playing) {
 				this.startSequencer();
 			} else {
-				this.topSequencer();
+				this.stopSequencer();
 			}
 		});
   }
@@ -1190,12 +1190,12 @@ class DrumMachine extends Component {
 						 ${(hidden === false ? styles.showMask : styles.hideMask)}`}
           onClick={() => this.toggleHidden()}
         >
-          <div className={styles.btn} onClick={() => console.log('update pattern')} onTouchTap={() => this.editPattern()}>
+          <button className={styles.btn} onClick={() => console.log('update pattern')} onTouchTap={() => this.editPattern()}>
 						Update Pattern
-					</div>
-          <div className={styles.btn} onClick={() => console.log('delete current pattern')} onTouchTap={() => this.deleteCurrentPattern()}>
+					</button>
+          <button className={styles.btn} onClick={() => console.log('delete current pattern')} onTouchTap={() => this.deleteCurrentPattern()}>
 						Delete Current Pattern
-					</div>
+					</button>
           <div className={styles.chainList}>
 						renderChain in this div
 						<ul>{this.renderChain()}<li style={{ color: 'yellow' }} onTouchTap={() => this.setCurrentChainElementAtLast()}>
