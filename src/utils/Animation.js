@@ -143,8 +143,8 @@ function Animation() {
    */
   (function makeWipe(opacity = 1, duration = 400) {
     const origin = { x: two.width * (-0.5), y: two.height * 0.5 };
-    const destIn = { x: two.height * 0.5 };
-    const destOut = { x: two.height * 1.5 };
+    const destIn = { x: two.width * 0.5 };
+    const destOut = { x: two.width * 1.5 };
 
     /**
      * [setDirection description]
@@ -509,7 +509,8 @@ function Animation() {
       });
 
       const clay = two.makeCurve(points);
-      clay.fill = colors[1];
+      // clay.fill = colors[1];
+      clay.fill = colors[4];
       clay.noStroke();
       clay.visible = false;
       points = clay.vertices;
