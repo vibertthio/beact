@@ -125,7 +125,7 @@ export class Sequencer {
         if (this.recordMatrix.length < 16) {
           this.recordMatrix.push(column);
           if (this.recordMatrix.length === 16) {
-            const recordMatrix = [[0, 0, 0, 0, 0, 0, 0, 0],
+            const recordMatrix = [
               [0, 0, 0, 0, 0, 0, 0, 0],
               [0, 0, 0, 0, 0, 0, 0, 0],
               [0, 0, 0, 0, 0, 0, 0, 0],
@@ -140,7 +140,9 @@ export class Sequencer {
               [0, 0, 0, 0, 0, 0, 0, 0],
               [0, 0, 0, 0, 0, 0, 0, 0],
               [0, 0, 0, 0, 0, 0, 0, 0],
-              [0, 0, 0, 0, 0, 0, 0, 0]];
+              [0, 0, 0, 0, 0, 0, 0, 0],
+              [0, 0, 0, 0, 0, 0, 0, 0],
+            ];
             for (let i = 0; i < 16; i += 1) {
               for (let j = 0; j < 8; j += 1) {
                 recordMatrix[i][j] = this.recordMatrix[i][j];
