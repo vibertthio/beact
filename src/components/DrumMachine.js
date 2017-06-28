@@ -202,14 +202,6 @@ class DrumMachine extends Component {
     this.setState({ currentChainElement: id, data });
   }
 
-  /**
-   * [showDOM description]
-   */
-	showDOM() {
-		const rootDiv = document.getElementById('root');
-		rootDiv.classList.add('fullHeight');
-		this.setState({ wait: false });
-	}
 
   /**
    * [hideSpinner description]
@@ -777,6 +769,15 @@ class DrumMachine extends Component {
 		this.setState({ currentSample: sample });
 	}
 
+  /**
+   * [showDOM description]
+   */
+	showDOM() {
+		const rootDiv = document.getElementById('root');
+		rootDiv.classList.add('fullHeight');
+		this.setState({ wait: false });
+	}
+
 	/**
    * [toggleHidden description]
    */
@@ -800,9 +801,9 @@ class DrumMachine extends Component {
         >
           <h4>{pattern.title}</h4>
         </li>
-        <h4 onClick={() => this.deletePattern(pattern.id)}>
+        <button onClick={() => this.deletePattern(pattern.id)}>
           X
-        </h4>
+        </button>
       </div>
 
     ));
@@ -822,9 +823,9 @@ class DrumMachine extends Component {
         >
           <h4>{drumRecord.title}{drumRecord.content.length}</h4>
         </li>
-        <h4 onClick={() => this.deleteRecord(drumRecord.id)}>
+        <button onClick={() => this.deleteRecord(drumRecord.id)}>
           X
-        </h4>
+        </button>
       </div>
     ));
   }

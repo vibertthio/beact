@@ -1,8 +1,8 @@
 import { MultiPlayer, Sequence, Transport } from 'tone';
 import axios from 'axios';
 import uuid4 from 'uuid/v4';
-import { urls, notes } from './samples.config';
-import { drumUrls } from './drum.config';
+import { keysUrls, keysNotes } from './keys.config';
+import { drumUrls, drumNotes } from './drum.config';
 
 let temperId = uuid4();
 /**
@@ -38,16 +38,7 @@ export class Sequencer {
     this.matrix = matrix;
     this.number = 0;
     this.playing = true;
-    this.notes = [
-      'kk',
-      'sn',
-      'hh',
-      'ho',
-      'A',
-      'F#',
-      'E',
-      'C#',
-    ];
+    this.notes = drumNotes;
     this.isPlayingChain = false;
     this.recordMatrix = [];
     this.recordFull = [];
@@ -276,10 +267,10 @@ export class Keyboard {
   constructor(storeRecord) {
     this.currentKey = null;
     this.record = [];
-    this.notes = notes;
+    this.notes = keysNotes;
     this.storeRecord = record => storeRecord(record);
     this.samples = new MultiPlayer({
-      urls,
+      urls: keysUrls,
       volume: -10,
       fadeOut: 0.1,
     }).toMaster();

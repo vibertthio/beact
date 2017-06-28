@@ -1,14 +1,14 @@
 import { animationNameList } from './animation.config';
 
 const head = './assets/audio/keys/A/';
-const notes = animationNameList.map(ls => ls.name);
-const urls = {};
+const keysNotes = animationNameList.map(ls => ls.name);
+const keysUrls = {};
 animationNameList.forEach((ls) => {
   const ad = head.concat(ls.name).concat('.mp3');
-  urls[ls.name] = ad;
+  keysUrls[ls.name] = ad;
 });
 
 export {
-  urls,
-  notes,
+  keysUrls,
+  keysNotes,
 };
