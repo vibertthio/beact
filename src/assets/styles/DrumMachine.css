@@ -114,17 +114,11 @@
   cursor: pointer;
 }*/
 
-.patternList {
+/*.patternList {
   width: 70%;
-  /*height: 35%;*/
+  height: 35%;
   background-color: darkgrey;
-}
-
-.chainList {
-  width: 70%;
-  /*height: 35%;*/
-  background-color: grey;
-}
+}*/
 
 .menuBtn {
   display: flex;
@@ -277,6 +271,7 @@
   /*flex-direction: column;*/
   align-items: center;
   justify-content: center;
+  /*height: 100%;*/
   height: 50%;
   background: #73676b;
 }
@@ -290,10 +285,33 @@
   width: 50%;
 }
 
+.row3m {
+  height: 100%;
+  width: 30%;
+}
+
+.row3mBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  background: #73676b;
+}
+
+.row3mBtn:hover {
+  background: #725862;
+}
+
+.row3mBtn img {
+  height: 50%;
+  width: 50%;
+}
+
 .row3r {
   display: flex;
   flex-direction: column;
-  width: 70%;
+  width: 40%;
   background: #724a59;
 }
 
@@ -323,6 +341,16 @@
 
 .row3rd ul {
   margin: 0;
+}
+
+.renderedLi {
+  position: relative;
+  display: flex;
+}
+
+.renderedLiX {
+  position: absolute;
+  right: 8%;
 }
 
 /* row4 */
@@ -359,7 +387,7 @@
   align-items: center;
   justify-content: center;
   height: 100%;
-  width: 50%;
+  width: 100%;
   background: #73676b;
 }
 
@@ -375,15 +403,21 @@
 .row5ld {
   display: flex;
   height: 50%;
+  width: 100%;
 }
 
-.row5ldl {
+/*.row5ldl {
   width: 50%;
   background: #73676b;
-}
+}*/
 
-.row5ldr {
-  width: 50%;
+/*.row5ldr {
+  width: 100%;
+  background: #73676b;
+}*/
+
+.row5ldbtn {
+  /*width: 100%;*/
   background: #73676b;
 }
 
@@ -420,7 +454,26 @@
   background: #73676b;
 }
 
-.row7l div button {
+.row7lbtn {
+  width: 100%;
+  height: 100%;
+  background: #78b19a;
+}
+
+.row7lbtn:hover {
+  background: #83d3b3;
+}
+
+.recordingBtn {
+  background: rgb(149, 61, 61);
+}
+
+.row7lbtn img {
+  width: 50%;
+  height: 50%;
+}
+
+/*.row7l div button {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -474,14 +527,14 @@
   background: #b19a78;
   transform-origin: top left;
   transform: skewX(-20deg);
-}
+}*/
 
-.row7lu button img {
-  /*height: 50%;*/
+/*.row7lu button img {
+  height: 50%;
   z-index: 1;
-}
+}*/
 
-.row7lul:hover {
+/*.row7lul:hover {
   background: #83d3b3;
 }
 
@@ -514,16 +567,47 @@
 
 .row7ld button img {
   height: 50%;
-}
+}*/
 
 .row7r {
+  display: flex;
+  flex-direction: column;
   width: 40%;
   margin: 3% 3% 3% -3%;
   overflow: auto;
 }
 
+.row7ru {
+  display: flex;
+  justify-content: center;
+  height: 20%;
+  border: 3px solid white;
+  border-radius: 0.5em;
+  margin: 0 0 0 2em;
+}
+
+.row7input {
+  border:none;
+  background: transparent;
+  outline: 0;
+  width: 90%;
+  background: #724a59;
+}
+
+.row7rd {
+  height: 80%;
+  margin: 3% 0% 3% 13%;
+  overflow: auto;
+  overflow-x: hidden;
+}
+
 .row7r ul {
   margin: 0 0 0 3%;
+}
+
+.invisible {
+  visibility: hidden;
+  opacity: 0;
 }
 
 /* even row (2, 4, 6, 8) */
@@ -601,4 +685,14 @@
   .row1r::after {
     transform: none;
   }
+}
+
+.chainList {
+  width: 70%;
+  /*height: 35%;*/
+  background-color: grey;
+}
+
+.currentPlayingItem {
+  background-color: orange;
 }
