@@ -42,20 +42,20 @@ function Animation() {
    */
 
   /**
-   * Animation #0, Bass Drum
-   * it will have two direction(u/d), which will be decided randomly
-   * @param  {number} [opacity = 1]
-   * @param  {number} [duration = 400]
-   * @return {Object}
-   */
-  (function makeBass(opacity = 1, duration = 400) {
+  * Animation #2, Ground Flash
+  * it will have two direction(u/d), which will be decided randomly
+  * @param  {number} [opacity = 1]
+  * @param  {number} [duration = 400]
+  * @return {Object}
+  */
+  (function makeGround(opacity = 0.5, duration = 400) {
     let playing = false;
     const dest = { x: 0 };
 
     /**
-     * [setup description]
-     * @return {[type]} [description]
-     */
+    * [setup description]
+    * @return {[type]} [description]
+    */
     function setup() {
       const shape = two.makeRectangle(
         two.width * 0.5,
@@ -65,30 +65,31 @@ function Animation() {
       );
       shape.opacity = 0;
       shape.noStroke();
-      shape.fill = colors[1];
+      shape.fill = colors[3];
 
       const aniOpacity = new TWEEN.Tween(shape)
-        .to({ opacity: 0 }, duration)
-        .easing(TWEEN.Easing.Exponential.In);
+      .to({ opacity: 0 }, duration)
+      .easing(TWEEN.Easing.Exponential.In);
 
       const ani = new TWEEN.Tween(shape.translation)
-        .to(dest, duration)
-        .easing(TWEEN.Easing.Exponential.In)
-        .onStart(() => {
-          aniOpacity.start();
-        });
+      .to(dest, duration)
+      .easing(TWEEN.Easing.Exponential.In)
+      .onStart(() => {
+        aniOpacity.start();
+      });
 
       return {
         shape,
         ani,
+        aniOpacity,
       };
     }
 
-    let { shape, ani } = setup();
+    let { shape, ani, aniOpacity } = setup();
 
     /**
-     * [setDirection description]
-     */
+    * [setDirection description]
+    */
     function setDirection() {
       const direction = (Math.random() > 0.5);
       shape.translation.set(two.width * 0.5, two.height * 0.5);
@@ -98,13 +99,14 @@ function Animation() {
     // methods
     const resize = () => {
       two.remove(shape);
-      ({ shape, ani } = setup());
+      ({ shape, ani, aniOpacity } = setup());
     };
 
     const reset = () => {
       playing = false;
       setDirection();
       ani.stop();
+      aniOpacity.stop();
       shape.opacity = 0;
     };
 
@@ -112,6 +114,642 @@ function Animation() {
       reset();
       playing = true;
       shape.opacity = opacity;
+      ani.start();
+    };
+
+    const EXPORT = {
+      playing,
+      start,
+      reset,
+      resize,
+    };
+    sequencerAnimations.push(EXPORT);
+    return EXPORT;
+  }());
+
+  /**
+  * Animation #0, Mountain
+  * it will have two direction(u/d), which will be decided randomly
+  * @param  {number} [opacity = 1]
+  * @param  {number} [duration = 400]
+  * @return {Object}
+  */
+  (function makeMoutainBass(opacity = 1, duration = 600) {
+    let playing = false;
+    const origin = { x: 0, y: 0 };
+    const dest = { y: 0 };
+
+    /**
+    * [setup description]
+    * @return {[type]} [description]
+    */
+    function setup() {
+      const low = two.height * 0.6;
+      const high = two.height * 0.4;
+      const shift = two.width * (0.4 + ((Math.random()) * 0.3));
+
+      const points = [
+        new Two.Anchor(0, two.height * 1.2),
+        new Two.Anchor(0, low),
+        new Two.Anchor(shift, high),
+        new Two.Anchor(two.width, low),
+        new Two.Anchor(two.width, two.height * 1.2),
+      ];
+
+
+      const shape = two.makePath(points, false);
+      shape.opacity = 0;
+      shape.noStroke();
+      shape.fill = colors[1];
+      origin.x = shape.translation.x;
+      origin.y = shape.translation.y;
+      dest.y = shape.translation.y + (two.height * 0.1);
+
+      const aniOpacity = new TWEEN.Tween(shape)
+      .to({ opacity: 0 }, duration * 2)
+      .easing(TWEEN.Easing.Exponential.Out)
+      .onUpdate(() => {
+        if (shape.opacity < 0.05) {
+          aniOpacity.stop();
+          shape.opacity = 0;
+        }
+      });
+
+      const ani = new TWEEN.Tween(shape.translation)
+      .to(dest, duration)
+      .easing(TWEEN.Easing.Back.In)
+      .onStart(() => {
+        aniOpacity.start();
+      });
+
+      return {
+        shape,
+        ani,
+        aniOpacity,
+      };
+    }
+
+    let { shape, ani, aniOpacity } = setup();
+
+    /**
+    * [setDirection description]
+    */
+    function setDirection() {
+      shape.translation.set(origin.x, origin.y);
+      shape.vertices[1].y = two.height * (-(0.1 * Math.random()));
+      shape.vertices[2].y = two.height * (-0.2 - (0.2 * Math.random()));
+      shape.vertices[2].x = two.width * (-0.3 + (Math.random() * 0.3));
+      shape.vertices[3].y = two.height * (-(0.1 * Math.random()));
+    }
+
+    // methods
+    const resize = () => {
+      two.remove(shape);
+      ({ shape, ani, aniOpacity } = setup());
+    };
+
+    const reset = () => {
+      playing = false;
+      setDirection();
+      ani.stop();
+      aniOpacity.stop();
+      shape.opacity = 0;
+    };
+
+    const start = () => {
+      reset();
+      playing = true;
+      shape.opacity = opacity;
+      ani.start();
+    };
+
+    const EXPORT = {
+      playing,
+      start,
+      reset,
+      resize,
+    };
+    sequencerAnimations.push(EXPORT);
+    return EXPORT;
+  }());
+
+  /**
+   * Animation #0, Mountain
+   * it will have two direction(u/d), which will be decided randomly
+   * @param  {number} [opacity = 1]
+   * @param  {number} [duration = 400]
+   * @return {Object}
+   */
+  (function makeMoutainSnare(opacity = 1, duration = 300) {
+    let playing = false;
+    const origin = { x: 0, y: 0 };
+    const dest = { y: 0 };
+
+    /**
+     * [setup description]
+     * @return {[type]} [description]
+     */
+    function setup() {
+      const low = two.height * 0.6;
+      const high = two.height * 0.4;
+      const shift = two.width * (0.4 + ((Math.random()) * 0.3));
+
+      const points = [
+        new Two.Anchor(0, two.height * 1.2),
+        new Two.Anchor(0, low),
+        new Two.Anchor(shift, high),
+        new Two.Anchor(two.width, low),
+        new Two.Anchor(two.width, two.height * 1.2),
+      ];
+
+
+      const shape = two.makePath(points, false);
+      shape.opacity = 0;
+      shape.noStroke();
+      shape.fill = colors[2];
+      origin.x = shape.translation.x;
+      origin.y = shape.translation.y;
+      dest.y = shape.translation.y + (two.height * 0.1);
+
+      const aniOpacity = new TWEEN.Tween(shape)
+        .to({ opacity: 0 }, duration * 2)
+        .easing(TWEEN.Easing.Exponential.Out)
+        .onUpdate(() => {
+          if (shape.opacity < 0.05) {
+            aniOpacity.stop();
+            shape.opacity = 0;
+          }
+        });
+
+      const ani = new TWEEN.Tween(shape.translation)
+        .to(dest, duration)
+        .easing(TWEEN.Easing.Back.In)
+        .onStart(() => {
+          aniOpacity.start();
+        });
+
+      return {
+        shape,
+        ani,
+        aniOpacity,
+      };
+    }
+
+    let { shape, ani, aniOpacity } = setup();
+
+    /**
+     * [setDirection description]
+     */
+    function setDirection() {
+      shape.translation.set(origin.x, origin.y);
+      shape.vertices[1].y = two.height * (0.2 - (0.1 * Math.random()));
+      shape.vertices[2].y = two.height * (-0.4 - (0.2 * Math.random()));
+      shape.vertices[2].x = two.width * (0.4 - ((Math.random()) * 0.4));
+      shape.vertices[3].y = two.height * (-0.1 + (-0.1 * Math.random()));
+    }
+
+    // methods
+    const resize = () => {
+      two.remove(shape);
+      ({ shape, ani, aniOpacity } = setup());
+    };
+
+    const reset = () => {
+      playing = false;
+      setDirection();
+      ani.stop();
+      aniOpacity.stop();
+      shape.opacity = 0;
+    };
+
+    const start = () => {
+      reset();
+      playing = true;
+      shape.opacity = opacity;
+      ani.start();
+    };
+
+    const EXPORT = {
+      playing,
+      start,
+      reset,
+      resize,
+    };
+    sequencerAnimations.push(EXPORT);
+    return EXPORT;
+  }());
+
+  /**
+   * Animation #3, 4
+   * @param  {number} [opacity = 1]
+   * @param  {number} [duration = 400]
+   * @return {Object}
+   */
+  (function makePrisms(opacity = 1, duration = 500) {
+    [3, 7].forEach((index) => {
+      const origin = { x: two.width * 0.5, y: two.height * 0.5 };
+      const dest = { scale: max(two.width, two.height) / 40 };
+
+      /**
+       * [setPosition description]
+       */
+      function setPosition() {
+        origin.x = two.width * 0.5;
+        origin.y = two.height * 0.5;
+      }
+
+      /**
+      * [setup description]
+      * @return {[type]} [description]
+      */
+      function setup() {
+        const playing = false;
+
+        const sides = index;
+        const rPolygon = 100;
+        const rCircle = 3;
+
+        const shape = two.makePolygon(
+          0,
+          0,
+          rPolygon,
+          sides,
+        );
+        shape.stroke = colors[6];
+        shape.linewidth = 1;
+        shape.noFill();
+
+        const circles = range(sides).map((i) => {
+          const pct = (i + 0.5) / sides;
+          const theta = (TWO_PI * pct) + (Math.PI / 2);
+          const x = 2 * rPolygon * cos(theta);
+          const y = 2 * rPolygon * sin(theta);
+          const circle = two.makeCircle(x, y, rCircle);
+          circle.fill = colors[6];
+          circle.noStroke();
+          return circle;
+        });
+
+
+        const group = two.makeGroup(shape).add(circles);
+        group.scale = 0;
+
+        const ani = new TWEEN.Tween(group)
+        .to(dest, duration)
+        .easing(TWEEN.Easing.Circular.In)
+        .onStart(() => {
+        });
+
+        return {
+          playing,
+          group,
+          ani,
+        };
+      }
+
+      let { playing, group, ani } = setup();
+
+      // methods
+      const resize = () => {
+        setPosition();
+        two.remove(group);
+        ({ playing, group, ani } = setup());
+      };
+
+      const reset = () => {
+        playing = false;
+        ani.stop();
+        setPosition();
+        group.scale = 0;
+        group.translation.set(
+          origin.x,
+          origin.y,
+        );
+      };
+
+      const start = () => {
+        reset();
+        playing = true;
+        ani.start();
+      };
+
+      const EXPORT = {
+        playing,
+        start,
+        reset,
+        resize,
+      };
+      sequencerAnimations.push(EXPORT);
+      return EXPORT;
+    });
+  }());
+
+  /**
+   * Animation #7, Sunrise
+   * @param  {number} [opacity = 1]
+   * @param  {number} [duration = 400]
+   * @return {Object}
+   */
+  (function makeSunrise(opacity = 1, duration = 400) {
+    let playing = false;
+    const origin = { x: two.width * 0.5, y: two.height * 1.5 };
+    const dest = { y: two.height * 0.5 };
+
+    /**
+     * [setDirection description]
+     */
+    function setOrigin() {
+      if (Math.random() > 0.5) {
+        origin.x = two.width * (1 / 3);
+      } else {
+        origin.x = two.width * (2 / 3);
+      }
+
+      if (Math.random() > 0.5) {
+        origin.y = two.height * (-0.5);
+      } else {
+        origin.y = two.height * (1.5);
+      }
+
+      dest.y = two.height * 0.5;
+    }
+
+    /**
+     * [setup description]
+     * @return {[type]} [description]
+     */
+    function setup() {
+      const radius = min(two.width, two.height) * 0.25;
+
+      const circle = two.makeCircle(origin.x, origin.y, radius);
+      circle.noStroke();
+      circle.fill = colors[4];
+
+      const aniOut = new TWEEN.Tween(circle)
+        .to({ scale: 0 }, duration)
+        .easing(TWEEN.Easing.Circular.Out)
+        .onComplete(() => {
+          playing = false;
+        });
+      const aniIn = new TWEEN.Tween(circle.translation)
+        .to(dest, duration)
+        .easing(TWEEN.Easing.Circular.Out)
+        .onStart(() => {
+          circle.scale = 1;
+        })
+        .onComplete(() => {
+          aniOut.start();
+        });
+      return {
+        circle,
+        aniIn,
+        aniOut,
+      };
+    }
+
+    let { circle, aniIn, aniOut } = setup();
+
+    // methods
+    const resize = () => {
+      setOrigin();
+      two.remove(circle);
+      ({ circle, aniIn, aniOut } = setup());
+    };
+
+    const reset = () => {
+      playing = false;
+      aniIn.stop();
+      aniOut.stop();
+      setOrigin();
+      circle.translation.set(
+        origin.x,
+        origin.y,
+      );
+    };
+
+    const start = () => {
+      reset();
+      playing = true;
+      aniIn.start();
+    };
+
+    const EXPORT = {
+      playing,
+      start,
+      reset,
+      resize,
+    };
+    sequencerAnimations.push(EXPORT);
+    return EXPORT;
+  }());
+
+  /**
+   * Animation #20, Strike
+   * @param  {number} [opacity = 1]
+   * @param  {number} [duration = 400]
+   * @return {Object}
+   */
+  (function makeStrike(opacity = 1, duration = 200) {
+    let playing = false;
+    const amount = 32;
+    let distance = min(two.width, two.height) * 0.5;
+    const startPoint = { x: 0, y: 0 };
+    const endPoint = { x: 0, y: 0 };
+    let points;
+
+    /**
+     * [setup description]
+     * @return {[type]} [description]
+     */
+    function setup() {
+      // first hemisphere
+      const line = two.makePolygon(
+        two.width * 0.5,
+        two.height * 0.5,
+        distance,
+        amount,
+      );
+      points = line.vertices;
+      line.noFill();
+      line.stroke = colors[6];
+      line.cap = 'round';
+      line.visible = false;
+
+      const aniOut = new TWEEN.Tween(line)
+        .to({ beginning: 1.0 }, duration)
+        .easing(TWEEN.Easing.Circular.Out);
+
+      const aniIn = new TWEEN.Tween(line)
+        .to({ ending: 1.0 }, duration)
+        .easing(TWEEN.Easing.Circular.In)
+        .onComplete(() => {
+          aniOut.start();
+        });
+
+      return {
+        line,
+        aniIn,
+        aniOut,
+      };
+    }
+
+    let { line, aniIn, aniOut } = setup();
+
+    // methods
+    const resize = () => {
+      two.remove(line);
+      ({ line, aniIn, aniOut } = setup());
+    };
+
+    const reset = () => {
+      playing = false;
+      const rando = Math.random();
+
+      line.linewidth = Math.round(rando * 7) + 3;
+      line.visible = false;
+      distance = Math.round(map(rando, 0, 1, two.height * 0.5, two.width));
+
+      let theta;
+      theta = Math.random() * TWO_PI;
+      startPoint.x = distance * Math.cos(theta);
+      startPoint.y = distance * Math.sin(theta);
+      aniIn.stop();
+      aniOut.stop();
+      theta += Math.PI;
+      endPoint.x = distance * Math.cos(theta);
+      endPoint.y = distance * Math.sin(theta);
+
+      for (let i = 0; i < amount; i += 1) {
+        const p = points[i];
+        const pct = i / (amount - 1);
+        p.x = lerp(startPoint.x, endPoint.x, pct);
+        p.y = lerp(startPoint.y, endPoint.y, pct);
+      }
+
+      line.beginning = 0;
+      line.ending = 0;
+      aniIn.stop();
+      aniOut.stop();
+    };
+
+    const start = () => {
+      reset();
+      playing = true;
+      line.visible = true;
+      aniIn.start();
+    };
+
+    const EXPORT = {
+      playing,
+      start,
+      reset,
+      resize,
+    };
+    sequencerAnimations.push(EXPORT);
+    return EXPORT;
+  }());
+
+
+  /**
+  * Animation #12, Splash
+  * @param  {number} [opacity = 1]
+  * @param  {number} [duration = 400]
+  * @return {Object}
+  */
+  (function makeSplash(opacity = 1, duration = 1000) {
+    let playing = false;
+    const amount = 16;
+    const param = { t: 0 };
+    let circles = [];
+    const destinations = [];
+
+    /**
+    * [setup description]
+    * @return {[type]} [description]
+    */
+    function setup() {
+      const rMin = min(two.width, two.height) * (12 / 900);
+      const rMax = min(two.width, two.height) * (20 / 900);
+
+      const group = two.makeGroup();
+      group.translation.set(two.width * 0.5, two.height * 0.5);
+
+      circles = range(amount).map(() => {
+        const r = Math.round(map(Math.random(), 0, 1, rMin, rMax));
+        const circle = two.makeCircle(0, 0, r);
+        circle.fill = colors[5];
+        circle.noStroke();
+        destinations.push(new Two.Vector());
+
+        group.add(circle);
+        return circle;
+      });
+
+      group.visible = false;
+
+      const ani = new TWEEN.Tween(param)
+      .to({ t: 1.0 }, duration)
+      .easing(TWEEN.Easing.Sinusoidal.Out)
+      .onUpdate(() => {
+        const t = param.t;
+        for (let i = 0; i < amount; i += 1) {
+          const c = circles[i];
+          const d = destinations[i];
+          const x = lerp(c.translation.x, d.x, t);
+          const y = lerp(c.translation.y, d.y, t);
+          c.translation.set(x, y);
+        }
+
+        if (t > 0.8) {
+          group.visible = false;
+        }
+      });
+
+      return {
+        group,
+        ani,
+      };
+    }
+
+    let { group, ani } = setup();
+
+    // methods
+    const resize = () => {
+      group.remove(circles);
+      two.remove(group);
+      ({ group, ani } = setup());
+    };
+
+    const reset = () => {
+      playing = false;
+      group.visible = false;
+      ani.stop();
+      const theta = Math.random() * TWO_PI;
+      const deviation = map(Math.random(), 0, 1, Math.PI / 4, Math.PI / 2);
+      param.t = 0;
+      for (let i = 0; i < amount; i += 1) {
+        const c = circles[i];
+        const t = theta + (((Math.random() * 2) - 1) * deviation);
+        const a = Math.random() * two.height;
+        const x = a * Math.cos(t);
+        const y = a * Math.sin(t);
+        destinations[i].set(x, y);
+
+        c.visible = false;
+        c.translation.set(0, 0);
+      }
+
+      group.translation.set(
+        two.width * 0.5,
+        two.height * 0.5,
+      );
+    };
+
+
+    const start = () => {
+      reset();
+      playing = true;
+      group.visible = true;
       ani.start();
     };
 
@@ -2525,7 +3163,7 @@ function Animation() {
   };
 
   const triggerSequencer = (index) => {
-    const i = index % triggerSequencer.length;
+    const i = index % sequencerAnimations.length;
     sequencerAnimations[i].start();
   };
 

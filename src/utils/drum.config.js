@@ -1,3 +1,4 @@
+const drumNotes =  Array.from(Array(8).keys()).map((i) => (i + 1).toString());
 const drumUrls = [
   {
     1: './assets/audio/505/kick.mp3',
@@ -42,17 +43,6 @@ const drumUrls = [
     7: './assets/audio/drum/dusty/clicks.mp3',
     8: './assets/audio/drum/dusty/clicks.mp3',
   },
-];
-
-const drumNotes = [
-  '1',
-  '2',
-  '3',
-  '4',
-  '5',
-  '6',
-  '7',
-  '8',
 ];
 
 export {

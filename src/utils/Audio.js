@@ -237,8 +237,8 @@ export class Keyboard {
     this.notes = keysNotes;
     this.storeRecord = record => storeRecord(record);
     this.samples = new MultiPlayer({
-      urls: keysUrls,
-      volume: -10,
+      urls: keysUrls[0],
+      volume: -15,
       fadeOut: 0.1,
     }).toMaster();
     this.recording = false;

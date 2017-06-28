@@ -741,7 +741,9 @@ class DrumMachine extends Component {
     key(keys, (e, h) => {
 			const index = animationKey2IndexMapping[h.shortcut];
       this.ani.trigger(index);
-			this.keyboard.currentKey = index;
+			const char = (h.shortcut.charCodeAt(0) - 96).toString();
+			// console.log(char);
+			this.keyboard.currentKey = char;
 			this.keyboard.playKey();
     });
 
