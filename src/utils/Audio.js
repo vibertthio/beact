@@ -50,7 +50,7 @@ export class Sequencer {
     this.samples = new MultiPlayer({
       urls: drumUrls[this.currentSampleIndex],
       volume: -10,
-      fadeOut: 0.2,
+      fadeOut: 0.4,
     }).toMaster();
 
     this.checkStart = false;
@@ -58,9 +58,6 @@ export class Sequencer {
     this.saveRecord = this.saveRecord.bind(this);
 
     this.sequence = new Sequence((time, col) => {
-      // console.log(`time : ${time}`);
-      // console.log(`matrix : ${this.matrix}`);
-      // console.log(`col : ${col}`);
       this.beat = col;
 
       setCurrentBeat(this.beat);
