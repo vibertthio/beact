@@ -66,7 +66,7 @@ class DrumMachine extends Component {
       currentPlayingRecord: [],
       currentPlayingRecordElement: 0,
       keyStartTimeCorrection: 0,
-			hidden: false,
+			hidden: true,
 			wait: true,
 			idle: false,
 			currentSample: 'A',
@@ -203,25 +203,13 @@ class DrumMachine extends Component {
   }
 
   /**
-   * [showDOM description]
+  * @param  {String} sample width of window
+   * [deleteRecord description]
    */
-	showDOM() {
-		const rootDiv = document.getElementById('root');
-		rootDiv.classList.add('fullHeight');
-		this.setState({ wait: false });
-	}
-
-  /**
-   * [hideSpinner description]
-   */
-	hideSpinner() {
-		const spinner = document.getElementById('spinner');
-		spinner.classList.add('loaded');
- 		const loadingTitle = document.getElementById('loadingTitle');
- 		loadingTitle.classList.add('loaded');
- 		window.clearTimeout(fadeoutID);
-		fadeoutID = window.setTimeout(this.showDOM, 1500);
- 	}
+  setSample(sample) {
+    this.sequencer.currentSample = sample;
+    this.setState({ currentSample: sample });
+  }
 
 	/**
    * [clearClicked description]
@@ -287,7 +275,6 @@ class DrumMachine extends Component {
    * [startSequence description]
    */
   startSequencer() {
-    this.ani.trigger(21);
     this.sequencer.start();
     this.setState({
       playing: true,
@@ -743,7 +730,7 @@ class DrumMachine extends Component {
    */
   playDrumAni(column) {
     for (let i = 0; i < column.length; i += 1) {
-      this.ani.trigger(column[i]);
+      this.ani.triggerSequencer(column[i]);
     }
   }
 
@@ -768,13 +755,25 @@ class DrumMachine extends Component {
 		});
   }
 
-	/**
-  * @param  {String} sample width of window
-   * [deleteRecord description]
+  /**
+   * [hideSpinner description]
    */
-	setSample(sample) {
-		this.sequencer.currentSample = sample;
-		this.setState({ currentSample: sample });
+	hideSpinner() {
+		const spinner = document.getElementById('spinner');
+		spinner.classList.add('loaded');
+ 		const loadingTitle = document.getElementById('loadingTitle');
+ 		loadingTitle.classList.add('loaded');
+ 		window.clearTimeout(fadeoutID);
+		fadeoutID = window.setTimeout(this.showDOM, 1500);
+ 	}
+
+  /**
+   * [showDOM description]
+   */
+	showDOM() {
+		const rootDiv = document.getElementById('root');
+		rootDiv.classList.add('fullHeight');
+		this.setState({ wait: false });
 	}
 
 	/**
@@ -800,9 +799,9 @@ class DrumMachine extends Component {
         >
           <h4>{pattern.title}</h4>
         </li>
-        <h4 onClick={() => this.deletePattern(pattern.id)}>
+        <button onClick={() => this.deletePattern(pattern.id)}>
           X
-        </h4>
+        </button>
       </div>
 
     ));
@@ -822,9 +821,9 @@ class DrumMachine extends Component {
         >
           <h4>{drumRecord.title}{drumRecord.content.length}</h4>
         </li>
-        <h4 onClick={() => this.deleteRecord(drumRecord.id)}>
+        <button onClick={() => this.deleteRecord(drumRecord.id)}>
           X
-        </h4>
+        </button>
       </div>
     ));
   }
@@ -891,10 +890,6 @@ class DrumMachine extends Component {
         >
           <div className={styles.colorMenu}>
             {/* 1 */}
-            <h3 onTouchTap={() => this.setSample('A')}>A</h3>
-            <h3 onTouchTap={() => this.setSample('B')}>B</h3>
-            <h3 onTouchTap={() => this.setSample('C')}>C</h3>
-            <h3 onTouchTap={() => this.setSample('D')}>D</h3>
             <div className={`${styles.row1} ${styles.row}`}>
               <button
                 className={styles.row1l}
@@ -1073,151 +1068,39 @@ class DrumMachine extends Component {
           </div>
         </div>
 
-        {/* <div
-          className={
-					`${styles.menu}
-					 ${(hidden === true) ? styles.toggleRevMenu : styles.toggleMenu}`
-				  }
-        >
-          <NavigationCloseIcon
-            className={styles.closeIcon}
-            onClick={() => this.toggleHidden()}
-          />
-          <div className={styles.patternList}>
-						renderPatterns in this div
-            <ul>
-              {this.renderPatterns()}
-            </ul>
-          </div>
-          <div className={styles.chainList}>
-						renderChain in this div
-            <ul>{this.renderChain()}
-              <li
-                style={{ color: 'yellow' }}
-                onTouchTap={() => this.setCurrentChainElementAtLast()}>
-		            Update at here in this li
-		          </li>
-		        </ul>
-          </div>
-          <div className={styles.patternList}>
-            renderRecords in this div
-            <ul>
-              {this.renderRecords()}
-            </ul>
-          </div>
-          <div className={styles.menuBtn}>
-            <div
-              className={styles.btn}
-              onTouchTap={() => this.startSequencer()}
-            >
-	            start
-	          </div>
-            <div
-              className={styles.btn}
-              onTouchTap={() => this.stopSequencer()}
-            >
-	            stop
-	          </div>
-            <div
-              className={styles.btn}
-              onTouchTap={() => this.recordSequencer()}
-            >
-	            Record
-	          </div>
-            <div
-              className={styles.btn}
-              onTouchTap={() => this.exitPlayRecord()}
-            >
-              Exit Playing Record
-            </div>
-
-            <div>
-              <div>
-                <input
-                  type="text"
-                  value={this.state.patternTitle}
-                  onChange={this.handleTitleChange}
-                />
-              </div>
-              <div
-                className={styles.btn}
-                onTouchTap={() => this.savePattern()}
-              >
-                Save New Pattern
-              </div>
-              <div
-                className={styles.btn}
-                onTouchTap={() => this.editPattern()}
-              >
-                Update Pattern
-              </div>
-            </div>
-
-            <div
-              className={styles.btn}
-              onTouchTap={() => this.deleteCurrentPattern()}
-            >
-              Delete Current Pattern
-            </div>
-
-            <div
-              className={styles.btn}
-              onTouchTap={() => this.exitPattern()}
-            >
-              Exit Pattern
-            </div>
-
-            <div
-              className={styles.btn}
-              onTouchTap={() => this.updateChain()}
-            >
-              Update Chain
-            </div>
-            <div
-              className={styles.btn}
-              onTouchTap={() => this.deleteCurrentChainElement()}
-            >
-              Delete Current Chain Element
-            </div>
-            <div
-              className={styles.btn}
-              onTouchTap={() => this.playChain()}
-            >
-              Play Chain
-            </div>
-            <div
-              className={styles.btn}
-              onTouchTap={() => this.exitChain()}
-            >
-              Exit Chain
-            </div>
-          </div>
-          <hr />
-          <div>
-            <br />
-            <br />
-						user guide
-          </div>
-        </div> */}
         <button
           className={
 						`${styles.mask}
 						 ${(hidden === false ? styles.showMask : styles.hideMask)}`}
           onClick={() => this.toggleHidden()}
         >
-          <button className={styles.btn} onClick={() => console.log('update pattern')} onTouchTap={() => this.editPattern()}>
+          {/*
+          <button
+            className={styles.btn}
+            onClick={() => console.log('update pattern')}
+            onTouchTap={() => this.editPattern()}
+          >
 						Update Pattern
 					</button>
-          <button className={styles.btn} onClick={() => console.log('delete current pattern')} onTouchTap={() => this.deleteCurrentPattern()}>
+          <button
+            className={styles.btn}
+            onClick={() => console.log('delete current pattern')}
+            onTouchTap={() => this.deleteCurrentPattern()}>
 						Delete Current Pattern
 					</button>
           <div className={styles.chainList}>
 						renderChain in this div
-						<ul>{this.renderChain()}<li style={{ color: 'yellow' }} onTouchTap={() => this.setCurrentChainElementAtLast()}>
+						<ul>
+              {this.renderChain()}
+              <li
+                style={{ color: 'yellow' }}
+                onTouchTap={() => this.setCurrentChainElementAtLast()}
+              >
 								Update at here in this li
 							</li>
 						</ul>
           </div>
+          */}
         </button>
         <Matrix
           data={this.state.data}

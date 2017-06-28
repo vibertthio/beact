@@ -1,8 +1,8 @@
 import { MultiPlayer, Sequence, Transport } from 'tone';
 import axios from 'axios';
 import uuid4 from 'uuid/v4';
-import { urls, notes } from './samples.config';
-import { drumUrls } from './drum.config';
+import { keysUrls, keysNotes } from './keys.config';
+import { drumUrls, drumNotes } from './drum.config';
 
 let temperId = uuid4();
 /**
@@ -38,46 +38,19 @@ export class Sequencer {
     this.matrix = matrix;
     this.number = 0;
     this.playing = true;
-    this.notes = [
-      'kk',
-      'sn',
-      'hh',
-      'ho',
-      'A',
-      'F#',
-      'E',
-      'C#',
-    ];
+    this.notes = drumNotes;
     this.isPlayingChain = false;
     this.recordMatrix = [];
     this.recordFull = [];
     this.isPlayingRecord = false;
     this.startTime = 0;
-    this.currentSample = 'A';
+    this.currentSampleIndex = 2;
     this.storeRecord = record => storeRecord(record);
 
-    this.samplesA = new MultiPlayer({
-      urls: drumUrls.A,
+    this.samples = new MultiPlayer({
+      urls: drumUrls[this.currentSampleIndex],
       volume: -10,
-      fadeOut: 0.1,
-    }).toMaster();
-
-    this.samplesB = new MultiPlayer({
-      urls: drumUrls.B,
-      volume: -10,
-      fadeOut: 0.1,
-    }).toMaster();
-
-    this.samplesC = new MultiPlayer({
-      urls: drumUrls.C,
-      volume: -10,
-      fadeOut: 0.1,
-    }).toMaster();
-
-    this.samplesD = new MultiPlayer({
-      urls: drumUrls.D,
-      volume: -10,
-      fadeOut: 0.1,
+      fadeOut: 0.4,
     }).toMaster();
 
     this.checkStart = false;
@@ -85,9 +58,6 @@ export class Sequencer {
     this.saveRecord = this.saveRecord.bind(this);
 
     this.sequence = new Sequence((time, col) => {
-      // console.log(`time : ${time}`);
-      // console.log(`matrix : ${this.matrix}`);
-      // console.log(`col : ${col}`);
       this.beat = col;
 
       setCurrentBeat(this.beat);
@@ -101,19 +71,7 @@ export class Sequencer {
         }
         if (column[i] === 1) {
           const vel = (Math.random() * 0.5) + 0.5;
-          if (this.currentSample === 'A') {
-            console.log('a');
-            this.samplesA.start(this.notes[i], time, 0, '32n', 0, vel);
-          } else if (this.currentSample === 'B') {
-            console.log('b');
-            this.samplesB.start(this.notes[i], time, 0, '32n', 0, vel);
-          } else if (this.currentSample === 'C') {
-            console.log('c');
-            this.samplesC.start(this.notes[i], time, 0, '32n', 0, vel);
-          } else if (this.currentSample === 'D') {
-            console.log('d');
-            this.samplesD.start(this.notes[i], time, 0, '32n', 0, vel);
-          }
+          this.samples.start(this.notes[i], time, 0, '32n', 0, vel);
           nowPlayingAni.push(i);
         }
         if (i === 7) {
@@ -276,10 +234,10 @@ export class Keyboard {
   constructor(storeRecord) {
     this.currentKey = null;
     this.record = [];
-    this.notes = notes;
+    this.notes = keysNotes;
     this.storeRecord = record => storeRecord(record);
     this.samples = new MultiPlayer({
-      urls,
+      urls: keysUrls,
       volume: -10,
       fadeOut: 0.1,
     }).toMaster();

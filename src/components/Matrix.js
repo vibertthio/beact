@@ -11,12 +11,7 @@ let idle = false;
  */
 function mouseTimerSetup() {
 	window.addEventListener('mousemove', resetTimer, false);
-	// window.addEventListener('mousedown', resetTimer, false);
-	// window.addEventListener('keypress', resetTimer, false);
-	// window.addEventListener('DOMMouseScroll', resetTimer, false);
-	// window.addEventListener('mousewheel', resetTimer, false);
-	// window.addEventListener('touchmove', resetTimer, false);
-	// window.addEventListener('MSPointerMove', resetTimer, false);
+	window.addEventListener('mousedown', resetTimer, false);
 	timeoutID = window.setTimeout(firstGoInactive, 12000);
 	// startTimer();
 }
