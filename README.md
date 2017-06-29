@@ -1,6 +1,7 @@
 # Beact
 use react to create audio/visual in a creative way.
-
+![screenshot](https://github.com/vibertthio/beact/blob/master/assets/images/sc-03.png)
+![screenshot](https://github.com/vibertthio/beact/blob/master/assets/images/sc-01.png)
 ## quick start
 1.   press space to start/stop
 2.   click any block to trigger drum machine note
