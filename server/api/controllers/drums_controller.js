@@ -53,8 +53,8 @@ module.exports = {
     const noteId = req.params.id;
     const noteProps = req.body;
 
-    DrumPattern.findByIdAndUpdate({ _id: noteId }, noteProps)
-      .then(() => Drum.findOne({ _id: noteId }))
+    DrumPattern.findOneAndUpdate({ id: noteId }, noteProps)
+      .then(() => Drum.findOne({ id: noteId }))
       .then(note => res.send(note))
       .catch(next);
   },
