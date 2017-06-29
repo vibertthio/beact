@@ -5,6 +5,7 @@ use react to create audio/visual in a creative way.
 [demo](https://fierce-tor-13436.herokuapp.com/)
 
 ![screenshot](https://github.com/vibertthio/beact/blob/master/assets/images/sc-03.png)
+
 ![screenshot](https://github.com/vibertthio/beact/blob/master/assets/images/sc-01.png)
 
 ## quick start
@@ -14,6 +15,8 @@ use react to create audio/visual in a creative way.
 4.   up/down to change bpm
 5.   left/right to change sound bank of drum machine
 6.   press 1 ~ 8 for different presets
+
+
 
 ## dev mode
 
@@ -30,11 +33,14 @@ git clone https://github.com/vibertthio/beact
 npm install
 ```
 
+
 ### To build the production package
 
 ```
 npm run build
 ```
+
+
 
 ## server mode
 
@@ -43,6 +49,7 @@ npm run build
 ```
 brew install mongo
 ```
+
 
 ### Initial config of mongodb
 
@@ -59,6 +66,8 @@ Taking ownership to /data/db
 // assume your username is John
 sudo chown -Rv John /data/db
 ```
+
+
 ### To run the database
 
 ```
@@ -71,16 +80,21 @@ If you don't want to run mongod everytime you need, the following command will a
 brew services start mongo
 ```
 
+
 ### To build the production package
 
 ```
 npm run build
 ```
+
+
 ### To run the server
 
 ```
 npm run server
 ```
+
+
 
 ## 按鈕功能
 
