@@ -841,22 +841,25 @@ class DrumMachine extends Component {
   renderPatterns() {
     return _.map(this.state.patternLists, pattern => (
       // <div key={uuid4()} className={styles.listWrap}>
-        <div
-          className={styles.renderedLi}
-          key={pattern.id}
-          style={{ color: 'white' }}
+      <div
+        className={styles.renderedLi}
+        key={pattern.id}
+        style={{ color: 'white' }}
+      >
+        <button className={styles.renderedLiTitle} onTouchTap={() => this.playPattern(pattern)}>
+          <span>{pattern.title}</span>
+        </button>
+        <button
+          className={styles.renderedListX}
+          onTouchTap={() => this.deletePattern(pattern.id)}
         >
-          <button className={styles.renderedLiTitle} onTouchTap={() => this.playPattern(pattern)}>
-            <span>{pattern.title}</span>
-          </button>
-					<button className={styles.renderedListX} onTouchTap={() => this.deletePattern(pattern.id)}>
-						<span>X</span>
-					</button>
-          {/* <NavigationCloseIcon
-            className={styles.renderedListX}
-            onTouchTap={() => this.deletePattern(pattern.id)}
-          /> */}
-        </div>
+          <span>X</span>
+        </button>
+        {/* <NavigationCloseIcon
+          className={styles.renderedListX}
+          onTouchTap={() => this.deletePattern(pattern.id)}
+        /> */}
+      </div>
       // </div>
     ));
   }
@@ -868,21 +871,21 @@ class DrumMachine extends Component {
   renderRecords() {
     return _.map(this.state.drumRecords, drumRecord => (
       // <div key={uuid4()} className={styles.listWrap}>
-        <div
-          className={styles.renderedLi}
-          key={drumRecord.id}
-          style={{ color: 'white' }}
+      <div
+        className={styles.renderedLi}
+        key={drumRecord.id}
+        style={{ color: 'white' }}
+      >
+        <button className={styles.renderedLiTitle} onTouchTap={() => this.playRecord(drumRecord)}>
+          <span>{drumRecord.title}</span>
+        </button>
+        <button
+          className={styles.renderedListX}
+          onTouchTap={() => this.deleteRecord(drumRecord.id)}
         >
-          <button className={styles.renderedLiTitle} onTouchTap={() => this.playRecord(drumRecord)}>
-            <span>{drumRecord.title}</span>
-          </button>
-          <button
-            className={styles.renderedListX}
-            onTouchTap={() => this.deleteRecord(drumRecord.id)}
-          >
-            <span>X</span>
-          </button>
-        </div>
+          <span>X</span>
+        </button>
+      </div>
       // </div>
     ));
   }
