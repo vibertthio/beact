@@ -26,18 +26,18 @@
 }
 
 .menuIcon {
-  top: 3%;
-  left: 2%;
+  top: 1.5em;
+  left: 2em;
 }
 
 .clearIcon {
-  top: 3%;
-  right: 2%;
+  top: 1.9em;
+  right: 2em;
 }
 
 .randomIcon {
-  top: 6%;
-  right: 2%;
+  top: 4em;
+  right: 2em;
 }
 
 .displayHide {
@@ -64,9 +64,12 @@
 
 .mask {
   position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 100%;
-  background-color: black;
-  opacity: 0.7;
+  background-color: lightgrey;
+  opacity: 0.5;
   z-index: 1;
   transition: margin .7s ease-in-out;
   border: none;
@@ -186,6 +189,11 @@
 
 .row1 {
   height: 16%;
+}
+
+.row1BtnWrap {
+  height: 100%;
+  width: 100%;
 }
 
 .row1 button {
@@ -343,16 +351,6 @@
   margin: 0;
 }
 
-.renderedLi {
-  position: relative;
-  display: flex;
-}
-
-.renderedLiX {
-  position: absolute;
-  right: 8%;
-}
-
 /* row4 */
 .chain {
   display: block;
@@ -406,29 +404,46 @@
   width: 100%;
 }
 
-/*.row5ldl {
+.row5ldl {
   width: 50%;
   background: #73676b;
-}*/
+}
 
-/*.row5ldr {
+.row5ldr {
+  width: 50%;
+  background: #73676b;
+}
+
+/*.row5ldbtn {
   width: 100%;
   background: #73676b;
 }*/
 
-.row5ldbtn {
-  /*width: 100%;*/
-  background: #73676b;
-}
-
 .row5r {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
+  margin: 3% 3% 3% -3%;
   width: 40%;
+  height: 80%;
+  /*max-height: 13%;*/
+  overflow-x: hidden;
 }
 
-.row5r .chainIndex {
+.chainLi {
+  width: 70%;
+  height: 85%;
+  margin: 0 0 0 10%;
+  cursor: pointer;
+  /*max-height: 10em;*/
+  background: #724a59;
+}
+
+.currentPlayingItem {
+  background-color: orange;
+}
+
+/*.row5r .chainIndex {
   font-size: 8em;
 }
 .row5r .chainDivider {
@@ -436,7 +451,7 @@
 }
 .row5r .chainLength {
   font-size: 8em;
-}
+}*/
 
 /* row7 */
 
@@ -466,6 +481,10 @@
 
 .recordingBtn {
   background: rgb(149, 61, 61);
+}
+
+.recordingBtn:hover {
+  background: rgb(226, 52, 52);
 }
 
 .row7lbtn img {
@@ -596,13 +615,35 @@
 
 .row7rd {
   height: 80%;
-  margin: 3% 0% 3% 13%;
+  margin: 3% 0 3% 3%;
   overflow: auto;
   overflow-x: hidden;
 }
 
-.row7r ul {
+/*.row7r ul {
   margin: 0 0 0 3%;
+}*/
+
+.listWrap {
+  width: 100%;
+  height: 32%;
+  margin: -3% 0 0 12%;
+}
+
+.renderedLi {
+  position: relative;
+  display: flex;
+  width: 100%;
+}
+
+.renderedLiTitle {
+  /*width: 70%;*/
+  background: transparent;
+}
+
+.renderedLiX {
+  /*width: 30%;*/
+  background: transparent;
 }
 
 .invisible {
@@ -685,14 +726,4 @@
   .row1r::after {
     transform: none;
   }
-}
-
-.chainList {
-  width: 70%;
-  /*height: 35%;*/
-  background-color: grey;
-}
-
-.currentPlayingItem {
-  background-color: orange;
 }
