@@ -69,7 +69,7 @@
   justify-content: center;
   height: 100%;
   background-color: lightgrey;
-  opacity: 0.5;
+  opacity: 0.3;
   z-index: 1;
   transition: margin .7s ease-in-out;
   border: none;
@@ -163,7 +163,7 @@
 }
 
 .colorMenu button {
-  width: 100%;
+  /*width: 100%;*/
   border: none;
   outline: none;
   cursor: pointer;
@@ -173,16 +173,9 @@
 .colorMenu button:hover {
 }
 
-.colorMenu img {
-  /*z-index: 2;*/
-}
-
-/*.colorMenu img:hover {
-  opacity: 1;
-}*/
-
-.row {
-
+.menuLogo {
+  height: 50%;
+  width: 50%;
 }
 
 /* row1 */
@@ -342,7 +335,7 @@
 
 .row3rd {
   height: 80%;
-  margin: 3% 3% 3% 0;
+  margin: 3% 3% 3% -3%;
   overflow: auto;
   overflow-x: hidden;
 }
@@ -440,7 +433,7 @@
 }
 
 .currentPlayingItem {
-  background-color: orange;
+  background-color: #d8b98a;
 }
 
 /*.row5r .chainIndex {
@@ -596,14 +589,14 @@
   overflow: auto;
 }
 
-.row7ru {
+/*.row7ru {
   display: flex;
   justify-content: center;
   height: 20%;
   border: 3px solid white;
   border-radius: 0.5em;
   margin: 0 0 0 2em;
-}
+}*/
 
 .row7input {
   border:none;
@@ -627,22 +620,23 @@
 .listWrap {
   width: 100%;
   height: 32%;
-  margin: -3% 0 0 12%;
+  margin: -5% 0 0 0;
 }
 
 .renderedLi {
   position: relative;
   display: flex;
+  justify-content: center;
   width: 100%;
 }
 
 .renderedLiTitle {
-  /*width: 70%;*/
+  width: 70%;
   background: transparent;
 }
 
-.renderedLiX {
-  /*width: 30%;*/
+.renderedListX {
+  width: 30%;
   background: transparent;
 }
 
@@ -668,6 +662,9 @@
 /* row9 */
 
 .row9 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background: #724a59;
   height: 7%;
 }
@@ -727,3 +724,7 @@
     transform: none;
   }
 }
+
+/*.titleText {
+  color: white;
+}*/

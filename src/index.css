@@ -28,6 +28,8 @@
 
 html * {
   font-family: "Open Sans";
+  font-style: italic;
+  color: #78b19a;
   /*height: 100%;*/
 }
 
