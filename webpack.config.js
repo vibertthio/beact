@@ -68,6 +68,7 @@ module.exports = {
     }),
     new CopyWebpackPlugin([
       { from: 'src/assets/audio', to: 'assets/audio' },
+      { from: 'src/assets/svg/menu/logo-2-2x.png' },
     ]),
   ]
 };
