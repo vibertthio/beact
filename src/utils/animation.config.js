@@ -255,6 +255,14 @@ animationNameList.forEach((l, i) => {
   animationKey2IndexMapping[l.key] = i;
 });
 
+const animationDrum2IndexMapping = [
+  [0, 1, 2, 3, 4, 5, 6, 7],
+  [0, 1, 2, 3, 4, 5, 8, 9],
+  [0, 1, 2, 3, 4, 5, 6, 7],
+  [0, 1, 2, 3, 4, 5, 6, 7],
+  [0, 1, 2, 3, 4, 5, 6, 7],
+];
+
 export {
   pallete,
   TWO_PI,
@@ -270,4 +278,5 @@ export {
   toRGB,
   animationNameList,
   animationKey2IndexMapping,
+  animationDrum2IndexMapping,
 };

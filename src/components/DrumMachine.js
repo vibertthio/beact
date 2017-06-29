@@ -14,6 +14,7 @@ import Matrix from './Matrix';
 import { Sequencer, Keyboard, changeBPM, presets } from '../utils/Audio';
 import Animation, {
 	animationKey2IndexMapping,
+	animationDrum2IndexMapping,
 } from '../utils/Animation';
 import menu1 from '../assets/svg/menu/menu1.svg';
 import menu2 from '../assets/svg/menu/menu2.svg';
@@ -746,7 +747,9 @@ class DrumMachine extends Component {
    */
   playDrumAni(column) {
     for (let i = 0; i < column.length; i += 1) {
-      this.ani.triggerSequencer(column[i]);
+      this.ani.triggerSequencerAnimation(
+				animationDrum2IndexMapping[1][column[i]],
+			);
     }
   }
 
@@ -756,7 +759,7 @@ class DrumMachine extends Component {
   detectKeyboard() {
     key(keys, (e, h) => {
 			const index = animationKey2IndexMapping[h.shortcut];
-      this.ani.trigger(index);
+      this.ani.triggerKeyAnimation(index);
 			const char = (h.shortcut.charCodeAt(0) - 96).toString();
 			// console.log(char);
 			this.keyboard.currentKey = char;
