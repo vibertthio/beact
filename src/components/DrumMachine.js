@@ -547,20 +547,31 @@ class DrumMachine extends Component {
         title: this.state.patternTitle,
         content: this.state.data,
       })
+			.then(
+				axios.get('/api/patterns')
+					.then((res) => {
+						this.setState({ patternLists: res.data });
+					})
+					.catch((err) => {
+						console.log(err);
+					}),
+			)
       .catch(err => console.log(err));
     } else {
       axios.put(`/api/patterns/${this.state.currentPatternId}`, {
         content: this.state.data,
       })
+			.then(
+				axios.get('/api/patterns')
+					.then((res) => {
+						this.setState({ patternLists: res.data });
+					})
+					.catch((err) => {
+						console.log(err);
+					}),
+			)
       .catch(err => console.log(err));
     }
-    axios.get('/api/patterns')
-      .then((res) => {
-        this.setState({ patternLists: res.data });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
   }
 
   /**
