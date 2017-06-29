@@ -29,6 +29,7 @@ import menu11 from '../assets/svg/menu/menu11.svg';
 import menuLogo from '../assets/svg/menu/logo-2-2x.png';
 
 let fadeoutID;
+let logoID;
 let keys = '';
 _.range(26).forEach((i) => {
 	keys = keys.concat(String.fromCharCode(97 + i));
@@ -47,7 +48,8 @@ class DrumMachine extends Component {
     for (let i = 0; i < 16; i += 1) {
       data[i] = [];
       for (let j = 0; j < 8; j += 1) {
-        data[i][j] = (Math.random() > 0.15) ? 0 : 1;
+        // data[i][j] = (Math.random() > 0.15) ? 0 : 1;
+        data[i][j] = 0;
       }
     }
 
@@ -68,7 +70,7 @@ class DrumMachine extends Component {
       currentPlayingRecord: [],
       currentPlayingRecordElement: 0,
       keyStartTimeCorrection: 0,
-			hidden: false,
+			hidden: true,
 			wait: true,
 			idle: false,
 			currentSample: 'A',
@@ -122,6 +124,7 @@ class DrumMachine extends Component {
     this.toggleHidden = this.toggleHidden.bind(this);
 		this.hideSpinner = this.hideSpinner.bind(this);
 		this.showDOM = this.showDOM.bind(this);
+		// this.showLogo = this.showLogo.bind(this);
   }
 
   /**
@@ -156,6 +159,7 @@ class DrumMachine extends Component {
 	   * hide loading spinner and wait 3.5s after DOM is loaded.
 	   */
 	  const outShowDOM = this.hideSpinner;
+    const outShowLogo = this.showLogo;
 		/**
 	   * [startTimer description]
 	   */
@@ -812,8 +816,16 @@ class DrumMachine extends Component {
 		spinner.classList.add('loaded');
  		const loadingTitle = document.getElementById('loadingTitle');
  		loadingTitle.classList.add('loaded');
+		const logo = document.getElementById('beactLogo');
+		logo.classList.add('showLogo');
+		const showLogo = () => {
+			const beactLogo = document.getElementById('beactLogo');
+			beactLogo.classList.remove('showLogo');
+			window.clearTimeout(logoID);
+		};
+		logoID = window.setTimeout(showLogo, 2000);
  		window.clearTimeout(fadeoutID);
-		fadeoutID = window.setTimeout(this.showDOM, 1500);
+		fadeoutID = window.setTimeout(this.showDOM, 3000);
  	}
 
   /**
@@ -847,13 +859,13 @@ class DrumMachine extends Component {
         style={{ color: 'white' }}
       >
         <button className={styles.renderedLiTitle} onTouchTap={() => this.playPattern(pattern)}>
-          <span>{pattern.title}</span>
+          <span className={styles.listText}>{pattern.title}</span>
         </button>
         <button
           className={styles.renderedListX}
           onTouchTap={() => this.deletePattern(pattern.id)}
         >
-          <span>X</span>
+          <span className={styles.listXBtn}>X</span>
         </button>
         {/* <NavigationCloseIcon
           className={styles.renderedListX}
@@ -877,13 +889,13 @@ class DrumMachine extends Component {
         style={{ color: 'white' }}
       >
         <button className={styles.renderedLiTitle} onTouchTap={() => this.playRecord(drumRecord)}>
-          <span>{drumRecord.title}</span>
+          <span className={styles.listText}>{drumRecord.title}</span>
         </button>
         <button
           className={styles.renderedListX}
           onTouchTap={() => this.deleteRecord(drumRecord.id)}
         >
-          <span>X</span>
+          <span className={styles.listXBtn}>X</span>
         </button>
       </div>
       // </div>
@@ -908,7 +920,7 @@ class DrumMachine extends Component {
 						 ${(i === this.state.currentPlayingChainElement) ? styles.currentPlayingItem : ''}`
 					}
         >
-          <span>{i + 1}{(this.state.currentChainElement !== '' && this.state.currentChainElementIndex === i) ? ' V' : ''}</span>
+          <span className={styles.chainIndex}>{i + 1}{(this.state.currentChainElement !== '' && this.state.currentChainElementIndex === i) ? ' V' : ''}</span>
         </div>
       </div>
     ));
@@ -1057,14 +1069,14 @@ class DrumMachine extends Component {
                     onClick={() => console.log('Play Chain Button clicked')}
                     onTouchTap={() => this.playChain()}
                   >
-                    <img src={menu7} alt="Play Chain Button" />
+                    <img src={menu1} alt="Play Chain Button" />
                   </button>
                   <button
                     className={styles.row5lur}
                     onClick={() => console.log('Update Chain Button clicked')}
                     onTouchTap={() => this.updateChain()}
                   >
-                    <img src={menu8} alt="Update Chain Button" />
+                    <img src={menu7} alt="Update Chain Button" />
                   </button>
                 </div>
                 <div className={styles.row5ld}>
@@ -1174,11 +1186,11 @@ class DrumMachine extends Component {
             </div>
             {/* 8 */}
             <div className={`${styles.evenrow} ${styles.row}`}>
-              <span>User Guide</span>
+              <span>Beact</span>
             </div>
             {/* 9 */}
             <div className={`${styles.row9} ${styles.row}`}>
-              <span>Beact - by Vibert, Joey, Scya, 2017</span>
+              <span>by Vibert, Joey, Scya, 2017</span>
             </div>
           </div>
         </div>

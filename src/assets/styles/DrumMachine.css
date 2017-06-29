@@ -174,8 +174,8 @@
 }
 
 .menuLogo {
-  height: 50%;
-  width: 50%;
+  /*height: 50%;*/
+  width: 40%;
 }
 
 /* row1 */
@@ -335,7 +335,7 @@
 
 .row3rd {
   height: 80%;
-  margin: 3% 3% 3% -3%;
+  margin: 3% 7% 3% -3%;
   overflow: auto;
   overflow-x: hidden;
 }
@@ -436,15 +436,9 @@
   background-color: #d8b98a;
 }
 
-/*.row5r .chainIndex {
-  font-size: 8em;
+.chainIndex {
+  padding-left: 10%;
 }
-.row5r .chainDivider {
-  font-size: 8em;
-}
-.row5r .chainLength {
-  font-size: 8em;
-}*/
 
 /* row7 */
 
@@ -627,15 +621,23 @@
   position: relative;
   display: flex;
   justify-content: center;
-  width: 100%;
+  width: 90%;
+  margin: 0 0% 0 13%;
+  margin: 0 0 0 6%;
+}
+
+.renderedLi:hover {
+  background-color: #d8b98a;
 }
 
 .renderedLiTitle {
+  text-align: left;
   width: 70%;
   background: transparent;
 }
 
 .renderedListX {
+  text-align: left;
   width: 30%;
   background: transparent;
 }
@@ -724,7 +726,3 @@
     transform: none;
   }
 }
-
-/*.titleText {
-  color: white;
-}*/
