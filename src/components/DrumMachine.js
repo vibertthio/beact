@@ -26,6 +26,7 @@ import menu8 from '../assets/svg/menu/menu8.svg';
 import menu9 from '../assets/svg/menu/menu9.svg';
 import menu10 from '../assets/svg/menu/menu10.svg';
 import menu11 from '../assets/svg/menu/menu11.svg';
+import menuLogo from '../assets/svg/menu/logo-2-2x.png';
 
 let fadeoutID;
 let keys = '';
@@ -67,7 +68,7 @@ class DrumMachine extends Component {
       currentPlayingRecord: [],
       currentPlayingRecordElement: 0,
       keyStartTimeCorrection: 0,
-			hidden: true,
+			hidden: false,
 			wait: true,
 			idle: false,
 			currentSample: 'A',
@@ -839,20 +840,24 @@ class DrumMachine extends Component {
    */
   renderPatterns() {
     return _.map(this.state.patternLists, pattern => (
-      <div key={uuid4()} className={styles.listWrap}>
+      // <div key={uuid4()} className={styles.listWrap}>
         <div
           className={styles.renderedLi}
           key={pattern.id}
           style={{ color: 'white' }}
         >
           <button className={styles.renderedLiTitle} onTouchTap={() => this.playPattern(pattern)}>
-            <h4>{pattern.title}</h4>
+            <span>{pattern.title}</span>
           </button>
-          <button className={styles.renderedLiX} onTouchTap={() => this.deletePattern(pattern.id)}>
-            <h4>X</h4>
-          </button>
+					<button className={styles.renderedListX} onTouchTap={() => this.deletePattern(pattern.id)}>
+						<span>X</span>
+					</button>
+          {/* <NavigationCloseIcon
+            className={styles.renderedListX}
+            onTouchTap={() => this.deletePattern(pattern.id)}
+          /> */}
         </div>
-      </div>
+      // </div>
     ));
   }
 
@@ -862,23 +867,23 @@ class DrumMachine extends Component {
    */
   renderRecords() {
     return _.map(this.state.drumRecords, drumRecord => (
-      <div key={uuid4()} className={styles.listWrap}>
+      // <div key={uuid4()} className={styles.listWrap}>
         <div
           className={styles.renderedLi}
           key={drumRecord.id}
-          style={{ color: 'black' }}
+          style={{ color: 'white' }}
         >
           <button className={styles.renderedLiTitle} onTouchTap={() => this.playRecord(drumRecord)}>
-            <h4>{drumRecord.title}</h4>
+            <span>{drumRecord.title}</span>
           </button>
           <button
-            className={styles.renderedLiX}
+            className={styles.renderedListX}
             onTouchTap={() => this.deleteRecord(drumRecord.id)}
           >
-            <h4>X</h4>
+            <span>X</span>
           </button>
         </div>
-      </div>
+      // </div>
     ));
   }
 
@@ -891,7 +896,7 @@ class DrumMachine extends Component {
       <div
         key={chainElement.id}
         className={styles.chainLi}
-        style={{ color: 'yellow' }}
+        style={{ color: '#d8b98a' }}
         onTouchTap={() => this.setCurrentChainElementAtHere(chainElement.id)}
       >
         <div
@@ -1082,7 +1087,7 @@ class DrumMachine extends Component {
                   : this.renderChain()}
                 <div
                   className={styles.chainLi}
-                  style={{ color: 'yellow' }}
+                  style={{ color: '#d8b98a' }}
                   onTouchTap={() => this.setCurrentChainElementAtLast()}
                 >
     								+
@@ -1145,19 +1150,19 @@ class DrumMachine extends Component {
               </div>
               <div
                 className={
-                `${styles.row7r}
+                `${styles.row3r}
                  ${(this.sequencer.recording === true) ? styles.displayHide : ''}`}
               >
-                <div className={styles.row7ru}>
+                <div className={styles.row3ru}>
                   <input
                     type="text"
-                    className={styles.row7input}
+                    className={styles.row3input}
                     value={this.state.recordTitle}
                     onChange={this.handleRecordTitleChange}
                     placeholder="input record name..."
                   />
                 </div>
-                <div className={styles.row7rd}>
+                <div className={styles.row3rd}>
                   {/* <ul> */}
                   {this.renderRecords()}
                   {/* </ul> */}
@@ -1170,8 +1175,8 @@ class DrumMachine extends Component {
             </div>
             {/* 9 */}
             <div className={`${styles.row9} ${styles.row}`}>
-							Beact - by Vibert, Joey, Scya, 2017
-						</div>
+              <span>Beact - by Vibert, Joey, Scya, 2017</span>
+            </div>
           </div>
         </div>
 
@@ -1180,7 +1185,9 @@ class DrumMachine extends Component {
 						`${styles.mask}
 						 ${(hidden === false ? styles.showMask : styles.hideMask)}`}
           onClick={() => this.toggleHidden()}
-        />
+        >
+          <img src={menuLogo} alt="BEACT" className={styles.menuLogo} />
+        </button>
         {/* <button
                 className={styles.btn}
                 onClick={() => console.log('update pattern')} onTouchTap={() => this.editPattern()}>
