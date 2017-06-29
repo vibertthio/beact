@@ -11,6 +11,7 @@ let temperId = uuid4();
 export class Sequencer {
   notes: Array<String>;
   samples: Object;
+  loadingSamples: Boolean;
   sequence: Object;
   playing: Boolean;
   beat: Number;
@@ -33,8 +34,14 @@ export class Sequencer {
    * @param  {[type]} playNextRecordElement [description]
    * @param  {[type]} playDrumAni [description]
    */
-  constructor(matrix, setCurrentBeat, playNextChainElement,
-    storeRecord, playNextRecordElement, playDrumAni) {
+  constructor(
+    matrix,
+    setCurrentBeat,
+    playNextChainElement,
+    storeRecord,
+    playNextRecordElement,
+    playDrumAni,
+  ) {
     this.matrix = matrix;
     this.number = 0;
     this.playing = true;
@@ -47,12 +54,7 @@ export class Sequencer {
     this.currentSampleIndex = 2;
     this.storeRecord = record => storeRecord(record);
 
-    this.samples = new MultiPlayer({
-      urls: drumUrls[this.currentSampleIndex],
-      volume: -10,
-      fadeOut: 0.4,
-    }).toMaster();
-
+    this.loadSamples();
     this.checkStart = false;
     // this.nowPlayingAni = [];
     this.saveRecord = this.saveRecord.bind(this);
@@ -69,7 +71,8 @@ export class Sequencer {
           this.checkStart = true;
           this.startTime = time;
         }
-        if (column[i] === 1) {
+        // make sure no play while loading
+        if (column[i] === 1 && !this.loadingSamples) {
           const vel = (Math.random() * 0.5) + 0.5;
           this.samples.start(this.notes[i], time, 0, '32n', 0, vel);
           nowPlayingAni.push(i);
@@ -181,14 +184,26 @@ export class Sequencer {
     if (this.currentSampleIndex < 0) {
       this.currentSampleIndex += drumUrls.length;
     }
+    this.loadSamples();
+  }
 
-    console.log(`drum sound bank : ${this.currentSampleIndex}`);
+  /**
+   * [loadSamples description]
+   */
+  loadSamples() {
+    console.log(`start loading drum sound bank : ${this.currentSampleIndex}`);
+    this.loadingSamples = true;
     this.samples = new MultiPlayer({
       urls: drumUrls[this.currentSampleIndex],
       volume: -10,
       fadeOut: 0.4,
-    }).toMaster();
+      onload: () => {
+        console.log('finish!');
+        this.loadingSamples = false;
+      },
+   }).toMaster();
   }
+
 
   /**
   * @param  {Function} saveKeyboardRecord width of window
