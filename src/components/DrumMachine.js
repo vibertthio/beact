@@ -59,6 +59,7 @@ class DrumMachine extends Component {
       currentPatternId: '',
       drumNoteChain: [],
       currentChainElement: '',
+			currentChainElementIndex: 0,
       currentPlayingChainElement: 0,
       drumRecords: [],
       keyRecords: [],
@@ -94,6 +95,7 @@ class DrumMachine extends Component {
     this.renderChain = this.renderChain.bind(this);
     this.setCurrentChainElementAtLast = this.setCurrentChainElementAtLast.bind(this);
     this.setCurrentChainElementAtHere = this.setCurrentChainElementAtHere.bind(this);
+		this.setCurrentChainElementIndex = this.setCurrentChainElementIndex.bind(this);
     this.deleteCurrentChainElement = this.deleteCurrentChainElement.bind(this);
 
     this.playNextChainElement = this.playNextChainElement.bind(this);
@@ -181,6 +183,19 @@ class DrumMachine extends Component {
     this.setState({ currentChainElement: '' });
   }
 
+	/**
+   * [setCurrentChainElementIndex description]
+   * @param  {number} id for currentChainElementIndex
+   */
+  setCurrentChainElementIndex(id) {
+		for (let i = 0; i < this.state.drumNoteChain.length; i += 1) {
+			if (id === this.state.drumNoteChain[i].id) {
+				this.setState({ currentChainElementIndex: i });
+				return;
+			}
+		}
+	}
+
   /**
   * @param  {String} id width of window
    * [setCurrentChainAtHere description]
@@ -200,6 +215,7 @@ class DrumMachine extends Component {
       }
     }
     this.setState({ currentChainElement: id, data });
+		this.setCurrentChainElementIndex(id);
   }
 
   /**
@@ -677,7 +693,7 @@ class DrumMachine extends Component {
           }
         }
       }
-      this.setState({ drumNoteChain, currentChainElement: '' });
+      this.setState({ drumNoteChain, currentChainElement: '', currentChainElementIndex: 0 });
       this.stopSequencer();
       this.exitPattern();
     }
@@ -794,23 +810,20 @@ class DrumMachine extends Component {
    */
   renderPatterns() {
     return _.map(this.state.patternLists, pattern => (
-      <div key={uuid4()}>
-        <li
-					className={styles.renderedLi}
+      <div key={uuid4()} className={styles.listWrap}>
+        <div
+          className={styles.renderedLi}
           key={pattern.id}
-          onTouchTap={() => this.playPattern(pattern)}
           style={{ color: 'white' }}
         >
-          <h4>{pattern.title}</h4>
-					<h4
-						className={styles.renderedLiX}
-						onClick={() => this.deletePattern(pattern.id)}
-					>
-	          X
-	        </h4>
-        </li>
+          <button className={styles.renderedLiTitle} onTouchTap={() => this.playPattern(pattern)}>
+            <h4>{pattern.title}</h4>
+          </button>
+          <button className={styles.renderedLiX} onTouchTap={() => this.deletePattern(pattern.id)}>
+            <h4>X</h4>
+          </button>
+        </div>
       </div>
-
     ));
   }
 
@@ -820,21 +833,22 @@ class DrumMachine extends Component {
    */
   renderRecords() {
     return _.map(this.state.drumRecords, drumRecord => (
-      <div key={uuid4()}>
-        <li
+      <div key={uuid4()} className={styles.listWrap}>
+        <div
           className={styles.renderedLi}
           key={drumRecord.id}
-          onTouchTap={() => this.playRecord(drumRecord)}
           style={{ color: 'black' }}
         >
-          <h4>{drumRecord.title}{drumRecord.content.length}</h4>
-          <h4
+          <button className={styles.renderedLiTitle} onTouchTap={() => this.playRecord(drumRecord)}>
+            <h4>{drumRecord.title}</h4>
+          </button>
+          <button
             className={styles.renderedLiX}
-            onClick={() => this.deleteRecord(drumRecord.id)}
-					>
-	          X
-	        </h4>
-        </li>
+            onTouchTap={() => this.deleteRecord(drumRecord.id)}
+          >
+            <h4>X</h4>
+          </button>
+        </div>
       </div>
     ));
   }
@@ -845,19 +859,21 @@ class DrumMachine extends Component {
    */
   renderChain() {
     return _.map(this.state.drumNoteChain, (chainElement, i) => (
-      <li
+      <div
         key={chainElement.id}
         className={styles.chainLi}
         style={{ color: 'yellow' }}
         onTouchTap={() => this.setCurrentChainElementAtHere(chainElement.id)}
       >
-				<div
-					className={
+        <div
+          className={
 						`${styles.chainItem}
 						 ${(i === this.state.currentPlayingChainElement) ? styles.currentPlayingItem : ''}`
 					}
-				>{i + 1}</div>
-      </li>
+        >
+          <span>{i + 1}{(this.state.currentChainElement !== '' && this.state.currentChainElementIndex === i) ? ' V' : ''}</span>
+        </div>
+      </div>
     ));
   }
 
@@ -921,23 +937,27 @@ class DrumMachine extends Component {
             <h3 onTouchTap={() => this.setSample('C')}>C</h3>
             <h3 onTouchTap={() => this.setSample('D')}>D</h3> */}
             <div className={`${styles.row1} ${styles.row}`}>
-              <button
-                className={styles.row1l}
-                onClick={() => console.log('Start Button clicked')}
-                onTouchTap={() => this.startSequencer()}
-              >
-                {/* <div className={styles.row1l}> */}
-                <img src={menu1} alt="Start Button" />
-                {/* </div> */}
-              </button>
-
-              <button
-                className={styles.row1r}
-                onClick={() => console.log('Stop Button clicked')}
-                onTouchTap={() => this.stopSequencer()}
-              >
-                <img src={menu2} alt="Stop Button" />
-              </button>
+              {(this.sequencer.recording === true)
+                ? <div>
+                  recording...
+                </div> : <div className={styles.row1BtnWrap}>
+                  <button
+                    className={styles.row1l}
+                    onClick={() => console.log('Start Button clicked')}
+                    onTouchTap={() => this.startSequencer()}
+                  >
+                    {/* <div className={styles.row1l}> */}
+                    <img src={menu1} alt="Start Button" />
+                    {/* </div> */}
+                  </button>
+                  <button
+                    className={styles.row1r}
+                    onClick={() => console.log('Stop Button clicked')}
+                    onTouchTap={() => this.stopSequencer()}
+                  >
+                    <img src={menu2} alt="Stop Button" />
+                  </button>
+                </div>}
             </div>
             {/* 2 */}
             <div className={`${styles.evenrow} ${styles.row}`}>
@@ -981,11 +1001,9 @@ class DrumMachine extends Component {
                   />
                 </div>
                 <div className={styles.row3rd}>
-                  <ul>
-                    {this.renderPatterns()}
-                    {/* <li>raggae</li>
-                    <li>rock pattern</li> */}
-                  </ul>
+                  {/* <ul> */}
+                  {this.renderPatterns()}
+                  {/* </ul> */}
                 </div>
               </div>
             </div>
@@ -1013,31 +1031,43 @@ class DrumMachine extends Component {
                   </button>
                 </div>
                 <div className={styles.row5ld}>
-                  {/* <button
-                    className={styles.row5ldl}
-                    onClick={() => console.log('Delete Current Chain Element Button clicked')}
-                    onTouchTap={() => this.deleteCurrentChainElement()}
-                  >
-                    <img src={menu5} alt="Delete Current Chain Element Button" />
-                  </button> */}
                   <button
-                    className={styles.row5ldbtn}
+                    className={styles.row5ldl}
                     onClick={() => console.log('Exit Chain Button Chain clicked')}
                     onTouchTap={() => this.exitChain()}
                   >
                     <img src={menu9} alt="Exit Chain Button Chain Index" />
                   </button>
+                  <button
+                    className={styles.row5ldr}
+                    onClick={() => console.log('Delete Current Chain Element Button clicked')}
+                    onTouchTap={() => this.deleteCurrentChainElement()}
+                  >
+                    <img src={menu5} alt="Delete Current Chain Element Button" />
+                  </button>
                 </div>
               </div>
               <div className={styles.row5r}>
-                <span className={styles.chainIndex}>
-                  {(this.sequencer.isPlayingChain === true)
-										? this.state.currentPlayingChainElement + 1 : 0}
-                </span>
-                <span className={styles.chainDivider}>/</span>
-                <span className={styles.chainLength}>
-									{this.state.drumNoteChain.length}
-								</span>
+                {(this.state.drumNoteChain.length === 0)
+                  ? <div>HEAD</div>
+                  : this.renderChain()}
+                <div
+                  className={styles.chainLi}
+                  style={{ color: 'yellow' }}
+                  onTouchTap={() => this.setCurrentChainElementAtLast()}
+                >
+    								+
+    							</div>
+                {/* <div>
+                    <span className={styles.chainIndex}>
+                      {(this.state.currentChainElement !== '')
+												? this.state.currentChainElementIndex + 1 : 0}
+                    </span>
+                    <span className={styles.chainDivider}>/</span>
+                    <span className={styles.chainLength}>
+                      {this.state.drumNoteChain.length}
+                    </span>
+                  </div> */}
               </div>
             </div>
             {/* 6 */}
@@ -1064,12 +1094,15 @@ class DrumMachine extends Component {
                   >
                     <img src={menu11} alt="Record Button" />
                   </button>
-                  <button className={styles.row7lur} onClick={() => console.log('Save Button clicked')}>
+                  <button
+                    className={styles.row7lur} onClick={() => console.log('Save Button clicked')}>
                     <img src={menu2} alt="Save Button" />
                   </button>
                 </div> */}
                 {/* <div className={styles.row7ld}>
-                  <button className={styles.row7ldl} onClick={() => console.log('Clear Current Record Button clicked')}>
+                <button
+                  className={styles.row7ldl}
+                  onClick={() => console.log('Clear Current Record Button clicked')}>
                     <img src={menu5} alt="Clear Current Record Button" />
                   </button>
                   <button
@@ -1081,7 +1114,11 @@ class DrumMachine extends Component {
                   </button>
                 </div> */}
               </div>
-              <div className={styles.row7r}>
+              <div
+                className={
+                `${styles.row7r}
+                 ${(this.sequencer.recording === true) ? styles.displayHide : ''}`}
+              >
                 <div className={styles.row7ru}>
                   <input
                     type="text"
@@ -1092,12 +1129,9 @@ class DrumMachine extends Component {
                   />
                 </div>
                 <div className={styles.row7rd}>
-                  <ul>
-                    {this.renderRecords()}
-                    {/* <li>raggae</li>
-                    <li>vibert</li>
-                    <li>...</li> */}
-                  </ul>
+                  {/* <ul> */}
+                  {this.renderRecords()}
+                  {/* </ul> */}
                 </div>
               </div>
             </div>
@@ -1117,14 +1151,19 @@ class DrumMachine extends Component {
 						`${styles.mask}
 						 ${(hidden === false ? styles.showMask : styles.hideMask)}`}
           onClick={() => this.toggleHidden()}
-        >
-          {/* <button className={styles.btn} onClick={() => console.log('update pattern')} onTouchTap={() => this.editPattern()}>
+        />
+        {/* <button
+                className={styles.btn}
+                onClick={() => console.log('update pattern')} onTouchTap={() => this.editPattern()}>
 						Update Pattern
 					</button>
-          <button className={styles.btn} onClick={() => console.log('delete current pattern')} onTouchTap={() => this.deleteCurrentPattern()}>
+          <button
+            className={styles.btn}
+            onClick={() => console.log('delete current pattern')}
+            onTouchTap={() => this.deleteCurrentPattern()}>
 						Delete Current Pattern
 					</button> */}
-          <div className={styles.chainList}>
+        {/* <div className={styles.chainList}>
 						<hr />
 						<ul>
 							{this.renderChain()}
@@ -1137,7 +1176,7 @@ class DrumMachine extends Component {
 						</ul>
 						<hr />
           </div>
-        </button>
+        </button> */}
         <Matrix
           data={this.state.data}
           playing={this.state.playing}
