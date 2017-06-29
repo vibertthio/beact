@@ -195,7 +195,7 @@ export class Sequencer {
     this.loadingSamples = true;
     this.samples = new MultiPlayer({
       urls: drumUrls[this.currentSampleIndex],
-      volume: -10,
+      volume: -2,
       fadeOut: 0.4,
       onload: () => {
         console.log('finish!');
@@ -271,9 +271,10 @@ export class Keyboard {
     this.record = [];
     this.notes = keysNotes;
     this.storeRecord = record => storeRecord(record);
+    console.log('haha');
     this.samples = new MultiPlayer({
       urls: keysUrls[0],
-      volume: -15,
+      volume: -5,
       fadeOut: 0.1,
     }).toMaster();
     this.recording = false;
