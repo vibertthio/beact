@@ -176,6 +176,8 @@ heroku open
 
 ## 按鈕功能
 
+![screenshot](https://github.com/vibertthio/beact/blob/master/assets/images/sc-04.png)
+
 **（以下 data 均指當前 DrumMachine 8x16 格的內容）**
 
 ### Start/Stop
