@@ -16,6 +16,7 @@ import {
   pallete,
   animationNameList,
   animationKey2IndexMapping,
+  animationDrum2IndexMapping,
 } from './animation.config';
 
 /**
@@ -649,7 +650,6 @@ function Animation() {
     return EXPORT;
   }());
 
-
   /**
   * Animation #12, Splash
   * @param  {number} [opacity = 1]
@@ -677,7 +677,7 @@ function Animation() {
       circles = range(amount).map(() => {
         const r = Math.round(map(Math.random(), 0, 1, rMin, rMax));
         const circle = two.makeCircle(0, 0, r);
-        circle.fill = colors[5];
+        circle.fill = colors[4];
         circle.noStroke();
         destinations.push(new Two.Vector());
 
@@ -761,6 +761,76 @@ function Animation() {
     };
     sequencerAnimations.push(EXPORT);
     return EXPORT;
+  }());
+
+  /**
+   * Animation #9, 10, 11, Flash
+   * it will have two direction(u/d), which will be decided randomly
+   * @param  {number} [opacity = 1]
+   * @param  {number} [duration = 400]
+   * @return {Object}
+   */
+  (function makeFlashes(opacity = 1, duration = 400) {
+    range(3).map((i) => {
+      let playing = false;
+      const param = { t: 0 };
+
+      /**
+      * [setup description]
+      * @return {[type]} [description]
+      */
+      function setup() {
+        const shape = two.makeRectangle(
+          two.width * 0.5,
+          two.height * 0.5,
+          two.width,
+          two.height,
+        );
+        shape.visible = 0;
+        shape.noStroke();
+        const colorIndex = [4, 5, 2];
+        shape.fill = colors[colorIndex[i]];
+
+        const ani = new TWEEN.Tween(param)
+          .to({ t: 1 }, duration)
+          .easing(TWEEN.Easing.Linear.None)
+          .onUpdate(() => {
+            shape.visible = Math.random() > 0.5;
+          })
+          .onComplete(() => {
+            shape.visible = false;
+          });
+
+        return { shape, ani };
+      }
+
+      let { shape, ani } = setup();
+
+      // methods
+      const resize = () => {
+        two.remove(shape);
+        ({ shape, ani } = setup());
+      };
+
+      const reset = () => {
+        ani.stop();
+      };
+
+      const start = () => {
+        reset();
+        playing = true;
+        ani.start();
+      };
+
+      const EXPORT = {
+        playing,
+        start,
+        reset,
+        resize,
+      };
+      sequencerAnimations.push(EXPORT);
+      return EXPORT;
+    });
   }());
 
   /**
@@ -2668,6 +2738,7 @@ function Animation() {
       sinewave.visible = false;
       sinewave.beginning = 0;
       sinewave.ending = 0;
+      sinewave.rotation = (Math.random() > 0.5 ? 0 : Math.PI);
       setPoints();
       aniIn.stop();
       aniOut.stop();
@@ -2857,7 +2928,7 @@ function Animation() {
     let playing = false;
     const amount = 24;
     const last = amount - 1;
-    let radius = min(two.width, two.height) * 0.33;
+    let radius = min(two.width, two.height) * 0.4;
     let bubbleRadius = min(two.width, two.height) / 30;
     let direction = false;
 
@@ -2962,7 +3033,7 @@ function Animation() {
     const resize = () => {
       group.remove(circles);
       two.remove(group);
-      radius = min(two.width, two.height) * 0.33;
+      radius = min(two.width, two.height) * 0.4;
       bubbleRadius = min(two.width, two.height) / 90;
       direction = TWO_PI * Math.random() > 0.5;
       ({ group, circles, aniIn, aniOut } = setup());
@@ -3001,150 +3072,100 @@ function Animation() {
     return EXPORT;
   }());
 
-  // TOOD
-
   /**
-   * Animation #25, Corona
+   * Animation #0, Mountain
+   * it will have two direction(u/d), which will be decided randomly
    * @param  {number} [opacity = 1]
    * @param  {number} [duration = 400]
    * @return {Object}
    */
-  (function makeCorona(opacity = 1, duration = 250) {
+  (function makeMoutainSnare(opacity = 1, duration = 300) {
     let playing = false;
-    const amount = 24;
-    const last = amount - 1;
-    let radius = min(two.width, two.height) * 0.33;
-    let bubbleRadius = min(two.width, two.height) / 30;
-    let direction = false;
+    const origin = { x: 0, y: 0 };
+    const dest = { y: 0 };
 
     /**
      * [setup description]
      * @return {[type]} [description]
      */
     function setup() {
-      const circles = range(amount).map((i) => {
-        const pct = i / last;
+      const low = two.height * 0.6;
+      const high = two.height * 0.4;
+      const shift = two.width * (0.4 + ((Math.random()) * 0.3));
 
-        const circle = two.makePolygon(radius, 0, bubbleRadius, 3);
-        circle.rotation = TWO_PI * 0.25;
-        circle.theta = 0;
-        circle.destination = pct * TWO_PI;
-        return circle;
-      });
-      const group = two.makeGroup(circles);
-      group.noStroke();
-      group.fill = colors[5];
-      group.translation.set(two.width * 0.5, two.height * 0.5);
-      group.visible = false;
-      const aniOuts = _.map(circles, (c, i) => {
-        const next =
-          (!circles[i + 1]) ?
-          TWO_PI : (circles[i + 1].destination);
-
-        return new TWEEN.Tween(c)
-          .to({ theta: next }, duration / (amount - (i)))
-          .onUpdate(() => {
-            const theta = direction ? c.theta : -c.theta;
-            const x = radius * Math.cos(theta);
-            const y = radius * Math.sin(theta);
-            c.translation.set(x, y);
-            circles[i].rotation = theta + (TWO_PI * 0.25);
-          })
-          .onComplete(() => {
-            circles[i].visible = false;
-            if (i < last) {
-              aniOuts[i + 1].start();
-              if (i === last - 1) {
-                group.visible = false;
-              }
-            }
-          });
-      });
-
-      const aniIns = _.map(circles, (c, i) =>
-        new TWEEN.Tween(c)
-          .to({ theta: c.destination }, duration / (i + 1))
-          .onStart(() => {
-            circles[i].visible = true;
-          })
-          .onUpdate(() => {
-            const theta = direction ? c.theta : -c.theta;
-            const x = radius * Math.cos(theta);
-            const y = radius * Math.sin(theta);
-            c.translation.set(x, y);
-            circles[i].rotation = theta + (TWO_PI * 0.25);
-          })
-          .onComplete(() => {
-            if (i >= last) {
-              aniOuts[0].start();
-              return;
-            }
-
-            const next = circles[i + 1];
-            const tween = aniIns[i + 1];
-            next.theta = c.theta;
-            next.translation.copy(c.translation);
-            tween.start();
-          }),
-      );
+      const points = [
+        new Two.Anchor(0, two.height * 1.2),
+        new Two.Anchor(0, low),
+        new Two.Anchor(shift, high),
+        new Two.Anchor(two.width, low),
+        new Two.Anchor(two.width, two.height * 1.2),
+      ];
 
 
-      const aniOut = {
-        stop: () => {
-          aniOuts.forEach(a => a.stop());
-        },
-      };
+      const shape = two.makePath(points, false);
+      shape.opacity = 0;
+      shape.noStroke();
+      shape.fill = colors[2];
+      origin.x = shape.translation.x;
+      origin.y = shape.translation.y;
+      dest.y = shape.translation.y + (two.height * 0.1);
 
-      const aniIn = {
-        start: () => {
-          aniIns[0].start();
-        },
-        stop: () => {
-          aniIns.forEach(a => a.stop());
-        },
-      };
+      const aniOpacity = new TWEEN.Tween(shape)
+        .to({ opacity: 0 }, duration * 2)
+        .easing(TWEEN.Easing.Exponential.Out)
+        .onUpdate(() => {
+          if (shape.opacity < 0.05) {
+            aniOpacity.stop();
+            shape.opacity = 0;
+          }
+        });
+
+      const ani = new TWEEN.Tween(shape.translation)
+        .to(dest, duration)
+        .easing(TWEEN.Easing.Back.In)
+        .onStart(() => {
+          aniOpacity.start();
+        });
 
       return {
-        group,
-        circles,
-        aniIn,
-        aniOut,
+        shape,
+        ani,
+        aniOpacity,
       };
     }
 
-    let { group, circles, aniIn, aniOut } = setup();
+    let { shape, ani, aniOpacity } = setup();
+
+    /**
+     * [setDirection description]
+     */
+    function setDirection() {
+      shape.translation.set(origin.x, origin.y);
+      shape.vertices[1].y = two.height * (0.2 - (0.1 * Math.random()));
+      shape.vertices[2].y = two.height * (-0.4 - (0.2 * Math.random()));
+      shape.vertices[2].x = two.width * (0.4 - ((Math.random()) * 0.4));
+      shape.vertices[3].y = two.height * (-0.1 + (-0.1 * Math.random()));
+    }
 
     // methods
     const resize = () => {
-      group.remove(circles);
-      two.remove(group);
-      radius = min(two.width, two.height) * 0.33;
-      bubbleRadius = min(two.width, two.height) / 90;
-      direction = TWO_PI * Math.random() > 0.5;
-      ({ group, circles, aniIn, aniOut } = setup());
+      two.remove(shape);
+      ({ shape, ani, aniOpacity } = setup());
     };
 
     const reset = () => {
       playing = false;
-      group.visible = false;
-      group.rotation = TWO_PI * Math.random();
-      for (let i = 0; i < amount; i += 1) {
-        const pct = i / last;
-        const circle = circles[i];
-        circle.translation.set(radius, 0);
-        circle.rotation = TWO_PI * 0.25;
-        circle.theta = 0;
-        circle.destination = pct * TWO_PI;
-      }
-      aniIn.stop();
-      aniOut.stop();
+      setDirection();
+      ani.stop();
+      aniOpacity.stop();
+      shape.opacity = 0;
     };
 
     const start = () => {
       reset();
       playing = true;
-      group.visible = true;
-      aniIn.start();
+      shape.opacity = opacity;
+      ani.start();
     };
 
     const EXPORT = {
@@ -3157,12 +3178,12 @@ function Animation() {
     return EXPORT;
   }());
 
-  const trigger = (index) => {
+  const triggerKeyAnimation = (index) => {
     const i = index % keyAnimations.length;
     keyAnimations[i].start();
   };
 
-  const triggerSequencer = (index) => {
+  const triggerSequencerAnimation = (index) => {
     const i = index % sequencerAnimations.length;
     sequencerAnimations[i].start();
   };
@@ -3185,14 +3206,15 @@ function Animation() {
    */
   return {
     resize,
-    trigger,
-    triggerSequencer,
+    triggerKeyAnimation,
+    triggerSequencerAnimation,
   };
 }
 
 export {
   animationNameList,
 	animationKey2IndexMapping,
+  animationDrum2IndexMapping,
 };
 
 export default Animation;
