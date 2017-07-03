@@ -18,7 +18,7 @@ use react to create audio/visual in a creative way.
 
 
 
-## Dev mode
+## Development mode
 
 ### To start and run
 
@@ -195,7 +195,7 @@ heroku open
 
 ### Pattern
 * ***PatternList*** ：列出當前所有的 Pattern。可透過點選來選擇當下要 Update 的 Pattern。
-	
+
 	* 重複點選 Pattern 時，每次點選都會使該 Pattern 重新播放。
 	* Pattern 旁邊的叉叉可以刪除該 Pattern。
 
@@ -250,3 +250,8 @@ heroku open
 	* 在 Title 欄位有字的情況下，再按一次 Record 會停止錄音並將錄製的內容儲存至資料庫。錄製的內容為有在播放時撥出的內容（包含 Drum 和鍵盤的紀錄）。
 	* 若在錄音模式時清除 Title，則此鍵會暫時無效，並於 console 顯示警告。輸入 Title 後即會恢復點選即停止錄音的效果。
 
+
+## Credit and Inspiration
+  * crazi ass library [tone.js](https://tonejs.github.io/) and [two.js](https://two.js.org/)
+  * original idea from amazing [papatap](http://patatap.com/)
+  * music samples from amazing [stepkit](http://jxnblk.com/stepkit/)
