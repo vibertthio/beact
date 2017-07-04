@@ -16,7 +16,7 @@ It's based on the idea of papatap, and using two.js, tone.js as audio and visual
 - [Development](#development)
 
 
-## Quick Start
+## 1. Quick Start
 1.   press space to start/stop
 2.   click any block to trigger drum machine note
 3.   press any alphabet to trigger keyboard note
@@ -25,7 +25,7 @@ It's based on the idea of papatap, and using two.js, tone.js as audio and visual
 6.   press 1 ~ 8 for different presets
 
 
-## Run on Local
+## 2. Run on Local
 > It's okay to run Beact without server. It will git some error in console irrelevant, though.
 
 First, clone the repo and install dependencies.
@@ -37,7 +37,7 @@ npm install
 npm run start
 ```
 
-## Development
+## 3. Development
 > Run Beact with server, giving you **the Force**.
 
 ### To install mongodb
