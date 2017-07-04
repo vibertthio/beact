@@ -8,7 +8,7 @@ A audio/visual interactive art piece, and a instrument that everyone play with t
 ### [demo](https://safe-stream-69256.herokuapp.com/)
 ### [blog](https://medium.com/@vibertthio/beact-audio-visual-art-in-react-44e9c757e40f)
 
-- [Quick Start](#quick-start)
+- [Quick Start](#quick-start-)
 - [Development](#dev)
 - [Environments](#environments)
 - [Dependencies](#dependencies)
@@ -23,7 +23,7 @@ A audio/visual interactive art piece, and a instrument that everyone play with t
 
 ![screenshot](./assets/images/sc-01.png) -->
 
-## Quick start <a name="quick-start"></a>
+## Quick start
 1.   press space to start/stop
 2.   click any block to trigger drum machine note
 3.   press any alphabet to trigger keyboard note
@@ -33,7 +33,7 @@ A audio/visual interactive art piece, and a instrument that everyone play with t
 
 
 
-## Development mode <a name="dev"></a>
+## Development mode
 
 ### To start and run
 
