@@ -4,7 +4,7 @@
 > 🎸🎨 DJ / VJ all by yourself in seconds !
 - [demo](https://safe-stream-69256.herokuapp.com/) - It's deployed on Heroku, play it now!
 - [blog](https://medium.com/@vibertthio/beact-audio-visual-art-in-react-44e9c757e40f) - vibert's words after creating Beact! (only mandarin now, english coming)
-
+- [blog](http://scyablog.blogspot.tw/2017/07/beact.html) - scya597's words after creating Beact! (only mandarin now, english coming)
 
 An audio/visual interactive art piece, and an instrument that everyone play with to become a DJ + VJ.
 It's based on the idea of papatap, and using two.js, tone.js as audio and visual library.
