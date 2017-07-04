@@ -16,6 +16,10 @@ I have added some my own animation and will do more to replace ones from papatap
 - [Quick Start](#1-quick-start)
 - [Run on Local](#2-run-on-local)
 - [Development](#3-development)
+- [Deploy](#4-deploy)
+- [Basic Usage](#5-basic-usage)
+- [Advanced Usage](#6-advanced-usage)
+- [Credits and Inpirations](#7-credits-and-inspirations)
 
 
 ## 1. Quick Start
@@ -43,14 +47,14 @@ npm run start
 ## 3. Development
 > Run Beact with server, giving you **the Force**.
 
-### To install mongodb
+### 3.1 To install mongodb
 
 ```
 brew install mongo
 ```
 
 
-### Initial config of mongodb
+### 3.2 Initial config of mongodb
 
 Create database directory
 
@@ -72,7 +76,7 @@ sudo chown -Rv John /data/db
 ```
 
 
-### To run the database
+### 3.3 To run the database
 
 ```
 mongod
@@ -85,37 +89,26 @@ brew services start mongo
 ```
 
 
-### To build the production package
+### 3.4 To build the production package and run the server
 
 ```
 npm run build
-```
-
-
-### To run the server
-
-```
 npm run server
 ```
 
-## Deploy
+## 4. Deploy
 > We are using great Heroku for current deploy.
 
-Clone the repo
+### 4.1 Clone the repo, install dependencies, and build.
 
 ```
 git clone https://github.com/vibertthio/beact Beact
-```
-
-Install dependencies and build the production package
-
-```
 cd Beact
 npm install
 npm run build
 ```
 
-Replace package.json by following:
+### 4.2 Replace package.json by following:
 
 ```
 {
@@ -163,14 +156,14 @@ Replace package.json by following:
 
 ```
 
-delete /public in "Ignore build files" of .gitignore
+### 4.3 Delete /public in "Ignore build files" of .gitignore
 
 ```
 # Ignore build files
 public << (delete)
 ```
 
-Deploy
+### 4.4 Deploy
 
 ```
 heroku create
@@ -179,8 +172,24 @@ git push heroku master
 heroku open
 ```
 
+## 5. Basic Usage
 
-## 按鈕功能
+### 5.1 Keyboard & Sequencer Pads
+1. click on the drum pad to make your own pattern.
+2. press space to start/stop.
+3. press up/down for bpm changing.
+4. left/right to change sound samples.
+5. press 1~8 to trigger preset patterns.
+6. press a~z to trigger animation and audio just like papatap.
+
+### 5.2 Sidebars
+1. Start / Stop
+2. Pattern : create a pattern, type in the name, and press add to upload yours to server and store.
+3. Chain：chain few patterns into a song.
+4. Recorder：record the drum machine pattern and keyboard together into a recording, and upload to server for you to share and replay.
+
+
+## 6. Advanced Usage
 
 ![screenshot](https://github.com/vibertthio/beact/blob/master/assets/images/sc-04.png)
 
@@ -257,7 +266,7 @@ heroku open
 	* 若在錄音模式時清除 Title，則此鍵會暫時無效，並於 console 顯示警告。輸入 Title 後即會恢復點選即停止錄音的效果。
 
 
-## Credit and Inspiration
+## 7. Credits and Inspirations
   * crazi ass library [tone.js](https://tonejs.github.io/) and [two.js](https://two.js.org/)
   * original idea from amazing [papatap](http://patatap.com/)
   * music samples from amazing [stepkit](http://jxnblk.com/stepkit/)
