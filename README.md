@@ -195,7 +195,7 @@ heroku open
 
 **（以下 data 均指當前 DrumMachine 8x16 格的內容）**
 
-### Start/Stop
+### 6.1 Start/Stop
 * **Start** ：依當下模式，循環播放當下的 data / Pattern / ChainElement / Chain。
 	* 若在按下 Start 前最後有選取過特定 Pattern，則會播放該 Pattern。
 	* 若最後選取的是特定的 Chain Element，則會播放該 Chain Element。
@@ -208,7 +208,7 @@ heroku open
 	* 若於 Stop 後重新按 Start，則會再從頭播當下的 data。
 	* 錄音的過程中此鍵會被隱藏掉。
 
-### Pattern
+### 6.2 Pattern
 * ***PatternList*** ：列出當前所有的 Pattern。可透過點選來選擇當下要 Update 的 Pattern。
 
 	* 重複點選 Pattern 時，每次點選都會使該 Pattern 重新播放。
@@ -230,7 +230,7 @@ heroku open
 	* 若當下有點選特定 Pattern，可跳出 Pattern 模式，也就是進入尚未點選任何 Pattern 的狀態。此舉亦會停止播放並將版面清空。
 	* 若當下沒有選定 Pattern，則此鍵無效。
 
-### Chain
+### 6.3 Chain
 * ***ChainList*** ：按撥出順序列出當前 Chain 裡頭的所有的 Chain Element。
 	* 可透過點選來顯示並選擇當下要 Update 或 Delete 的 Chain Element。此時被點選的 Chain Element 旁會打勾。
 	* 若點選最後一行的 + 按鈕，則可透過 Update Chain 將新的 Chain Element 新增至 ChainList 的末端。此時當下沒有任何一個 Chain Element 旁會打勾。
@@ -252,7 +252,7 @@ heroku open
 	* 若 ChainList 沒在播放，則此鍵無效。
 
 
-### Recorder
+### 6.4 Recorder
 * ***RecordList*** ：列出當前所有的 Record。可透過點選來播放。
 	* 播放時，左邊的 sidebar 會被隱藏，在左上角以一個叉叉取代。按下該叉叉將停止播放錄音並清空版面。
 
