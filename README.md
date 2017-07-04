@@ -1,17 +1,29 @@
 ![logo of beact](./assets/images/hive.png)
-# Beact [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+# [Beact](https://safe-stream-69256.herokuapp.com/) &middot; [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
-use react to create audio/visual in a creative way.
+> 🎸🎨 DJ / VJ all by yourself in seconds !
 
+A audio/visual interactive art piece, and a instrument that everyone play with to become a DJ + VJ. It's based
 
 ### [demo](https://safe-stream-69256.herokuapp.com/)
 ### [blog](https://medium.com/@vibertthio/beact-audio-visual-art-in-react-44e9c757e40f)
 
-![screenshot](https://github.com/vibertthio/beact/blob/master/assets/images/sc-03.png)
+- [Quick Start](#quick-start)
+- [Development](#dev)
+- [Environments](#environments)
+- [Dependencies](#dependencies)
+- [Testing](#testing)
+- [Structure and Naming](#structure-and-naming)
+- [Code style](#code-style)
+- [Logging](#logging)
+- [Api Design](#api-design)
+- [Licensing](#licensing)
 
-![screenshot](https://github.com/vibertthio/beact/blob/master/assets/images/sc-01.png)
+<!-- ![screenshot](./assets/images/sc-03.png)
 
-## Quick start
+![screenshot](./assets/images/sc-01.png) -->
+
+## Quick start <a name="quick-start"></a>
 1.   press space to start/stop
 2.   click any block to trigger drum machine note
 3.   press any alphabet to trigger keyboard note
@@ -21,7 +33,7 @@ use react to create audio/visual in a creative way.
 
 
 
-## Development mode
+## Development mode <a name="dev"></a>
 
 ### To start and run
 
