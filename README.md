@@ -2,14 +2,15 @@
 # [Beact](https://safe-stream-69256.herokuapp.com/) &middot; [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
 > 🎸🎨 DJ / VJ all by yourself in seconds !
-
-
 - [demo](https://safe-stream-69256.herokuapp.com/) - It's deployed on Heroku, play it now!
 - [blog](https://medium.com/@vibertthio/beact-audio-visual-art-in-react-44e9c757e40f) - vibert's words after creating Beact! (only mandarin now, english coming)
 
-A audio/visual interactive art piece, and a instrument that everyone play with to become a DJ + VJ.
 
+An audio/visual interactive art piece, and an instrument that everyone play with to become a DJ + VJ.
 It's based on the idea of papatap, and using two.js, tone.js as audio and visual library.
+It combines sequencer with on concept of papatap.
+I have added some my own animation and will do more to replace ones from papatap.
+
 
 ## 0. Table of Contents  
 - [Quick Start](#1-quick-start)
@@ -18,12 +19,13 @@ It's based on the idea of papatap, and using two.js, tone.js as audio and visual
 
 
 ## 1. Quick Start
-1.   press space to start/stop
-2.   click any block to trigger drum machine note
-3.   press any alphabet to trigger keyboard note
-4.   up/down to change bpm
-5.   left/right to change sound bank of drum machine
-6.   press 1 ~ 8 for different presets
+1.   open the [demo](https://safe-stream-69256.herokuapp.com/) link.
+2.   press space to start/stop.
+3.   click any block to trigger drum machine note.
+4.   press any alphabet to trigger keyboard note.
+5.   up/down to change bpm.
+6.   left/right to change sound bank of drum machine.
+7.   press 1 ~ 8 for different presets.
 
 
 ## 2. Run on Local
