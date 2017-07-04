@@ -1,8 +1,11 @@
-# Beact
+![logo of beact](./assets/images/hive.png)
+# Beact [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
 use react to create audio/visual in a creative way.
 
-# [demo](https://safe-stream-69256.herokuapp.com/)
+
+### [demo](https://safe-stream-69256.herokuapp.com/)
+### [blog](https://medium.com/@vibertthio/beact-audio-visual-art-in-react-44e9c757e40f)
 
 ![screenshot](https://github.com/vibertthio/beact/blob/master/assets/images/sc-03.png)
 
