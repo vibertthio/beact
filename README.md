@@ -3,27 +3,20 @@
 
 > 🎸🎨 DJ / VJ all by yourself in seconds !
 
-A audio/visual interactive art piece, and a instrument that everyone play with to become a DJ + VJ. It's based
 
-### [demo](https://safe-stream-69256.herokuapp.com/)
-### [blog](https://medium.com/@vibertthio/beact-audio-visual-art-in-react-44e9c757e40f)
+- [demo](https://safe-stream-69256.herokuapp.com/) - It's deployed on Heroku, play it now!
+- [blog](https://medium.com/@vibertthio/beact-audio-visual-art-in-react-44e9c757e40f) - vibert's words after creating Beact! (only mandarin now, english coming)
 
-- [Quick Start](#quick-start-)
-- [Development](#dev)
-- [Environments](#environments)
-- [Dependencies](#dependencies)
-- [Testing](#testing)
-- [Structure and Naming](#structure-and-naming)
-- [Code style](#code-style)
-- [Logging](#logging)
-- [Api Design](#api-design)
-- [Licensing](#licensing)
+A audio/visual interactive art piece, and a instrument that everyone play with to become a DJ + VJ.
 
-<!-- ![screenshot](./assets/images/sc-03.png)
+It's based on the idea of papatap, and using two.js, tone.js as audio and visual library.
 
-![screenshot](./assets/images/sc-01.png) -->
+- [Quick Start](#quick-start)
+- [Run on Local](#run-on-local)
+- [Development](#development)
 
-## Quick start
+
+## Quick Start
 1.   press space to start/stop
 2.   click any block to trigger drum machine note
 3.   press any alphabet to trigger keyboard note
@@ -32,25 +25,20 @@ A audio/visual interactive art piece, and a instrument that everyone play with t
 6.   press 1 ~ 8 for different presets
 
 
+## Run on Local
+> It's okay to run Beact without server. It will git some error in console irrelevant, though.
 
-## Development mode
-
-### To start and run
-
-First, clone the repo.
+First, clone the repo and install dependencies.
+Then **Rock'n Roll**, baanngg.
 
 ```
 git clone https://github.com/vibertthio/beact
-```
-
-Then install the dependencies:
-
-```
 npm install
+npm run start
 ```
 
-
-## Server mode
+## Development
+> Run Beact with server, giving you **the Force**.
 
 ### To install mongodb
 
@@ -107,13 +95,13 @@ npm run build
 npm run server
 ```
 
-## Deploy to Heroku
-
+## Deploy
+> We are using great Heroku for current deploy.
 
 Clone the repo
 
 ```
-git clone https://github.com/vibertthio/beact
+git clone https://github.com/vibertthio/beact Beact
 ```
 
 Install dependencies and build the production package
