@@ -11,9 +11,10 @@ A audio/visual interactive art piece, and a instrument that everyone play with t
 
 It's based on the idea of papatap, and using two.js, tone.js as audio and visual library.
 
-- [Quick Start](#quick-start)
-- [Run on Local](#run-on-local)
-- [Development](#development)
+## 0. Table of Contents  
+- [Quick Start](#1-quick-start)
+- [Run on Local](#2-run-on-local)
+- [Development](#3-development)
 
 
 ## 1. Quick Start
