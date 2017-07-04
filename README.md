@@ -2,7 +2,7 @@
 
 use react to create audio/visual in a creative way.
 
-**[demo](https://safe-stream-69256.herokuapp.com/)**
+# [demo](https://safe-stream-69256.herokuapp.com/)
 
 ![screenshot](https://github.com/vibertthio/beact/blob/master/assets/images/sc-03.png)
 
