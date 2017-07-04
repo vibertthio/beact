@@ -1,4 +1,4 @@
-![logo of beact](./assets/images/hive.png)
+![logo of beact](./assets/images/bar.png)
 # [Beact](https://safe-stream-69256.herokuapp.com/) &middot; [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
 > 🎸🎨 DJ / VJ all by yourself in seconds !
