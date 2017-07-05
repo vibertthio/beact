@@ -7,9 +7,9 @@
 - [blog](http://scyablog.blogspot.tw/2017/07/beact.html) - scya597's words after creating Beact! (only mandarin now, english coming)
 
 An audio/visual interactive art piece, and an instrument that everyone play with to become a DJ + VJ.
-It's based on the idea of papatap, and using two.js, tone.js as audio and visual library.
-It combines sequencer with on concept of papatap.
-I have added some my own animation and will do more to replace ones from papatap.
+It's based on the idea of patatap, and using two.js, tone.js as audio and visual library.
+It combines sequencer with on concept of patatap.
+I have added some my own animation and will do more to replace ones from patatap.
 
 
 ## 0. Table of Contents  
@@ -180,7 +180,7 @@ heroku open
 3. press up/down for bpm changing.
 4. left/right to change sound samples.
 5. press 1~8 to trigger preset patterns.
-6. press a~z to trigger animation and audio just like papatap.
+6. press a~z to trigger animation and audio just like patatap.
 
 ### 5.2 Sidebars
 1. Start / Stop
@@ -268,5 +268,5 @@ heroku open
 
 ## 7. Credits and Inspirations
   * crazi ass library [tone.js](https://tonejs.github.io/) and [two.js](https://two.js.org/)
-  * original idea from amazing [papatap](http://patatap.com/)
+  * original idea from amazing [patatap](http://patatap.com/)
   * music samples from amazing [stepkit](http://jxnblk.com/stepkit/)
