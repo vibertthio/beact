@@ -270,6 +270,7 @@ export class Keyboard {
     this.currentKey = null;
     this.record = [];
     this.notes = keysNotes;
+    console.log(keysNotes);
     this.storeRecord = record => storeRecord(record);
     console.log('haha');
     this.samples = new MultiPlayer({
