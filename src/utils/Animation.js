@@ -17,7 +17,7 @@ import {
   animationNameList,
   animationKey2IndexMapping,
   animationDrum2IndexMapping,
-} from './animation.config';
+} from './config/animation.config';
 
 /**
  * [animation description]
