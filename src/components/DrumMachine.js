@@ -36,6 +36,7 @@ _.range(26).forEach((i) => {
 	keys = keys.concat(String.fromCharCode(97 + i));
 	if (i < 25) { keys = keys.concat(', '); }
 });
+
 /**
  * DrumMachine
  */
@@ -133,7 +134,6 @@ class DrumMachine extends Component {
    */
   componentDidMount() {
     this.detectKeyboard();
-    // this.ani = new Animation();
     this.ani = Animation();
     axios.get('/api/patterns')
       .then((res) => {
@@ -160,7 +160,7 @@ class DrumMachine extends Component {
 	   * hide loading spinner and wait 3.5s after DOM is loaded.
 	   */
 	  const outShowDOM = this.hideSpinner;
-    const outShowLogo = this.showLogo;
+    // const outShowLogo = this.showLogo;
 		/**
 	   * [startTimer description]
 	   */
@@ -764,7 +764,7 @@ class DrumMachine extends Component {
   playDrumAni(column) {
     for (let i = 0; i < column.length; i += 1) {
       this.ani.triggerSequencerAnimation(
-				animationDrum2IndexMapping[1][column[i]],
+				animationDrum2IndexMapping[0][column[i]],
 			);
     }
   }
@@ -776,8 +776,7 @@ class DrumMachine extends Component {
     key(keys, (e, h) => {
 			const index = animationKey2IndexMapping[h.shortcut];
       this.ani.triggerKeyAnimation(index);
-			const char = (h.shortcut.charCodeAt(0) - 96).toString();
-			// console.log(char);
+			const char = (h.shortcut.charCodeAt(0) - 97).toString();
 			this.keyboard.currentKey = char;
 			this.keyboard.playKey();
     });

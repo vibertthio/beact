@@ -1,8 +1,8 @@
 import { MultiPlayer, Sequence, Transport } from 'tone';
 import axios from 'axios';
 import uuid4 from 'uuid/v4';
-import { keysUrls, keysNotes } from './keys.config';
-import { drumUrls, drumNotes, presets } from './drum.config';
+import { keysUrls, keysNotes } from './config/keys.config';
+import { drumUrls, drumNotes, presets } from './config/drum.config';
 
 let temperId = uuid4();
 /**
@@ -270,6 +270,7 @@ export class Keyboard {
     this.currentKey = null;
     this.record = [];
     this.notes = keysNotes;
+    console.log(keysNotes);
     this.storeRecord = record => storeRecord(record);
     console.log('haha');
     this.samples = new MultiPlayer({
