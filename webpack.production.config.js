@@ -4,6 +4,7 @@ var loaders = require('./webpack.loaders');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var WebpackCleanupPlugin = require('webpack-cleanup-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 loaders.push({
   test: /\.scss$/,
@@ -16,9 +17,9 @@ module.exports = {
     './src/index.js',
   ],
   output: {
-    publicPath: './',
+    publicPath: '/',
     path: path.join(__dirname, 'public'),
-    filename: '[chunkhash].js'
+    filename: '[chunkhash].bundle.js',
   },
   resolve: {
     extensions: ['.js', '.jsx']
@@ -47,11 +48,12 @@ module.exports = {
       allChunks: true
     }),
     new HtmlWebpackPlugin({
-      template: './src/index.html',
+      template: './src/template.html',
       files: {
         css: ['style.css'],
         js: ['bundle.js'],
-      }
+      },
+      filename: 'index.html',
     }),
     new CopyWebpackPlugin([
       { from: 'src/assets/audio', to: 'assets/audio' },

@@ -26,12 +26,12 @@ module.exports = [
   {
     test: /\.(woff|woff2)$/,
     exclude: /(node_modules|bower_components)/,
-    loader: "url-loader?prefix=font/&limit=5000"
+    loader: "url-loader?prefix=font/&limit=5000&name=assets/fonts/[hash].[ext]"
   },
   {
     test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
     exclude: /(node_modules|bower_components)/,
-    loader: "url-loader?limit=10000&mimetype=application/octet-stream"
+    loader: "url-loader?limit=10000&mimetype=application/octet-stream&name=assets/fonts/[hash].[ext]"
   },
   {
     test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
@@ -41,17 +41,17 @@ module.exports = [
   {
     test: /\.gif/,
     exclude: /(node_modules|bower_components)/,
-    loader: "url-loader?limit=10000&mimetype=image/gif"
+    loader: "url-loader?limit=10000&mimetype=image/gif&name=assets/images/[hash].[ext]"
   },
   {
     test: /\.jpg/,
     exclude: /(node_modules|bower_components)/,
-    loader: "url-loader?limit=10000&mimetype=image/jpg"
+    loader: "url-loader?limit=10000&mimetype=image/jpg&name=assets/images/[hash].[ext]"
   },
   {
     test: /\.png/,
     exclude: /(node_modules|bower_components)/,
-    loader: "url-loader?limit=10000&mimetype=image/png"
+    loader: "url-loader?limit=10000&mimetype=image/png&name=assets/images/[hash].[ext]"
   },
   {
     test: /\.ico$/,
