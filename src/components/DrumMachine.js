@@ -1199,7 +1199,7 @@ class DrumMachine extends Component {
             </div>
             {/* 8 */}
             <div className={`${styles.evenrow} ${styles.row}`}>
-              <span>Beact.</span>
+              <span>Beact</span>
             </div>
             {/* 9 */}
             <div className={`${styles.row9} ${styles.row}`}>
