@@ -27,7 +27,7 @@ import menu8 from '../assets/svg/menu/menu8.svg';
 import menu9 from '../assets/svg/menu/menu9.svg';
 import menu10 from '../assets/svg/menu/menu10.svg';
 import menu11 from '../assets/svg/menu/menu11.svg';
-import menuLogo from '../assets/svg/menu/logo-2-2x.png';
+import menuLogo from '../assets/svg/menu/logo.png';
 
 let fadeoutID;
 let logoID;
