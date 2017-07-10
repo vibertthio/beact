@@ -133,7 +133,6 @@ class DrumMachine extends Component {
    */
   componentDidMount() {
     this.detectKeyboard();
-    // this.ani = new Animation();
     this.ani = Animation();
     axios.get('/api/patterns')
       .then((res) => {
@@ -160,7 +159,7 @@ class DrumMachine extends Component {
 	   * hide loading spinner and wait 3.5s after DOM is loaded.
 	   */
 	  const outShowDOM = this.hideSpinner;
-    const outShowLogo = this.showLogo;
+    // const outShowLogo = this.showLogo;
 		/**
 	   * [startTimer description]
 	   */
