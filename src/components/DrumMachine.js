@@ -764,7 +764,7 @@ class DrumMachine extends Component {
   playDrumAni(column) {
     for (let i = 0; i < column.length; i += 1) {
       this.ani.triggerSequencerAnimation(
-				animationDrum2IndexMapping[1][column[i]],
+				animationDrum2IndexMapping[0][column[i]],
 			);
     }
   }
