@@ -11,7 +11,7 @@
     "lint": "eslint --ext js --ext jsx src || exit 0",
     "dev": " webpack-dashboard -- webpack-dev-server --progress --profile --colors",
     "load": "cp -R src/assets/audio pulic/assets/",
-    "deploy": "gh-pages -d public -b heroku --no-push -m 'vibert update'"
+    "deploy": "gh-pages -d public -e public -b heroku --no-push -m 'vibert update'"
   },
   "author": "Vibert Thio",
   "license": "MIT",
