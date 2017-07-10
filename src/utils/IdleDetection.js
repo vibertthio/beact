@@ -28,7 +28,7 @@ function idleDetection(setIdle) {
    * [goInActive description]
    */
   function goInactive() {
-  	console.log('you have idled for 3s');
+  	// console.log('you have idled for 3s');
   	setIdle(true);
   	startTimer();
   }
@@ -38,7 +38,7 @@ function idleDetection(setIdle) {
    * wait 12s if mouse idle at first
    */
   function firstGoInactive() {
-  	console.log('you have idled for 12s');
+  	// console.log('you have idled for 12s');
     setIdle(true);
   	startTimer();
   }

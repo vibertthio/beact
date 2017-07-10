@@ -191,14 +191,14 @@ export class Sequencer {
    * [loadSamples description]
    */
   loadSamples() {
-    console.log(`start loading drum sound bank : ${this.currentSampleIndex}`);
+    // console.log(`start loading drum sound bank : ${this.currentSampleIndex}`);
     this.loadingSamples = true;
     this.samples = new MultiPlayer({
       urls: drumUrls[this.currentSampleIndex],
       volume: -2,
       fadeOut: 0.4,
       onload: () => {
-        console.log('finish!');
+        // console.log('finish!');
         this.loadingSamples = false;
       },
    }).toMaster();
@@ -270,9 +270,7 @@ export class Keyboard {
     this.currentKey = null;
     this.record = [];
     this.notes = keysNotes;
-    console.log(keysNotes);
     this.storeRecord = record => storeRecord(record);
-    console.log('haha');
     this.samples = new MultiPlayer({
       urls: keysUrls[0],
       volume: -5,
