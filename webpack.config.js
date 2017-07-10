@@ -30,7 +30,7 @@ module.exports = {
   output: {
     publicPath: '/',
     path: path.join(__dirname, 'public'),
-    filename: '[chunkhash].bundle.js'
+    filename: '[hash].bundle.js'
   },
   resolve: {
     extensions: ['.js', '.jsx']
@@ -70,6 +70,7 @@ module.exports = {
     new CopyWebpackPlugin([
       { from: 'src/assets/audio', to: 'assets/audio' },
       { from: 'src/assets/svg/menu/logo.png' },
+      { from: 'src/assets/ico/flash.ico' },
     ]),
   ]
 };
