@@ -60,11 +60,12 @@ module.exports = {
     }),
     new DashboardPlugin(),
     new HtmlWebpackPlugin({
-      template: './src/index.html',
+      template: './src/template.html',
       files: {
         css: ['style.css'],
         js: [ "bundle.js"],
       },
+      filename: 'index.html'
     }),
     new CopyWebpackPlugin([
       { from: 'src/assets/audio', to: 'assets/audio' },
