@@ -36,6 +36,7 @@ _.range(26).forEach((i) => {
 	keys = keys.concat(String.fromCharCode(97 + i));
 	if (i < 25) { keys = keys.concat(', '); }
 });
+
 /**
  * DrumMachine
  */
