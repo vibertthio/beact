@@ -4,7 +4,8 @@
   "description": "making audio/visual with react and tone.js",
   "main": "''",
   "scripts": {
-    "build": "webpack -wd --config webpack.config.js --progress --profile --colors",
+    "build": "webpack -d --config webpack.production.config.js --colors",
+    "build:watch": "webpack -wd --config webpack.config.js --progress --profile --colors",
     "start": "webpack-dev-server --progress --profile --colors",
     "server": "nodemon --exec babel-node server/server.js --ignore public/",
     "lint": "eslint --ext js --ext jsx src || exit 0",
