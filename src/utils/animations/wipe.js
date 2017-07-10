@@ -9,7 +9,7 @@
  * @param  {number} [opacity = 1]
  * @param  {number} [duration = 400]
  */
-export default function makeWipe(
+export default function wipe(
   Two,
   two,
   TWEEN,
