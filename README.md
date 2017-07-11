@@ -1,8 +1,8 @@
 ![logo of beact](./assets/images/bar.png)
-# [Beact](https://safe-stream-69256.herokuapp.com/) &middot; [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+# [Beact](https://beact.herokuapp.com/) &middot; [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
 > 🎸🎨 DJ / VJ all by yourself in seconds !
-- [demo](https://safe-stream-69256.herokuapp.com/) - It's deployed on Heroku, play it now!
+- [demo](https://beact.herokuapp.com/) - It's deployed on Heroku, play it now!
 - [blog](https://medium.com/@vibertthio/beact-audio-visual-art-in-react-44e9c757e40f) - vibert's words after creating Beact! (only mandarin now, english coming)
 - [blog](http://scyablog.blogspot.tw/2017/07/beact.html) - scya597's words after creating Beact! (only mandarin now, english coming)
 
