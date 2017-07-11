@@ -1,4 +1,4 @@
-import imgUrl from '../../assets/images/animations/sculpture-02.png';
+import defaultImgUrl from '../../assets/images/animations/sculpture-02.png';
 /**
  * Animation #0, Veil
  * it will have two direction(u/d), which will be decided randomly
@@ -7,15 +7,19 @@ import imgUrl from '../../assets/images/animations/sculpture-02.png';
  * @param  {object} TWEEN the library for tweening
  * @param  {object} colors color pallete
  * @param  {array} animations It's the stack of animations
+ * @param  {string} imgUrl the src of image
+ * @param  {number} [scale = 1]
  * @param  {number} [opacity = 1]
  * @param  {number} [duration = 400]
  */
-export default function sculpture(
+export default function flashImage(
   Two,
   two,
   TWEEN,
   colors,
   animations,
+  imgUrl = defaultImgUrl,
+  scale = 1,
   opacity = 1,
   duration = 400,
   ) {
@@ -36,7 +40,8 @@ export default function sculpture(
     const texture = new Two.Texture(imgUrl);
     shape.visible = 0;
     shape.fill = texture;
-    texture.scale = 0.5;
+    shape.noStroke();
+    texture.scale = scale;
 
     const ani = new TWEEN.Tween(param)
       .to({ t: 1 }, duration)

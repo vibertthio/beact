@@ -31,7 +31,10 @@ import sinewave from './animations/sinewave';
 import bubbles from './animations/bubbles';
 import corona from './animations/corona';
 
-import sculpture from './animations/sculpture';
+import flashImage from './animations/flashImage';
+
+import landscape from '../assets/images/animations/landscape.jpg';
+
 
 /**
  * [animation description]
@@ -54,7 +57,15 @@ function Animation() {
    * Animations of Sequencer
    */
   // ground(Two, two, TWEEN, colors, sequencerAnimations);
-  sculpture(Two, two, TWEEN, colors, sequencerAnimations);
+  // mountainBass(Two, two, TWEEN, colors, sequencerAnimations);
+  // mountainSnare(Two, two, TWEEN, colors, sequencerAnimations);
+  // prism(Two, two, TWEEN, colors, sequencerAnimations, 3);
+  // prism(Two, two, TWEEN, colors, sequencerAnimations, 7);
+  // sunrise(Two, two, TWEEN, colors, sequencerAnimations);
+  // strike(Two, two, TWEEN, colors, sequencerAnimations);
+  // splash(Two, two, TWEEN, colors, sequencerAnimations);
+
+  flashImage(Two, two, TWEEN, colors, sequencerAnimations, landscape);
   mountainBass(Two, two, TWEEN, colors, sequencerAnimations);
   mountainSnare(Two, two, TWEEN, colors, sequencerAnimations);
   prism(Two, two, TWEEN, colors, sequencerAnimations, 3);
