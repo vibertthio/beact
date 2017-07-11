@@ -32,6 +32,7 @@ import bubbles from './animations/bubbles';
 import corona from './animations/corona';
 
 import flashImage from './animations/flashImage';
+import popImage from './animations/popImage';
 
 import landscape from '../assets/images/animations/landscape.jpg';
 import sculpture from '../assets/images/animations/sculpture-02.png';
@@ -67,7 +68,7 @@ function Animation() {
   // splash(Two, two, TWEEN, colors, sequencerAnimations);
 
   flashImage(Two, two, TWEEN, colors, sequencerAnimations, landscape);
-  flashImage(Two, two, TWEEN, colors, sequencerAnimations, sculpture, 0.25);
+  popImage(Two, two, TWEEN, colors, sequencerAnimations, sculpture);
   mountainSnare(Two, two, TWEEN, colors, sequencerAnimations);
   prism(Two, two, TWEEN, colors, sequencerAnimations, 3);
   prism(Two, two, TWEEN, colors, sequencerAnimations, 7);
