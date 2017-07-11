@@ -40,8 +40,7 @@ export default function veil(
       two.width * 0.5,
       two.height * 0.5,
     );
-    const originalScale = (scale * two.height) / 3000;
-    shape.scale = originalScale;
+    shape.scale = (scale * two.height) / 3000;
     shape.opacity = 0;
 
     const aniOut = new TWEEN.Tween(shape.translation)
