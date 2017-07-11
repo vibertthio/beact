@@ -16,18 +16,18 @@ import Animation, {
 	animationKey2IndexMapping,
 	animationDrum2IndexMapping,
 } from '../utils/Animation';
-import menu1 from '../assets/svg/menu/menu1.svg';
-import menu2 from '../assets/svg/menu/menu2.svg';
-import menu3 from '../assets/svg/menu/menu3.svg';
-import menu4 from '../assets/svg/menu/menu4.svg';
-import menu5 from '../assets/svg/menu/menu5.svg';
-import menu6 from '../assets/svg/menu/menu6.svg';
-import menu7 from '../assets/svg/menu/menu7.svg';
-import menu8 from '../assets/svg/menu/menu8.svg';
-import menu9 from '../assets/svg/menu/menu9.svg';
-import menu10 from '../assets/svg/menu/menu10.svg';
-import menu11 from '../assets/svg/menu/menu11.svg';
-import menuLogo from '../assets/svg/menu/logo.png';
+import menu1 from '../assets/images/menu/menu1.svg';
+import menu2 from '../assets/images/menu/menu2.svg';
+import menu3 from '../assets/images/menu/menu3.svg';
+import menu4 from '../assets/images/menu/menu4.svg';
+import menu5 from '../assets/images/menu/menu5.svg';
+import menu6 from '../assets/images/menu/menu6.svg';
+import menu7 from '../assets/images/menu/menu7.svg';
+import menu8 from '../assets/images/menu/menu8.svg';
+import menu9 from '../assets/images/menu/menu9.svg';
+import menu10 from '../assets/images/menu/menu10.svg';
+import menu11 from '../assets/images/menu/menu11.svg';
+import menuLogo from '../assets/images/logo.png';
 
 let fadeoutID;
 let logoID;
