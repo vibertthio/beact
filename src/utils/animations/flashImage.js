@@ -1,4 +1,4 @@
-import defaultImgUrl from '../../assets/images/animations/sculpture-02.png';
+import defaultImgUrl from '../../assets/images/animations/landscape.jpg';
 /**
  * Animation #0, Veil
  * it will have two direction(u/d), which will be decided randomly
@@ -41,12 +41,17 @@ export default function flashImage(
     shape.visible = 0;
     shape.fill = texture;
     shape.noStroke();
-    texture.scale = scale;
+
+    const originalScale = (scale * two.height) / 500;
+    let targetRatio;
+    texture.scale = originalScale;
 
     const ani = new TWEEN.Tween(param)
       .to({ t: 1 }, duration)
-      .easing(TWEEN.Easing.Linear.None)
-      .onUpdate(() => {
+      .easing(TWEEN.Easing.Circular.Out)
+      .onStart(() => { targetRatio = 0.2 * Math.random(); })
+      .onUpdate((t) => {
+        texture.scale = originalScale * (1 + (targetRatio * t));
         shape.visible = Math.random() > 0.5;
       })
       .onComplete(() => {

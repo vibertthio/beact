@@ -9,7 +9,7 @@ import {
 } from './config/animation.config';
 
 // import ground from './animations/ground';
-import mountainBass from './animations/mountainBass';
+// import mountainBass from './animations/mountainBass';
 import mountainSnare from './animations/mountainSnare';
 import prism from './animations/prism';
 import sunrise from './animations/sunrise';
@@ -34,6 +34,7 @@ import corona from './animations/corona';
 import flashImage from './animations/flashImage';
 
 import landscape from '../assets/images/animations/landscape.jpg';
+import sculpture from '../assets/images/animations/sculpture-02.png';
 
 
 /**
@@ -66,7 +67,7 @@ function Animation() {
   // splash(Two, two, TWEEN, colors, sequencerAnimations);
 
   flashImage(Two, two, TWEEN, colors, sequencerAnimations, landscape);
-  mountainBass(Two, two, TWEEN, colors, sequencerAnimations);
+  flashImage(Two, two, TWEEN, colors, sequencerAnimations, sculpture, 0.25);
   mountainSnare(Two, two, TWEEN, colors, sequencerAnimations);
   prism(Two, two, TWEEN, colors, sequencerAnimations, 3);
   prism(Two, two, TWEEN, colors, sequencerAnimations, 7);
