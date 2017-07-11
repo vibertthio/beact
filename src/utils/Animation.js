@@ -1,4 +1,4 @@
-import Two from 'two.js/build/two';
+import Two from 'two.js/build/two.min';
 import TWEEN from '@tweenjs/tween.js';
 import {
   toRGB,
@@ -8,7 +8,7 @@ import {
   animationDrum2IndexMapping,
 } from './config/animation.config';
 
-import ground from './animations/ground';
+// import ground from './animations/ground';
 import mountainBass from './animations/mountainBass';
 import mountainSnare from './animations/mountainSnare';
 import prism from './animations/prism';
@@ -31,6 +31,8 @@ import sinewave from './animations/sinewave';
 import bubbles from './animations/bubbles';
 import corona from './animations/corona';
 
+import sculpture from './animations/sculpture';
+
 /**
  * [animation description]
  * @return {[type]} [description]
@@ -44,13 +46,15 @@ function Animation() {
   const colors = pallete[2].map(toRGB);
   const canvas = document.getElementById('animation');
   const params = { fullscreen: true };
+  // const params = { type: Two.Types.canvas, fullscreen: true };
   const two = new Two(params).appendTo(canvas);
   two.bind('update', () => { TWEEN.update(); }).play();
 
   /**
    * Animations of Sequencer
    */
-  ground(Two, two, TWEEN, colors, sequencerAnimations);
+  // ground(Two, two, TWEEN, colors, sequencerAnimations);
+  sculpture(Two, two, TWEEN, colors, sequencerAnimations);
   mountainBass(Two, two, TWEEN, colors, sequencerAnimations);
   mountainSnare(Two, two, TWEEN, colors, sequencerAnimations);
   prism(Two, two, TWEEN, colors, sequencerAnimations, 3);
