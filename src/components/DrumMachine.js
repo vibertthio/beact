@@ -9,7 +9,7 @@ import NavigationRefreshIcon from 'material-ui/svg-icons/navigation/refresh';
 import NavigationCloseIcon from 'material-ui/svg-icons/navigation/close';
 import AVShuffleIcon from 'material-ui/svg-icons/av/shuffle';
 
-import styles from '../assets/styles/DrumMachine.css';
+import styles from '../styles/DrumMachine.css';
 import Matrix from './Matrix';
 import { Sequencer, Keyboard, changeBPM, presets } from '../utils/Audio';
 import Animation, {
