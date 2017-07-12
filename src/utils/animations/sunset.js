@@ -10,7 +10,7 @@ import { min } from '../config/animation.config';
  * @param  {number} [opacity = 1]
  * @param  {number} [duration = 400]
  */
-export default function sunrise(
+export default function sunset(
   Two,
   two,
   TWEEN,
