@@ -47,13 +47,12 @@ export default function timer(
 
     points.push(
       points[0].clone(),
-      // points[1].clone(),
     );
 
     const shape = two.makeCurve(points, true);
     shape.stroke = colors[3];
     shape.cap = 'butt';
-    shape.linewidth = min(two.width, two.height) / 10;
+    shape.linewidth = min(two.width, two.height) / 20;
     shape.noFill();
     shape.translation.set(two.width * 0.5, two.height * 0.5);
     shape.visible = false;

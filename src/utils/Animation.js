@@ -73,7 +73,7 @@ function Animation() {
 
   flashImage(Two, two, TWEEN, colors, sequencerAnimations, landscape);
   popImage(Two, two, TWEEN, colors, sequencerAnimations, sculpture);
-  mountainSnare(Two, two, TWEEN, colors, sequencerAnimations);
+  timer(Two, two, TWEEN, colors, sequencerAnimations);
   prism(Two, two, TWEEN, colors, sequencerAnimations, 3);
   prism(Two, two, TWEEN, colors, sequencerAnimations, 7);
   sunset(Two, two, TWEEN, colors, sequencerAnimations);

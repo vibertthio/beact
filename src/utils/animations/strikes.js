@@ -8,7 +8,7 @@ import strike from './strike';
 * @param  {object} TWEEN the library for tweening
 * @param  {object} colors color pallete
 * @param  {array} animations It's the stack of animations
-* @param  {amount} [amount = 3]
+* @param  {amount} [amount = 2]
 * @param  {number} [opacity = 1]
 * @param  {number} [duration = 200]
 */
@@ -18,7 +18,7 @@ export default function strikes(
   TWEEN,
   colors,
   animations,
-  amount = 3,
+  amount = 2,
   opacity = 1,
   duration = 200,
   ) {
