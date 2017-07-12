@@ -33,6 +33,8 @@ import corona from './animations/corona';
 
 import flashImage from './animations/flashImage';
 import popImage from './animations/popImage';
+import sunset from './animations/sunset';
+
 
 import landscape from '../assets/images/animations/landscape.jpg';
 import sculpture from '../assets/images/animations/sculpture-02.png';
@@ -72,7 +74,7 @@ function Animation() {
   mountainSnare(Two, two, TWEEN, colors, sequencerAnimations);
   prism(Two, two, TWEEN, colors, sequencerAnimations, 3);
   prism(Two, two, TWEEN, colors, sequencerAnimations, 7);
-  sunrise(Two, two, TWEEN, colors, sequencerAnimations);
+  sunset(Two, two, TWEEN, colors, sequencerAnimations);
   strike(Two, two, TWEEN, colors, sequencerAnimations);
   splash(Two, two, TWEEN, colors, sequencerAnimations);
 
