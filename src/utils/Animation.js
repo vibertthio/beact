@@ -35,6 +35,7 @@ import flashImage from './animations/flashImage';
 import popImage from './animations/popImage';
 import sunset from './animations/sunset';
 import brush from './animations/brush';
+import strikes from './animations/strikes';
 
 
 import landscape from '../assets/images/animations/landscape.jpg';
@@ -76,7 +77,7 @@ function Animation() {
   prism(Two, two, TWEEN, colors, sequencerAnimations, 3);
   prism(Two, two, TWEEN, colors, sequencerAnimations, 7);
   sunset(Two, two, TWEEN, colors, sequencerAnimations);
-  strike(Two, two, TWEEN, colors, sequencerAnimations);
+  strikes(Two, two, TWEEN, colors, sequencerAnimations);
   brush(Two, two, TWEEN, colors, sequencerAnimations, 4);
 
 

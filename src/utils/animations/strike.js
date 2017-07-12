@@ -77,6 +77,8 @@ export default function strike(
 
   const reset = () => {
     playing = false;
+    aniIn.stop();
+    aniOut.stop();
     const rando = Math.random();
 
     line.linewidth = Math.round(rando * 7) + 3;
@@ -87,9 +89,8 @@ export default function strike(
     theta = Math.random() * TWO_PI;
     startPoint.x = distance * Math.cos(theta);
     startPoint.y = distance * Math.sin(theta);
-    aniIn.stop();
-    aniOut.stop();
-    theta += Math.PI;
+
+    theta += Math.PI * (1 + (0.3 * rando));
     endPoint.x = distance * Math.cos(theta);
     endPoint.y = distance * Math.sin(theta);
 
