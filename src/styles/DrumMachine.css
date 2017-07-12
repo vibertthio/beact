@@ -30,6 +30,11 @@
   left: 2em;
 }
 
+.icon:hover {
+  border-radius: 50%;
+  background-color: #b1788f;
+}
+
 .clearIcon {
   top: 1.9em;
   right: 2em;

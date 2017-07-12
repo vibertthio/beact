@@ -984,8 +984,6 @@ class DrumMachine extends Component {
           style={{ color: '#eecdcc' }}
         />
 
-        {/* sidebar menu (only css) */}
-
         <div
           className={
 					`${styles.menu}
@@ -994,10 +992,6 @@ class DrumMachine extends Component {
         >
           <div className={styles.colorMenu}>
             {/* 1 */}
-            {/* <h3 onTouchTap={() => this.setSample('A')}>A</h3>
-            <h3 onTouchTap={() => this.setSample('B')}>B</h3>
-            <h3 onTouchTap={() => this.setSample('C')}>C</h3>
-            <h3 onTouchTap={() => this.setSample('D')}>D</h3> */}
             <div className={`${styles.row1} ${styles.row}`}>
               {(this.sequencer.recording === true)
                 ? <div>
