@@ -8,6 +8,8 @@ import NavigationMenuIcon from 'material-ui/svg-icons/navigation/menu';
 import NavigationRefreshIcon from 'material-ui/svg-icons/navigation/refresh';
 import NavigationCloseIcon from 'material-ui/svg-icons/navigation/close';
 import AVShuffleIcon from 'material-ui/svg-icons/av/shuffle';
+import AVPlayArrowIcon from 'material-ui/svg-icons/av/play-arrow';
+import AVPauseIcon from 'material-ui/svg-icons/av/pause';
 
 import styles from '../styles/DrumMachine.css';
 import Matrix from './Matrix';
@@ -944,7 +946,7 @@ class DrumMachine extends Component {
    * @return {Element}
    */
   render() {
-		const { hidden, wait } = this.state;
+		const { hidden, wait, playing } = this.state;
     return (
       <div className={(wait === true) ? styles.hideDOM : styles.showDOM}>
         {(this.sequencer.isPlayingRecord === false)
@@ -954,7 +956,7 @@ class DrumMachine extends Component {
 						 ${styles.menuIcon}
 						 ${(hidden === true) ? '' : styles.displayHide}`
 					}
-            onClick={() => this.toggleHidden()}
+            onTouchTap={() => this.toggleHidden()}
             style={{ color: '#eecdcc' }}
           /> : <NavigationCloseIcon
             className={
@@ -965,13 +967,32 @@ class DrumMachine extends Component {
             onTouchTap={() => this.exitPlayRecord()}
             style={{ color: '#eecdcc' }}
           />}
+        {(playing)
+          ? <AVPauseIcon
+            className={
+  						`${styles.icon}
+  						 ${styles.toggleIcon}
+  						 ${(hidden === true) ? '' : styles.displayHide}`
+  					}
+            onTouchTap={() => this.stopSequencer()}
+            style={{ color: '#eecdcc' }}
+          /> : <AVPlayArrowIcon
+            className={
+  						`${styles.icon}
+  						 ${styles.toggleIcon}
+  						 ${(hidden === true) ? '' : styles.displayHide}`
+  					}
+            onTouchTap={() => this.startSequencer()}
+            style={{ color: '#eecdcc' }}
+          />
+          }
         <NavigationRefreshIcon
           className={
 						`${styles.icon}
 						 ${styles.clearIcon}
 						 ${(hidden === true) ? '' : styles.displayHide}`
 					}
-          onClick={() => this.clearClicked()}
+          onTouchTap={() => this.clearClicked()}
           style={{ color: '#eecdcc' }}
         />
         <AVShuffleIcon
@@ -980,7 +1001,7 @@ class DrumMachine extends Component {
 						 ${styles.randomIcon}
 						 ${(hidden === true) ? '' : styles.displayHide}`
 					}
-          onClick={() => this.randomClicked()}
+          onTouchTap={() => this.randomClicked()}
           style={{ color: '#eecdcc' }}
         />
 
