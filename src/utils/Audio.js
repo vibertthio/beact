@@ -198,7 +198,6 @@ export class Sequencer {
       volume: -2,
       fadeOut: 0.4,
       onload: () => {
-        // console.log('finish!');
         this.loadingSamples = false;
       },
    }).toMaster();
@@ -352,7 +351,7 @@ export class Keyboard {
 }
 
 const changeBPM = (value) => {
-    Transport.bpm.value += value;
+    Transport.bpm.value = (Transport.bpm.value + value).toFixed();
     console.log(`bpm:${Transport.bpm.value}`);
 };
 
