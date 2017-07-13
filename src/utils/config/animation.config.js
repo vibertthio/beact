@@ -1,3 +1,35 @@
+import ground from '../animations/ground';
+import mountainBass from '../animations/mountainBass';
+import mountainSnare from '../animations/mountainSnare';
+import prism from '../animations/prism';
+import sunrise from '../animations/sunrise';
+import strike from '../animations/strike';
+import splash from '../animations/splash';
+import splashColorful from '../animations/splashColorful';
+import veil from '../animations/veil';
+import wipe from '../animations/wipe';
+import piston from '../animations/piston';
+import clay from '../animations/clay';
+import flash from '../animations/flash';
+import timer from '../animations/timer';
+import pinwheel from '../animations/pinwheel';
+import glimmer from '../animations/glimmer';
+import split from '../animations/split';
+import moon from '../animations/moon';
+import zigzag from '../animations/zigzag';
+import sinewave from '../animations/sinewave';
+import bubbles from '../animations/bubbles';
+import corona from '../animations/corona';
+
+import flashImage from '../animations/flashImage';
+import popImage from '../animations/popImage';
+import sunset from '../animations/sunset';
+import brush from '../animations/brush';
+import strikes from '../animations/strikes';
+
+import landscape from '../../assets/images/animations/landscape.jpg';
+import sculpture from '../../assets/images/animations/sculpture-02.png';
+
 /**
  * Math Definition
  */
@@ -106,17 +138,17 @@ const pallete = [
     { r: 253, g: 228, b: 252 },
     { r: 255, g: 255, b: 255 },
   ],
+  [
+    { r: 28, g: 52, b: 53 },
+    { r: 238, g: 205, b: 204 },
+    { r: 204, g: 238, b: 205 },
+    { r: 204, g: 237, b: 238 },
+    { r: 204, g: 237, b: 204 },
+    { r: 205, g: 204, b: 238 },
+    { r: 88, g: 95, b: 96 },
+    { r: 238, g: 204, b: 237 },
+  ],
 ];
-
-// original
-// 'rgb(28, 52, 53)',
-// 'rgb(238, 205, 204)',
-// 'rgb(204, 238, 205)',
-// 'rgb(204, 237, 238)',
-// 'rgb(204, 237, 204)',
-// 'rgb(205, 204, 238)',
-// 'rgb(88, 95, 96)',
-// 'rgb(238, 204, 237)',
 
 const animationNameList = [
   // #0
@@ -263,6 +295,62 @@ const animationDrum2IndexMapping = [
   [0, 1, 2, 3, 4, 5, 6, 7],
 ];
 
+const sequencerAnimationsSet = [
+  [
+    { animation: ground },
+    { animation: mountainBass },
+    { animation: mountainSnare },
+    { animation: prism, options: [3] },
+    { animation: prism, options: [7] },
+    { animation: sunrise },
+    { animation: strike },
+    { animation: splash },
+  ],
+  [
+    { animation: flashImage, options: [landscape] },
+    // { animation: flashImage },
+    { animation: popImage, options: [sculpture] },
+    // { animation: popImage },
+    { animation: timer },
+    { animation: prism, options: [3] },
+    { animation: prism, options: [7] },
+    { animation: sunset },
+    { animation: strikes },
+    { animation: brush, options: [4] },
+  ],
+];
+
+const keyAnimationsSet = [
+  [
+    { animation: veil },
+    { animation: wipe },
+    { animation: prism, options: [3] },
+    { animation: prism, options: [5] },
+    { animation: prism, options: [6] },
+    { animation: piston, options: [1] },
+    { animation: piston, options: [4] },
+    { animation: piston, options: [8] },
+    { animation: clay },
+    { animation: flash, options: [0] },
+    { animation: flash, options: [1] },
+    { animation: flash, options: [2] },
+    { animation: splash },
+    { animation: splashColorful },
+    { animation: sunrise },
+    { animation: timer },
+    { animation: pinwheel },
+    { animation: glimmer },
+    { animation: split },
+    { animation: moon },
+    { animation: strike },
+    { animation: zigzag },
+    { animation: sinewave },
+    { animation: bubbles },
+    { animation: corona },
+    { animation: mountainSnare },
+  ],
+];
+
 export {
   pallete,
   TWO_PI,
@@ -276,7 +364,7 @@ export {
   map,
   ease,
   toRGB,
-  animationNameList,
   animationKey2IndexMapping,
-  animationDrum2IndexMapping,
+  sequencerAnimationsSet,
+  keyAnimationsSet,
 };

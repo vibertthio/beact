@@ -14,10 +14,7 @@ import AVPauseIcon from 'material-ui/svg-icons/av/pause';
 import styles from '../styles/DrumMachine.css';
 import Matrix from './Matrix';
 import { Sequencer, Keyboard, changeBPM, presets } from '../utils/Audio';
-import Animation, {
-	animationKey2IndexMapping,
-	animationDrum2IndexMapping,
-} from '../utils/Animation';
+import Animation, { animationKey2IndexMapping } from '../utils/Animation';
 import menu1 from '../assets/images/menu/menu1.svg';
 import menu2 from '../assets/images/menu/menu2.svg';
 import menu3 from '../assets/images/menu/menu3.svg';
@@ -765,9 +762,10 @@ class DrumMachine extends Component {
    */
   playDrumAni(column) {
     for (let i = 0; i < column.length; i += 1) {
-      this.ani.triggerSequencerAnimation(
-				animationDrum2IndexMapping[0][column[i]],
-			);
+      // this.ani.triggerSequencerAnimation(
+			// 	animationDrum2IndexMapping[0][column[i]],
+			// );
+      this.ani.triggerSequencerAnimation(column[i]);
     }
   }
 
@@ -806,6 +804,16 @@ class DrumMachine extends Component {
 		});
 		key('left', () => {
 			this.sequencer.changeSampleSet(false);
+		});
+
+		// change animation bank
+		key('shift+right', () => {
+			console.log('s+r');
+			this.ani.changeSequencerAnimations(true);
+		});
+		key('shift+left', () => {
+			console.log('s+l');
+			this.ani.changeSequencerAnimations(false);
 		});
 
 		// loading presets
