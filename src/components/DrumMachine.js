@@ -806,6 +806,16 @@ class DrumMachine extends Component {
 			this.sequencer.changeSampleSet(false);
 		});
 
+		// change animation bank
+		key('shift+right', () => {
+			console.log('s+r');
+			this.ani.changeSequencerAnimations(true);
+		});
+		key('shift+left', () => {
+			console.log('s+l');
+			this.ani.changeSequencerAnimations(false);
+		});
+
 		// loading presets
 		key('1, 2, 3, 4, 5, 6, 7, 8', (e, h) => {
 			const index = h.shortcut.charCodeAt(0) - 49;

@@ -18,6 +18,8 @@ function Animation() {
    */
   const keyAnimations = [];
   const sequencerAnimations = [];
+  const currentKeyAnimationsIndex = 0;
+  let currentSequencerAnimationsIndex = 0;
   const colors = pallete[2].map(toRGB);
   const canvas = document.getElementById('animation');
   const params = { fullscreen: true };
@@ -33,6 +35,21 @@ function Animation() {
       s.animation(...param, ...opt);
     });
   };
+  const setSequencerAnimations = () => {
+    sequencerAnimations.splice(0, sequencerAnimations.length);
+    setAnimation(
+      currentSequencerAnimationsIndex,
+      sequencerAnimationsSet,
+      sequencerAnimations,
+    );
+  };
+  const setKeyAnimation = () => {
+    setAnimation(
+      currentKeyAnimationsIndex,
+      keyAnimationsSet,
+      keyAnimations,
+    );
+  };
   const reset = () => {
     two.clear();
   };
@@ -45,7 +62,7 @@ function Animation() {
     sequencerAnimations[i].start();
   };
   const resize = (w, h) => {
-    reset();
+    two.clear();
     two.renderer.setSize(w, h);
     two.width = w;
     two.height = h;
@@ -56,16 +73,29 @@ function Animation() {
       ani.resize();
     });
   };
+  const changeSequencerAnimations = (up) => {
+    const n = sequencerAnimations.length;
+    currentSequencerAnimationsIndex += (up ? 1 : -1);
+    if (currentSequencerAnimationsIndex < 0) {
+      currentSequencerAnimationsIndex += n;
+    } else if (currentSequencerAnimationsIndex > n - 1) {
+      currentSequencerAnimationsIndex = 0;
+    }
+    reset();
+    setSequencerAnimations();
+  };
 
-  setAnimation(0, sequencerAnimationsSet, sequencerAnimations);
-  setAnimation(0, keyAnimationsSet, keyAnimations);
+  setSequencerAnimations();
+  setKeyAnimation();
 
   return {
     triggerKeyAnimation,
     triggerSequencerAnimation,
+    changeSequencerAnimations,
     resize,
   };
 }
+
 
 export {
 	animationKey2IndexMapping,
