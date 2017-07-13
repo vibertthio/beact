@@ -75,13 +75,19 @@
 		.fullHeight {
 			height: 100%;
 		}
-		.beactLogo {
+    .beactLogoWrap {
       z-index: -1;
-			position: fixed;
+      position: fixed;
 			top: 25%;
-			left: 40%;
-			opacity: 0;
 			height: 50%;
+			width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+		.beactLogo {
+			opacity: 0;
+			height: 100%;
 			transition: opacity 1s ease-out;
 		}
 		.showLogo {
@@ -103,7 +109,9 @@
   <body>
     <div id="root"></div>
 		<div id="loadingTitle">Beact</div>
-    <img src="./logo.png" id="beactLogo" class="beactLogo" />
+    <div class="beactLogoWrap">
+      <img src="./logo.png" id="beactLogo" class="beactLogo" />
+    </div>
 		<div id="spinner">
 		  <div class="dot1"></div>
 		  <div class="dot2"></div>

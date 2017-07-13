@@ -21,7 +21,7 @@ function idleDetection(setIdle) {
    * [startTimer description]
    */
   function startTimer() {
-  	timeoutID = window.setTimeout(goInactive, 3000);
+  	timeoutID = window.setTimeout(goInactive, 3500);
   }
 
   /**
