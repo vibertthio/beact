@@ -115,6 +115,8 @@ function Animation() {
    * EXPORT functions
    */
 
+  const setSequencerAnimation = () => {};
+
   const triggerKeyAnimation = (index) => {
     const i = index % keyAnimations.length;
     keyAnimations[i].start();
@@ -137,9 +139,10 @@ function Animation() {
   };
 
   return {
-    resize,
     triggerKeyAnimation,
     triggerSequencerAnimation,
+    resize,
+    setSequencerAnimation,
   };
 }
 
