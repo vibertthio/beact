@@ -351,8 +351,11 @@ export class Keyboard {
 }
 
 const changeBPM = (value) => {
-    Transport.bpm.value = (Transport.bpm.value + value).toFixed();
+  const target = (Transport.bpm.value + value).toFixed();
+  if (target > 70 && target < 300) {
+    Transport.bpm.value = target;
     console.log(`bpm:${Transport.bpm.value}`);
+  }
 };
 
 export {

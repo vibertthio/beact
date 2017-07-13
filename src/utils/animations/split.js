@@ -106,7 +106,6 @@ export default function split(
 
   // methods
   const resize = () => {
-    console.log('resizing..');
     group.remove(shapes);
     two.remove(group);
     distance = two.height / 5;

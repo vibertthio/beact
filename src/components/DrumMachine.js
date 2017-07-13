@@ -808,11 +808,9 @@ class DrumMachine extends Component {
 
 		// change animation bank
 		key('shift+right', () => {
-			console.log('s+r');
 			this.ani.changeSequencerAnimations(true);
 		});
 		key('shift+left', () => {
-			console.log('s+l');
 			this.ani.changeSequencerAnimations(false);
 		});
 

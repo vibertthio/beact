@@ -97,7 +97,6 @@ export default function veil(
   };
 
   const start = () => {
-    console.log('play');
     reset();
     playing = true;
     shape.opacity = opacity;
