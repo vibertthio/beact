@@ -35,8 +35,6 @@ export default function corona(
    * @return {[type]} [description]
    */
   function setup() {
-    console.log(`radius: ${radius}`);
-    console.log(`bubbleRadius: ${bubbleRadius}`);
     const circles = range(amount).map((i) => {
       const pct = i / last;
 

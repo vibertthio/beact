@@ -184,6 +184,8 @@ export class Sequencer {
     if (this.currentSampleIndex < 0) {
       this.currentSampleIndex += drumUrls.length;
     }
+
+    console.log(this.currentSampleIndex);
     this.loadSamples();
   }
 

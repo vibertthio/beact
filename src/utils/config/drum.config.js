@@ -60,6 +60,16 @@ const drumUrls = [
     7: './assets/audio/drum/really-wanna/vocal-3.mp3',
     8: './assets/audio/drum/really-wanna/vocal-4.mp3',
   },
+  {
+    1: './assets/audio/chillsaxiao/kick.mp3',
+    2: './assets/audio/chillsaxiao/snare.mp3',
+    3: './assets/audio/chillsaxiao/dn.mp3',
+    4: './assets/audio/chillsaxiao/hh.mp3',
+    5: './assets/audio/chillsaxiao/bass.mp3',
+    6: './assets/audio/chillsaxiao/man.mp3',
+    7: './assets/audio/chillsaxiao/pad.mp3',
+    8: './assets/audio/chillsaxiao/star.mp3',
+  },
 ];
 
 const presets = [
