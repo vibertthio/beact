@@ -44,6 +44,7 @@ function Animation() {
     );
   };
   const setKeyAnimation = () => {
+    keyAnimations.splice(0, keyAnimations.length);
     setAnimation(
       currentKeyAnimationsIndex,
       keyAnimationsSet,
@@ -83,6 +84,7 @@ function Animation() {
     }
     reset();
     setSequencerAnimations();
+    setKeyAnimation();
   };
 
   setSequencerAnimations();
