@@ -51,7 +51,7 @@ export class Sequencer {
     this.recordFull = [];
     this.isPlayingRecord = false;
     this.startTime = 0;
-    this.currentSampleIndex = 2;
+    this.currentSampleIndex = 0;
     this.storeRecord = record => storeRecord(record);
 
     this.loadSamples();
@@ -193,7 +193,7 @@ export class Sequencer {
    * [loadSamples description]
    */
   loadSamples() {
-    // console.log(`start loading drum sound bank : ${this.currentSampleIndex}`);
+    console.log(`start loading drum sound bank : ${this.currentSampleIndex}`);
     this.loadingSamples = true;
     this.samples = new MultiPlayer({
       urls: drumUrls[this.currentSampleIndex],

@@ -44,6 +44,7 @@ export default function moon(
     shape.fill = colors[2];
     shape.noStroke();
     shape.visible = false;
+    // shape.visible = true;
 
     const points = shape.vertices;
     const destinations = [];
