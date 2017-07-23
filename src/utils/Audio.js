@@ -285,6 +285,7 @@ export class Keyboard {
    * [playKey description]
    */
   playKey() {
+    console.log(`key: ${this.currentKey}`);
     if (this.currentKey !== null) {
       this.samples.start(this.notes[this.currentKey]);
       if (this.recording === true) {

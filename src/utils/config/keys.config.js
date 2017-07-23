@@ -14,7 +14,7 @@ const keysUrls = [
     1: './assets/audio/drum/bedford/kick.mp3',
     2: './assets/audio/drum/bedford/hat.mp3',
     3: './assets/audio/drum/bedford/rim.mp3',
-    4: './assets/audio/drum/let-go/snare.mp3',
+    4: './assets/audio/drum/everything/vocal-4.mp3',
     5: './assets/audio/drum/bedford/stab01.mp3',
     6: './assets/audio/drum/bedford/stab02.mp3',
     7: './assets/audio/drum/bedford/stab03.mp3',
@@ -33,10 +33,10 @@ const keysUrls = [
     20: './assets/audio/drum/everything/vocal-1.mp3',
     21: './assets/audio/drum/everything/vocal-2.mp3',
     22: './assets/audio/drum/everything/vocal-3.mp3',
-    23: './assets/audio/drum/everything/vocal-4.mp3',
-    24: './assets/audio/drum/really-wanna/vocal-4.mp3',
-    25: './assets/audio/drum/really-wanna/vocal-4.mp3',
-    26: './assets/audio/drum/really-wanna/vocal-4.mp3',
+    23: './assets/audio/chillsaxiao/bass.mp3',
+    24: './assets/audio/chillsaxiao/star.mp3',
+    25: './assets/audio/chillsaxiao/pad.mp3',
+    26: './assets/audio/chillsaxiao/man.mp3',
   },
 ];
 
