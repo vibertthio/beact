@@ -30,6 +30,9 @@ import strikes from '../animations/strikes';
 import landscape from '../../assets/images/animations/landscape.jpg';
 import sculpture from '../../assets/images/animations/sculpture-02.png';
 
+import crossline from '../animations/scyaAni/scya-crossline';
+import firework from '../animations/scyaAni/scya-firework';
+
 /**
  * Math Definition
  */
@@ -318,6 +321,16 @@ const sequencerAnimationsSet = [
     { animation: strikes },
     { animation: brush, options: [4] },
   ],
+	[
+		{ animation: crossline },
+		{ animation: firework },
+		{ animation: crossline },
+		{ animation: firework },
+		{ animation: crossline },
+		{ animation: firework },
+		{ animation: crossline },
+		{ animation: firework },
+	],
 ];
 
 const keyAnimationsSet = [
