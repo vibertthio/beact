@@ -32,6 +32,8 @@ export default function firework(
 		const w = two.width;
 		const h = two.height;
 		const r = 15;
+		const g = 3;
+		let v = 0;
 
 		let xA = (0.5 * w);
 		let yA = (0.75 * h);
@@ -47,8 +49,6 @@ export default function firework(
 		let yF = (0.75 * h);
 		let xG = (0.5 * w);
 		let yG = (0.75 * h);
-		let v = 0;
-		const g = 3;
 
 		const circleA = two.makeCircle(
 			xA,
@@ -93,16 +93,19 @@ export default function firework(
 		circleF.fill = 'rgb(25, 255, 185)';
 		circleG.fill = 'rgb(150, 255, 25)';
 		const circles = [circleA, circleB, circleC, circleD, circleE, circleF, circleG];
+
 		for (let i = 0; i < circles.length; i += 1) {
 			circles[i].linewidth = 0;
+			circles[i].visible = 0;
 		}
-
 
     const ani = new TWEEN.Tween(param)
       .to({ t: 1 }, duration)
       .easing(TWEEN.Easing.Linear.None)
       .onUpdate(() => {
-        // circleA.scale += 0.1;
+				for (let i = 0; i < circles.length; i += 1) {
+					circles[i].visible = 1;
+				}
         v += g;
 				xA += 30;
 			  yA += v - 30;
@@ -130,13 +133,13 @@ export default function firework(
 				circleG.translation.set(xG, yG);
       })
       .onComplete(() => {
-        circleA.visible = false;
-				circleB.visible = false;
-				circleC.visible = false;
-				circleD.visible = false;
-				circleE.visible = false;
-				circleF.visible = false;
-				circleG.visible = false;
+        circleA.visible = 0;
+				circleB.visible = 0;
+				circleC.visible = 0;
+				circleD.visible = 0;
+				circleE.visible = 0;
+				circleF.visible = 0;
+				circleG.visible = 0;
       });
     return { circleA, circleB, circleC, circleD, circleE, circleF, circleG, ani };
   }
@@ -150,8 +153,8 @@ export default function firework(
   };
 
   const reset = () => {
-    ani.stop();
 		resize();
+		ani.stop();
   };
 
   const start = () => {

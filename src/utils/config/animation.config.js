@@ -322,14 +322,14 @@ const sequencerAnimationsSet = [
     { animation: brush, options: [4] },
   ],
 	[
-		{ animation: crossline },
 		{ animation: firework },
 		{ animation: crossline },
-		{ animation: firework },
 		{ animation: crossline },
-		{ animation: firework },
 		{ animation: crossline },
-		{ animation: firework },
+		{ animation: crossline },
+		{ animation: crossline },
+		{ animation: crossline },
+		{ animation: crossline },
 	],
 ];
 

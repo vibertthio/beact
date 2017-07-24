@@ -57,8 +57,8 @@ export default function crossline(
 				lineB.visible = Math.random() > 0.5;
       })
       .onComplete(() => {
-        lineA.visible = false;
-				lineB.visible = false;
+        lineA.visible = 0;
+				lineB.visible = 0;
       });
     return { lineA, lineB, ani };
   }
