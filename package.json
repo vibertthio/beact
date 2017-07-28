@@ -4,16 +4,9 @@
   "description": "making audio/visual with react and tone.js",
   "main": "''",
   "scripts": {
-    "develope": "NODE_ENV=dev nodemon --exec babel-node server/server.js --ignore public/ --ignore src/",
-    "build": "webpack -d --config webpack.production.config.js --colors",
-    "server": "babel-node server/server.js --presets es2015",
-    "build:serve": "npm run build && serve public",
-    "build:deploy": "npm run build && npm run deploy",
-    "start": "webpack-dev-server --progress --profile --colors",
-    "lint": "eslint --ext js --ext jsx src || exit 0",
-    "dev": " webpack-dashboard -- webpack-dev-server --progress --profile --colors",
-    "load": "cp -R src/assets/audio pulic/assets/",
-    "deploy": "git checkout heroku && npm run build"
+    "dev": "NODE_ENV=dev webpack-dashboard -- nodemon --exec babel-node server/server.js --ignore public/ --ignore src/",
+    "build": "webpack -d --config webpack.prod.config.js --colors",
+    "start": "babel-node server/server.js --presets es2015"
   },
   "author": "Vibert Thio",
   "license": "MIT",
