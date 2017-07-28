@@ -24,13 +24,11 @@
     "material-ui": "^0.18.3",
     "mongodb": "^2.2.27",
     "mongoose": "^4.10.3",
-    "node-sass": "^4.3.0",
     "prop-types": "^15.5.10",
     "react": "15.4.2",
     "react-dom": "15.4.2",
     "react-tap-event-plugin": "^2.0.1",
     "react-window-resize-listener": "^1.1.0",
-    "sass-loader": "^6.0.2",
     "tone": "^0.10.0",
     "two.js": "github:vibertthio/two.js#dev",
     "uuid": "^3.0.1"
@@ -66,7 +64,6 @@
     "webpack-cleanup-plugin": "^0.4.2",
     "webpack-dashboard": "^0.3.0",
     "webpack-dev-middleware": "^1.11.0",
-    "webpack-hot-middleware": "^2.13.2",
-    "webpack-dev-server": "^2.4.1"
+    "webpack-hot-middleware": "^2.13.2"
   }
 }
