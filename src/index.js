@@ -1,12 +1,33 @@
-import React from 'react'; // eslint-disable-line
-import ReactDOM from 'react-dom';
+import React from 'react';
+import { render } from 'react-dom';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import App from './components/App';
 import './index.css';
 
 injectTapEventPlugin();
 
-ReactDOM.render(
-  <App />,
-  document.getElementById('root'),
-);
+const rootElement = document.getElementById('root');
+
+let app;
+if (module.hot) {
+  const { AppContainer } = require('react-hot-loader');
+  app = (
+    <AppContainer>
+      <App />
+    </AppContainer>
+  );
+
+  module.hot.accept('./components/App', () => {
+    const NewApp = require('./components/App').default;
+    render(
+      <AppContainer>
+        <NewApp />
+      </AppContainer>,
+      rootElement,
+    );
+  });
+} else {
+  app = <App />;
+}
+
+render(app, rootElement);

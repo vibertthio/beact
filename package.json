@@ -4,12 +4,12 @@
   "description": "making audio/visual with react and tone.js",
   "main": "''",
   "scripts": {
+    "develope": "NODE_ENV=dev nodemon --exec babel-node server/server.js --ignore public/ --ignore src/",
     "build": "webpack -d --config webpack.production.config.js --colors",
-    "build:watch": "webpack -wd --config webpack.config.js --progress --profile --colors",
+    "server": "babel-node server/server.js --presets es2015",
     "build:serve": "npm run build && serve public",
     "build:deploy": "npm run build && npm run deploy",
     "start": "webpack-dev-server --progress --profile --colors",
-    "server": "nodemon --exec babel-node server/server.js --ignore public/",
     "lint": "eslint --ext js --ext jsx src || exit 0",
     "dev": " webpack-dashboard -- webpack-dev-server --progress --profile --colors",
     "load": "cp -R src/assets/audio pulic/assets/",
@@ -71,6 +71,8 @@
     "webpack": "^2.2.1",
     "webpack-cleanup-plugin": "^0.4.2",
     "webpack-dashboard": "^0.3.0",
+    "webpack-dev-middleware": "^1.11.0",
+    "webpack-hot-middleware": "^2.13.2",
     "webpack-dev-server": "^2.4.1"
   }
 }
