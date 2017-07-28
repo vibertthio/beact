@@ -63,6 +63,7 @@
     "gh-pages": "^1.0.0",
     "html-webpack-plugin": "^2.26.0",
     "imports-loader": "^0.7.1",
+    "lodash-webpack-plugin": "^0.11.4",
     "nodemon": "^1.11.0",
     "postcss-loader": "^1.2.2",
     "react-hot-loader": "^3.0.0-beta.6",
