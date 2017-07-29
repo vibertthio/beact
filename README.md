@@ -89,11 +89,10 @@ brew services start mongo
 ```
 
 
-### 3.4 To build the production package and run the server
+### 3.4 To develop Beact
 
 ```
-npm run build
-npm run server
+npm run dev
 ```
 
 ## 4. Deploy
@@ -108,62 +107,14 @@ npm install
 npm run build
 ```
 
-### 4.2 Replace package.json by following:
-
-```
-{
-  "name": "beact",
-  "version": "0.0.0",
-  "description": "making audio/visual with react and tone.js",
-  "main": "''",
-  "scripts": {
-    "start": "nodemon --exec babel-node server/server.js --ignore public/"
-  },
-  "author": "Vibert Thio",
-  "license": "MIT",
-  "dependencies": {
-    "@tweenjs/tween.js": "^16.7.0",
-    "axios": "^0.16.2",
-    "body-parser": "^1.17.2",
-    "express": "^4.15.3",
-    "keymaster": "^1.6.2",
-    "lodash": "^4.17.4",
-    "material-ui": "^0.18.3",
-    "mongodb": "^2.2.27",
-    "mongoose": "^4.10.3",
-    "node-sass": "^4.3.0",
-    "prop-types": "^15.5.10",
-    "react": "15.4.2",
-    "react-dom": "15.4.2",
-    "react-tap-event-plugin": "^2.0.1",
-    "react-window-resize-listener": "^1.1.0",
-    "sass-loader": "^6.0.2",
-    "tone": "^0.10.0",
-    "two.js": "github:vibertthio/two.js#dev",
-    "uuid": "^3.0.1",
-    "babel-cli": "^6.24.1",
-    "babel-loader": "^6.3.2",
-    "babel-plugin-transform-class-properties": "^6.22.0",
-    "babel-plugin-transform-decorators-legacy": "^1.3.4",
-    "babel-plugin-transform-runtime": "^6.22.0",
-    "babel-preset-es2015": "6.22.0",
-    "babel-preset-react": "^6.23.0",
-    "babel-runtime": "^6.22.0",
-    "nodemon": "^1.11.0",
-    "react-hot-loader": "^3.0.0-beta.6"
-  }
-}
-
-```
-
-### 4.3 Delete /public in "Ignore build files" of .gitignore
+### 4.2 Delete /public in "Ignore build files" of .gitignore
 
 ```
 # Ignore build files
 public << (delete)
 ```
 
-### 4.4 Deploy
+### 4.3 Deploy
 
 ```
 heroku create
