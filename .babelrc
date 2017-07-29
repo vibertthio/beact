@@ -8,7 +8,15 @@
         }
       }
     ],
-    "react"
+    "react",
+    "stage-2",
+    [
+      "babili",
+      {
+        "evaluate": false,
+        "mangle": false
+      }
+    ]
   ],
   "plugins": ["transform-runtime", "transform-decorators-legacy", "transform-class-properties"]
 }
