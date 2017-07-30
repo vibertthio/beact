@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { WindowResizeListener } from 'react-window-resize-listener';
-import _ from 'lodash';
+// import _ from 'lodash';
 import uuid4 from 'uuid/v4';
 import axios from 'axios';
 import key from 'keymaster';
@@ -31,10 +31,16 @@ import menuLogo from '../assets/images/logo.png';
 let fadeoutID;
 let logoID;
 let keys = '';
-_.range(26).forEach((i) => {
-	keys = keys.concat(String.fromCharCode(97 + i));
-	if (i < 25) { keys = keys.concat(', '); }
-});
+keys = new Array(26);
+for (let i = 0; i < 26; i += 1) {
+	keys[i] = String.fromCharCode(97 + i);
+}
+keys = keys.join(', ');
+// let keys = '';
+// _.range(26).forEach((i) => {
+// 	keys = keys.concat(String.fromCharCode(97 + i));
+// 	if (i < 25) { keys = keys.concat(', '); }
+// });
 
 /**
  * DrumMachine
@@ -71,7 +77,7 @@ class DrumMachine extends Component {
       currentPlayingRecord: [],
       currentPlayingRecordElement: 0,
       keyStartTimeCorrection: 0,
-			hidden: true,
+			hidden: false,
 			wait: true,
 			idle: false,
 			currentSample: 'A',
@@ -872,29 +878,16 @@ class DrumMachine extends Component {
    * @return {Element}
    */
   renderPatterns() {
-    return _.map(this.state.patternLists, pattern => (
-      // <div key={uuid4()} className={styles.listWrap}>
-      <div
-        className={styles.renderedLi}
-        key={pattern.id}
-        style={{ color: 'white' }}
-      >
+		const { patternLists } = this.state;
+    return patternLists.map(pattern => (
+      <div className={styles.renderedLi} key={pattern.id}>
         <button className={styles.renderedLiTitle} onTouchTap={() => this.playPattern(pattern)}>
           <span className={styles.listText}>{pattern.title}</span>
         </button>
-        <button
-          className={styles.renderedListX}
-          onTouchTap={() => this.deletePattern(pattern.id)}
-        >
+        <button className={styles.renderedListX} onTouchTap={() => this.deletePattern(pattern.id)}>
           <span className={styles.listXBtn}>X</span>
         </button>
-        {/* <NavigationCloseIcon
-          className={styles.renderedListX}
-          onTouchTap={() => this.deletePattern(pattern.id)}
-        /> */}
-      </div>
-      // </div>
-    ));
+      </div>));
   }
 
   /**
@@ -902,25 +895,18 @@ class DrumMachine extends Component {
    * @return {Element}
    */
   renderRecords() {
-    return _.map(this.state.drumRecords, drumRecord => (
-      // <div key={uuid4()} className={styles.listWrap}>
-      <div
-        className={styles.renderedLi}
-        key={drumRecord.id}
-        style={{ color: 'white' }}
-      >
+		const { drumRecords } = this.state;
+    return drumRecords.map(drumRecord => (
+      <div className={styles.renderedLi} key={drumRecord.id}>
         <button className={styles.renderedLiTitle} onTouchTap={() => this.playRecord(drumRecord)}>
           <span className={styles.listText}>{drumRecord.title}</span>
         </button>
         <button
-          className={styles.renderedListX}
-          onTouchTap={() => this.deleteRecord(drumRecord.id)}
+          className={styles.renderedListX} onTouchTap={() => this.deleteRecord(drumRecord.id)}
         >
           <span className={styles.listXBtn}>X</span>
         </button>
-      </div>
-      // </div>
-    ));
+      </div>));
   }
 
   /**
@@ -928,7 +914,9 @@ class DrumMachine extends Component {
    * @return {Element}
    */
   renderChain() {
-    return _.map(this.state.drumNoteChain, (chainElement, i) => (
+		const { drumNoteChain, currentPlayingChainElement,
+			currentChainElement, currentChainElementIndex } = this.state;
+    return drumNoteChain.map((chainElement, i) => (
       <div
         key={chainElement.id}
         className={styles.chainLi}
@@ -937,11 +925,11 @@ class DrumMachine extends Component {
       >
         <div
           className={
-						`${styles.chainItem}
-						 ${(i === this.state.currentPlayingChainElement) ? styles.currentPlayingItem : ''}`
-					}
+           `${styles.chainItem}
+            ${(i === currentPlayingChainElement) ? styles.currentPlayingItem : ''}`
+          }
         >
-          <span className={styles.chainIndex}>{i + 1}{(this.state.currentChainElement !== '' && this.state.currentChainElementIndex === i) ? ' V' : ''}</span>
+          <span className={styles.chainIndex}>{i + 1}{(currentChainElement !== '' && currentChainElementIndex === i) ? 'V' : ''}</span>
         </div>
       </div>
     ));
