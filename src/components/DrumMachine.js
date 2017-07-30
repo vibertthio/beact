@@ -69,7 +69,7 @@ class DrumMachine extends Component {
       currentPatternId: '',
       drumNoteChain: [],
       currentChainElement: '',
-			currentChainElementIndex: 0,
+	  currentChainElementIndex: 0,
       currentPlayingChainElement: 0,
       drumRecords: [],
       keyRecords: [],
@@ -77,10 +77,10 @@ class DrumMachine extends Component {
       currentPlayingRecord: [],
       currentPlayingRecordElement: 0,
       keyStartTimeCorrection: 0,
-			hidden: false,
-			wait: true,
-			idle: false,
-			currentSample: 'A',
+	  hidden: true,
+	  wait: true,
+	  idle: false,
+	  currentSample: 'A',
     };
 
     this.setCurrentBeat = this.setCurrentBeat.bind(this);
