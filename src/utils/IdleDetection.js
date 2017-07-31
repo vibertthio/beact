@@ -1,6 +1,7 @@
 /**
  * [mouseTimerSetup description]
  * @param  {Function} setIdle
+ * @return {Object}
  * it takes on param, for setting the idle state
  */
 function idleDetection(setIdle) {
@@ -13,7 +14,7 @@ function idleDetection(setIdle) {
    */
   function resetTimer() {
   	window.clearTimeout(timeoutID);
-  	setIdle(false);
+		setIdle(false);
     startTimer();
   }
 
@@ -42,6 +43,17 @@ function idleDetection(setIdle) {
     setIdle(true);
   	startTimer();
   }
+
+	/**
+	 * [deleteTimer description]
+	 */
+	function deleteTimer() {
+		window.clearTimeout(timeoutID);
+	}
+
+	return {
+		deleteTimer,
+	};
 }
 
 
