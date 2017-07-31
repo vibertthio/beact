@@ -18,13 +18,14 @@ if (module.hot) {
   );
 
   module.hot.accept('./components/App', () => {
-    const NewApp = require('./components/App').default;
-    render(
-      <AppContainer>
-        <NewApp />
-      </AppContainer>,
-      rootElement,
-    );
+    window.location.reload(true);
+    // const NewApp = require('./components/App').default;
+    // render(
+    //   <AppContainer>
+    //     <NewApp />
+    //   </AppContainer>,
+    //   rootElement,
+    // );
   });
 } else {
   app = <App />;
