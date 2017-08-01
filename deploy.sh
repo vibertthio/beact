@@ -5,7 +5,7 @@ then
     sed -i '' '/public/d' ./.gitignore
     git add .
     git commit -m "Edit .gitignore to publish"
-    git push master heroku:master --force
+    git push heroku master --force
     git reset HEAD~
     git checkout .gitignore
 else
