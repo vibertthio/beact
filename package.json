@@ -9,7 +9,8 @@
     "build:client": "webpack -d --config webpack.prod.config.js --colors",
     "build:server": "webpack --config webpack.server.config.js -p",
     "build": "npm-run-all build:*",
-    "start": "node public/server.js"
+    "start": "node public/server.js",
+    "deploy": "./deploy.sh"
   },
   "author": "Vibert Thio",
   "license": "MIT",
