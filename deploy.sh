@@ -1,6 +1,6 @@
 STATUS="$(git status)"
 
-if [[ $STATUS == *"nothing to commit, working directory clean"* ]]
+if [[ $STATUS == *"nothing to commit, working tree clean"* ]]
 then
     sed -i '' '/public/d' ./.gitignore
     git add .
@@ -9,5 +9,5 @@ then
     git reset HEAD~
     git checkout .gitignore
 else
-    echo "Need clean working directory to publish"
+    echo "Need clean working tree to publish"
 fi
