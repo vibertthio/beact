@@ -41,6 +41,7 @@ Then **Rock'n Roll**, baanngg.
 ```
 git clone https://github.com/vibertthio/beact
 npm install
+npm run build
 npm run start
 ```
 
@@ -119,8 +120,7 @@ public << (delete)
 ```
 heroku create
 heroku addons:create mongolab:sandbox
-git push heroku master
-heroku open
+npm run deploy
 ```
 
 ## 5. Basic Usage
