@@ -17,6 +17,11 @@ if (module.hot) {
     </AppContainer>
   );
 
+  // module.hot.addStatusHandler((status) => {
+  //   // React to the current status...
+  //   console.log(`status : ${status}`);
+  // });
+
   module.hot.accept('./components/App', () => {
     window.location.reload(true);
     // const NewApp = require('./components/App').default;
