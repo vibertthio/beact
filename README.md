@@ -39,7 +39,8 @@ First, clone the repo and install dependencies.
 Then **Rock'n Roll**, baanngg.
 
 ```
-git clone https://github.com/vibertthio/beact
+git clone https://github.com/vibertthio/beact beact
+cd beact
 npm install
 npm run build
 npm run start
