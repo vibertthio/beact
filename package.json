@@ -10,6 +10,7 @@
     "build:server": "webpack --config webpack.server.config.js -p",
     "build": "npm-run-all build:*",
     "start": "node public/server.js",
+    "predeploy": "npm run build",
     "deploy": "./deploy.sh"
   },
   "author": "Vibert Thio",
