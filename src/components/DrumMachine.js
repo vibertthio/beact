@@ -36,11 +36,6 @@ for (let i = 0; i < 26; i += 1) {
 	keys[i] = String.fromCharCode(97 + i);
 }
 keys = keys.join(', ');
-// let keys = '';
-// _.range(26).forEach((i) => {
-// 	keys = keys.concat(String.fromCharCode(97 + i));
-// 	if (i < 25) { keys = keys.concat(', '); }
-// });
 
 /**
  * DrumMachine
@@ -69,7 +64,7 @@ class DrumMachine extends Component {
       currentPatternId: '',
       drumNoteChain: [],
       currentChainElement: '',
-	  currentChainElementIndex: 0,
+	  	currentChainElementIndex: 0,
       currentPlayingChainElement: 0,
       drumRecords: [],
       keyRecords: [],
@@ -77,10 +72,10 @@ class DrumMachine extends Component {
       currentPlayingRecord: [],
       currentPlayingRecordElement: 0,
       keyStartTimeCorrection: 0,
-	  hidden: true,
-	  wait: true,
-	  idle: false,
-	  currentSample: 'A',
+	    hidden: true,
+	    wait: true,
+	    idle: false,
+	    currentSample: 'A',
     };
 
     this.setCurrentBeat = this.setCurrentBeat.bind(this);
@@ -118,12 +113,12 @@ class DrumMachine extends Component {
 		this.setSample = this.setSample.bind(this);
 
     this.sequencer = new Sequencer(
-      this.state.data,
-      this.setCurrentBeat,
-      this.playNextChainElement,
-      this.storeDrumRecord,
-      this.playNextRecordElement,
-      this.playDrumAni,
+	    this.state.data,
+	    this.setCurrentBeat,
+	    this.playNextChainElement,
+	    this.storeDrumRecord,
+	    this.playNextRecordElement,
+	    this.playDrumAni,
     );
 
     this.keyboard = new Keyboard(this.storeKeyRecord);
