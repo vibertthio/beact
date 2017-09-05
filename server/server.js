@@ -13,8 +13,6 @@ if (process.env.NODE_ENV === 'dev') {
   const webpackMiddleware = require('webpack-dev-middleware');
   const webpackHotMiddleware = require('webpack-hot-middleware');
   const webpack = require('webpack');
-  // const webpackConfig = require('../webpack.config.js');
-  // const webpackDevConfig = webpackConfig('dev');
   const webpackDevConfig = require('../webpack.dev.config.js');
   const compiler = webpack(webpackDevConfig);
   const middleware = webpackMiddleware(compiler, {

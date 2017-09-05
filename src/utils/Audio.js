@@ -328,8 +328,8 @@ export class Keyboard {
   }
 
   /**
-  * @param  {Object} record width of window
-  * @param  {Function} aniTrigger width of window
+  * @param  {Object} record
+  * @param  {Function} aniTrigger
    * [playRecord description]
    */
   playRecord(record, aniTrigger) {

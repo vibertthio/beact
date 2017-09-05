@@ -24,8 +24,9 @@ class Matrix extends Component {
    * [componentDidMount description]
    */
   componentDidMount() {
-    idleDetection(this.setIdle);
+    this.timer = idleDetection(this.setIdle);
   }
+
 
   /**
    * [setIdle description]
@@ -35,6 +36,16 @@ class Matrix extends Component {
     this.setState({
       idle: isIdle,
     });
+  }
+
+  /**
+   * [componentWillUnmout description]
+   */
+  componentWillUnmout() {
+    this.setState({
+      idle: true,
+    });
+    this.timer.deleteTimer();
   }
 
   /**

@@ -401,7 +401,7 @@ class DrumMachine extends Component {
     for (let i = 0; i < this.state.keyRecords.length; i += 1) {
       if (this.state.keyRecords[i].id === record.id) {
         this.startSequencer();
-        this.keyboard.playRecord(this.state.keyRecords[i], this.ani.trigger);
+        this.keyboard.playRecord(this.state.keyRecords[i], this.ani.triggerKeyAnimation);
       }
     }
   }
