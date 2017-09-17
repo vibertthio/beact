@@ -15,9 +15,10 @@ class Matrix extends Component {
     super();
     this.state = {
       idle: false,
+      hover: { i: '', j: '' },
     };
-
     this.setIdle = this.setIdle.bind(this);
+    this.mouseOver = this.mouseOver.bind(this);
   }
 
   /**
@@ -26,7 +27,6 @@ class Matrix extends Component {
   componentDidMount() {
     this.timer = idleDetection(this.setIdle);
   }
-
 
   /**
    * [setIdle description]
@@ -49,10 +49,22 @@ class Matrix extends Component {
   }
 
   /**
+   * [mouseOver description]
+   * @param {number} i [description]
+   * @param {number} j [description]
+   */
+  mouseOver(i, j) {
+    this.setState({
+      hover: { i, j },
+    });
+  }
+
+  /**
    * [render description]
    * @return {Element} [description]
    */
   render() {
+		const { hover } = this.state;
     const { data, onClick } = this.props;
     return (
       <div
@@ -72,10 +84,12 @@ class Matrix extends Component {
                 key={uuid4()}
                 className={
                   `${styles.rect}
-                  ${(i === this.props.currentBeat) && this.props.playing ?
+                   ${(i === this.props.currentBeat) && this.props.playing ?
                     styles.current : ''}
-                    ${data[i][j] === 1 ? styles.clicked : ''}`
+                   ${data[i][j] === 1 ? styles.clicked : ''}
+									 ${hover.i === i && hover.j === j ? styles.hover : ''}`
                   }
+                onMouseEnter={() => this.mouseOver(i, j)}
                 onTouchTap={() => onClick(i, j)}
               />,
               )}
