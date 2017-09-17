@@ -1,15 +1,8 @@
 import React, { Component } from 'react';
 import { WindowResizeListener } from 'react-window-resize-listener';
-// import _ from 'lodash';
 import uuid4 from 'uuid/v4';
 import axios from 'axios';
 import key from 'keymaster';
-import NavigationMenuIcon from 'material-ui/svg-icons/navigation/menu';
-import NavigationRefreshIcon from 'material-ui/svg-icons/navigation/refresh';
-import NavigationCloseIcon from 'material-ui/svg-icons/navigation/close';
-import AVShuffleIcon from 'material-ui/svg-icons/av/shuffle';
-import AVPlayArrowIcon from 'material-ui/svg-icons/av/play-arrow';
-import AVPauseIcon from 'material-ui/svg-icons/av/pause';
 
 import styles from '../styles/DrumMachine.css';
 import Matrix from './Matrix';
@@ -27,6 +20,12 @@ import menu9 from '../assets/images/menu/menu9.svg';
 import menu10 from '../assets/images/menu/menu10.svg';
 import menu11 from '../assets/images/menu/menu11.svg';
 import menuLogo from '../assets/images/logo.png';
+import mi1 from '../assets/images/material-icon/ic_menu_white_24dp_2x.png';
+import mi2 from '../assets/images/material-icon/ic_close_white_24dp_2x.png';
+import mi3 from '../assets/images/material-icon/ic_pause_white_24dp_2x.png';
+import mi4 from '../assets/images/material-icon/ic_play_arrow_white_24dp_2x.png';
+import mi5 from '../assets/images/material-icon/ic_refresh_white_24dp_2x.png';
+import mi6 from '../assets/images/material-icon/ic_shuffle_white_24dp_2x.png';
 
 let fadeoutID;
 let logoID;
@@ -939,52 +938,41 @@ class DrumMachine extends Component {
     return (
       <div className={(wait === true) ? styles.hideDOM : styles.showDOM}>
         {(this.sequencer.isPlayingRecord === false)
-          ? <NavigationMenuIcon
-            className={
-						`${styles.icon}
-						 ${styles.menuIcon}
-						 ${(hidden === true) ? '' : styles.displayHide}`
-					}
+          ? <button
+            className={`${styles.icon} ${styles.menuIcon} ${(hidden === true) ? '' : styles.displayHide}`}
             onTouchTap={() => this.toggleHidden()}
-            style={{ color: '#eecdcc' }}
-          /> : <NavigationCloseIcon
-            className={
-						`${styles.icon}
-						 ${styles.menuIcon}`
-            }
+          >
+            <img src={mi1} alt="menu" />
+          </button> : <button
+            className={`${styles.icon} ${styles.menuIcon}`}
             onClick={() => console.log('Exit Playing Record Button clicked')}
             onTouchTap={() => this.exitPlayRecord()}
-            style={{ color: '#eecdcc' }}
-          />}
+          >
+            <img src={mi2} alt="close" />
+          </button>}
         {(playing)
-          ? <AVPauseIcon
-            className={
-  						`${styles.icon}
-  						 ${styles.toggleIcon}
-  						 ${(hidden === true) ? '' : styles.displayHide}`
-  					}
+          ? <button
+            className={`${styles.icon} ${styles.toggleIcon} ${(hidden === true) ? '' : styles.displayHide}`}
             onTouchTap={() => this.stopSequencer()}
-            style={{ color: '#eecdcc' }}
-          /> : <AVPlayArrowIcon
-            className={
-  						`${styles.icon}
-  						 ${styles.toggleIcon}
-  						 ${(hidden === true) ? '' : styles.displayHide}`
-  					}
+          >
+            <img src={mi3} alt="pause" />
+          </button> : <button
+            className={`${styles.icon} ${styles.toggleIcon} ${(hidden === true) ? '' : styles.displayHide}`}
             onTouchTap={() => this.startSequencer()}
-            style={{ color: '#eecdcc' }}
-          />
-          }
-        <NavigationRefreshIcon
+          >
+            <img src={mi4} alt="play" />
+          </button>}
+        <button
           className={
-						`${styles.icon}
-						 ${styles.clearIcon}
-						 ${(hidden === true) ? '' : styles.displayHide}`
-					}
+					`${styles.icon}
+					 ${styles.clearIcon}
+					 ${(hidden === true) ? '' : styles.displayHide}`
+				  }
           onTouchTap={() => this.clearClicked()}
-          style={{ color: '#eecdcc' }}
-        />
-        <AVShuffleIcon
+        >
+          <img src={mi5} alt="refresh" />
+        </button>
+        <button
           className={
 						`${styles.icon}
 						 ${styles.randomIcon}
@@ -992,8 +980,9 @@ class DrumMachine extends Component {
 					}
           onTouchTap={() => this.randomClicked()}
           style={{ color: '#eecdcc' }}
-        />
-
+        >
+          <img src={mi6} alt="shuffle" />
+        </button>
         <div
           className={
 					`${styles.menu}
@@ -1012,9 +1001,7 @@ class DrumMachine extends Component {
                     onClick={() => console.log('Start Button clicked')}
                     onTouchTap={() => this.startSequencer()}
                   >
-                    {/* <div className={styles.row1l}> */}
                     <img src={menu1} alt="Start Button" />
-                    {/* </div> */}
                   </button>
                   <button
                     className={styles.row1r}
@@ -1067,9 +1054,7 @@ class DrumMachine extends Component {
                   />
                 </div>
                 <div className={styles.row3rd}>
-                  {/* <ul> */}
                   {this.renderPatterns()}
-                  {/* </ul> */}
                 </div>
               </div>
             </div>
@@ -1124,16 +1109,6 @@ class DrumMachine extends Component {
                 >
     								+
     							</div>
-                {/* <div>
-                    <span className={styles.chainIndex}>
-                      {(this.state.currentChainElement !== '')
-												? this.state.currentChainElementIndex + 1 : 0}
-                    </span>
-                    <span className={styles.chainDivider}>/</span>
-                    <span className={styles.chainLength}>
-                      {this.state.drumNoteChain.length}
-                    </span>
-                  </div> */}
               </div>
             </div>
             {/* 6 */}
@@ -1152,33 +1127,6 @@ class DrumMachine extends Component {
                 >
                   <img src={menu11} alt="Record Button" />
                 </button>
-                {/* <div className={styles.row7lu}>
-                  <button
-                    className={styles.row7lul}
-                    onClick={() => console.log('Record Button clicked')}
-                    onTouchTap={() => this.recordSequencer()}
-                  >
-                    <img src={menu11} alt="Record Button" />
-                  </button>
-                  <button
-                    className={styles.row7lur} onClick={() => console.log('Save Button clicked')}>
-                    <img src={menu2} alt="Save Button" />
-                  </button>
-                </div> */}
-                {/* <div className={styles.row7ld}>
-                <button
-                  className={styles.row7ldl}
-                  onClick={() => console.log('Clear Current Record Button clicked')}>
-                    <img src={menu5} alt="Clear Current Record Button" />
-                  </button>
-                  <button
-                    className={styles.row7ldr}
-                    onClick={() => console.log('Exit Playing Record Button clicked')}
-                    onTouchTap={() => this.exitPlayRecord()}
-                  >
-                    <img src={menu9} alt="Exit Playing Record Button" />
-                  </button>
-                </div> */}
               </div>
               <div
                 className={
@@ -1195,9 +1143,7 @@ class DrumMachine extends Component {
                   />
                 </div>
                 <div className={styles.row3rd}>
-                  {/* <ul> */}
                   {this.renderRecords()}
-                  {/* </ul> */}
                 </div>
               </div>
             </div>
@@ -1220,31 +1166,6 @@ class DrumMachine extends Component {
         >
           <img src={menuLogo} alt="BEACT" className={styles.menuLogo} />
         </button>
-        {/* <button
-                className={styles.btn}
-                onClick={() => console.log('update pattern')} onTouchTap={() => this.editPattern()}>
-						Update Pattern
-					</button>
-          <button
-            className={styles.btn}
-            onClick={() => console.log('delete current pattern')}
-            onTouchTap={() => this.deleteCurrentPattern()}>
-						Delete Current Pattern
-					</button> */}
-        {/* <div className={styles.chainList}>
-						<hr />
-						<ul>
-							{this.renderChain()}
-							<li
-								style={{ color: 'yellow' }}
-								onTouchTap={() => this.setCurrentChainElementAtLast()}
-							>
-								Update at here in this li
-							</li>
-						</ul>
-						<hr />
-          </div>
-        </button> */}
         <Matrix
           data={this.state.data}
           playing={this.state.playing}

@@ -61,7 +61,7 @@ module.exports = {
       template: './src/template.html',
       files: {
         css: ['style.css'],
-        js: [ "bundle.js"],
+        js: ["bundle.js"],
       },
       filename: 'index.html',
     }),
