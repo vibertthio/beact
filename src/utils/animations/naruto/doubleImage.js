@@ -22,10 +22,10 @@ export default function doubleImage(
   colors,
   animations,
   imgUrls = [defaultImgUrl1, defaultImgUrl2],
-  scales = [1, 0.1],
+  scales = [0.4, 0.22],
   opacity = 1,
   duration = 400,
-  ratios = [0.8, 0.1],
+  ratios = [1, 0.2],
   ) {
   let playing = false;
 

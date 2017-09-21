@@ -263,6 +263,7 @@ export class Keyboard {
   notes: Array<String>;
   samples: Object;
   recording: Boolean;
+	loadingSamples: Boolean;
   /**
    * [constructor description]
    * @param  {[type]} storeRecord [description]
@@ -279,6 +280,7 @@ export class Keyboard {
     }).toMaster();
     this.recording = false;
     this.saveRecord = this.saveRecord.bind(this);
+		this.currentSampleIndex = 0;
   }
 
   /**
@@ -286,7 +288,7 @@ export class Keyboard {
    */
   playKey() {
     console.log(`key: ${this.currentKey}`);
-    if (this.currentKey !== null) {
+    if (this.currentKey !== null && !this.loadingSamples) {
       this.samples.start(this.notes[this.currentKey]);
       if (this.recording === true) {
         const time = Transport.seconds;
@@ -351,6 +353,38 @@ export class Keyboard {
      this.samples.stopAll([time]);
      // Transport.cancel([time]);
     }
+
+	/**
+	 * [changeSampleSet description]
+	 * @param  {[type]} up [description]
+	 */
+	changeSampleSet(up) {
+	  this.currentSampleIndex =
+	    (this.currentSampleIndex + (up ? 1 : -1)) % keysUrls.length;
+	  if (this.currentSampleIndex < 0) {
+	    this.currentSampleIndex += keysUrls.length;
+	  }
+
+	  console.log(this.currentSampleIndex);
+	  this.loadSamples();
+	}
+
+	/**
+	 * [loadSamples description]
+	 */
+	loadSamples() {
+	  console.log(`start loading key sound bank : ${this.currentSampleIndex}`);
+	  this.loadingSamples = true;
+	  this.samples = new MultiPlayer({
+	    urls: keysUrls[this.currentSampleIndex],
+	    volume: -2,
+	    fadeOut: 0.4,
+	    onload: () => {
+	      this.loadingSamples = false;
+	    },
+	 }).toMaster();
+	}
+
 }
 
 const changeBPM = (value) => {

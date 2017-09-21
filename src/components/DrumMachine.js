@@ -805,13 +805,27 @@ class DrumMachine extends Component {
 		key('left', () => {
 			this.sequencer.changeSampleSet(false);
 		});
+		key('up', () => {
+			this.keyboard.changeSampleSet(true);
+		});
+		key('down', () => {
+			this.keyboard.changeSampleSet(false);
+		});
 
-		// change animation bank
+		// change sequencer animation bank
 		key('shift+right', () => {
 			this.ani.changeSequencerAnimations(true);
 		});
 		key('shift+left', () => {
 			this.ani.changeSequencerAnimations(false);
+		});
+
+		// change key animation bank
+		key('shift+up', () => {
+			this.ani.changeKeyAnimations(true);
+		});
+		key('shift+down', () => {
+			this.ani.changeKeyAnimations(false);
 		});
 
 		// loading presets
