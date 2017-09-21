@@ -32,6 +32,7 @@ import sculpture from '../../assets/images/animations/sculpture-02.png';
 
 import crossline from '../animations/scyaAni/scya-crossline';
 import firework from '../animations/scyaAni/scya-firework';
+import doubleImage from '../animations/naruto/doubleImage';
 
 /**
  * Math Definition
@@ -324,7 +325,7 @@ const sequencerAnimationsSet = [
 	[
 		{ animation: firework },
 		{ animation: crossline },
-		{ animation: crossline },
+		{ animation: doubleImage, options: [[landscape, sculpture]]},
 		{ animation: crossline },
 		{ animation: crossline },
 		{ animation: crossline },
