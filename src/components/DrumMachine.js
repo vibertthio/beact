@@ -805,10 +805,10 @@ class DrumMachine extends Component {
 		key('left', () => {
 			this.sequencer.changeSampleSet(false);
 		});
-		key('up', () => {
+		key('tab+up', () => {
 			this.keyboard.changeSampleSet(true);
 		});
-		key('down', () => {
+		key('tab+down', () => {
 			this.keyboard.changeSampleSet(false);
 		});
 
