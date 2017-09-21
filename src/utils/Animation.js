@@ -98,7 +98,6 @@ function Animation() {
   };
 }
 
-
 export {
 	animationKey2IndexMapping,
 };

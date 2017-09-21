@@ -51,10 +51,15 @@
   }
 }
 
-.rect:hover {
+.hover {
+    cursor: pointer;
+    opacity: 1;
+}
+
+/*.rect:hover {
   cursor: pointer;
   opacity: 1;
-}
+}*/
 
 .clicked {
   background-color: #ccedee;

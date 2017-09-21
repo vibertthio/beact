@@ -23,7 +23,6 @@
     "image-size-loader": "^0.7.0",
     "keymaster": "^1.6.2",
     "lodash": "^4.17.4",
-    "material-ui": "^0.18.3",
     "mongodb": "^2.2.27",
     "mongoose": "^4.10.3",
     "prop-types": "^15.5.10",

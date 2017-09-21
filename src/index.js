@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import App from './components/App';
+import DrumMachine from './components/DrumMachine';
 import './index.css';
 
 injectTapEventPlugin();
@@ -13,7 +13,7 @@ if (module.hot) {
   const { AppContainer } = require('react-hot-loader');
   app = (
     <AppContainer>
-      <App />
+      <DrumMachine />
     </AppContainer>
   );
 
@@ -33,7 +33,7 @@ if (module.hot) {
     // );
   });
 } else {
-  app = <App />;
+  app = <DrumMachine />;
 }
 
 render(app, rootElement);

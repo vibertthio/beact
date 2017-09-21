@@ -7,9 +7,22 @@
 }
 
 .icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: fixed;
+  width: 30px;
+  height: 30px;
   cursor: pointer;
+  background-color: transparent;
+  border: none;
+  outline: none;
   z-index: 2;
+}
+
+.icon > img {
+  width: 25px;
+  height: 25px;
 }
 
 .icon:hover {
@@ -18,13 +31,13 @@
 }
 
 .menuIcon {
-  top: 1.5em;
-  left: 2em;
+  top: 2em;
+  left: 2.6em;
 }
 
 .toggleIcon {
-  top: 3.6em;
-  left: 2em;
+  top: 5em;
+  left: 2.5em;
 }
 
 .clearIcon {
@@ -33,7 +46,7 @@
 }
 
 .randomIcon {
-  top: 4em;
+  top: 5em;
   right: 2em;
 }
 
