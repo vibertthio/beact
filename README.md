@@ -30,6 +30,9 @@ I have added some my own animation and will do more to replace ones from patatap
 5.   up/down to change bpm.
 6.   left/right to change sound bank of drum machine.
 7.   press 1 ~ 8 for different presets.
+8.   shift+up/down to change animations of keyboard.
+9.   shift+left/right to change animations of drum machine.
+10.   press naruto icon to set naruto animation of keyboard.
 
 
 ## 2. Run on Local
