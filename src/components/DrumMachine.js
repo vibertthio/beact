@@ -1033,7 +1033,8 @@ class DrumMachine extends Component {
 					}
           onTouchTap={() => this.toggleNarutoBool()}
         >
-          {narutoBool ? <img src={narutoG} className={styles.glow} alt="narutoG" /> : <img src={narutoW} alt="narutoW" />}
+          {narutoBool ? <img src={narutoG} className={styles.glow} alt="narutoG" /> : null}
+          {narutoBool ? null : <img src={narutoW} alt="narutoW" />}
         </button>
         <div
           className={
