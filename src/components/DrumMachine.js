@@ -26,6 +26,8 @@ import mi3 from '../assets/images/material-icon/ic_pause_white_24dp_2x.png';
 import mi4 from '../assets/images/material-icon/ic_play_arrow_white_24dp_2x.png';
 import mi5 from '../assets/images/material-icon/ic_refresh_white_24dp_2x.png';
 import mi6 from '../assets/images/material-icon/ic_shuffle_white_24dp_2x.png';
+import narutoW from '../assets/images/material-icon/narutoW.png';
+import narutoG from '../assets/images/material-icon/narutoG.png';
 
 let fadeoutID;
 let logoID;
@@ -75,6 +77,7 @@ class DrumMachine extends Component {
 	    wait: true,
 	    idle: false,
 	    currentSample: 'A',
+			narutoBool: false,
     };
 
     this.setCurrentBeat = this.setCurrentBeat.bind(this);
@@ -126,6 +129,8 @@ class DrumMachine extends Component {
 		this.hideSpinner = this.hideSpinner.bind(this);
 		this.showDOM = this.showDOM.bind(this);
 		// this.showLogo = this.showLogo.bind(this);
+
+		this.toggleNarutoBool = this.toggleNarutoBool.bind(this);
   }
 
   /**
@@ -265,6 +270,16 @@ class DrumMachine extends Component {
 		}
 		this.setState({
 			data,
+		});
+	}
+
+	/**
+   * [toggleNarutoBool description]
+   * @param  {bool} narutoBool
+   */
+	toggleNarutoBool() {
+		this.setState({
+			narutoBool: !this.state.narutoBool,
 		});
 	}
 
@@ -805,13 +820,27 @@ class DrumMachine extends Component {
 		key('left', () => {
 			this.sequencer.changeSampleSet(false);
 		});
+		key('tab+up', () => {
+			this.keyboard.changeSampleSet(true);
+		});
+		key('tab+down', () => {
+			this.keyboard.changeSampleSet(false);
+		});
 
-		// change animation bank
+		// change sequencer animation bank
 		key('shift+right', () => {
 			this.ani.changeSequencerAnimations(true);
 		});
 		key('shift+left', () => {
 			this.ani.changeSequencerAnimations(false);
+		});
+
+		// change key animation bank
+		key('shift+up', () => {
+			this.ani.changeKeyAnimations(true);
+		});
+		key('shift+down', () => {
+			this.ani.changeKeyAnimations(false);
 		});
 
 		// loading presets
@@ -934,7 +963,7 @@ class DrumMachine extends Component {
    * @return {Element}
    */
   render() {
-		const { hidden, wait, playing } = this.state;
+		const { hidden, wait, playing, narutoBool } = this.state;
     return (
       <div className={(wait === true) ? styles.hideDOM : styles.showDOM}>
         {(this.sequencer.isPlayingRecord === false)
@@ -982,6 +1011,16 @@ class DrumMachine extends Component {
           style={{ color: '#eecdcc' }}
         >
           <img src={mi6} alt="shuffle" />
+        </button>
+        <button
+          className={
+						`${styles.icon}
+						 ${styles.narutoIcon}
+						 ${(hidden === true) ? '' : styles.displayHide}`
+					}
+          onTouchTap={() => this.toggleNarutoBool()}
+        >
+          {narutoBool ? <img src={narutoG} alt="narutoG" /> : <img src={narutoW} alt="narutoW" />}
         </button>
         <div
           className={
@@ -1185,7 +1224,6 @@ class DrumMachine extends Component {
       </div>
     );
   }
-
 }
 
 export default DrumMachine;

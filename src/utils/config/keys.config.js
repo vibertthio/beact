@@ -38,6 +38,34 @@ const keysUrls = [
     25: './assets/audio/chillsaxiao/pad.mp3',
     26: './assets/audio/chillsaxiao/man.mp3',
   },
+	{
+		1: './assets/audio/naruto/01.mp3', // a ok
+		2: './assets/audio/naruto/02.mp3', // b ok
+		3: './assets/audio/naruto/03.mp3', // c ok
+		4: './assets/audio/naruto/04.mp3', // d ok
+		5: './assets/audio/naruto/05.mp3', // e ok
+		6: './assets/audio/naruto/06.mp3', // f ok
+		7: './assets/audio/naruto/07.mp3', // g ok
+		8: './assets/audio/naruto/08.mp3', // h ok
+		9: './assets/audio/naruto/09.mp3', // i ok
+		10: './assets/audio/naruto/10.mp3', // j ok
+		11: './assets/audio/naruto/11.mp3', // k ok
+		12: './assets/audio/naruto/12.mp3', // l ok
+		13: './assets/audio/naruto/01.mp3', // m
+		14: './assets/audio/naruto/02.mp3', // n
+		15: './assets/audio/naruto/03.mp3', // o
+		16: './assets/audio/naruto/04.mp3', // p
+		17: './assets/audio/naruto/11.mp3', // q
+		18: './assets/audio/naruto/06.mp3', // r
+		19: './assets/audio/naruto/09.mp3', // s
+		20: './assets/audio/naruto/08.mp3', // t
+		21: './assets/audio/naruto/07.mp3', // u
+		22: './assets/audio/naruto/10.mp3', // v
+		23: './assets/audio/naruto/12.mp3', // w
+		24: './assets/audio/naruto/05.mp3', // x
+		25: './assets/audio/naruto/01.mp3', // y
+		26: './assets/audio/naruto/02.mp3', // z
+	},
 ];
 
 export {

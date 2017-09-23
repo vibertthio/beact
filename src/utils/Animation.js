@@ -18,7 +18,7 @@ function Animation() {
    */
   const keyAnimations = [];
   const sequencerAnimations = [];
-  const currentKeyAnimationsIndex = 0;
+  let currentKeyAnimationsIndex = 0;
   let currentSequencerAnimationsIndex = 0;
   const colors = pallete[2].map(toRGB);
   const canvas = document.getElementById('animation');
@@ -87,6 +87,19 @@ function Animation() {
     setKeyAnimation();
   };
 
+	const changeKeyAnimations = (up) => {
+    const n = keyAnimations.length;
+    currentKeyAnimationsIndex += (up ? 1 : -1);
+    if (currentKeyAnimationsIndex < 0) {
+      currentKeyAnimationsIndex += n;
+    } else if (currentKeyAnimationsIndex > n - 1) {
+      currentKeyAnimationsIndex = 0;
+    }
+    reset();
+    setSequencerAnimations();
+    setKeyAnimation();
+  };
+
   setSequencerAnimations();
   setKeyAnimation();
 
@@ -94,6 +107,7 @@ function Animation() {
     triggerKeyAnimation,
     triggerSequencerAnimation,
     changeSequencerAnimations,
+		changeKeyAnimations,
     resize,
   };
 }
