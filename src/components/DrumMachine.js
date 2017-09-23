@@ -805,12 +805,6 @@ class DrumMachine extends Component {
 		key('left', () => {
 			this.sequencer.changeSampleSet(false);
 		});
-		key('tab+up', () => {
-			this.keyboard.changeSampleSet(true);
-		});
-		key('tab+down', () => {
-			this.keyboard.changeSampleSet(false);
-		});
 
 		// change sequencer animation bank
 		key('shift+right', () => {
@@ -820,12 +814,26 @@ class DrumMachine extends Component {
 			this.ani.changeSequencerAnimations(false);
 		});
 
-		// change key animation bank
+		// change key animation/sound bank
 		key('shift+up', () => {
 			this.ani.changeKeyAnimations(true);
+			this.keyboard.changeSampleSet(true);
+			// turn naruto state T/F (IF STATEMENT)
 		});
 		key('shift+down', () => {
 			this.ani.changeKeyAnimations(false);
+			this.keyboard.changeSampleSet(false);
+			// turn naruto state T/F (IF STATEMENT)
+		});
+
+		key('0', () => {
+			this.keyboard.startNaruto();
+			this.ani.startNaruto();
+		});
+
+		key('9', () => {
+			this.keyboard.startNormal();
+			this.ani.startNormal();
 		});
 
 		// loading presets

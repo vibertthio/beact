@@ -369,6 +369,24 @@ export class Keyboard {
 	  this.loadSamples();
 	}
 
+  /**
+	 * [startNaruto description]
+	 */
+  startNaruto() {
+	  this.currentSampleIndex = 1;
+	  console.log(this.currentSampleIndex);
+	  this.loadSamples();
+	}
+
+	/**
+	 * [startNaruto description]
+	 */
+	startNormal() {
+		this.currentSampleIndex = 0;
+		console.log(this.currentSampleIndex);
+		this.loadSamples();
+	}
+
 	/**
 	 * [loadSamples description]
 	 */
