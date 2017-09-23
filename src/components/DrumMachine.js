@@ -278,6 +278,13 @@ class DrumMachine extends Component {
    * @param  {bool} narutoBool
    */
 	toggleNarutoBool() {
+		if (this.state.narutoBool) {
+			this.keyboard.startNormal();
+			this.ani.startNormal();
+		} else {
+			this.keyboard.startNaruto();
+			this.ani.startNaruto();
+		}
 		this.setState({
 			narutoBool: !this.state.narutoBool,
 		});
@@ -833,22 +840,20 @@ class DrumMachine extends Component {
 		key('shift+up', () => {
 			this.ani.changeKeyAnimations(true);
 			this.keyboard.changeSampleSet(true);
-			// turn naruto state T/F (IF STATEMENT)
+			if (this.keyboard.currentSampleIndex === 1) {
+				this.setState({ narutoBool: true });
+			} else {
+				this.setState({ narutoBool: false });
+			}
 		});
 		key('shift+down', () => {
 			this.ani.changeKeyAnimations(false);
 			this.keyboard.changeSampleSet(false);
-			// turn naruto state T/F (IF STATEMENT)
-		});
-
-		key('0', () => {
-			this.keyboard.startNaruto();
-			this.ani.startNaruto();
-		});
-
-		key('9', () => {
-			this.keyboard.startNormal();
-			this.ani.startNormal();
+			if (this.keyboard.currentSampleIndex === 1) {
+				this.setState({ narutoBool: true });
+			} else {
+				this.setState({ narutoBool: false });
+			}
 		});
 
 		// loading presets
