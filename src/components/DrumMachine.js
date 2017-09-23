@@ -27,7 +27,7 @@ import mi4 from '../assets/images/material-icon/ic_play_arrow_white_24dp_2x.png'
 import mi5 from '../assets/images/material-icon/ic_refresh_white_24dp_2x.png';
 import mi6 from '../assets/images/material-icon/ic_shuffle_white_24dp_2x.png';
 import narutoW from '../assets/images/material-icon/narutoW.png';
-import narutoG from '../assets/images/material-icon/narutoG.png';
+import narutoG from '../assets/images/material-icon/narutoG2.png';
 
 let fadeoutID;
 let logoID;
