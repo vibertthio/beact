@@ -2,12 +2,10 @@
   display: flex;
   height: 100%;
   transition: opacity 1s ease-out;
-  /*border: solid 1px red;*/
 }
 
 .row {
   display: flex;
-  /*border: solid 1px blue;*/
 }
 
 .rect {
@@ -15,8 +13,8 @@
   /*min-height: 2em;*/
   margin: 0.2em;
   background-color: #585f60;
+  transition: opacity .3s ease-in;
   opacity: 0.1;
-  transition: opacity .3s ease-in-out;
   outline: none;
   border: none;
 }
@@ -51,20 +49,20 @@
   }
 }
 
+.clicked {
+  background-color: #ccedee;
+  opacity: 0.5;
+}
+
 .hover {
-    cursor: pointer;
-    opacity: 0.3;
+  cursor: pointer;
+  opacity: 1;
 }
 
 /*.rect:hover {
   cursor: pointer;
   opacity: 1;
 }*/
-
-.clicked {
-  background-color: #ccedee;
-  opacity: 0.5;
-}
 
 .current {
   background-color: #eecdcc;
