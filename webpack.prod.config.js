@@ -66,6 +66,7 @@ module.exports = {
     new CopyWebpackPlugin([
       { from: 'src/assets/audio', to: 'assets/audio' },
       { from: 'src/assets/images/logo.png' },
+      { from: 'src/assets/images/fbimg.jpg' },
       { from: 'src/assets/images/ico/flash.ico' },
     ]),
   ]
