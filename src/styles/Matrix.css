@@ -1,7 +1,7 @@
 .matrix {
   display: flex;
   height: 100%;
-  transition: opacity 1s ease-out;
+  transition: opacity 0.1s ease-out;
 }
 
 .row {
@@ -13,7 +13,7 @@
   /*min-height: 2em;*/
   margin: 0.2em;
   background-color: #585f60;
-  transition: opacity .3s ease-in;
+  transition: opacity 0.1s ease-in;
   opacity: 0.1;
   outline: none;
   border: none;
@@ -51,12 +51,12 @@
 
 .clicked {
   background-color: #ccedee;
-  opacity: 0.5;
+  opacity: 0.3;
 }
 
 .hover {
-  cursor: pointer;
-  opacity: 1;
+  /*cursor: pointer;*/
+  /*opacity: 0.4;*/
 }
 
 /*.rect:hover {

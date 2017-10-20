@@ -15,7 +15,7 @@ class Matrix extends Component {
     super();
     this.state = {
       idle: false,
-      hover: { i: '', j: '' },
+      hover: { i: -1, j: -1 },
     };
     this.setIdle = this.setIdle.bind(this);
     this.mouseEnter = this.mouseEnter.bind(this);
@@ -54,6 +54,7 @@ class Matrix extends Component {
    * @param {number} j [description]
    */
   mouseEnter(i, j) {
+    this.setIdle(false);
     this.setState({
       hover: { i, j },
     });
