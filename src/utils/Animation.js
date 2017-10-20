@@ -86,7 +86,6 @@ function Animation() {
     setSequencerAnimations();
     setKeyAnimation();
   };
-
 	const changeKeyAnimations = (up) => {
     const n = keyAnimations.length;
     currentKeyAnimationsIndex += (up ? 1 : -1);
@@ -106,7 +105,6 @@ function Animation() {
     setSequencerAnimations();
     setKeyAnimation();
   };
-
 	const startNormal = () => {
     currentKeyAnimationsIndex = 0;
     reset();
