@@ -437,16 +437,6 @@ const animationDrum2IndexMapping = [
 
 const sequencerAnimationsSet = [
   [
-    { animation: ground },
-    { animation: mountainBass },
-    { animation: mountainSnare },
-    { animation: prism, options: [3] },
-    { animation: prism, options: [7] },
-    { animation: sunrise },
-    { animation: strike },
-    { animation: splash },
-  ],
-  [
     { animation: flashImage, options: [landscape] },
     // { animation: flashImage },
     { animation: popImage, options: [sculpture] },
@@ -458,16 +448,16 @@ const sequencerAnimationsSet = [
     { animation: strikes },
     { animation: brush, options: [4] },
   ],
-	[
-		{ animation: firework },
-		{ animation: crossline },
-		{ animation: doubleImage, options: [[landscape, sculpture]]},
-		{ animation: crossline },
-		{ animation: crossline },
-		{ animation: crossline },
-		{ animation: crossline },
-		{ animation: crossline },
-	],
+  [
+    { animation: ground },
+    { animation: mountainBass },
+    { animation: mountainSnare },
+    { animation: prism, options: [3] },
+    { animation: prism, options: [7] },
+    { animation: sunrise },
+    { animation: strike },
+    { animation: splash },
+  ],
 ];
 
 const keyAnimationsSet = [
