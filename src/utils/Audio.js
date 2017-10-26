@@ -51,7 +51,7 @@ export class Sequencer {
     this.recordFull = [];
     this.isPlayingRecord = false;
     this.startTime = 0;
-    this.currentSampleIndex = 0;
+    this.currentSampleIndex = 2;
     this.storeRecord = record => storeRecord(record);
 
     this.loadSamples();
