@@ -8,6 +8,44 @@ import Midi, { isMidiReady } from './Midi';
 let temperId = uuid4();
 
 /**
+ * [sendMidi description]
+ * @param  {[type]} index [description]
+ */
+function sendMidi(index) {
+  if (isMidiReady()) {
+    console.log('sending note...');
+    switch (index) {
+      case 0:
+        Midi.outputs[0].playNote('C1', 1).stopNote('C1', 1);
+        break;
+      case 1:
+        Midi.outputs[0].playNote('D1', 1).stopNote('D1', 1);
+        break;
+      case 2:
+        Midi.outputs[0].playNote('D#1', 1).stopNote('D#1', 1);
+        break;
+      case 3:
+        Midi.outputs[0].playNote('G#1', 1).stopNote('G#1', 1);
+        break;
+      case 4:
+        Midi.outputs[0].playNote('G1', 1).stopNote('G1', 1);
+        break;
+      case 5:
+        Midi.outputs[0].playNote('A1', 1).stopNote('A1', 1);
+        break;
+      case 6:
+        Midi.outputs[0].playNote('A#1', 1).stopNote('A#1', 1);
+        break;
+      case 7:
+        Midi.outputs[0].playNote('C#2', 1).stopNote('C#2', 1);
+        break;
+      default:
+        break;
+    }
+  }
+}
+
+/**
  * Sequencer
  */
 export class Sequencer {
@@ -16,6 +54,7 @@ export class Sequencer {
   loadingSamples: Boolean;
   sequence: Object;
   playing: Boolean;
+  mute: Boolean;
   beat: Number;
   matrix: Array<Array<number>>;
   recording: Boolean;
@@ -46,6 +85,7 @@ export class Sequencer {
     this.matrix = matrix;
     this.number = 0;
     this.playing = true;
+    this.mute = false;
     this.notes = drumNotes;
     this.isPlayingChain = false;
     this.recordMatrix = [];
@@ -72,8 +112,12 @@ export class Sequencer {
           this.startTime = time;
         }
         if (column[i] === 1 && !this.loadingSamples) { // make sure no play while loading
-          const vel = (Math.random() * 0.5) + 0.5;
-          this.samples.start(this.notes[i], time, 0, '32n', 0, vel);
+          if (!this.mute) {
+            const vel = (Math.random() * 0.5) + 0.5;
+            this.samples.start(this.notes[i], time, 0, '32n', 0, vel);
+          } else {
+            sendMidi(i);
+          }
           nowPlayingAni.push(i);
         }
         if (i === this.notes.length - 1) {
@@ -148,10 +192,6 @@ export class Sequencer {
   start() {
     this.playing = true;
     this.sequence.start();
-    if (isMidiReady()) {
-      console.log('sending note C3...');
-      Midi.outputs[0].playNote('C3');
-    }
   }
 
   /**
