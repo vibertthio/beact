@@ -32,7 +32,8 @@
     "react-window-resize-listener": "^1.1.0",
     "tone": "^0.10.0",
     "two.js": "github:vibertthio/two.js#dev",
-    "uuid": "^3.0.1"
+    "uuid": "^3.0.1",
+    "webmidi": "^2.0.0-rc.9"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",

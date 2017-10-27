@@ -3,8 +3,10 @@ import axios from 'axios';
 import uuid4 from 'uuid/v4';
 import { keysUrls, keysNotes } from './config/keys.config';
 import { drumUrls, drumNotes, presets } from './config/drum.config';
+import Midi, { isMidiReady } from './Midi';
 
 let temperId = uuid4();
+
 /**
  * Sequencer
  */
@@ -22,7 +24,6 @@ export class Sequencer {
   recordMatrix: Array;
   recordFull: Array;
   isPlayingRecord: Array;
-  nowPlayingAni: Array;
   startTime: Number;
 
   /**
@@ -56,7 +57,6 @@ export class Sequencer {
 
     this.loadSamples();
     this.checkStart = false;
-    // this.nowPlayingAni = [];
     this.saveRecord = this.saveRecord.bind(this);
 
     this.sequence = new Sequence((time, col) => {
@@ -71,13 +71,12 @@ export class Sequencer {
           this.checkStart = true;
           this.startTime = time;
         }
-        // make sure no play while loading
-        if (column[i] === 1 && !this.loadingSamples) {
+        if (column[i] === 1 && !this.loadingSamples) { // make sure no play while loading
           const vel = (Math.random() * 0.5) + 0.5;
           this.samples.start(this.notes[i], time, 0, '32n', 0, vel);
           nowPlayingAni.push(i);
         }
-        if (i === 7) {
+        if (i === this.notes.length - 1) {
           playDrumAni(nowPlayingAni);
         }
       }
@@ -149,6 +148,10 @@ export class Sequencer {
   start() {
     this.playing = true;
     this.sequence.start();
+    if (isMidiReady()) {
+      console.log('sending note C3...');
+      Midi.outputs[0].playNote('C3');
+    }
   }
 
   /**
@@ -287,13 +290,13 @@ export class Keyboard {
    * [playKey description]
    */
   playKey() {
-    console.log(`key: ${this.currentKey}`);
+    // console.log(`key: ${this.currentKey}`);
     if (this.currentKey !== null && !this.loadingSamples) {
       this.samples.start(this.notes[this.currentKey]);
       if (this.recording === true) {
         const time = Transport.seconds;
         this.record.push({ time, key: this.currentKey });
-        console.log(`keyBoardRecord: ${this.record}`);
+        // console.log(`keyBoardRecord: ${this.record}`);
       }
       this.currentKey = null;
     }

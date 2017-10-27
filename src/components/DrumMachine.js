@@ -114,23 +114,23 @@ class DrumMachine extends Component {
     this.detectKeyboard = this.detectKeyboard.bind(this);
 		this.setSample = this.setSample.bind(this);
 
-    this.sequencer = new Sequencer(
-	    this.state.data,
-	    this.setCurrentBeat,
-	    this.playNextChainElement,
-	    this.storeDrumRecord,
-	    this.playNextRecordElement,
-	    this.playDrumAni,
-    );
-
-    this.keyboard = new Keyboard(this.storeKeyRecord);
-
     this.toggleHidden = this.toggleHidden.bind(this);
 		this.hideSpinner = this.hideSpinner.bind(this);
 		this.showDOM = this.showDOM.bind(this);
-		// this.showLogo = this.showLogo.bind(this);
 
+    // Naruto
 		this.toggleNarutoBool = this.toggleNarutoBool.bind(this);
+
+    this.sequencer = new Sequencer(
+      this.state.data,
+      this.setCurrentBeat,
+      this.playNextChainElement,
+      this.storeDrumRecord,
+      this.playNextRecordElement,
+      this.playDrumAni,
+    );
+
+    this.keyboard = new Keyboard(this.storeKeyRecord);
   }
 
   /**
@@ -160,18 +160,11 @@ class DrumMachine extends Component {
       .catch((err) => {
         console.log(err);
       });
-		/**
+
+    /**
 	   * hide loading spinner and wait 3.5s after DOM is loaded.
 	   */
-	  const outShowDOM = this.hideSpinner;
-    // const outShowLogo = this.showLogo;
-		/**
-	   * [startTimer description]
-	   */
-		function startTimer() {
-			fadeoutID = window.setTimeout(outShowDOM, 3500);
-		}
-		startTimer();
+    fadeoutID = window.setTimeout(this.hideSpinner, 3500);
   }
 
   /**
