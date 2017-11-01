@@ -1,4 +1,4 @@
-![logo of beact](./assets/images/perf.jpg)
+![logo of beact](./assets/images/bar.png)
 # [Beact](https://beact.herokuapp.com/) &middot; [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
 > 🎸🎨 DJ / VJ all by yourself in seconds !
@@ -41,7 +41,7 @@ I have added some my own animation and will do more to replace ones from patatap
 ## 2. Run on Local
 > It's okay to run Beact without server. It will git some error in console irrelevant, though.
 
-First, clone the repo and install dependencies.
+First, clone the repo and install dependencies.  
 Then **Rock'n Roll**, baanngg.
 
 ```
@@ -149,8 +149,8 @@ npm run deploy
 
 ## 6. UI and Advanced Usage
 
-![screenshot](./assets/images/beact-ui.png)
-[Full User Guide](https://safe-stream-69256.herokuapp.com/) link.
+![screenshot](./assets/images/beact-ui.png)  
+[Full User Guide](https://safe-stream-69256.herokuapp.com/)
 
 ## 7. Credits and Inspirations
   * crazi ass library [tone.js](https://tonejs.github.io/) and [two.js](https://two.js.org/)
