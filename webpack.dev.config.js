@@ -42,7 +42,10 @@ module.exports = {
     filename: '[hash].bundle.js'
   },
   resolve: {
-    extensions: ['.js', '.jsx']
+    extensions: ['.js', '.jsx'],
+		alias: {
+		  yuen: path.resolve(__dirname, 'src/utilities/'),
+		}
   },
   module: {
     loaders
