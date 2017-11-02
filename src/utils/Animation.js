@@ -118,6 +118,7 @@ function Animation() {
     }
     reset();
     setSequencerAnimations();
+    setSequencerAnimationsCustomSettings();
     setKeyAnimation();
   };
 
