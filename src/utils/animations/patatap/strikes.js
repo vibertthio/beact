@@ -1,4 +1,4 @@
-import { range } from '../config/animation.config';
+import { range } from 'config/animation.config';
 import strike from './strike';
 
 /**

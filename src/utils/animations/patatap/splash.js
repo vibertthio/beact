@@ -1,12 +1,13 @@
 import {
+  TWO_PI,
   min,
   range,
   lerp,
   map,
-} from '../config/animation.config';
+} from 'config/animation.config';
 
 /**
-* Animation #13, Splash Colorful
+* Animation #12, Splash
 * @param  {objct} Two
 * @param  {object} two instance of two
 * @param  {object} TWEEN the library for tweening
@@ -15,7 +16,7 @@ import {
 * @param  {number} [opacity = 1]
 * @param  {number} [duration = 1000]
 */
-export default function splashColorful(
+export default function splash(
   Two,
   two,
   TWEEN,
@@ -25,7 +26,7 @@ export default function splashColorful(
   duration = 1000,
   ) {
   let playing = false;
-  const amount = 32;
+  const amount = 16;
   const param = { t: 0 };
   let circles = [];
   const destinations = [];
@@ -41,10 +42,10 @@ export default function splashColorful(
     const group = two.makeGroup();
     group.translation.set(two.width * 0.5, two.height * 0.5);
 
-    circles = range(amount).map((i) => {
+    circles = range(amount).map(() => {
       const r = Math.round(map(Math.random(), 0, 1, rMin, rMax));
       const circle = two.makeCircle(0, 0, r);
-      circle.fill = colors[i % colors.length];
+      circle.fill = colors[4];
       circle.noStroke();
       destinations.push(new Two.Vector());
 
@@ -66,9 +67,10 @@ export default function splashColorful(
         const y = lerp(c.translation.y, d.y, t);
         c.translation.set(x, y);
       }
-    })
-    .onComplete(() => {
-      group.visible = false;
+
+      if (t > 0.8) {
+        group.visible = false;
+      }
     });
 
     return {
@@ -90,28 +92,7 @@ export default function splashColorful(
     playing = false;
     group.visible = false;
     ani.stop();
-    const pos = Math.random() * 4;
-    let ox;
-    let oy;
-    if (pos > 3) {
-      // west
-      ox = -two.width * 0.125;
-      oy = two.height * 0.5;
-    } else if (pos > 2) {
-      // east
-      ox = two.width * 1.125;
-      oy = two.height * 0.5;
-    } else if (pos > 1) {
-      // north
-      ox = two.width * 0.5;
-      oy = -two.height * 0.125;
-    } else {
-      // west
-      ox = two.width * 0.5;
-      oy = two.height * 1.125;
-    }
-
-    const theta = Math.atan2((two.height * 0.5) - oy, (two.width * 0.5) - ox);
+    const theta = Math.random() * TWO_PI;
     const deviation = map(Math.random(), 0, 1, Math.PI / 4, Math.PI / 2);
     param.t = 0;
     for (let i = 0; i < amount; i += 1) {
@@ -126,7 +107,10 @@ export default function splashColorful(
       c.translation.set(0, 0);
     }
 
-    group.translation.set(ox, oy);
+    group.translation.set(
+      two.width * 0.5,
+      two.height * 0.5,
+    );
   };
 
 

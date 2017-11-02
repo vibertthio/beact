@@ -2,53 +2,80 @@ import {
   TWO_PI,
   min,
   map,
-} from '../config/animation.config';
+} from 'config/animation.config';
 
 /**
- * Animation #21, Zigzag
+ * Animation #22, Sinewave
  * @param  {objct} Two
  * @param  {object} two instance of two
  * @param  {object} TWEEN the library for tweening
  * @param  {object} colors color pallete
  * @param  {array} animations It's the stack of animations
  * @param  {number} [opacity = 1]
- * @param  {number} [duration = 200]
+ * @param  {number} [duration = 400]
  */
-export default function zigzag(
+export default function sinewave(
   Two,
   two,
   TWEEN,
   colors,
   animations,
   opacity = 1,
-  duration = 200,
+  duration = 400,
   ) {
   let playing = false;
-  const amount = 120;
-  let phi = 6;
-  const offset = Math.PI * 0.5;
+  const amount = 200;
   let points;
 
+  /**
+   * [setPoints description]
+   */
+  function setPoints() {
+    const phi = Math.round(Math.random() * 6) + 1;
+    const offset = Math.PI / 2;
+
+    for (let i = 0; i < amount; i += 1) {
+      const v = points[i];
+      const pct = i / amount;
+      const theta = (TWO_PI * phi * pct) + offset;
+      const w = two.width * 0.5;
+      const h = two.height * 0.33;
+      v.set(
+        map(pct, 0, 1, -w / 2, w / 2),
+        h * Math.sin(theta),
+      );
+    }
+  }
   /**
    * [setup description]
    * @return {[type]} [description]
    */
   function setup() {
     // first hemisphere
-    const shape = two.makePolygon(two.width * 0.5, two.height * 0.5, 1, amount);
+    const shape = two.makePolygon(
+      two.width * 0.5,
+      two.height * 0.5,
+      0,
+      amount,
+    );
     points = shape.vertices;
     shape.noFill();
+    shape.stroke = colors[4];
+    shape.linewidth = min(two.width, two.height) * 0.025;
+    shape.cap = 'round';
+    shape.join = 'round';
     shape.closed = false;
-    shape.stroke = colors[6];
-    shape.linewidth = min(two.width, two.height) * 0.033;
-    shape.join = 'miter';
-    shape.miter = 4;
-    shape.cap = 'butt';
     shape.visible = false;
+    shape.noFill();
+    setPoints();
 
     const aniOut = new TWEEN.Tween(shape)
       .to({ beginning: 1.0 }, duration)
-      .easing(TWEEN.Easing.Sinusoidal.Out);
+      .easing(TWEEN.Easing.Sinusoidal.In)
+      .onComplete(() => {
+        shape.visible = false;
+      })
+      ;
 
     const aniIn = new TWEEN.Tween(shape)
       .to({ ending: 1.0 }, duration)
@@ -74,47 +101,11 @@ export default function zigzag(
 
   const reset = () => {
     playing = false;
-
-    // left or right
-    if (Math.random() > 0.5) {
-      shape.translation.set(
-        two.width * 0.85,
-        two.height * 0.5,
-      );
-    } else {
-      shape.translation.set(
-        two.width * 0.15,
-        two.height * 0.5,
-      );
-    }
-
-    const index = Math.random() * 4;
-    if (index > 3) {
-      phi = 5;
-    } else if (index > 2) {
-      phi = 4;
-    } else if (index > 1) {
-      phi = 2;
-    } else {
-      phi = 1;
-    }
-
-    shape.rotation = Math.random() > 0.5 ? Math.PI : 0;
+    shape.visible = false;
     shape.beginning = 0;
     shape.ending = 0;
-
-    const w = two.width / 16;
-    const h = two.height * 0.66;
-    for (let i = 0; i < amount; i += 1) {
-      const p = points[i];
-      const pct = i / amount;
-      const theta =
-        Math.abs(((((2 * ((pct * TWO_PI * phi) + offset)) / Math.PI) - 1) % 4) - 2) - 1;
-      const x = (theta * w) / 2;
-      const y = map(pct, 0, 1, -h / 2, h / 2);
-      p.set(x, y);
-    }
-
+    shape.rotation = (Math.random() > 0.5 ? 0 : Math.PI);
+    setPoints();
     aniIn.stop();
     aniOut.stop();
   };

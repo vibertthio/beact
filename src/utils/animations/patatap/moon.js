@@ -2,7 +2,7 @@ import {
   TWO_PI,
   min,
   lerp,
-} from '../config/animation.config';
+} from 'config/animation.config';
 
 /**
  * Animation #19, Moon

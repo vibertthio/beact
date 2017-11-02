@@ -1,4 +1,5 @@
-import defaultImgUrl from '../../../assets/images/animations/landscape.jpg';
+import defaultImgUrl from 'vapor/landscape.jpg';
+
 /**
  * Animation #0, Veil
  * it will have two direction(u/d), which will be decided randomly
@@ -11,6 +12,7 @@ import defaultImgUrl from '../../../assets/images/animations/landscape.jpg';
  * @param  {number} [scale = 1]
  * @param  {number} [opacity = 1]
  * @param  {number} [duration = 400]
+ * @param  {number} [ratio = 0.5]
  */
 export default function flashImage(
   Two,

@@ -2,7 +2,7 @@ import {
   TWO_PI,
   min,
   range,
-} from '../config/animation.config';
+} from 'config/animation.config';
 
 /**
  * Animation #24, Corona

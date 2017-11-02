@@ -3,7 +3,7 @@ import {
   min,
   lerp,
   map,
-} from '../config/animation.config';
+} from 'config/animation.config';
 
 /**
 * Animation #20, Strike

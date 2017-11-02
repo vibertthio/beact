@@ -1,7 +1,7 @@
 import {
   min,
   range,
-} from '../config/animation.config';
+} from 'config/animation.config';
 
 /**
  * Animation #17, Glimmer

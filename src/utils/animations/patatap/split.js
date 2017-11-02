@@ -4,7 +4,7 @@ import {
   sin,
   min,
   ease,
-} from '../config/animation.config';
+} from 'config/animation.config';
 
 /**
  * Animation #18, Split

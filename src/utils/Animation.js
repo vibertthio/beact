@@ -6,7 +6,7 @@ import {
   animationKey2IndexMapping,
   sequencerAnimationsSet,
   keyAnimationsSet,
-} from './config/animation.config';
+} from 'config/animation.config';
 
 /**
  * [animation description]

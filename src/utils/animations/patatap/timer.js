@@ -4,7 +4,7 @@ import {
   sin,
   min,
   range,
-} from '../config/animation.config';
+} from 'config/animation.config';
 
 /**
  * Animation #15, Timer

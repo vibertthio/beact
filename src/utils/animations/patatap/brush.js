@@ -1,4 +1,4 @@
-import { range } from '../config/animation.config';
+import { range } from 'config/animation.config';
 
 /**
  * Animation #5, 6, 7, Pistons

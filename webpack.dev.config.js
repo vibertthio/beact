@@ -44,7 +44,11 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx'],
 		alias: {
-		  yuen: path.resolve(__dirname, 'src/utilities/'),
+		  animations: path.resolve(__dirname, 'src/utils/animations'),
+		  config: path.resolve(__dirname, 'src/utils/config'),
+		  yuen: path.resolve(__dirname, 'src/assets/images/animations/yuen'),
+		  vapor: path.resolve(__dirname, 'src/assets/images/animations/vapor'),
+		  naruto: path.resolve(__dirname, 'src/assets/images/animations/naruto'),
 		}
   },
   module: {

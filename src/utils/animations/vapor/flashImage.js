@@ -1,4 +1,5 @@
-import defaultImgUrl from '../../assets/images/animations/landscape.jpg';
+import defaultImgUrl from 'vapor/landscape.jpg';
+
 /**
  * Animation #0, Veil
  * it will have two direction(u/d), which will be decided randomly
