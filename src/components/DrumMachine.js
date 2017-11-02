@@ -898,6 +898,9 @@ class DrumMachine extends Component {
 		const rootDiv = document.getElementById('root');
 		rootDiv.classList.add('fullHeight');
 		this.setState({ wait: false });
+
+    // wait till this time
+    this.ani.setSequencerAnimationsCustomSettings();
 	}
 
 	/**

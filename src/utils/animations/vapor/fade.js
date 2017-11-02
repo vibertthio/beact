@@ -35,6 +35,7 @@ export default function fade(
       two.width,
       two.height,
     );
+    console.log('setup!');
     shape.visible = true;
     // shape.visible = false;
     shape.noStroke();

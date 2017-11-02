@@ -49,12 +49,15 @@ function Animation() {
   const setSequencerAnimations = () => {
     sequencerAnimations.splice(0, sequencerAnimations.length);
     // console.log(`set animation: ${currentSequencerAnimationsIndex}`);
-    sequencerCustomSettings[currentSequencerAnimationsIndex]();
     setAnimation(
       currentSequencerAnimationsIndex,
       sequencerAnimationsSet,
       sequencerAnimations,
     );
+  };
+
+  const setSequencerAnimationsCustomSettings = () => {
+    sequencerCustomSettings[currentSequencerAnimationsIndex]();
   };
 
   const setKeyAnimation = () => {
@@ -156,6 +159,7 @@ function Animation() {
     resize,
     startNaruto,
 		startNormal,
+    setSequencerAnimationsCustomSettings,
   };
 }
 
