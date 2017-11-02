@@ -9,10 +9,10 @@ import defaultImgUrl from 'vapor/landscape.jpg';
  * @param  {object} colors color pallete
  * @param  {array} animations It's the stack of animations
  * @param  {string} imgUrl the src of image
- * @param  {number} [scale = 1]
+ * @param  {number} [textureScale = 1]
+ * @param  {number} [shapeScale = 1]
  * @param  {number} [opacity = 1]
  * @param  {number} [duration = 400]
- * @param  {number} [ratio = 0.5]
  */
 export default function flashImage(
   Two,
@@ -21,10 +21,10 @@ export default function flashImage(
   colors,
   animations,
   imgUrl = defaultImgUrl,
-  scale = 1,
+  textureScale = 1,
+  shapeScale = 1,
   opacity = 1,
   duration = 400,
-  ratio = 0.5,
   ) {
   let playing = false;
   const param = { t: 0 };
@@ -34,39 +34,30 @@ export default function flashImage(
   * @return {[type]} [description]
   */
   function setup() {
-    // const shape = two.makeRectangle(
-    //   two.width * 0.5,
-    //   two.height * 0.5,
-    //   two.width,
-    //   two.height,
-    // );
-    // const texture = new Two.Texture(imgUrl);
-    // shape.visible = 0;
-    // shape.fill = texture;
-    // shape.noStroke();
-    const shape = two.makeSprite(
-      imgUrl,
+    // const length = Math.min(two.width, two.height);
+    const shape = two.makeRectangle(
       two.width * 0.5,
       two.height * 0.5,
+      two.width * shapeScale,
+      two.height * shapeScale,
     );
-    shape.scale = (scale * two.height) / 3000;
+    const texture = new Two.Texture(imgUrl);
     shape.visible = 0;
+    shape.fill = texture;
+    shape.noStroke();
 
-    const originalScale = (scale * two.height) / 500;
+    const originalScale = (textureScale * two.height) / 500;
     let targetRatio;
-    // texture.scale = originalScale;
+    texture.scale = originalScale;
 
     const ani = new TWEEN.Tween(param)
       .to({ t: 1 }, duration)
       .easing(TWEEN.Easing.Circular.Out)
-      .onStart(() => {
-        targetRatio = ratio;
-        shape.visible = 1;
-      })
+      .onStart(() => { targetRatio = 0.2 * Math.random(); })
       .onUpdate((t) => {
-        // texture.scale = originalScale * (1 + (targetRatio * t));
-        shape.scale = originalScale * (1 + (targetRatio * t));
-        // shape.visible = Math.random() > 0.5;
+        texture.scale = originalScale * (1 + (targetRatio * t));
+        shape.visible = Math.random() > 0.5;
+        // shape.visible = true;
       })
       .onComplete(() => {
         shape.visible = false;

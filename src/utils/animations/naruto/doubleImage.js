@@ -1,5 +1,5 @@
-import defaultImgUrl1 from '../../../assets/images/animations/landscape.jpg';
-import defaultImgUrl2 from '../../../assets/images/animations/sculpture-01.jpg';
+import defaultImgUrl1 from 'vapor/landscape.jpg';
+import defaultImgUrl2 from 'vapor/sculpture-01.jpg';
 import showImage from './showImage';
 
 /**

@@ -1,4 +1,5 @@
-import defaultImgUrl from '../../assets/images/animations/landscape.jpg';
+import defaultImgUrl from 'vapor/landscape.jpg';
+
 /**
  * Animation #0, Veil
  * it will have two direction(u/d), which will be decided randomly
@@ -21,14 +22,11 @@ export default function flashImage(
   imgUrl = defaultImgUrl,
   scale = 1,
   opacity = 1,
-  duration = 400,
   ) {
-  let playing = false;
-  const param = { t: 0 };
+  const playing = true;
 
   /**
   * [setup description]
-  * @return {[type]} [description]
   */
   function setup() {
     const shape = two.makeRectangle(
@@ -38,46 +36,25 @@ export default function flashImage(
       two.height,
     );
     const texture = new Two.Texture(imgUrl);
-    shape.visible = 0;
+    shape.visible = true;
     shape.fill = texture;
     shape.noStroke();
 
     const originalScale = (scale * two.height) / 500;
-    let targetRatio;
     texture.scale = originalScale;
-
-    const ani = new TWEEN.Tween(param)
-      .to({ t: 1 }, duration)
-      .easing(TWEEN.Easing.Circular.Out)
-      .onStart(() => { targetRatio = 0.2 * Math.random(); })
-      .onUpdate((t) => {
-        texture.scale = originalScale * (1 + (targetRatio * t));
-        shape.visible = Math.random() > 0.5;
-      })
-      .onComplete(() => {
-        shape.visible = false;
-      });
-
-    return { shape, ani };
+    texture.opacity = opacity;
   }
 
-  let { shape, ani } = setup();
+  setup();
 
   // methods
   const resize = () => {
-    two.remove(shape);
-    ({ shape, ani } = setup());
+    setup();
   };
 
-  const reset = () => {
-    ani.stop();
-  };
+  const reset = () => {};
 
-  const start = () => {
-    reset();
-    playing = true;
-    ani.start();
-  };
+  const start = () => {};
 
   const EXPORT = {
     playing,

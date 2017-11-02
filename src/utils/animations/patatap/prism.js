@@ -4,7 +4,7 @@ import {
   sin,
   max,
   range,
-} from '../config/animation.config';
+} from 'config/animation.config';
 
 /**
  * Animation #3, 4

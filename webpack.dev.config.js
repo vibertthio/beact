@@ -18,11 +18,11 @@ loaders.push({
 	loader: ['react-hot-loader/webpack', 'babel-loader']
 });
 
-loaders.push({
-  test: /\.scss$/,
-  loaders: ['style-loader', 'css-loader?importLoaders=1', 'sass-loader'],
-  exclude: ['node_modules']
-});
+// loaders.push({
+//   test: /\.scss$/,
+//   loaders: ['style-loader', 'css-loader?importLoaders=1', 'sass-loader'],
+//   exclude: ['node_modules']
+// });
 
 loaders.push({
   test: require.resolve('two.js'),
@@ -42,7 +42,14 @@ module.exports = {
     filename: '[hash].bundle.js'
   },
   resolve: {
-    extensions: ['.js', '.jsx']
+    extensions: ['.js', '.jsx'],
+		alias: {
+		  animations: path.resolve(__dirname, 'src/utils/animations'),
+		  config: path.resolve(__dirname, 'src/utils/config'),
+		  yuen: path.resolve(__dirname, 'src/assets/images/animations/yuen'),
+		  vapor: path.resolve(__dirname, 'src/assets/images/animations/vapor'),
+		  naruto: path.resolve(__dirname, 'src/assets/images/animations/naruto'),
+		},
   },
   module: {
     loaders
@@ -70,6 +77,7 @@ module.exports = {
       { from: 'src/utils/autotrack.js' },
       { from: 'src/assets/images/logo.png' },
       { from: 'src/assets/images/ico/flash.ico' },
+      { from: 'src/assets/images/animations/yuen/bg.jpg' },
     ]),
   ]
 };

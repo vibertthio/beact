@@ -4,7 +4,7 @@ import {
   sin,
   min,
   range,
-} from '../config/animation.config';
+} from 'config/animation.config';
 
 /**
  * Animation #15, Timer
@@ -48,19 +48,19 @@ export default function timer(
     points.push(
       points[0].clone(),
     );
-    // test
-    // const linearGradient = two.makeLinearGradient(
-    //   two.width / 2,
-    //   -two.height / 6,
-    //   two.width / 2,
-    //   two.height / 6,
-    //   new Two.Stop(0, colors[3]),
-    //   new Two.Stop(1, colors[0]),
-    // );
+
+    const linearGradient = two.makeLinearGradient(
+      two.width / 2,
+      -two.height / 6,
+      two.width / 2,
+      two.height / 6,
+      new Two.Stop(0, colors[3]),
+      new Two.Stop(1, colors[4]),
+    );
 
     const shape = two.makeCurve(points, true);
-    shape.stroke = colors[3];
-    // shape.stroke = linearGradient;
+    // shape.stroke = colors[3];
+    shape.stroke = linearGradient;
     shape.cap = 'butt';
     shape.linewidth = min(two.width, two.height) / 20;
     shape.noFill();

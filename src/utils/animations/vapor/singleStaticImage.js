@@ -9,22 +9,22 @@ import defaultImgUrl from 'vapor/landscape.jpg';
  * @param  {object} colors color pallete
  * @param  {array} animations It's the stack of animations
  * @param  {string} imgUrl the src of image
- * @param  {number} [scale = 1]
+ * @param  {number} [textureScale = 1]
+ * @param  {number} [spriteScale = 1]
  * @param  {number} [opacity = 1]
  * @param  {number} [duration = 400]
- * @param  {number} [ratio = 0.5]
  */
-export default function flashImage(
+export default function singleStaticImage(
   Two,
   two,
   TWEEN,
   colors,
   animations,
   imgUrl = defaultImgUrl,
-  scale = 1,
+  textureScale = 1,
+  spriteScale = 1.3,
   opacity = 1,
   duration = 400,
-  ratio = 0.5,
   ) {
   let playing = false;
   const param = { t: 0 };
@@ -34,42 +34,33 @@ export default function flashImage(
   * @return {[type]} [description]
   */
   function setup() {
-    // const shape = two.makeRectangle(
-    //   two.width * 0.5,
-    //   two.height * 0.5,
-    //   two.width,
-    //   two.height,
-    // );
-    // const texture = new Two.Texture(imgUrl);
-    // shape.visible = 0;
-    // shape.fill = texture;
-    // shape.noStroke();
     const shape = two.makeSprite(
       imgUrl,
       two.width * 0.5,
       two.height * 0.5,
     );
-    shape.scale = (scale * two.height) / 3000;
-    shape.visible = 0;
+    shape.scale = (textureScale * two.height) / 3000;
+    shape.opacity = 1;
 
-    const originalScale = (scale * two.height) / 500;
+    const originalScale = (textureScale * two.height) / 500;
+    shape.scale = originalScale;
     let targetRatio;
-    // texture.scale = originalScale;
+    let rotateRatio;
 
     const ani = new TWEEN.Tween(param)
       .to({ t: 1 }, duration)
       .easing(TWEEN.Easing.Circular.Out)
       .onStart(() => {
-        targetRatio = ratio;
-        shape.visible = 1;
+        targetRatio = 0.15;
+        rotateRatio = (Math.random() > 0.5) ? 0.05 : -0.05;
       })
       .onUpdate((t) => {
-        // texture.scale = originalScale * (1 + (targetRatio * t));
         shape.scale = originalScale * (1 + (targetRatio * t));
-        // shape.visible = Math.random() > 0.5;
+        shape.rotation = Math.PI * rotateRatio * t;
+        shape.visible = true;
       })
       .onComplete(() => {
-        shape.visible = false;
+        // shape.visible = false;
       });
 
     return { shape, ani };

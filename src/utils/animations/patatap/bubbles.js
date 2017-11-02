@@ -2,7 +2,7 @@ import {
   TWO_PI,
   range,
   min,
-} from '../config/animation.config';
+} from 'config/animation.config';
 
 /**
  * Animation #23, Bubbles

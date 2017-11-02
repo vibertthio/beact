@@ -1,64 +1,211 @@
-import ground from '../animations/ground';
-import mountainBass from '../animations/mountainBass';
-import mountainSnare from '../animations/mountainSnare';
-import prism from '../animations/prism';
-import sunrise from '../animations/sunrise';
-import strike from '../animations/strike';
-import splash from '../animations/splash';
-import splashColorful from '../animations/splashColorful';
-import veil from '../animations/veil';
-import wipe from '../animations/wipe';
-import piston from '../animations/piston';
-import clay from '../animations/clay';
-import flash from '../animations/flash';
-import timer from '../animations/timer';
-import pinwheel from '../animations/pinwheel';
-import glimmer from '../animations/glimmer';
-import split from '../animations/split';
-import moon from '../animations/moon';
-import zigzag from '../animations/zigzag';
-import sinewave from '../animations/sinewave';
-import bubbles from '../animations/bubbles';
-import corona from '../animations/corona';
+/******
+Animaition import
+******/
+// patatap
+import ground from 'animations/patatap/ground';
+import mountainBass from 'animations/patatap/mountainBass';
+import mountainSnare from 'animations/patatap/mountainSnare';
+import prism from 'animations/patatap/prism';
+import sunrise from 'animations/patatap/sunrise';
+import strike from 'animations/patatap/strike';
+import splash from 'animations/patatap/splash';
+import splashColorful from 'animations/patatap/splashColorful';
+import veil from 'animations/patatap/veil';
+import wipe from 'animations/patatap/wipe';
+import piston from 'animations/patatap/piston';
+import clay from 'animations/patatap/clay';
+import flash from 'animations/patatap/flash';
+import timer from 'animations/patatap/timer';
+import pinwheel from 'animations/patatap/pinwheel';
+import glimmer from 'animations/patatap/glimmer';
+import split from 'animations/patatap/split';
+import moon from 'animations/patatap/moon';
+import zigzag from 'animations/patatap/zigzag';
+import sinewave from 'animations/patatap/sinewave';
+import bubbles from 'animations/patatap/bubbles';
+import corona from 'animations/patatap/corona';
+import sunset from 'animations/patatap/sunset';
+import brush from 'animations/patatap/brush';
+import strikes from 'animations/patatap/strikes';
 
-import flashImage from '../animations/flashImage';
-import popImage from '../animations/popImage';
-import sunset from '../animations/sunset';
-import brush from '../animations/brush';
-import strikes from '../animations/strikes';
+// vapor
+import flashImage from 'animations/vapor/flashImage';
+import singleFlashImage from 'animations/vapor/singleFlashImage';
+import popImage from 'animations/vapor/popImage';
+import staticImage from 'animations/vapor/staticImage';
+import singleStaticImage from 'animations/vapor/singleStaticImage';
+import fade from 'animations/vapor/fade';
+import gradientTimer from 'animations/vapor/gradientTimer';
 
-import landscape from '../../assets/images/animations/landscape.jpg';
-import sculpture from '../../assets/images/animations/sculpture-02.png';
+// scya
+import crossline from 'animations/scyaAni/scya-crossline';
+import firework from 'animations/scyaAni/scya-firework';
+import doubleImage from 'animations/naruto/doubleImage';
 
-import crossline from '../animations/scyaAni/scya-crossline';
-import firework from '../animations/scyaAni/scya-firework';
-import doubleImage from '../animations/naruto/doubleImage';
+/******
+Image import
+******/
+// vapor
+import landscape from 'vapor/landscape.jpg';
+import sculpture from 'vapor/sculpture-02.png';
 
-import n1 from '../../assets/images/naruto/01.png';
-import n1b from '../../assets/images/naruto/01-b.jpg';
-import n2 from '../../assets/images/naruto/02.png';
-import n2b from '../../assets/images/naruto/02-b.jpg';
-import n3 from '../../assets/images/naruto/03.png';
-import n3b from '../../assets/images/naruto/03-b.jpg';
-import n4 from '../../assets/images/naruto/04.png';
-import n4b from '../../assets/images/naruto/04-b.jpg';
-import n5 from '../../assets/images/naruto/05.png';
-import n5b from '../../assets/images/naruto/05-b.jpg';
-import n6 from '../../assets/images/naruto/06.png';
-import n6b from '../../assets/images/naruto/06-b.jpg';
-import n7 from '../../assets/images/naruto/07.png';
-import n7b from '../../assets/images/naruto/07-b.jpg';
-import n8 from '../../assets/images/naruto/08.png';
-import n8b from '../../assets/images/naruto/08-b.jpg';
-import n9 from '../../assets/images/naruto/09.png';
-import n9b from '../../assets/images/naruto/09-b.jpg';
-import n10 from '../../assets/images/naruto/10.png';
-import n10b from '../../assets/images/naruto/10-b.jpg';
-import n11 from '../../assets/images/naruto/11.png';
-import n11b from '../../assets/images/naruto/11-b.jpg';
-import n12 from '../../assets/images/naruto/12.png';
-import n12b from '../../assets/images/naruto/12-b.jpg';
+// naruto
+import n1 from 'naruto/01.png';
+import n1b from 'naruto/01-b.jpg';
+import n2 from 'naruto/02.png';
+import n2b from 'naruto/02-b.jpg';
+import n3 from 'naruto/03.png';
+import n3b from 'naruto/03-b.jpg';
+import n4 from 'naruto/04.png';
+import n4b from 'naruto/04-b.jpg';
+import n5 from 'naruto/05.png';
+import n5b from 'naruto/05-b.jpg';
+import n6 from 'naruto/06.png';
+import n6b from 'naruto/06-b.jpg';
+import n7 from 'naruto/07.png';
+import n7b from 'naruto/07-b.jpg';
+import n8 from 'naruto/08.png';
+import n8b from 'naruto/08-b.jpg';
+import n9 from 'naruto/09.png';
+import n9b from 'naruto/09-b.jpg';
+import n10 from 'naruto/10.png';
+import n10b from 'naruto/10-b.jpg';
+import n11 from 'naruto/11.png';
+import n11b from 'naruto/11-b.jpg';
+import n12 from 'naruto/12.png';
+import n12b from 'naruto/12-b.jpg';
 
+// yuen
+import bg from 'yuen/bg.jpg';
+import heart from 'yuen/heart.png';
+import cube from 'yuen/cube.png';
+
+const sequencerAnimationsSet = [
+  [
+    [
+      { animation: fade, options: [0] },
+      { animation: singleStaticImage, options: [heart, 0.8, 0.4] },
+    ],
+    { animation: singleFlashImage, options: [cube, 0.9, 0.3] },
+    { animation: gradientTimer },
+    { animation: prism, options: [3] },
+    { animation: prism, options: [7] },
+    { animation: sunset },
+    { animation: strikes },
+    { animation: brush, options: [4] },
+  ],
+  // [
+  //   [
+  //     { animation: fade, options: [0] },
+  //     { animation: singleStaticImage, options: [heart, 0.8, 0.4] },
+  //   ],
+  //   { animation: singleFlashImage, options: [cube, 0.9, 0.3] },
+  //   { animation: gradientTimer },
+  //   { animation: prism, options: [3] },
+  //   { animation: prism, options: [7] },
+  //   { animation: sunset },
+  //   { animation: strikes },
+  //   { animation: brush, options: [4] },
+  // ],
+  [
+    { animation: flashImage, options: [landscape] },
+    { animation: popImage, options: [sculpture, 4.5] },
+    { animation: timer },
+    { animation: prism, options: [3] },
+    { animation: prism, options: [7] },
+    { animation: sunset },
+    { animation: strikes },
+    { animation: brush, options: [4] },
+  ],
+  [
+    { animation: ground },
+    { animation: mountainBass },
+    { animation: mountainSnare },
+    { animation: prism, options: [3] },
+    { animation: prism, options: [7] },
+    { animation: sunrise },
+    { animation: strike },
+    { animation: splash },
+  ],
+];
+
+const setBackgroundImage = () => {
+  console.log('set background');
+  const s = document.body.style;
+  s.backgroundImage = "url('bg.jpg')";
+};
+const setBackgroundColor = () => {
+  console.log('set background none');
+  const s = document.body.style;
+  s.backgroundImage = "";
+  s.background = "";
+  s.backgroundColor = "rgba(39, 6, 54, 1)";
+};
+const none = () => {};
+const sequencerCustomSettings = [
+  setBackgroundImage,
+  setBackgroundColor,
+  setBackgroundColor,
+];
+
+const keyAnimationsSet = [
+  [
+    { animation: flash, options: [1] },
+    { animation: corona },
+    { animation: split },
+    { animation: sunrise },
+    { animation: moon },
+    { animation: piston, options: [4] },
+    { animation: bubbles },
+    { animation: strike },
+    { animation: sinewave },
+    { animation: prism, options: [5] },
+    { animation: pinwheel },
+    { animation: zigzag },
+    { animation: prism, options: [6] },
+    { animation: splashColorful },
+    { animation: glimmer },
+		{ animation: mountainSnare },
+    { animation: flash, options: [0] },
+    { animation: piston, options: [1] },
+    { animation: veil },
+    { animation: timer },
+    { animation: prism, options: [3] },
+    { animation: piston, options: [8] },
+    { animation: clay },
+    { animation: flash, options: [2] },
+    { animation: splash },
+    { animation: wipe },
+  ],
+	[
+		{ animation: doubleImage, options: [[n1b, n1]]},
+    { animation: doubleImage, options: [[n2b, n2]]},
+    { animation: doubleImage, options: [[n3b, n3]]},
+    { animation: doubleImage, options: [[n4b, n4]]},
+    { animation: doubleImage, options: [[n5b, n5]]},
+    { animation: doubleImage, options: [[n6b, n6]]},
+    { animation: doubleImage, options: [[n7b, n7]]},
+    { animation: doubleImage, options: [[n8b, n8]]},
+		{ animation: doubleImage, options: [[n9b, n9]]},
+    { animation: doubleImage, options: [[n10b, n10]]},
+    { animation: doubleImage, options: [[n11b, n11]]},
+    { animation: doubleImage, options: [[n12b, n12]]},
+		{ animation: doubleImage, options: [[n1b, n1]]},
+    { animation: doubleImage, options: [[n2b, n2]]},
+    { animation: doubleImage, options: [[n3b, n3]]},
+    { animation: doubleImage, options: [[n4b, n4]]},
+    { animation: doubleImage, options: [[n5b, n5]]},
+    { animation: doubleImage, options: [[n6b, n6]]},
+    { animation: doubleImage, options: [[n7b, n7]]},
+    { animation: doubleImage, options: [[n8b, n8]]},
+		{ animation: doubleImage, options: [[n9b, n9]]},
+    { animation: doubleImage, options: [[n10b, n10]]},
+    { animation: doubleImage, options: [[n11b, n11]]},
+    { animation: doubleImage, options: [[n12b, n12]]},
+		{ animation: doubleImage, options: [[n1b, n1]]},
+    { animation: doubleImage, options: [[n2b, n2]]},
+	],
+];
 
 
 /**
@@ -181,139 +328,6 @@ const pallete = [
   ],
 ];
 
-// const animationNameList = [
-//   // #0
-//   {
-//     name: 'veil',
-//     key: 's',
-//   },
-//   // #1
-//   {
-//     name: 'wipe',
-//     key: 'x',
-//   },
-//   // #2
-//   {
-//     name: 'prism-1',
-//     key: 'u',
-//   },
-//   // #3
-//   {
-//     name: 'prism-2',
-//     key: 'j',
-//   },
-//   // #4
-//   {
-//     name: 'prism-3',
-//     key: 'm',
-//   },
-//   // #5
-//   {
-//     name: 'piston-1',
-//     key: 'r',
-//   },
-//   // #6
-//   {
-//     name: 'piston-2',
-//     key: 'f',
-//   },
-//   // #7
-//   {
-//     name: 'piston-3',
-//     key: 'v',
-//   },
-//   // #8
-//   {
-//     name: 'clay',
-//     key: 'w',
-//   },
-//   // #9
-//   {
-//     name: 'flash-1',
-//     key: 'q',
-//   },
-//   // #10
-//   {
-//     name: 'flash-2',
-//     key: 'a',
-//   },
-//   // #11
-//   {
-//     name: 'flash-3',
-//     key: 'z',
-//   },
-//   // #12
-//   {
-//     name: 'splash',
-//     key: 'y',
-//   },
-//   // #13
-//   {
-//     name: 'splash-color',
-//     key: 'n',
-//   },
-//   // #14
-//   {
-//     name: 'sunrise',
-//     key: 'd',
-//   },
-//   // #15
-//   {
-//     name: 'timer',
-//     key: 't',
-//   },
-//   // #16
-//   {
-//     name: 'pinwheel',
-//     key: 'k',
-//   },
-//   // #17
-//   {
-//     name: 'glimmer',
-//     key: 'o',
-//   },
-//   // #18
-//   {
-//     name: 'splits',
-//     key: 'c',
-//   },
-//   // #19
-//   {
-//     name: 'moon',
-//     key: 'e',
-//   },
-//   // #20
-//   {
-//     name: 'strike',
-//     key: 'h',
-//   },
-//   // #21
-//   {
-//     name: 'zigzag',
-//     key: 'l',
-//   },
-//   // #22
-//   {
-//     name: 'sinewave',
-//     key: 'i',
-//   },
-//   // #23
-//   {
-//     name: 'bubbles',
-//     key: 'g',
-//   },
-//   // #24
-//   {
-//     name: 'corona',
-//     key: 'b',
-//   },
-//   // #25
-//   {
-//     name: 'corona-2',
-//     key: 'p',
-//   },
-// ];
-
 const animationNameList = [
   // #0
   {
@@ -421,7 +435,6 @@ const animationNameList = [
   },
 ];
 
-
 const animationKey2IndexMapping = {};
 animationNameList.forEach((l, i) => {
   animationKey2IndexMapping[l.key] = i;
@@ -435,89 +448,6 @@ const animationDrum2IndexMapping = [
   [0, 1, 2, 3, 4, 5, 6, 7],
 ];
 
-const sequencerAnimationsSet = [
-  [
-    { animation: flashImage, options: [landscape] },
-    // { animation: flashImage },
-    { animation: popImage, options: [sculpture] },
-    // { animation: popImage },
-    { animation: timer },
-    { animation: prism, options: [3] },
-    { animation: prism, options: [7] },
-    { animation: sunset },
-    { animation: strikes },
-    { animation: brush, options: [4] },
-  ],
-  [
-    { animation: ground },
-    { animation: mountainBass },
-    { animation: mountainSnare },
-    { animation: prism, options: [3] },
-    { animation: prism, options: [7] },
-    { animation: sunrise },
-    { animation: strike },
-    { animation: splash },
-  ],
-];
-
-const keyAnimationsSet = [
-  [
-    { animation: flash, options: [1] },
-    { animation: corona },
-    { animation: split },
-    { animation: sunrise },
-    { animation: moon },
-    { animation: piston, options: [4] },
-    { animation: bubbles },
-    { animation: strike },
-    { animation: sinewave },
-    { animation: prism, options: [5] },
-    { animation: pinwheel },
-    { animation: zigzag },
-    { animation: prism, options: [6] },
-    { animation: splashColorful },
-    { animation: glimmer },
-		{ animation: mountainSnare },
-    { animation: flash, options: [0] },
-    { animation: piston, options: [1] },
-    { animation: veil },
-    { animation: timer },
-    { animation: prism, options: [3] },
-    { animation: piston, options: [8] },
-    { animation: clay },
-    { animation: flash, options: [2] },
-    { animation: splash },
-    { animation: wipe },
-  ],
-	[
-		{ animation: doubleImage, options: [[n1b, n1]]},
-    { animation: doubleImage, options: [[n2b, n2]]},
-    { animation: doubleImage, options: [[n3b, n3]]},
-    { animation: doubleImage, options: [[n4b, n4]]},
-    { animation: doubleImage, options: [[n5b, n5]]},
-    { animation: doubleImage, options: [[n6b, n6]]},
-    { animation: doubleImage, options: [[n7b, n7]]},
-    { animation: doubleImage, options: [[n8b, n8]]},
-		{ animation: doubleImage, options: [[n9b, n9]]},
-    { animation: doubleImage, options: [[n10b, n10]]},
-    { animation: doubleImage, options: [[n11b, n11]]},
-    { animation: doubleImage, options: [[n12b, n12]]},
-		{ animation: doubleImage, options: [[n1b, n1]]},
-    { animation: doubleImage, options: [[n2b, n2]]},
-    { animation: doubleImage, options: [[n3b, n3]]},
-    { animation: doubleImage, options: [[n4b, n4]]},
-    { animation: doubleImage, options: [[n5b, n5]]},
-    { animation: doubleImage, options: [[n6b, n6]]},
-    { animation: doubleImage, options: [[n7b, n7]]},
-    { animation: doubleImage, options: [[n8b, n8]]},
-		{ animation: doubleImage, options: [[n9b, n9]]},
-    { animation: doubleImage, options: [[n10b, n10]]},
-    { animation: doubleImage, options: [[n11b, n11]]},
-    { animation: doubleImage, options: [[n12b, n12]]},
-		{ animation: doubleImage, options: [[n1b, n1]]},
-    { animation: doubleImage, options: [[n2b, n2]]},
-	],
-];
 
 export {
   pallete,
@@ -534,5 +464,6 @@ export {
   toRGB,
   animationKey2IndexMapping,
   sequencerAnimationsSet,
+  sequencerCustomSettings,
   keyAnimationsSet,
 };

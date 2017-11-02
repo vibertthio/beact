@@ -1,7 +1,7 @@
-import { min } from '../config/animation.config';
+import { min } from 'config/animation.config';
 
 /**
- * Animation #7, Sunset
+ * Animation #7, Sunrise
  * @param  {objct} Two
  * @param  {object} two instance of two
  * @param  {object} TWEEN the library for tweening
@@ -10,7 +10,7 @@ import { min } from '../config/animation.config';
  * @param  {number} [opacity = 1]
  * @param  {number} [duration = 400]
  */
-export default function sunset(
+export default function sunrise(
   Two,
   two,
   TWEEN,
@@ -51,15 +51,7 @@ export default function sunset(
 
     const circle = two.makeCircle(origin.x, origin.y, radius);
     circle.noStroke();
-    const linearGradient = two.makeLinearGradient(
-      two.width / 2,
-      -two.height / 6,
-      two.width / 2,
-      two.height / 6,
-      new Two.Stop(0, colors[3]),
-      new Two.Stop(1, colors[4]),
-    );
-    circle.fill = linearGradient;
+    circle.fill = colors[4];
 
     const aniOut = new TWEEN.Tween(circle)
       .to({ scale: 0 }, duration)

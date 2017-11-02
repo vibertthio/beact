@@ -1,4 +1,4 @@
-import sculpture from '../../assets/images/animations/sculpture-02.png';
+import sculpture from 'vapor/sculpture-02.png';
 
 /**
  * Animation #0, Veil

@@ -3,7 +3,7 @@ import {
   range,
   angleBetween,
   lerp,
-} from '../config/animation.config';
+} from 'config/animation.config';
 
 /**
 * Animation #8, Clay
