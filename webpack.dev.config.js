@@ -18,12 +18,6 @@ loaders.push({
 	loader: ['react-hot-loader/webpack', 'babel-loader']
 });
 
-// loaders.push({
-//   test: /\.scss$/,
-//   loaders: ['style-loader', 'css-loader?importLoaders=1', 'sass-loader'],
-//   exclude: ['node_modules']
-// });
-
 loaders.push({
   test: require.resolve('two.js'),
   loader: 'imports-loader?this=>window',
@@ -73,8 +67,8 @@ module.exports = {
       filename: 'index.html',
     }),
     new CopyWebpackPlugin([
-      { from: 'src/assets/audio', to: 'assets/audio' },
       { from: 'src/utils/autotrack.js' },
+      { from: 'src/assets/audio', to: 'assets/audio' },
       { from: 'src/assets/images/logo.png' },
       { from: 'src/assets/images/ico/flash.ico' },
       { from: 'src/assets/images/animations/yuen/bg.jpg' },

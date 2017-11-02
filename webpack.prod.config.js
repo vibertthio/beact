@@ -13,12 +13,6 @@ loaders.push({
 	loader: "babel-loader"
 });
 
-loaders.push({
-  test: /\.scss$/,
-  loader: ExtractTextPlugin.extract({fallback: 'style-loader', use: 'css-loader?sourceMap&localIdentName=[local]___[hash:base64:5]!sass-loader?outputStyle=expanded'}),
-  exclude: ['node_modules']
-});
-
 module.exports = {
   entry: [
     './src/index.js',
@@ -75,6 +69,7 @@ module.exports = {
       { from: 'src/assets/audio', to: 'assets/audio' },
       { from: 'src/assets/images/logo.png' },
       { from: 'src/assets/images/ico/flash.ico' },
+			{ from: 'src/assets/images/animations/yuen/bg.jpg' },
     ]),
   ]
 };
