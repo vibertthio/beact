@@ -4,7 +4,7 @@ module.exports = [
     use: [
       { loader: 'style-loader' },
       {
-        loader: 'css-loader',
+        loader: 'css-loader?url=false',
         options: {
           module: true,
           localIdentName: '[name]__[local]--[hash:base64:5]',

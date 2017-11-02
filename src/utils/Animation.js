@@ -5,6 +5,7 @@ import {
   pallete,
   animationKey2IndexMapping,
   sequencerAnimationsSet,
+  sequencerCustomSettings,
   keyAnimationsSet,
 } from 'config/animation.config';
 
@@ -29,20 +30,33 @@ function Animation() {
 
   const setAnimation = (index, set, animation) => {
     const i = index % (set.length);
-    set[i].forEach((s) => {
-      const opt = s.options ? s.options : [];
-      const param = [Two, two, TWEEN, colors, animation];
-      s.animation(...param, ...opt);
+    set[i].forEach((s, j) => {
+      if (Array.isArray(s)) {
+        animation.push([]);
+        s.forEach((a) => {
+          const opt = a.options ? a.options : [];
+          const param = [Two, two, TWEEN, colors, animation[j]];
+          a.animation(...param, ...opt);
+        });
+      } else {
+        const opt = s.options ? s.options : [];
+        const param = [Two, two, TWEEN, colors, animation];
+        s.animation(...param, ...opt);
+      }
     });
   };
+
   const setSequencerAnimations = () => {
     sequencerAnimations.splice(0, sequencerAnimations.length);
+    // console.log(`set animation: ${currentSequencerAnimationsIndex}`);
+    sequencerCustomSettings[currentSequencerAnimationsIndex]();
     setAnimation(
       currentSequencerAnimationsIndex,
       sequencerAnimationsSet,
       sequencerAnimations,
     );
   };
+
   const setKeyAnimation = () => {
     keyAnimations.splice(0, keyAnimations.length);
     setAnimation(
@@ -51,31 +65,48 @@ function Animation() {
       keyAnimations,
     );
   };
+
   const reset = () => {
     two.clear();
   };
+
   const triggerKeyAnimation = (index) => {
     const i = index % keyAnimations.length;
     keyAnimations[i].start();
   };
+
   const triggerSequencerAnimation = (index) => {
     const i = index % sequencerAnimations.length;
-    sequencerAnimations[i].start();
+    if (Array.isArray(sequencerAnimations[i])) {
+      sequencerAnimations[i].forEach((a) => {
+        a.start();
+      });
+    } else {
+      sequencerAnimations[i].start();
+    }
   };
+
   const resize = (w, h) => {
     two.clear();
     two.renderer.setSize(w, h);
     two.width = w;
     two.height = h;
     sequencerAnimations.forEach((ani) => {
-      ani.resize();
+      if (Array.isArray(ani)) {
+        ani.forEach((a) => {
+          a.resize();
+        });
+      } else {
+        ani.resize();
+      }
     });
     keyAnimations.forEach((ani) => {
       ani.resize();
     });
   };
+
   const changeSequencerAnimations = (up) => {
-    const n = sequencerAnimations.length;
+    const n = sequencerAnimationsSet.length;
     currentSequencerAnimationsIndex += (up ? 1 : -1);
     if (currentSequencerAnimationsIndex < 0) {
       currentSequencerAnimationsIndex += n;
@@ -86,6 +117,7 @@ function Animation() {
     setSequencerAnimations();
     setKeyAnimation();
   };
+
 	const changeKeyAnimations = (up) => {
     const n = keyAnimations.length;
     currentKeyAnimationsIndex += (up ? 1 : -1);
@@ -105,6 +137,7 @@ function Animation() {
     setSequencerAnimations();
     setKeyAnimation();
   };
+
 	const startNormal = () => {
     currentKeyAnimationsIndex = 0;
     reset();

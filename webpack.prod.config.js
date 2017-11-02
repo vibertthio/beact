@@ -29,7 +29,14 @@ module.exports = {
     filename: '[chunkhash].bundle.js',
   },
   resolve: {
-    extensions: ['.js', '.jsx']
+    extensions: ['.js', '.jsx'],
+		alias: {
+			animations: path.resolve(__dirname, 'src/utils/animations'),
+			config: path.resolve(__dirname, 'src/utils/config'),
+			yuen: path.resolve(__dirname, 'src/assets/images/animations/yuen'),
+			vapor: path.resolve(__dirname, 'src/assets/images/animations/vapor'),
+			naruto: path.resolve(__dirname, 'src/assets/images/animations/naruto'),
+		},
   },
   module: {
     loaders

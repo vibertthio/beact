@@ -12,9 +12,9 @@ import defaultImgUrl from 'vapor/landscape.jpg';
  * @param  {number} [textureScale = 1]
  * @param  {number} [shapeScale = 1]
  * @param  {number} [opacity = 1]
- * @param  {number} [duration = 400]
+ * @param  {number} [duration = 200]
  */
-export default function flashImage(
+export default function singleFlashImage(
   Two,
   two,
   TWEEN,
@@ -24,7 +24,7 @@ export default function flashImage(
   textureScale = 1,
   shapeScale = 1,
   opacity = 1,
-  duration = 400,
+  duration = 200,
   ) {
   let playing = false;
   const param = { t: 0 };
@@ -35,28 +35,28 @@ export default function flashImage(
   */
   function setup() {
     // const length = Math.min(two.width, two.height);
-    const shape = two.makeRectangle(
-      two.width * 0.5,
-      two.height * 0.5,
-      two.width * shapeScale,
-      two.height * shapeScale,
+    const shape = two.makeSprite(
+      imgUrl,
+      two.width * 0.52,
+      two.height * 0.6,
     );
-    const texture = new Two.Texture(imgUrl);
-    shape.visible = 0;
-    shape.fill = texture;
-    shape.noStroke();
 
     const originalScale = (textureScale * two.height) / 500;
+    shape.opacity = 1;
+    shape.scale = originalScale;
+    shape.visible = false;
     let targetRatio;
-    texture.scale = originalScale;
 
     const ani = new TWEEN.Tween(param)
       .to({ t: 1 }, duration)
       .easing(TWEEN.Easing.Circular.Out)
-      .onStart(() => { targetRatio = 0.2 * Math.random(); })
+      .onStart(() => {
+        targetRatio = 0.15;
+        // targetRatio = 0.2 * Math.random();
+      })
       .onUpdate((t) => {
-        texture.scale = originalScale * (1 + (targetRatio * t));
-        shape.visible = Math.random() > 0.5;
+        shape.scale = originalScale * (1 + (targetRatio * t));
+        shape.visible = Math.random() > 0.25;
         // shape.visible = true;
       })
       .onComplete(() => {

@@ -10,11 +10,11 @@ import defaultImgUrl from 'vapor/landscape.jpg';
  * @param  {array} animations It's the stack of animations
  * @param  {string} imgUrl the src of image
  * @param  {number} [textureScale = 1]
- * @param  {number} [shapeScale = 1]
+ * @param  {number} [spriteScale = 1]
  * @param  {number} [opacity = 1]
  * @param  {number} [duration = 400]
  */
-export default function flashImage(
+export default function singleStaticImage(
   Two,
   two,
   TWEEN,
@@ -22,7 +22,7 @@ export default function flashImage(
   animations,
   imgUrl = defaultImgUrl,
   textureScale = 1,
-  shapeScale = 1,
+  spriteScale = 1.3,
   opacity = 1,
   duration = 400,
   ) {
@@ -34,33 +34,33 @@ export default function flashImage(
   * @return {[type]} [description]
   */
   function setup() {
-    // const length = Math.min(two.width, two.height);
-    const shape = two.makeRectangle(
+    const shape = two.makeSprite(
+      imgUrl,
       two.width * 0.5,
       two.height * 0.5,
-      two.width * shapeScale,
-      two.height * shapeScale,
     );
-    const texture = new Two.Texture(imgUrl);
-    shape.visible = 0;
-    shape.fill = texture;
-    shape.noStroke();
+    shape.scale = (textureScale * two.height) / 3000;
+    shape.opacity = 1;
 
     const originalScale = (textureScale * two.height) / 500;
+    shape.scale = originalScale;
     let targetRatio;
-    texture.scale = originalScale;
+    let rotateRatio;
 
     const ani = new TWEEN.Tween(param)
       .to({ t: 1 }, duration)
       .easing(TWEEN.Easing.Circular.Out)
-      .onStart(() => { targetRatio = 0.2 * Math.random(); })
+      .onStart(() => {
+        targetRatio = 0.15;
+        rotateRatio = (Math.random() > 0.5) ? 0.05 : -0.05;
+      })
       .onUpdate((t) => {
-        texture.scale = originalScale * (1 + (targetRatio * t));
-        shape.visible = Math.random() > 0.5;
-        // shape.visible = true;
+        shape.scale = originalScale * (1 + (targetRatio * t));
+        shape.rotation = Math.PI * rotateRatio * t;
+        shape.visible = true;
       })
       .onComplete(() => {
-        shape.visible = false;
+        // shape.visible = false;
       });
 
     return { shape, ani };
