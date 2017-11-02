@@ -2,99 +2,105 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="DJ and VJ all by yourself in seconds !" />
+    <meta name="viewport"             content="width=device-width, initial-scale=1" />
+    <meta name="description"          content="DJ and VJ all by yourself in seconds !" />
+    <meta property="og:url"           content="https://beact.herokuapp.com/" />
+		<meta property="og:type"          content="music.song" />
+		<meta property="og:title"         content="Beact" />
+		<meta property="og:description"   content="DJ and VJ all by yourself in seconds !" />
+		<meta property="og:image"         content="https://github.com/vibertthio/beact/blob/master/assets/images/b1.png" />
+
     <link rel="shortcut icon" href="flash.ico">
 		<style>
-		html, body {
-			background-color: rgba(39, 6, 54, 1);
-		}
-
-		#loadingTitle {
-			color: #eecdcc;
-			font-family: "";
-			/*font-family: "Open Sans";*/
-			font-style: italic;
-			font-weight: 700;
-			font-size: 10em;
-			font-variant: normal;
-			text-align: center;
-			margin-top: .4em;
-			transition: opacity 1s ease-out;
-		}
-
-		#spinner {
-			margin: 10% auto;
-			width: 120px;
-			height: 120px;
-			position: relative;
-			text-align: center;
-			-webkit-animation: sk-rotate 2.0s infinite linear;
-			animation: sk-rotate 2.0s infinite linear;
-		}
-
-		.dot1, .dot2 {
-			width: 60%;
-			height: 60%;
-			display: inline-block;
-			position: absolute;
-			top: 0;
-			background-color: #eecdcc;
-			border-radius: 100%;
-
-			-webkit-animation: sk-bounce 2.0s infinite ease-in-out;
-			animation: sk-bounce 2.0s infinite ease-in-out;
-		}
-
-		.dot2 {
-			top: auto;
-			bottom: 0;
-			-webkit-animation-delay: -1.0s;
-			animation-delay: -1.0s;
-		}
-
-		@-webkit-keyframes sk-rotate { 100% { -webkit-transform: rotate(360deg) }}
-		@keyframes sk-rotate { 100% { transform: rotate(360deg); -webkit-transform: rotate(360deg) }}
-
-		@-webkit-keyframes sk-bounce {
-			0%, 100% { -webkit-transform: scale(0.0) }
-			50% { -webkit-transform: scale(1.0) }
-		}
-
-		@keyframes sk-bounce {
-			0%, 100% {
-				transform: scale(0.0);
-				-webkit-transform: scale(0.0);
-			} 50% {
-				transform: scale(1.0);
-				-webkit-transform: scale(1.0);
+			html, body {
+				background-color: rgba(39, 6, 54, 1);
 			}
-		}
-		.loaded {
-			opacity: 0;
-		}
-		.fullHeight {
-			height: 100%;
-		}
-    .beactLogoWrap {
-      z-index: -1;
-      position: fixed;
-			top: 25%;
-			height: 50%;
-			width: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-		.beactLogo {
-			opacity: 0;
-			height: 100%;
-			transition: opacity 1s ease-out;
-		}
-		.showLogo {
-      z-index: 0;
-			opacity: 0.6;
-		}
+
+			#loadingTitle {
+				color: #eecdcc;
+				font-family: "";
+				/*font-family: "Open Sans";*/
+				font-style: italic;
+				font-weight: 700;
+				font-size: 10em;
+				font-variant: normal;
+				text-align: center;
+				margin-top: .4em;
+				transition: opacity 1s ease-out;
+			}
+
+			#spinner {
+				margin: 10% auto;
+				width: 120px;
+				height: 120px;
+				position: relative;
+				text-align: center;
+				-webkit-animation: sk-rotate 2.0s infinite linear;
+				animation: sk-rotate 2.0s infinite linear;
+			}
+
+			.dot1, .dot2 {
+				width: 60%;
+				height: 60%;
+				display: inline-block;
+				position: absolute;
+				top: 0;
+				background-color: #eecdcc;
+				border-radius: 100%;
+
+				-webkit-animation: sk-bounce 2.0s infinite ease-in-out;
+				animation: sk-bounce 2.0s infinite ease-in-out;
+			}
+
+			.dot2 {
+				top: auto;
+				bottom: 0;
+				-webkit-animation-delay: -1.0s;
+				animation-delay: -1.0s;
+			}
+
+			@-webkit-keyframes sk-rotate { 100% { -webkit-transform: rotate(360deg) }}
+			@keyframes sk-rotate { 100% { transform: rotate(360deg); -webkit-transform: rotate(360deg) }}
+
+			@-webkit-keyframes sk-bounce {
+				0%, 100% { -webkit-transform: scale(0.0) }
+				50% { -webkit-transform: scale(1.0) }
+			}
+
+			@keyframes sk-bounce {
+				0%, 100% {
+					transform: scale(0.0);
+					-webkit-transform: scale(0.0);
+				} 50% {
+					transform: scale(1.0);
+					-webkit-transform: scale(1.0);
+				}
+			}
+			.loaded {
+				opacity: 0;
+			}
+			.fullHeight {
+				height: 100%;
+			}
+	    .beactLogoWrap {
+	      z-index: -1;
+	      position: fixed;
+				top: 25%;
+				height: 50%;
+				width: 100%;
+	      display: flex;
+	      justify-content: center;
+	      align-items: center;
+	    }
+			.beactLogo {
+				opacity: 0;
+				height: 100%;
+				transition: opacity 1s ease-out;
+			}
+			.showLogo {
+	      z-index: 0;
+				opacity: 0.6;
+			}
 		</style>
     <!--
       Notice the use of %PUBLIC_URL% in the tag above.
@@ -119,15 +125,14 @@
 		</div>
     <div>
       <!-- ga -->
-      <script>
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-        ga('create', 'UA-102358307-2', 'auto');
-        ga('send', 'pageview');
-      </script>
+			<script>
+				window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+				ga('create', 'UA-102358307-2', 'auto');
+				ga('require', 'eventTracker');
+				ga('send', 'pageview');
+			</script>
+			<script async src="https://www.google-analytics.com/analytics.js"></script>
+			<script async src="./autotrack.js"></script>
     </div>
   </body>
 

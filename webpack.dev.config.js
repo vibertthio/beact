@@ -67,6 +67,7 @@ module.exports = {
     }),
     new CopyWebpackPlugin([
       { from: 'src/assets/audio', to: 'assets/audio' },
+      { from: 'src/utils/autotrack.js' },
       { from: 'src/assets/images/logo.png' },
       { from: 'src/assets/images/ico/flash.ico' },
     ]),
