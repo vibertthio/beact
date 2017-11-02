@@ -33,9 +33,11 @@ import flashImage from 'animations/vapor/flashImage';
 import singleFlashImage from 'animations/vapor/singleFlashImage';
 import popImage from 'animations/vapor/popImage';
 import staticImage from 'animations/vapor/staticImage';
+import flyImage from 'animations/vapor/flyImage';
 import singleStaticImage from 'animations/vapor/singleStaticImage';
 import fade from 'animations/vapor/fade';
 import gradientTimer from 'animations/vapor/gradientTimer';
+import randomPiston from 'animations/vapor/randomPiston';
 
 // scya
 import crossline from 'animations/scyaAni/scya-crossline';
@@ -79,6 +81,7 @@ import n12b from 'naruto/12-b.jpg';
 import bg from 'yuen/bg.jpg';
 import heart from 'yuen/heart.png';
 import cube from 'yuen/cube.png';
+import hand from 'yuen/hand.png';
 
 const sequencerAnimationsSet = [
   [
@@ -86,15 +89,21 @@ const sequencerAnimationsSet = [
       { animation: fade, options: [0] },
       { animation: singleStaticImage, options: [heart, 0.8, 0.4] },
     ],
-    { animation: singleFlashImage, options: [cube, 0.9, 0.3] },
+    [
+      { animation: singleFlashImage, options: [cube, 0.9, 0.3] },
+      { animation: prism, options: [6, 1, 600, 1] },
+      { animation: prism, options: [6, 1, 900, 1] },
+    ],
     [
       { animation: gradientTimer },
-      { animation: prism, options: [7] },
+      { animation: flyImage, options: [hand] },
+      { animation: flyImage, options: [hand] },
     ],
     { animation: prism, options: [3] },
-    { animation: splashColorful },
     { animation: strikes },
-    { animation: brush, options: [4] },
+    { animation: randomPiston },
+    { animation: randomPiston },
+    { animation: splashColorful },
   ],
   // [
   //   [

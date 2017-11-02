@@ -10,6 +10,7 @@
  * @param  {number} [index = 0] 0 ~ 2
  * @param  {number} [opacity = 1]
  * @param  {number} [duration = 400]
+ * @param  {number} [mode = 0]
  */
 export default function fade(
   Two,
@@ -20,6 +21,7 @@ export default function fade(
   index = 0,
   opacity = 1,
   duration = 400,
+  mode = 0,
   ) {
   let playing = false;
   const param = { t: 0 };
@@ -41,9 +43,23 @@ export default function fade(
     shape.noStroke();
     shape.fill = colors[0];
 
+    let twn;
+    switch (mode) {
+      case 0:
+        twn = TWEEN.Easing.Exponential.Out;
+        break;
+      case 1:
+        twn = TWEEN.Easing.Exponential.In;
+        break;
+      case 2:
+        twn = TWEEN.Easing.Circular.Out;
+        break;
+      default:
+        break;
+    }
     const ani = new TWEEN.Tween(param)
       .to({ t: 1 }, duration)
-      .easing(TWEEN.Easing.Exponential.Out)
+      .easing(twn)
       .onStart(() => { shape.visible = true; })
       .onUpdate((t) => {
         shape.opacity = t;
