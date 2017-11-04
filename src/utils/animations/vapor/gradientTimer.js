@@ -55,7 +55,8 @@ export default function timer(
       two.width / 2,
       two.height / 6,
       new Two.Stop(0, colors[3]),
-      new Two.Stop(1, colors[4]),
+      new Two.Stop(1, colors[2]),
+      // new Two.Stop(1, colors[5]),
     );
 
     const shape = two.makeCurve(points, true);

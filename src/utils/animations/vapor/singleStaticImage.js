@@ -27,7 +27,7 @@ export default function singleStaticImage(
   duration = 400,
   ) {
   let playing = false;
-  const param = { t: 0 };
+  let param = { t: 0, op: 1 };
 
   /**
   * [setup description]
@@ -40,14 +40,24 @@ export default function singleStaticImage(
       two.height * 0.5,
     );
     shape.scale = (textureScale * two.height) / 3000;
-    shape.opacity = 1;
+    shape.opacity = 0;
 
     const originalScale = (textureScale * two.height) / 500;
     shape.scale = originalScale;
     let targetRatio;
     let rotateRatio;
 
-    const ani = new TWEEN.Tween(param)
+    const aniOut = new TWEEN.Tween(param)
+      .to({ opa: 0 }, duration * 1.5)
+      .easing(TWEEN.Easing.Exponential.Out)
+      .onUpdate((t) => {
+        shape.opacity = 1 - t;
+      })
+      .onComplete(() => {
+
+      });
+
+    const aniIn = new TWEEN.Tween(param)
       .to({ t: 1 }, duration)
       .easing(TWEEN.Easing.Circular.Out)
       .onStart(() => {
@@ -61,27 +71,31 @@ export default function singleStaticImage(
       })
       .onComplete(() => {
         // shape.visible = false;
+        aniOut.start();
       });
 
-    return { shape, ani };
+    return { shape, aniIn, aniOut };
   }
 
-  let { shape, ani } = setup();
+  let { shape, aniIn, aniOut } = setup();
 
   // methods
   const resize = () => {
     two.remove(shape);
-    ({ shape, ani } = setup());
+    ({ shape, aniIn, aniOut } = setup());
   };
 
   const reset = () => {
-    ani.stop();
+    param = { t: 0, op: 1 };
+    shape.opacity = 1;
+    aniIn.stop();
+    aniOut.stop();
   };
 
   const start = () => {
     reset();
     playing = true;
-    ani.start();
+    aniIn.start();
   };
 
   const EXPORT = {

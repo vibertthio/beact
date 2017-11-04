@@ -51,14 +51,14 @@ export default function strike(
 
     const aniOut = new TWEEN.Tween(line)
       .to({ beginning: 1.0 }, duration)
-      .easing(TWEEN.Easing.Circular.Out);
+      .easing(TWEEN.Easing.Circular.Out)
+      .onComplete(() => { line.visible = false; });
 
     const aniIn = new TWEEN.Tween(line)
       .to({ ending: 1.0 }, duration)
       .easing(TWEEN.Easing.Circular.In)
-      .onComplete(() => {
-        aniOut.start();
-      });
+      .onStart(() => { line.visible = true; })
+      .onComplete(() => { aniOut.start(); });
 
     return {
       line,

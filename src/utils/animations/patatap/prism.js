@@ -75,10 +75,8 @@ export default function prism(
     group.scale = 0;
 
     const ani = new TWEEN.Tween(group)
-    .to(dest, duration)
-    .easing(TWEEN.Easing.Circular.In)
-    .onStart(() => {
-    });
+      .to(dest, duration)
+      .easing(TWEEN.Easing.Circular.In);
 
     return {
       playing,
