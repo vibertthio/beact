@@ -1,4 +1,7 @@
-![logo of beact](./assets/images/bar.png)
+> :tada: New Animation Arrival!
+
+<!-- ![logo of beact](./assets/images/bar.png) -->
+![logo of beact](./assets/images/new-ani.png)
 # [Beact](https://beact.herokuapp.com/) &middot; [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
 > 🎸🎨 DJ / VJ all by yourself in seconds !
@@ -149,7 +152,7 @@ npm run deploy
 
 ## 6. UI and Advanced Usage
 
-![screenshot](./assets/images/beact-ui.png)  
+![screenshot](./assets/images/beact-ui-2.png)  
 [Full User Guide](https://safe-stream-69256.herokuapp.com/)
 
 ## 7. Credits and Inspirations
