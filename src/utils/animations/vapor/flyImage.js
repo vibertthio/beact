@@ -41,7 +41,7 @@ export default function flyImage(
       origin.x,
       origin.y,
     );
-    shape.scale = (scale * two.height) / 300;
+    shape.scale = (scale * Math.min(two.height, two.width)) / 300;
     shape.opacity = 0;
 
     const aniOut = new TWEEN.Tween(shape.translation)

@@ -96,8 +96,8 @@ const sequencerAnimationsSet = [
     ],
     [
       { animation: gradientTimer },
-      { animation: flyImage, options: [hand] },
-      { animation: flyImage, options: [hand] },
+      { animation: flyImage, options: [hand, 0.5] },
+      { animation: flyImage, options: [hand, 0.6] },
     ],
     { animation: prism, options: [3] },
     { animation: strikes },
