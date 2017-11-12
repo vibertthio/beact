@@ -18,6 +18,7 @@
     "global-require": 0,
     "import/no-extraneous-dependencies": 0,
     "no-console": 0,
+    "no-alert": 0,
     "no-tabs": 0,
     "no-mixed-spaces-and-tabs": 0,
     "indent": 0,

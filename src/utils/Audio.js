@@ -45,7 +45,7 @@ export class Sequencer {
     this.matrix = matrix;
     this.number = 0;
     this.playing = true;
-    this.notes = drumNotes;
+    this.notes = drumNotes; // [1, 2, 3, 4, 5, 6, 7, 8]
     this.isPlayingChain = false;
     this.recordMatrix = [];
     this.recordFull = [];
@@ -59,11 +59,13 @@ export class Sequencer {
     // this.nowPlayingAni = [];
     this.saveRecord = this.saveRecord.bind(this);
 
+    // now playing column
     this.sequence = new Sequence((time, col) => {
       this.beat = col;
 
       setCurrentBeat(this.beat);
 
+      // 16 columns
       const column = this.matrix[col];
       const nowPlayingAni = [];
       for (let i = 0; i < this.notes.length; i += 1) {

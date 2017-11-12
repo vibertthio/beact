@@ -58,7 +58,7 @@ class DrumMachine extends Component {
 
     this.state = {
       data,
-      currentBeat: 0,
+      currentBeat: 0, // now playing column
       playing: false,
       patternLists: [],
       patternTitle: '',
@@ -67,8 +67,8 @@ class DrumMachine extends Component {
       currentChainElement: '',
 	  	currentChainElementIndex: 0,
       currentPlayingChainElement: 0,
-      drumRecords: [],
-      keyRecords: [],
+      drumRecords: [], // record sequencer
+      keyRecords: [], // record keyboard
       recordTitle: '',
       currentPlayingRecord: [],
       currentPlayingRecordElement: 0,
@@ -135,6 +135,7 @@ class DrumMachine extends Component {
 
   /**
    * [componentDidMount description]
+	 * get patterns & records
    */
   componentDidMount() {
     this.detectKeyboard();
@@ -343,6 +344,7 @@ class DrumMachine extends Component {
    */
   recordSequencer() {
     if (this.state.recordTitle === '') {
+      alert('Please give your record a title');
       console.log('Please give your record a title');
     } else if (this.sequencer.recording === true) {
       this.sequencer.stopRecording();
@@ -385,6 +387,7 @@ class DrumMachine extends Component {
   /**
   * @param  {Array} records width of window
    * [storeDrumRecord description]
+	 * when using Recorder
    */
   storeDrumRecord(records) {
     this.setState({ drumRecords: records });
@@ -393,6 +396,7 @@ class DrumMachine extends Component {
   /**
   * @param  {Array} records width of window
    * [storeKeyRecord description]
+	 * When using Recorder
    */
   storeKeyRecord(records) {
     this.setState({ keyRecords: records });
@@ -535,6 +539,7 @@ class DrumMachine extends Component {
         .catch(err => console.log(err));
       this.setState({ patternTitle: '' });
     } else {
+      alert('Please give your pattern a name!');
       console.log('Please give your pattern a name!');
     }
   }
