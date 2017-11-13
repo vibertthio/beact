@@ -43,6 +43,7 @@ module.exports = {
 		  yuen: path.resolve(__dirname, 'src/assets/images/animations/yuen'),
 		  vapor: path.resolve(__dirname, 'src/assets/images/animations/vapor'),
 		  naruto: path.resolve(__dirname, 'src/assets/images/animations/naruto'),
+		  images: path.resolve(__dirname, 'src/assets/images'),
 		},
   },
   module: {

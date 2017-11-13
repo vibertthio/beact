@@ -83,6 +83,8 @@ import heart from 'yuen/heart.png';
 import cube from 'yuen/cube.png';
 import hand from 'yuen/hand.png';
 
+import samuri from 'images/animations/samuri.png';
+
 const sequencerAnimationsSet = [
   [
     [
@@ -102,7 +104,8 @@ const sequencerAnimationsSet = [
     ],
     { animation: prism, options: [3] },
     { animation: strikes },
-    { animation: randomPiston },
+    { animation: flyImage, options: [samuri, 0.5] },
+    // { animation: randomPiston },
     { animation: randomPiston },
     { animation: splashColorful },
   ],
