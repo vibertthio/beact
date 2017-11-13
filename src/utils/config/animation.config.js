@@ -86,6 +86,7 @@ import hand from 'yuen/hand.png';
 const sequencerAnimationsSet = [
   [
     [
+      // play multiple animations at the same time!
       { animation: fade, options: [0] },
       { animation: singleStaticImage, options: [heart, 0.8, 0.4] },
     ],
