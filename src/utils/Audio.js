@@ -90,6 +90,7 @@ export class Sequencer {
 
       if (this.recording === true) {
         if (this.recordMatrix.length < 16) {
+          console.log(`start column: ${col}`);
           this.recordMatrix.push(column);
           if (this.recordMatrix.length === 16) {
             const recordMatrix = [
@@ -217,6 +218,17 @@ export class Sequencer {
    */
   saveRecord(saveKeyboardRecord, storeKeyboardRecord, recordTitle) {
     this.checkStart = false;
+    console.log(`ready to save this.recordFull: ${this.recordFull}`);
+    console.log(`now this.recordMatrix: ${this.recordMatrix}`);
+    // fill the rest recordMatrix then append to recordFull
+    // if the rest recordMatrix columns are too few, we think it's not user's intention
+    if (this.recordMatrix.length > 5) {
+      const emptyCol = [0, 0, 0, 0, 0, 0, 0, 0];
+      while (this.recordMatrix.length < 16) {
+        this.recordMatrix.push(emptyCol);
+      }
+      this.recordFull.push(this.recordMatrix);
+    }
     if (this.recordFull.length > 0) {
       axios.post('/api/notes', {
         id: temperId,
@@ -229,6 +241,7 @@ export class Sequencer {
       )
       .then(
         this.recordFull = [],
+        this.recordMatrix = [],
       )
       .then(
         axios.get('/api/notes')
@@ -290,6 +303,7 @@ export class Keyboard {
    */
   playKey() {
     console.log(`key: ${this.currentKey}`);
+    console.log(`Transport.seconds: ${Transport.seconds}`);
     if (this.currentKey !== null && !this.loadingSamples) {
       // find each Tone.player in Tone.Players.
       this.samples._players[this.notes[this.currentKey]].start();
@@ -323,6 +337,7 @@ export class Keyboard {
    * [saveRecord description]
    */
   saveRecord(recordId, startTime) {
+    console.log(`record startTime: ${startTime}`);
     const keyBoardRecord = {
       content: this.record,
       id: recordId,
