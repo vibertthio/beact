@@ -61,6 +61,9 @@ export class Sequencer {
 
     // now playing column
     this.sequence = new Sequence((time, col) => {
+      // console.log(`time: ${time} vs Transport.seconds: ${Transport.seconds}`);
+      // this.startTimeDiff = time - Transport.seconds;
+      // console.log(`this.startTimeDiff: ${this.startTimeDiff}`);
       this.beat = col;
 
       setCurrentBeat(this.beat);
@@ -72,6 +75,7 @@ export class Sequencer {
       for (let i = 0; i < this.notes.length; i += 1) {
         if (col === 0 && i === 0 && this.checkStart === false && this.recording === true) {
           this.checkStart = true;
+          // this.startTime = Transport.seconds;
           this.startTime = time;
         }
         // make sure no play while loading
@@ -90,7 +94,6 @@ export class Sequencer {
 
       if (this.recording === true) {
         if (this.recordMatrix.length < 16) {
-          console.log(`start column: ${col}`);
           this.recordMatrix.push(column);
           if (this.recordMatrix.length === 16) {
             const recordMatrix = [
@@ -117,8 +120,7 @@ export class Sequencer {
               }
             }
             this.recordFull.push(recordMatrix);
-            console.log(`startTime: ${this.startTime}`);
-            console.log(`recordFull: ${this.recordFull}`);
+            // console.log(`recordFull: ${this.recordFull}`);
             this.recordMatrix = [];
           }
         }
@@ -218,8 +220,8 @@ export class Sequencer {
    */
   saveRecord(saveKeyboardRecord, storeKeyboardRecord, recordTitle) {
     this.checkStart = false;
-    console.log(`ready to save this.recordFull: ${this.recordFull}`);
-    console.log(`now this.recordMatrix: ${this.recordMatrix}`);
+    // console.log(`ready to save this.recordFull: ${this.recordFull}`);
+    // console.log(`now this.recordMatrix: ${this.recordMatrix}`);
     // fill the rest recordMatrix then append to recordFull
     // if the rest recordMatrix columns are too few, we think it's not user's intention
     if (this.recordMatrix.length > 5) {
@@ -357,6 +359,7 @@ export class Keyboard {
     const currentTime = Transport.seconds;
     for (let i = 0; i < record.content.length; i += 1) {
       const time = currentTime + (record.content[i].time - record.startTime);
+      console.log(`${time} = current: ${currentTime} + (record time: ${record.content[i].time} - start: ${record.startTime})`);
       this.samples._players[this.notes[record.content[i].key]].start(time);
       // this.samples.start(this.notes[record.content[i].key], time); // for Tone.MultiPlayer
       Transport.schedule(() => {
@@ -371,8 +374,9 @@ export class Keyboard {
   clearSchedule() {
      const time = Transport.seconds + 1;
      this.samples.stopAll(time);
-    //  this.samples.stopAll([time]); // for Tone.MultiPlayer
-     // Transport.cancel([time]);
+     Transport.cancel(time);
+    //  this.samples.stopAll([time]);
+    //  Transport.cancel([time]);
     }
 
 	/**
