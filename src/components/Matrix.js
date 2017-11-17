@@ -16,9 +16,12 @@ class Matrix extends Component {
     this.state = {
       idle: false,
       hover: { i: -1, j: -1 },
+      isDown: false,
     };
     this.setIdle = this.setIdle.bind(this);
     this.mouseEnter = this.mouseEnter.bind(this);
+    this.mouseDown = this.mouseDown.bind(this);
+    this.setIsDown = this.setIsDown.bind(this);
   }
 
   /**
@@ -39,6 +42,45 @@ class Matrix extends Component {
   }
 
   /**
+   * [setIsDown description]
+   * @param {Boolean} isDown
+   */
+  setIsDown(isDown) {
+    this.setState({
+      isDown,
+    });
+  }
+
+  /**
+   * [mouseEnter description]
+   * @param {number} i [description]
+   * @param {number} j [description]
+   */
+  mouseEnter(i, j) {
+    const { isDown } = this.state;
+    const { onClick } = this.props;
+    this.setIdle(false);
+    this.setState({
+      hover: { i, j },
+    });
+    if (isDown) {
+      console.log(`dragclicking ${i}, ${j}`);
+      onClick(i, j);
+    }
+  }
+
+  /**
+   * [mouseDown description]
+   * @param {number} i [description]
+   * @param {number} j [description]
+   */
+  mouseDown(i, j) {
+    const { onClick } = this.props;
+    onClick(i, j);
+    this.setIsDown(true);
+  }
+
+  /**
    * [componentWillUnmout description]
    */
   componentWillUnmout() {
@@ -49,24 +91,12 @@ class Matrix extends Component {
   }
 
   /**
-   * [mouseEnter description]
-   * @param {number} i [description]
-   * @param {number} j [description]
-   */
-  mouseEnter(i, j) {
-    this.setIdle(false);
-    this.setState({
-      hover: { i, j },
-    });
-  }
-
-  /**
    * [render description]
    * @return {Element} [description]
    */
   render() {
 		const { hover, idle } = this.state;
-    const { data, onClick } = this.props;
+    const { data } = this.props;
     return (
       <div
         className={
@@ -91,7 +121,9 @@ class Matrix extends Component {
 									 ${(hover.i === i && hover.j === j) ? styles.hover : ''}`
                   }
                 onMouseEnter={() => this.mouseEnter(i, j)}
-                onTouchTap={() => onClick(i, j)}
+                onMouseDown={() => this.mouseDown(i, j)}
+                onMouseUp={() => this.setIsDown(false)}
+                // onTouchTap={() => onClick(i, j)}
               />,
               )}
           </div>,
