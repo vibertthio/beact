@@ -61,6 +61,7 @@ export class Sequencer {
 
     // now playing column
     this.sequence = new Sequence((time, col) => {
+      console.log('column Transport.seconds', Transport.seconds);
       // console.log(`time: ${time} vs Transport.seconds: ${Transport.seconds}`);
       // this.startTimeDiff = time - Transport.seconds;
       // console.log(`this.startTimeDiff: ${this.startTimeDiff}`);
@@ -75,8 +76,9 @@ export class Sequencer {
       for (let i = 0; i < this.notes.length; i += 1) {
         if (col === 0 && i === 0 && this.checkStart === false && this.recording === true) {
           this.checkStart = true;
-          // this.startTime = Transport.seconds;
-          this.startTime = time;
+          console.log('startTime Transport.seconds', Transport.seconds);
+          this.startTime = Transport.seconds;
+          // this.startTime = time;
         }
         // make sure no play while loading
         if (column[i] === 1 && !this.loadingSamples) {
@@ -305,7 +307,7 @@ export class Keyboard {
    */
   playKey() {
     console.log(`key: ${this.currentKey}`);
-    console.log(`Transport.seconds: ${Transport.seconds}`);
+    console.log('key Transport.seconds: ', Transport.seconds);
     if (this.currentKey !== null && !this.loadingSamples) {
       // find each Tone.player in Tone.Players.
       this.samples._players[this.notes[this.currentKey]].start();
@@ -359,7 +361,10 @@ export class Keyboard {
     const currentTime = Transport.seconds;
     for (let i = 0; i < record.content.length; i += 1) {
       const time = currentTime + (record.content[i].time - record.startTime);
-      console.log(`${time} = current: ${currentTime} + (record time: ${record.content[i].time} - start: ${record.startTime})`);
+      console.log('record startTime: ', record.startTime);
+      const diff = record.content[i].time - record.startTime;
+      console.log('diff: ', diff);
+      console.log(`${time} = ${currentTime} + (${record.content[i].time} - ${record.startTime})`);
       this.samples._players[this.notes[record.content[i].key]].start(time);
       // this.samples.start(this.notes[record.content[i].key], time); // for Tone.MultiPlayer
       Transport.schedule(() => {
@@ -375,8 +380,8 @@ export class Keyboard {
      const time = Transport.seconds + 1;
      this.samples.stopAll(time);
      Transport.cancel(time);
-    //  this.samples.stopAll([time]);
-    //  Transport.cancel([time]);
+     // this.samples.stopAll([time]);
+     // Transport.cancel([time]);
     }
 
 	/**
