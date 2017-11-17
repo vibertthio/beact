@@ -354,6 +354,7 @@ export class Keyboard {
     const currentTime = Transport.seconds;
     for (let i = 0; i < record.content.length; i += 1) {
       const time = currentTime + (record.content[i].time - record.startTime);
+      // time difference '0.6' as temporary compensation
       this.samples._players[this.notes[record.content[i].key]].start(time + 0.6);
       Transport.schedule(() => {
         aniTrigger(record.content[i].key);
