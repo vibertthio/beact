@@ -62,23 +62,18 @@ export class Sequencer {
     // now playing column
     this.sequence = new Sequence((time, col) => {
       console.log('column Transport.seconds', Transport.seconds);
-      // console.log(`time: ${time} vs Transport.seconds: ${Transport.seconds}`);
-      // this.startTimeDiff = time - Transport.seconds;
-      // console.log(`this.startTimeDiff: ${this.startTimeDiff}`);
       this.beat = col;
 
       setCurrentBeat(this.beat);
 
       // 16 columns, each column: ex. [1, 0, 0, 0, 1, 1, 0, 1]
       const column = this.matrix[col];
-      // console.log('column: ', column);
       const nowPlayingAni = [];
       for (let i = 0; i < this.notes.length; i += 1) {
         if (col === 0 && i === 0 && this.checkStart === false && this.recording === true) {
           this.checkStart = true;
           console.log('startTime Transport.seconds', Transport.seconds);
           this.startTime = Transport.seconds;
-          // this.startTime = time;
         }
         // make sure no play while loading
         if (column[i] === 1 && !this.loadingSamples) {
@@ -86,7 +81,6 @@ export class Sequencer {
           // convert velocity(gain) to volume
           this.samples.volume.value = 10 * Math.log10(vel);
           this.samples._players[this.notes[i]].start(time, 0, '32n');
-          // this.samples.start(this.notes[i], time, 0, '32n', 0, vel); // for Tone.MultiPlayer
           nowPlayingAni.push(i);
         }
         if (i === 7) {
@@ -311,7 +305,6 @@ export class Keyboard {
     if (this.currentKey !== null && !this.loadingSamples) {
       // find each Tone.player in Tone.Players.
       this.samples._players[this.notes[this.currentKey]].start();
-      // this.samples.start(this.notes[this.currentKey]); // for Tone.MultiPlayer
       if (this.recording === true) {
         const time = Transport.seconds;
         this.record.push({ time, key: this.currentKey });
@@ -361,15 +354,10 @@ export class Keyboard {
     const currentTime = Transport.seconds;
     for (let i = 0; i < record.content.length; i += 1) {
       const time = currentTime + (record.content[i].time - record.startTime);
-      console.log('record startTime: ', record.startTime);
-      const diff = record.content[i].time - record.startTime;
-      console.log('diff: ', diff);
-      console.log(`${time} = ${currentTime} + (${record.content[i].time} - ${record.startTime})`);
-      this.samples._players[this.notes[record.content[i].key]].start(time);
-      // this.samples.start(this.notes[record.content[i].key], time); // for Tone.MultiPlayer
+      this.samples._players[this.notes[record.content[i].key]].start(time + 0.6);
       Transport.schedule(() => {
         aniTrigger(record.content[i].key);
-      }, time - 0.4);
+      }, time);
     }
   }
 
