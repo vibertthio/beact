@@ -20,7 +20,7 @@ function Animation() {
   const keyAnimations = [];
   const sequencerAnimations = [];
   let currentKeyAnimationsIndex = 0;
-  let currentSequencerAnimationsIndex = 0;
+  let currentSequencerAnimationsIndex = 2;
   const colors = pallete[2].map(toRGB);
   const canvas = document.getElementById('animation');
   const params = { fullscreen: true };
@@ -28,6 +28,7 @@ function Animation() {
   const two = new Two(params).appendTo(canvas);
   two.bind('update', () => { TWEEN.update(); }).play();
 
+  // set includes both key and sequencer animations.
   const setAnimation = (index, set, animation) => {
     const i = index % (set.length);
     set[i].forEach((s, j) => {
@@ -36,6 +37,7 @@ function Animation() {
         s.forEach((a) => {
           const opt = a.options ? a.options : [];
           const param = [Two, two, TWEEN, colors, animation[j]];
+          // elements in animation array are filled in animation files
           a.animation(...param, ...opt);
         });
       } else {
@@ -78,6 +80,7 @@ function Animation() {
     keyAnimations[i].start();
   };
 
+  // index of clicked element in each column
   const triggerSequencerAnimation = (index) => {
     const i = index % sequencerAnimations.length;
     if (Array.isArray(sequencerAnimations[i])) {

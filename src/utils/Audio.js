@@ -1,4 +1,4 @@
-import { MultiPlayer, Sequence, Transport } from 'tone';
+import { Sequence, Transport, Players } from 'tone';
 import axios from 'axios';
 import uuid4 from 'uuid/v4';
 import { keysUrls, keysNotes } from './config/keys.config';
@@ -61,22 +61,26 @@ export class Sequencer {
 
     // now playing column
     this.sequence = new Sequence((time, col) => {
+      console.log('column Transport.seconds', Transport.seconds);
       this.beat = col;
 
       setCurrentBeat(this.beat);
 
-      // 16 columns
+      // 16 columns, each column: ex. [1, 0, 0, 0, 1, 1, 0, 1]
       const column = this.matrix[col];
       const nowPlayingAni = [];
       for (let i = 0; i < this.notes.length; i += 1) {
         if (col === 0 && i === 0 && this.checkStart === false && this.recording === true) {
           this.checkStart = true;
-          this.startTime = time;
+          console.log('startTime Transport.seconds', Transport.seconds);
+          this.startTime = Transport.seconds;
         }
         // make sure no play while loading
         if (column[i] === 1 && !this.loadingSamples) {
           const vel = (Math.random() * 0.5) + 0.5;
-          this.samples.start(this.notes[i], time, 0, '32n', 0, vel);
+          // convert velocity(gain) to volume
+          this.samples.volume.value = 10 * Math.log10(vel);
+          this.samples._players[this.notes[i]].start(time, 0, '32n');
           nowPlayingAni.push(i);
         }
         if (i === 7) {
@@ -112,8 +116,7 @@ export class Sequencer {
               }
             }
             this.recordFull.push(recordMatrix);
-            console.log(`startTime: ${this.startTime}`);
-            console.log(`recordFull: ${this.recordFull}`);
+            // console.log(`recordFull: ${this.recordFull}`);
             this.recordMatrix = [];
           }
         }
@@ -197,14 +200,11 @@ export class Sequencer {
   loadSamples() {
     console.log(`start loading drum sound bank : ${this.currentSampleIndex}`);
     this.loadingSamples = true;
-    this.samples = new MultiPlayer({
-      urls: drumUrls[this.currentSampleIndex],
-      volume: -2,
-      fadeOut: 0.4,
-      onload: () => {
-        this.loadingSamples = false;
-      },
-   }).toMaster();
+    this.samples = new Players(keysUrls[0], () => {
+      this.loadingSamples = false;
+    }).toMaster();
+    this.samples.volume.value = -2;
+    this.samples.fadeOut = 0.4;
   }
 
 
@@ -212,10 +212,21 @@ export class Sequencer {
   * @param  {Function} saveKeyboardRecord width of window
   * @param  {Function} storeKeyboardRecord width of window
   * @param  {String} recordTitle width of window
-   * [storeRecord description]
+   * [saveRecord description]
    */
   saveRecord(saveKeyboardRecord, storeKeyboardRecord, recordTitle) {
     this.checkStart = false;
+    // console.log(`ready to save this.recordFull: ${this.recordFull}`);
+    // console.log(`now this.recordMatrix: ${this.recordMatrix}`);
+    // fill the rest recordMatrix then append to recordFull
+    // if the rest recordMatrix columns are too few, we think it's not user's intention
+    if (this.recordMatrix.length > 5) {
+      const emptyCol = [0, 0, 0, 0, 0, 0, 0, 0];
+      while (this.recordMatrix.length < 16) {
+        this.recordMatrix.push(emptyCol);
+      }
+      this.recordFull.push(this.recordMatrix);
+    }
     if (this.recordFull.length > 0) {
       axios.post('/api/notes', {
         id: temperId,
@@ -228,6 +239,7 @@ export class Sequencer {
       )
       .then(
         this.recordFull = [],
+        this.recordMatrix = [],
       )
       .then(
         axios.get('/api/notes')
@@ -258,6 +270,7 @@ export class Sequencer {
 
 /**
  * Keyboard
+ * storeRecord (frontend) v.s. saveRecord (backend)
  */
 export class Keyboard {
   currentKey: Number;
@@ -275,11 +288,9 @@ export class Keyboard {
     this.record = [];
     this.notes = keysNotes;
     this.storeRecord = record => storeRecord(record);
-    this.samples = new MultiPlayer({
-      urls: keysUrls[0],
-      volume: -5,
-      fadeOut: 0.1,
-    }).toMaster();
+    this.samples = new Players(keysUrls[0]).toMaster();
+    this.samples.volume.value = -5;
+    this.samples.fadeOut = 0.1;
     this.recording = false;
     this.saveRecord = this.saveRecord.bind(this);
 		this.currentSampleIndex = 0;
@@ -290,8 +301,10 @@ export class Keyboard {
    */
   playKey() {
     console.log(`key: ${this.currentKey}`);
+    console.log('key Transport.seconds: ', Transport.seconds);
     if (this.currentKey !== null && !this.loadingSamples) {
-      this.samples.start(this.notes[this.currentKey]);
+      // find each Tone.player in Tone.Players.
+      this.samples._players[this.notes[this.currentKey]].start();
       if (this.recording === true) {
         const time = Transport.seconds;
         this.record.push({ time, key: this.currentKey });
@@ -321,6 +334,7 @@ export class Keyboard {
    * [saveRecord description]
    */
   saveRecord(recordId, startTime) {
+    console.log(`record startTime: ${startTime}`);
     const keyBoardRecord = {
       content: this.record,
       id: recordId,
@@ -340,10 +354,10 @@ export class Keyboard {
     const currentTime = Transport.seconds;
     for (let i = 0; i < record.content.length; i += 1) {
       const time = currentTime + (record.content[i].time - record.startTime);
-      this.samples.start(this.notes[record.content[i].key], time);
+      this.samples._players[this.notes[record.content[i].key]].start(time + 0.6);
       Transport.schedule(() => {
         aniTrigger(record.content[i].key);
-      }, time - 0.4);
+      }, time);
     }
   }
 
@@ -352,7 +366,9 @@ export class Keyboard {
    */
   clearSchedule() {
      const time = Transport.seconds + 1;
-     this.samples.stopAll([time]);
+     this.samples.stopAll(time);
+     Transport.cancel(time);
+     // this.samples.stopAll([time]);
      // Transport.cancel([time]);
     }
 
@@ -395,14 +411,11 @@ export class Keyboard {
 	loadSamples() {
 	  console.log(`start loading key sound bank : ${this.currentSampleIndex}`);
 	  this.loadingSamples = true;
-	  this.samples = new MultiPlayer({
-	    urls: keysUrls[this.currentSampleIndex],
-	    volume: -2,
-	    fadeOut: 0.4,
-	    onload: () => {
-	      this.loadingSamples = false;
-	    },
-	 }).toMaster();
+    this.samples = new Players(keysUrls[this.currentSampleIndex], () => {
+      this.loadingSamples = false;
+    }).toMaster();
+    this.samples.volume.value = -2;
+    this.samples.fadeOut = 0.4;
 	}
 
 }

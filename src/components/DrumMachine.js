@@ -380,7 +380,7 @@ class DrumMachine extends Component {
   saveRecord() {
     // add title as a paramater (feature)
     this.sequencer.saveRecord(this.keyboard.saveRecord,
-       this.keyboard.storeRecord,
+      this.keyboard.storeRecord,
       this.state.recordTitle);
   }
 
@@ -665,7 +665,7 @@ class DrumMachine extends Component {
   }
 
   /**
-   * [appendChain description]
+   * [updateChain description]
    */
   updateChain() {
     const drumNoteChain = this.state.drumNoteChain;
