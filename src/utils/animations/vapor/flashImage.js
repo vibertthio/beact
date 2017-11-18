@@ -1,19 +1,5 @@
 import defaultImgUrl from 'vapor/landscape.png';
 
-/**
- * Animation #0, Veil
- * it will have two direction(u/d), which will be decided randomly
- * @param  {objct} Two
- * @param  {object} two instance of two
- * @param  {object} TWEEN the library for tweening
- * @param  {object} colors color pallete
- * @param  {array} animations It's the stack of animations
- * @param  {string} imgUrl the src of image
- * @param  {number} [textureScale = 1]
- * @param  {number} [shapeScale = 1]
- * @param  {number} [opacity = 1]
- * @param  {number} [duration = 400]
- */
 export default function flashImage(
   Two,
   two,
@@ -25,8 +11,7 @@ export default function flashImage(
   duration = 400,
   ) {
   let playing = false;
-  const param = { t: 0 };
-  let dest = { x: two.width * 0.5, y: two.height * 1.5 };
+  let originalScale;
 
   /**
   * [setup description]
@@ -53,34 +38,35 @@ export default function flashImage(
       two.height * 0.5,
     );
 
-    dest = { x: two.width * 0.5, y: two.height * 0.5 };
-    const originalScale = (textureScale * two.height) / 400;
+    originalScale = (textureScale * two.height) / 400;
     shape.scale = originalScale;
     shape.opacity = 0;
-    const targetRatio = originalScale * (1 + (0.3 * Math.random()));
+    let targetRatio = originalScale * (1 + (0.5 * Math.random()));
 
-    const aniScale = new TWEEN.Tween(shape)
-      .to({ scale: targetRatio }, duration)
-      .easing(TWEEN.Easing.Circular.Out)
-      .onComplete(() => {
-        shape.scale = originalScale;
-      });
-
-    const ani = new TWEEN.Tween(shape.translation)
-      .to(dest, duration)
-      .easing(TWEEN.Easing.Circular.Out)
-      .onStart(() => { aniScale.start(); })
-      .onUpdate(() => {
-        if (Math.random() > 0.5) {
-          shape.opacity = 0;
-        } else {
-          shape.opacity = 1;
-        }
+    const aniOpacity = new TWEEN.Tween(shape)
+      .to({ opacity: 0 }, duration)
+      .onStart(() => {
+        console.log('opa start');
       })
-      .onComplete(() => {
+      .easing(TWEEN.Easing.Circular.Out)
+      .onStop(() => {
         shape.opacity = 0;
       });
 
+    const ani = new TWEEN.Tween(shape)
+      .to({ scale: targetRatio }, duration)
+      .onStart(() => {
+        targetRatio = originalScale * (1 + (0.5 * Math.random()));
+        aniOpacity.start();
+      })
+      .easing(TWEEN.Easing.Exponential.Out)
+      .onComplete(() => {
+        shape.scale = originalScale;
+      })
+      .onStop(() => {
+        shape.scale = originalScale;
+        aniOpacity.stop();
+      });
 
     return { shape, ani };
   }
@@ -95,12 +81,13 @@ export default function flashImage(
 
   const reset = () => {
     ani.stop();
-    shape.opacity = 0;
+    shape.scale = originalScale;
   };
 
   const start = () => {
     reset();
     playing = true;
+    shape.opacity = 1;
     ani.start();
   };
 

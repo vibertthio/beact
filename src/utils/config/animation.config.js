@@ -90,10 +90,10 @@ const sequencerAnimationsSet = [
     [
       // play multiple animations at the same time!
       { animation: fade, options: [0] },
-      { animation: singleStaticImage, options: [heart, 0.8, 0.4] },
+      { animation: singleStaticImage, options: [heart, 0.6] },
     ],
     [
-      { animation: singleFlashImage, options: [cube, 0.9, 0.3] },
+      { animation: singleFlashImage, options: [cube, 1.0] },
       { animation: prism, options: [6, 1, 600, 1] },
       { animation: prism, options: [6, 1, 900, 1] },
     ],

@@ -61,7 +61,7 @@ export class Sequencer {
 
     // now playing column
     this.sequence = new Sequence((time, col) => {
-      console.log('column Transport.seconds', Transport.seconds);
+      // console.log('column Transport.seconds', Transport.seconds);
       this.beat = col;
 
       setCurrentBeat(this.beat);
@@ -72,7 +72,7 @@ export class Sequencer {
       for (let i = 0; i < this.notes.length; i += 1) {
         if (col === 0 && i === 0 && this.checkStart === false && this.recording === true) {
           this.checkStart = true;
-          console.log('startTime Transport.seconds', Transport.seconds);
+          // console.log('startTime Transport.seconds', Transport.seconds);
           this.startTime = Transport.seconds;
         }
         // make sure no play while loading

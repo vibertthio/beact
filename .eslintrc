@@ -25,19 +25,8 @@
     "indent": 0,
     "no-else-return": 0,
     "no-use-before-define": [2, "nofunc"],
-    "valid-jsdoc": ["error", {
-      "requireReturn": false,
-      "requireReturnType": false,
-      "requireParamDescription": false,
-      "requireReturnDescription": false,
-    }],
-    "require-jsdoc": ["error", {
-        "require": {
-            "FunctionDeclaration": true,
-            "MethodDefinition": true,
-            "ClassDeclaration": true,
-        }
-    }],
+    "valid-jsdoc": 0,
+    "require-jsdoc": 0,
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "import/no-unresolved": 0,
   }
