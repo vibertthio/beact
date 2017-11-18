@@ -15,7 +15,7 @@ class Matrix extends Component {
     super();
     this.state = {
       idle: false,
-      hover: { i: -1, j: -1 },
+      // hover: { i: -1, j: -1 },
       isDown: false,
     };
     this.setIdle = this.setIdle.bind(this);
@@ -58,11 +58,13 @@ class Matrix extends Component {
    */
   mouseEnter(i, j) {
     const { isDown } = this.state;
-    const { onClick } = this.props;
+    // const { onClick } = this.props;
+    const { onClick, onHover } = this.props;
     this.setIdle(false);
-    this.setState({
-      hover: { i, j },
-    });
+    onHover(i, j);
+    // this.setState({
+    //   hover: { i, j },
+    // });
     if (isDown) {
       console.log(`dragclicking ${i}, ${j}`);
       onClick(i, j);
@@ -95,8 +97,8 @@ class Matrix extends Component {
    * @return {Element} [description]
    */
   render() {
-		const { hover, idle } = this.state;
-    const { data } = this.props;
+		const { idle } = this.state;
+    const { data, hover } = this.props;
     return (
       <div
         className={
@@ -139,9 +141,16 @@ Matrix.propTypes = {
       PropTypes.number,
     ).isRequired,
   ).isRequired,
+  hover: PropTypes.objectOf(
+    PropTypes.shape({
+      i: PropTypes.number,
+      j: PropTypes.number,
+    }),
+  ).isRequired,
   playing: PropTypes.bool.isRequired,
   currentBeat: PropTypes.number.isRequired,
   onClick: PropTypes.func.isRequired,
+  onHover: PropTypes.func.isRequired,
 };
 
 export default Matrix;

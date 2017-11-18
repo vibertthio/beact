@@ -78,6 +78,7 @@ class DrumMachine extends Component {
 	    idle: false,
 	    currentSample: 'A',
 			narutoBool: false,
+			hover: { i: -1, j: -1 },
     };
 
     this.setCurrentBeat = this.setCurrentBeat.bind(this);
@@ -301,6 +302,17 @@ class DrumMachine extends Component {
     data[i][j] = (data[i][j] === 0) ? 1 : 0;
     this.setState({
       data,
+    });
+  }
+
+	/**
+   * [handleHover description]
+   * @param  {number} i first index
+   * @param  {number} j second index
+   */
+  handleHover(i, j) {
+    this.setState({
+      hover: { i, j },
     });
   }
 
@@ -984,7 +996,7 @@ class DrumMachine extends Component {
    * @return {Element}
    */
   render() {
-		const { hidden, wait, playing, narutoBool } = this.state;
+		const { data, hover, hidden, wait, playing, narutoBool } = this.state;
     return (
       <div className={(wait === true) ? styles.hideDOM : styles.showDOM}>
         {(this.sequencer.isPlayingRecord === false)
@@ -1229,10 +1241,12 @@ class DrumMachine extends Component {
           <img src={menuLogo} alt="BEACT" className={styles.menuLogo} />
         </button>
         <Matrix
-          data={this.state.data}
+          data={data}
+          hover={hover}
           playing={this.state.playing}
           currentBeat={this.state.currentBeat}
           onClick={(i, j) => this.handleClick(i, j)}
+          onHover={(i, j) => this.handleHover(i, j)}
         />
         <div className={styles.animation} id="animation" />
         <WindowResizeListener
