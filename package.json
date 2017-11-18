@@ -29,7 +29,6 @@
     "react": "16.1.0",
     "react-dom": "16.1.0",
     "react-tap-event-plugin": "^3.0.2",
-    "react-window-resize-listener": "^1.1.0",
     "tone": "^0.11.11",
     "two.js": "github:vibertthio/two.js#dev",
     "uuid": "^3.0.1"

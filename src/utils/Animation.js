@@ -1,4 +1,5 @@
-import Two from 'two.js/build/two.min';
+// import Two from 'two.js/build/two.min';
+import Two from 'two.js/build/two';
 import TWEEN from '@tweenjs/tween.js';
 import {
   toRGB,

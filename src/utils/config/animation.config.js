@@ -48,7 +48,7 @@ import doubleImage from 'animations/naruto/doubleImage';
 Image import
 ******/
 // vapor
-import landscape from 'vapor/landscape.jpg';
+import landscape from 'vapor/landscape.png';
 import sculpture from 'vapor/sculpture-02.png';
 
 // naruto
@@ -123,7 +123,7 @@ const sequencerAnimationsSet = [
   //   { animation: brush, options: [4] },
   // ],
   [
-    { animation: flashImage, options: [landscape] },
+    { animation: flashImage, options: [landscape, 0.8] },
     { animation: popImage, options: [sculpture, 4.5] },
     { animation: timer },
     { animation: prism, options: [3] },

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { WindowResizeListener } from 'react-window-resize-listener';
 import uuid4 from 'uuid/v4';
 import axios from 'axios';
 import key from 'keymaster';
@@ -129,6 +128,7 @@ class DrumMachine extends Component {
 		this.hideSpinner = this.hideSpinner.bind(this);
 		this.showDOM = this.showDOM.bind(this);
 		// this.showLogo = this.showLogo.bind(this);
+		this.handleResize = this.handleResize.bind(this);
 
 		this.toggleNarutoBool = this.toggleNarutoBool.bind(this);
   }
@@ -173,6 +173,15 @@ class DrumMachine extends Component {
 			fadeoutID = window.setTimeout(outShowDOM, 3500);
 		}
 		startTimer();
+
+    window.addEventListener('resize', this.handleResize);
+  }
+
+  /**
+   * [componentWillUnmount description]
+   */
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleResize);
   }
 
   /**
@@ -306,11 +315,9 @@ class DrumMachine extends Component {
 
   /**
    * [handleResize description]
-   * @param  {number} w width of window
-   * @param  {number} h height of window
    */
-  handleResize(w, h) {
-    this.ani.resize(w, h);
+  handleResize() {
+    this.ani.resize(window.innerWidth, window.innerHeight);
   }
 
   /**
@@ -1235,12 +1242,10 @@ class DrumMachine extends Component {
           onClick={(i, j) => this.handleClick(i, j)}
         />
         <div className={styles.animation} id="animation" />
-        <WindowResizeListener
-          onResize={w => this.handleResize(w.windowWidth, w.windowHeight)}
-        />
         <div>
           <input
-            type="text" id="one"
+            type="text"
+            id="one"
             onKeyPress={this.detectKeyboard}
           />
         </div>
