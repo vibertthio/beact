@@ -71,7 +71,7 @@ class DrumMachine extends Component {
       recordTitle: '',
       currentPlayingRecord: [],
       currentPlayingRecordElement: 0,
-      keyStartTimeCorrection: 0,
+      // keyStartTimeCorrection: 0,
 	    hidden: true,
 	    wait: true,
 	    idle: false,

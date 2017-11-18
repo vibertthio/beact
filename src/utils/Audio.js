@@ -51,7 +51,7 @@ export class Sequencer {
     this.recordFull = [];
     this.isPlayingRecord = false;
     this.startTime = 0;
-    this.currentSampleIndex = 2;
+    this.currentSampleIndex = 0;
     this.storeRecord = record => storeRecord(record);
 
     this.loadSamples();
@@ -200,7 +200,7 @@ export class Sequencer {
   loadSamples() {
     console.log(`start loading drum sound bank : ${this.currentSampleIndex}`);
     this.loadingSamples = true;
-    this.samples = new Players(keysUrls[0], () => {
+    this.samples = new Players(drumUrls[this.currentSampleIndex], () => {
       this.loadingSamples = false;
     }).toMaster();
     this.samples.volume.value = -2;
@@ -417,7 +417,6 @@ export class Keyboard {
     this.samples.volume.value = -2;
     this.samples.fadeOut = 0.4;
 	}
-
 }
 
 const changeBPM = (value) => {
