@@ -37,13 +37,7 @@ for (let i = 0; i < 26; i += 1) {
 }
 keys = keys.join(', ');
 
-/**
- * DrumMachine
- */
 class DrumMachine extends Component {
-  /**
-   * [constructor description]
-   */
   constructor() {
     super();
     const data = [];
@@ -133,10 +127,6 @@ class DrumMachine extends Component {
 		this.toggleNarutoBool = this.toggleNarutoBool.bind(this);
   }
 
-  /**
-   * [componentDidMount description]
-	 * get patterns & records
-   */
   componentDidMount() {
     this.detectKeyboard();
     this.ani = Animation();
@@ -166,9 +156,6 @@ class DrumMachine extends Component {
 	   */
 	  const outShowDOM = this.hideSpinner;
     // const outShowLogo = this.showLogo;
-		/**
-	   * [startTimer description]
-	   */
 		function startTimer() {
 			fadeoutID = window.setTimeout(outShowDOM, 3500);
 		}
@@ -177,36 +164,22 @@ class DrumMachine extends Component {
     window.addEventListener('resize', this.handleResize);
   }
 
-  /**
-   * [componentWillUnmount description]
-   */
   componentWillUnmount() {
     window.removeEventListener('resize', this.handleResize);
   }
 
-  /**
-   * [setCurrentBeat description]
-   * @param {number} currentBeat
-   */
   setCurrentBeat(currentBeat) {
     this.setState({
       currentBeat,
     });
   }
 
-  /**
-   * [setCurrentChainAtLast description]
-   */
   setCurrentChainElementAtLast() {
     this.sequencer.isPlayingChain = false;
     this.sequencer.isPlayingRecord = false;
     this.setState({ currentChainElement: '' });
   }
 
-	/**
-   * [setCurrentChainElementIndex description]
-   * @param  {number} id for currentChainElementIndex
-   */
   setCurrentChainElementIndex(id) {
 		for (let i = 0; i < this.state.drumNoteChain.length; i += 1) {
 			if (id === this.state.drumNoteChain[i].id) {
@@ -216,10 +189,6 @@ class DrumMachine extends Component {
 		}
 	}
 
-  /**
-  * @param  {String} id width of window
-   * [setCurrentChainAtHere description]
-   */
   setCurrentChainElementAtHere(id) {
     this.sequencer.isPlayingChain = false;
     this.sequencer.isPlayingRecord = false;
@@ -237,20 +206,11 @@ class DrumMachine extends Component {
 		this.setCurrentChainElementIndex(id);
   }
 
-  /**
-  * @param  {String} sample width of window
-   * [setSample description]
-   */
   setSample(sample) {
     this.sequencer.currentSample = sample;
     this.setState({ currentSample: sample });
   }
 
-	/**
-   * [clearClicked description]
-   * @param  {number} i first index
-   * @param  {number} j second index
-   */
 	clearClicked() {
 		const { data } = this.state;
 		let i;
@@ -265,11 +225,6 @@ class DrumMachine extends Component {
 		});
 	}
 
-  /**
-   * [clearClicked description]
-   * @param  {number} i first index
-   * @param  {number} j second index
-   */
 	randomClicked() {
 		const { data } = this.state;
 		for (let i = 0; i < 16; i += 1) {
@@ -282,10 +237,6 @@ class DrumMachine extends Component {
 		});
 	}
 
-	/**
-   * [toggleNarutoBool description]
-   * @param  {bool} narutoBool
-   */
 	toggleNarutoBool() {
 		if (this.state.narutoBool) {
 			this.keyboard.startNormal();
@@ -299,11 +250,6 @@ class DrumMachine extends Component {
 		});
 	}
 
-  /**
-   * [handleClick description]
-   * @param  {number} i first index
-   * @param  {number} j second index
-   */
   handleClick(i, j) {
 		const { data } = this.state;
     data[i][j] = (data[i][j] === 0) ? 1 : 0;
@@ -312,16 +258,10 @@ class DrumMachine extends Component {
     });
   }
 
-  /**
-   * [handleResize description]
-   */
   handleResize() {
     this.ani.resize(window.innerWidth, window.innerHeight);
   }
 
-  /**
-   * [startSequence description]
-   */
   startSequencer() {
     this.sequencer.start();
     this.setState({
@@ -332,9 +272,6 @@ class DrumMachine extends Component {
     }
   }
 
-  /**
-   * [stopSequencer description]
-   */
   stopSequencer() {
     if (this.sequencer.recording !== true) {
       this.sequencer.stop();
@@ -345,9 +282,6 @@ class DrumMachine extends Component {
     }
   }
 
-  /**
-   * [recordSequencer description]
-   */
   recordSequencer() {
     if (this.state.recordTitle === '') {
       alert('Please give your record a title');
@@ -372,17 +306,10 @@ class DrumMachine extends Component {
     }
   }
 
-  /**
-  * @param  {object} event width of window
-   * [playPattern description]
-   */
   handleRecordTitleChange(event) {
     this.setState({ recordTitle: event.target.value });
   }
 
-  /**
-   * [saveRecord description]
-   */
   saveRecord() {
     // add title as a paramater (feature)
     this.sequencer.saveRecord(
@@ -392,28 +319,14 @@ class DrumMachine extends Component {
 		);
   }
 
-  /**
-  * @param  {Array} records width of window
-   * [storeDrumRecord description]
-	 * when using Recorder
-   */
   storeDrumRecord(records) {
     this.setState({ drumRecords: records });
   }
 
-  /**
-  * @param  {Array} records width of window
-   * [storeKeyRecord description]
-	 * When using Recorder
-   */
   storeKeyRecord(records) {
     this.setState({ keyRecords: records });
   }
 
-  /**
-  * @param  {Array} record width of window
-   * [playRecord description]
-   */
   playRecord(record) {
 		this.setState({ hidden: true });
     this.sequencer.isPlayingChain = false;
@@ -441,9 +354,6 @@ class DrumMachine extends Component {
     }
   }
 
-  /**
-   * [exitPlayRecord description]
-   */
   exitPlayRecord() {
     if (this.sequencer.isPlayingRecord === true) {
       this.sequencer.isPlayingRecord = false;
@@ -491,9 +401,6 @@ class DrumMachine extends Component {
     console.log(recordId);
   }
 
-  /**
-   * [playNextRecordElement description]
-   */
   playNextRecordElement() {
 		const { data } = this.state;
     let stopDrum = false;
@@ -515,17 +422,10 @@ class DrumMachine extends Component {
     this.setState({ currentPlayingRecordElement: num, data });
   }
 
-  /**
-  * @param  {object} event width of window
-   * [playPattern description]
-   */
   handleTitleChange(event) {
     this.setState({ patternTitle: event.target.value });
   }
 
-  /**
-   * [savePattern description]
-   */
   savePattern() {
     if (this.state.patternTitle !== '') {
       axios.post('/api/patterns', {
@@ -548,10 +448,6 @@ class DrumMachine extends Component {
     }
   }
 
-  /**
-  * @param  {object} pattern width of window
-   * [playPattern description]
-   */
   playPattern(pattern) {
     this.sequencer.isPlayingRecord = false;
     this.sequencer.isPlayingChain = false;
@@ -569,9 +465,6 @@ class DrumMachine extends Component {
     this.startSequencer();
   }
 
-  /**
-   * [editPattern description]
-   */
   editPattern() {
     if (this.state.patternTitle !== '') {
       axios.put(`/api/patterns/${this.state.currentPatternId}`, {
@@ -601,9 +494,6 @@ class DrumMachine extends Component {
     }
   }
 
-  /**
-   * [exitPattern description]
-   */
   exitPattern() {
     if (this.state.currentPatternId !== '') {
 			const { data } = this.state;
@@ -617,9 +507,6 @@ class DrumMachine extends Component {
     }
   }
 
-  /**
-   * [deleteCurrentPattern description]
-   */
   deleteCurrentPattern() {
     if (this.state.currentPatternId !== '') {
       axios.delete(`/api/patterns/${this.state.currentPatternId}`)
@@ -638,10 +525,6 @@ class DrumMachine extends Component {
     }
   }
 
-  /**
-  * @param  {Number} id width of window
-   * [deletePattern description]
-   */
   deletePattern(id) {
     if (id === this.state.currentPatternId) {
       this.deleteCurrentPattern();
@@ -660,9 +543,6 @@ class DrumMachine extends Component {
     }
   }
 
-  /**
-   * [updateChain description]
-   */
   updateChain() {
 		const { drumNoteChain } = this.state;
     const data = [[0, 0, 0, 0, 0, 0, 0, 0],
@@ -700,9 +580,6 @@ class DrumMachine extends Component {
     this.setState({ drumNoteChain });
   }
 
-  /**
-   * [deleteCurrentChainElement description]
-   */
   deleteCurrentChainElement() {
     if (this.state.currentChainElement !== '') {
       const { drumNoteChain } = this.state;
@@ -723,9 +600,6 @@ class DrumMachine extends Component {
     }
   }
 
-  /**
-   * [playChain description]
-   */
   playChain() {
     if (this.state.drumNoteChain.length > 0) {
       this.sequencer.isPlayingRecord = false;
@@ -743,9 +617,6 @@ class DrumMachine extends Component {
     }
   }
 
-  /**
-   * [exitChain description]
-   */
   exitChain() {
     if (this.sequencer.isPlayingChain === true) {
       this.sequencer.isPlayingChain = false;
@@ -760,9 +631,6 @@ class DrumMachine extends Component {
     }
   }
 
-  /**
-   * [playNextChainElement description]
-   */
   playNextChainElement() {
     let num = this.state.currentPlayingChainElement;
     num += 1;
@@ -779,10 +647,6 @@ class DrumMachine extends Component {
     this.setState({ currentPlayingChainElement: num, data });
   }
 
-  /**
-   * @param  {Array} column width of window
-   * [playDrumAni description]
-   */
   playDrumAni(column) {
     for (let i = 0; i < column.length; i += 1) {
       // this.ani.triggerSequencerAnimation(
@@ -792,9 +656,6 @@ class DrumMachine extends Component {
     }
   }
 
-  /**
-   * [detectKeyboard description]
-   */
   detectKeyboard() {
     key(keys, (e, h) => {
 			const index = animationKey2IndexMapping[h.shortcut];
@@ -872,9 +733,6 @@ class DrumMachine extends Component {
 		});
   }
 
-  /**
-   * [hideSpinner description]
-   */
 	hideSpinner() {
 		const spinner = document.getElementById('spinner');
 		spinner.classList.add('loaded');
@@ -892,9 +750,6 @@ class DrumMachine extends Component {
 		fadeoutID = window.setTimeout(this.showDOM, 3000);
  	}
 
-  /**
-   * [showDOM description]
-   */
 	showDOM() {
 		const rootDiv = document.getElementById('root');
 		rootDiv.classList.add('fullHeight');
@@ -904,19 +759,12 @@ class DrumMachine extends Component {
     this.ani.setSequencerAnimationsCustomSettings();
 	}
 
-	/**
-   * [toggleHidden description]
-   */
   toggleHidden() {
     this.setState({
       hidden: !this.state.hidden,
     });
   }
 
-  /**
-   * [renderPatterns description]
-   * @return {Element}
-   */
   renderPatterns() {
 		const { patternLists } = this.state;
     return patternLists.map(pattern => (
@@ -930,10 +778,6 @@ class DrumMachine extends Component {
       </div>));
   }
 
-  /**
-   * [renderRecords description]
-   * @return {Element}
-   */
   renderRecords() {
 		const { drumRecords } = this.state;
     return drumRecords.map(drumRecord => (
@@ -950,10 +794,6 @@ class DrumMachine extends Component {
       </div>));
   }
 
-  /**
-   * [renderChain description]
-   * @return {Element}
-   */
   renderChain() {
 		const {
 			drumNoteChain, currentPlayingChainElement,
@@ -978,10 +818,6 @@ class DrumMachine extends Component {
     ));
   }
 
-  /**
-   * [render description]
-   * @return {Element}
-   */
   render() {
 		const {
 			hidden, wait, playing, narutoBool,

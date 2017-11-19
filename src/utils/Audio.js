@@ -5,9 +5,7 @@ import { keysUrls, keysNotes } from './config/keys.config';
 import { drumUrls, drumNotes, presets } from './config/drum.config';
 
 let temperId = uuid4();
-/**
- * Sequencer
- */
+
 export class Sequencer {
   notes: Array<String>;
   samples: Object;
@@ -25,15 +23,6 @@ export class Sequencer {
   nowPlayingAni: Array;
   startTime: Number;
 
-  /**
-   * [constructor description]
-   * @param  {[type]} matrix [description]
-   * @param  {[type]} setCurrentBeat [description]
-   * @param  {[type]} playNextChainElement [description]
-   * @param  {[type]} storeRecord [description]
-   * @param  {[type]} playNextRecordElement [description]
-   * @param  {[type]} playDrumAni [description]
-   */
   constructor(
     matrix,
     setCurrentBeat,
@@ -133,57 +122,33 @@ export class Sequencer {
     Transport.start();
   }
 
-  /**
-   * get the current position of sequence
-   * @return {number} [description]
-   */
   static getBeat() {
     return this.beat;
   }
 
-  /**
-   * [isPlaying description]
-   * @return {Boolean} [description]
-   */
   isPlaying() {
     return this.playing;
   }
 
-  /**
-   * [start description]
-   */
   start() {
     this.playing = true;
     this.sequence.start();
   }
 
-  /**
-   * [stop description]
-   */
   stop() {
     this.playing = false;
     this.sequence.stop();
   }
 
-  /**
-   * [startRecording description]
-   */
   startRecording() {
     this.recording = true;
   }
 
-  /**
-   * [stopRecording description]
-   */
   stopRecording() {
     this.recording = false;
     this.stop();
   }
 
-  /**
-   * [changeSampleSet description]
-   * @param  {[type]} up [description]
-   */
   changeSampleSet(up) {
     this.currentSampleIndex =
       (this.currentSampleIndex + (up ? 1 : -1)) % drumUrls.length;
@@ -195,9 +160,6 @@ export class Sequencer {
     this.loadSamples();
   }
 
-  /**
-   * [loadSamples description]
-   */
   loadSamples() {
     console.log(`start loading drum sound bank : ${this.currentSampleIndex}`);
     this.loadingSamples = true;
@@ -208,13 +170,6 @@ export class Sequencer {
     this.samples.fadeOut = 0.4;
   }
 
-
-  /**
-  * @param  {Function} saveKeyboardRecord width of window
-  * @param  {Function} storeKeyboardRecord width of window
-  * @param  {String} recordTitle width of window
-   * [saveRecord description]
-   */
   saveRecord(saveKeyboardRecord, storeKeyboardRecord, recordTitle) {
     this.checkStart = false;
     // console.log(`ready to save this.recordFull: ${this.recordFull}`);
@@ -262,10 +217,6 @@ export class Sequencer {
   }
 }
 
-/**
- * Keyboard
- * storeRecord (frontend) v.s. saveRecord (backend)
- */
 export class Keyboard {
   currentKey: Number;
   record: Array;
@@ -273,10 +224,7 @@ export class Keyboard {
   samples: Object;
   recording: Boolean;
 	loadingSamples: Boolean;
-  /**
-   * [constructor description]
-   * @param  {[type]} storeRecord [description]
-   */
+
   constructor(storeRecord) {
     this.currentKey = null;
     this.record = [];
@@ -290,9 +238,6 @@ export class Keyboard {
 		this.currentSampleIndex = 0;
   }
 
-  /**
-   * [playKey description]
-   */
   playKey() {
     console.log(`key: ${this.currentKey}`);
     console.log('key Transport.seconds: ', Transport.seconds);
@@ -308,25 +253,14 @@ export class Keyboard {
     }
   }
 
-  /**
-   * [startRecording description]
-   */
   startRecording() {
     this.recording = true;
   }
 
-  /**
-   * [stopRecording description]
-   */
   stopRecording() {
     this.recording = false;
   }
 
-  /**
-  * @param  {String} recordId width of window
-  * @param  {Number} startTime width of window
-   * [saveRecord description]
-   */
   saveRecord(recordId, startTime) {
     console.log(`record startTime: ${startTime}`);
     const keyBoardRecord = {
@@ -339,11 +273,6 @@ export class Keyboard {
     this.record = [];
   }
 
-  /**
-  * @param  {Object} record
-  * @param  {Function} aniTrigger
-   * [playRecord description]
-   */
   playRecord(record, aniTrigger) {
     const currentTime = Transport.seconds;
     for (let i = 0; i < record.content.length; i += 1) {
@@ -355,9 +284,6 @@ export class Keyboard {
     }
   }
 
-  /**
-   * [clearSchedule description]
-   */
   clearSchedule() {
      const time = Transport.seconds + 1;
      this.samples.stopAll(time);
@@ -366,10 +292,6 @@ export class Keyboard {
      // Transport.cancel([time]);
     }
 
-	/**
-	 * [changeSampleSet description]
-	 * @param  {[type]} up [description]
-	 */
 	changeSampleSet(up) {
 	  this.currentSampleIndex =
 	    (this.currentSampleIndex + (up ? 1 : -1)) % keysUrls.length;
@@ -381,27 +303,18 @@ export class Keyboard {
 	  this.loadSamples();
 	}
 
-  /**
-	 * [startNaruto description]
-	 */
   startNaruto() {
 	  this.currentSampleIndex = 1;
 	  console.log(this.currentSampleIndex);
 	  this.loadSamples();
 	}
 
-	/**
-	 * [startNaruto description]
-	 */
 	startNormal() {
 		this.currentSampleIndex = 0;
 		console.log(this.currentSampleIndex);
 		this.loadSamples();
 	}
 
-	/**
-	 * [loadSamples description]
-	 */
 	loadSamples() {
 	  console.log(`start loading key sound bank : ${this.currentSampleIndex}`);
 	  this.loadingSamples = true;
