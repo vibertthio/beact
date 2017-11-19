@@ -235,38 +235,31 @@ export class Sequencer {
         content: this.recordFull,
         startTime: this.startTime,
       })
-      .then(
-        saveKeyboardRecord(temperId, this.startTime),
-      )
+      .then(saveKeyboardRecord(temperId, this.startTime))
       .then(
         this.recordFull = [],
         this.recordMatrix = [],
       )
-      .then(
-        axios.get('/api/notes')
+      .then(axios.get('/api/notes')
           .then((res) => {
             this.storeRecord(res.data);
             temperId = uuid4();
           })
           .catch((err) => {
             console.log(err);
-          }),
-      )
-      .then(
-        axios.get('/api/keys')
+          }))
+      .then(axios.get('/api/keys')
           .then((res) => {
             storeKeyboardRecord(res.data);
           })
           .catch((err) => {
             console.log(err);
-          }),
-      )
+          }))
       .catch(err => console.log(err));
     } else {
       console.log('you should at least play one rounds of drum');
     }
   }
-
 }
 
 /**

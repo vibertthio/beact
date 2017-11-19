@@ -74,8 +74,8 @@ class DrumMachine extends Component {
       // keyStartTimeCorrection: 0,
 	    hidden: true,
 	    wait: true,
-	    idle: false,
-	    currentSample: 'A',
+	    // idle: false,
+	    // currentSample: 'A',
 			narutoBool: false,
     };
 
@@ -223,8 +223,7 @@ class DrumMachine extends Component {
   setCurrentChainElementAtHere(id) {
     this.sequencer.isPlayingChain = false;
     this.sequencer.isPlayingRecord = false;
-    const drumNoteChain = this.state.drumNoteChain;
-    const data = this.state.data;
+    const { drumNoteChain, data } = this.state;
     for (let k = 0; k < drumNoteChain.length; k += 1) {
       if (drumNoteChain[k].id === id) {
         for (let i = 0; i < 16; i += 1) {
@@ -240,7 +239,7 @@ class DrumMachine extends Component {
 
   /**
   * @param  {String} sample width of window
-   * [deleteRecord description]
+   * [setSample description]
    */
   setSample(sample) {
     this.sequencer.currentSample = sample;
@@ -253,7 +252,7 @@ class DrumMachine extends Component {
    * @param  {number} j second index
    */
 	clearClicked() {
-		const data = this.state.data;
+		const { data } = this.state;
 		let i;
 		let j;
 		for (i = 0; i < 16; i += 1) {
@@ -272,7 +271,7 @@ class DrumMachine extends Component {
    * @param  {number} j second index
    */
 	randomClicked() {
-		const data = this.state.data;
+		const { data } = this.state;
 		for (let i = 0; i < 16; i += 1) {
 			for (let j = 0; j < 8; j += 1) {
 				data[i][j] = (Math.random() > 0.8) ? 1 : 0;
@@ -306,7 +305,7 @@ class DrumMachine extends Component {
    * @param  {number} j second index
    */
   handleClick(i, j) {
-    const data = this.state.data;
+		const { data } = this.state;
     data[i][j] = (data[i][j] === 0) ? 1 : 0;
     this.setState({
       data,
@@ -386,9 +385,11 @@ class DrumMachine extends Component {
    */
   saveRecord() {
     // add title as a paramater (feature)
-    this.sequencer.saveRecord(this.keyboard.saveRecord,
+    this.sequencer.saveRecord(
+			this.keyboard.saveRecord,
       this.keyboard.storeRecord,
-      this.state.recordTitle);
+      this.state.recordTitle,
+		);
   }
 
   /**
@@ -420,16 +421,18 @@ class DrumMachine extends Component {
     this.keyboard.isPlayingRecord = true;
     this.stopSequencer();
     this.exitPattern();
-    const data = this.state.data;
+		const { data } = this.state;
     for (let i = 0; i < 16; i += 1) {
       for (let j = 0; j < 8; j += 1) {
         data[i][j] = record.content[0][i][j];
       }
     }
-    this.setState({ data,
+    this.setState({
+			data,
       currentPlayingRecord: record.content,
       currentPlayingRecordElement: 0,
-      keyStartTimeCorrection: record.startTime });
+      // keyStartTimeCorrection: record.startTime,
+		});
     for (let i = 0; i < this.state.keyRecords.length; i += 1) {
       if (this.state.keyRecords[i].id === record.id) {
         this.startSequencer();
@@ -445,7 +448,7 @@ class DrumMachine extends Component {
     if (this.sequencer.isPlayingRecord === true) {
       this.sequencer.isPlayingRecord = false;
       this.keyboard.isPlayingRecord = false;
-      const data = this.state.data;
+			const { data } = this.state;
       for (let i = 0; i < 16; i += 1) {
         for (let j = 0; j < 8; j += 1) {
           data[i][j] = 0;
@@ -464,28 +467,24 @@ class DrumMachine extends Component {
    */
   deleteRecord(recordId) {
     axios.delete(`/api/notes/${recordId}`)
-     .then(
-       axios.get('/api/notes')
+     .then(axios.get('/api/notes')
          .then((res) => {
            this.setState({ drumRecords: res.data });
          })
          .catch((err) => {
            console.log(err);
-         }),
-     )
+         }))
      .catch((err) => {
        console.log(err);
      });
      axios.delete(`/api/keys/${recordId}`)
-      .then(
-        axios.get('/api/keys')
+      .then(axios.get('/api/keys')
           .then((res) => {
             this.setState({ keyRecords: res.data });
           })
           .catch((err) => {
             console.log(err);
-          }),
-      )
+          }))
       .catch((err) => {
         console.log(err);
       });
@@ -496,7 +495,7 @@ class DrumMachine extends Component {
    * [playNextRecordElement description]
    */
   playNextRecordElement() {
-    const data = this.state.data;
+		const { data } = this.state;
     let stopDrum = false;
     let num = this.state.currentPlayingRecordElement;
     num += 1;
@@ -534,15 +533,13 @@ class DrumMachine extends Component {
         content: this.state.data,
         id: uuid4(),
       })
-        .then(
-          axios.get('/api/patterns')
+        .then(axios.get('/api/patterns')
             .then((res) => {
               this.setState({ patternLists: res.data });
             })
             .catch((err) => {
               console.log(err);
-            }),
-        )
+            }))
         .catch(err => console.log(err));
       this.setState({ patternTitle: '' });
     } else {
@@ -559,7 +556,7 @@ class DrumMachine extends Component {
     this.sequencer.isPlayingRecord = false;
     this.sequencer.isPlayingChain = false;
     this.stopSequencer();
-    const data = this.state.data;
+		const { data } = this.state;
     for (let i = 0; i < 16; i += 1) {
       for (let j = 0; j < 8; j += 1) {
         data[i][j] = pattern.content[i][j];
@@ -581,29 +578,25 @@ class DrumMachine extends Component {
         title: this.state.patternTitle,
         content: this.state.data,
       })
-			.then(
-				axios.get('/api/patterns')
+			.then(axios.get('/api/patterns')
 					.then((res) => {
 						this.setState({ patternLists: res.data });
 					})
 					.catch((err) => {
 						console.log(err);
-					}),
-			)
+					}))
       .catch(err => console.log(err));
     } else {
       axios.put(`/api/patterns/${this.state.currentPatternId}`, {
         content: this.state.data,
       })
-			.then(
-				axios.get('/api/patterns')
+			.then(axios.get('/api/patterns')
 					.then((res) => {
 						this.setState({ patternLists: res.data });
 					})
 					.catch((err) => {
 						console.log(err);
-					}),
-			)
+					}))
       .catch(err => console.log(err));
     }
   }
@@ -613,7 +606,7 @@ class DrumMachine extends Component {
    */
   exitPattern() {
     if (this.state.currentPatternId !== '') {
-      const data = this.state.data;
+			const { data } = this.state;
       for (let i = 0; i < 16; i += 1) {
         for (let j = 0; j < 8; j += 1) {
           data[i][j] = 0;
@@ -630,15 +623,13 @@ class DrumMachine extends Component {
   deleteCurrentPattern() {
     if (this.state.currentPatternId !== '') {
       axios.delete(`/api/patterns/${this.state.currentPatternId}`)
-       .then(
-         axios.get('/api/patterns')
+       .then(axios.get('/api/patterns')
            .then((res) => {
              this.setState({ patternLists: res.data });
            })
            .catch((err) => {
              console.log(err);
-           }),
-       )
+           }))
        .catch((err) => {
          console.log(err);
        });
@@ -656,15 +647,13 @@ class DrumMachine extends Component {
       this.deleteCurrentPattern();
     } else {
       axios.delete(`/api/patterns/${id}`)
-       .then(
-         axios.get('/api/patterns')
+       .then(axios.get('/api/patterns')
            .then((res) => {
              this.setState({ patternLists: res.data });
            })
            .catch((err) => {
              console.log(err);
-           }),
-       )
+           }))
        .catch((err) => {
          console.log(err);
        });
@@ -675,7 +664,7 @@ class DrumMachine extends Component {
    * [updateChain description]
    */
   updateChain() {
-    const drumNoteChain = this.state.drumNoteChain;
+		const { drumNoteChain } = this.state;
     const data = [[0, 0, 0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 0, 0],
@@ -716,9 +705,9 @@ class DrumMachine extends Component {
    */
   deleteCurrentChainElement() {
     if (this.state.currentChainElement !== '') {
-      const drumNoteChain = this.state.drumNoteChain;
-      const newDrumNoteChain = drumNoteChain.filter(
-        element => element.id !== this.state.currentChainElement);
+      const { drumNoteChain } = this.state;
+      const newDrumNoteChain = drumNoteChain.filter(element =>
+				element.id !== this.state.currentChainElement);
       drumNoteChain.pop();
       for (let k = 0; k < drumNoteChain.length; k += 1) {
         drumNoteChain[k].id = newDrumNoteChain[k].id;
@@ -743,7 +732,7 @@ class DrumMachine extends Component {
       this.sequencer.isPlayingChain = true;
       this.stopSequencer();
       this.exitPattern();
-      const data = this.state.data;
+      const { data } = this.state;
       for (let i = 0; i < 16; i += 1) {
         for (let j = 0; j < 8; j += 1) {
           data[i][j] = this.state.drumNoteChain[0].data[i][j];
@@ -760,7 +749,7 @@ class DrumMachine extends Component {
   exitChain() {
     if (this.sequencer.isPlayingChain === true) {
       this.sequencer.isPlayingChain = false;
-      const data = this.state.data;
+			const { data } = this.state;
       for (let i = 0; i < 16; i += 1) {
         for (let j = 0; j < 8; j += 1) {
           data[i][j] = 0;
@@ -781,7 +770,7 @@ class DrumMachine extends Component {
     if (num === this.state.drumNoteChain.length) {
       num = 0;
     }
-    const data = this.state.data;
+		const { data } = this.state;
     for (let i = 0; i < 16; i += 1) {
       for (let j = 0; j < 8; j += 1) {
         data[i][j] = this.state.drumNoteChain[num].data[i][j];
@@ -871,7 +860,7 @@ class DrumMachine extends Component {
 		// loading presets
 		key('1, 2, 3, 4, 5, 6, 7, 8', (e, h) => {
 			const index = h.shortcut.charCodeAt(0) - 49;
-			const data = this.state.data;
+			const { data } = this.state;
 			for (let i = 0; i < 16; i += 1) {
 				for (let j = 0; j < 8; j += 1) {
 					data[i][j] = presets[index][i][j];
@@ -953,7 +942,8 @@ class DrumMachine extends Component {
           <span className={styles.listText}>{drumRecord.title}</span>
         </button>
         <button
-          className={styles.renderedListX} onTouchTap={() => this.deleteRecord(drumRecord.id)}
+          className={styles.renderedListX}
+          onTouchTap={() => this.deleteRecord(drumRecord.id)}
         >
           <span className={styles.listXBtn}>X</span>
         </button>
@@ -965,8 +955,10 @@ class DrumMachine extends Component {
    * @return {Element}
    */
   renderChain() {
-		const { drumNoteChain, currentPlayingChainElement,
-			currentChainElement, currentChainElementIndex } = this.state;
+		const {
+			drumNoteChain, currentPlayingChainElement,
+			currentChainElement, currentChainElementIndex,
+		} = this.state;
     return drumNoteChain.map((chainElement, i) => (
       <div
         key={chainElement.id}
@@ -991,29 +983,33 @@ class DrumMachine extends Component {
    * @return {Element}
    */
   render() {
-		const { hidden, wait, playing, narutoBool } = this.state;
+		const {
+			hidden, wait, playing, narutoBool,
+		} = this.state;
     return (
       <div className={(wait === true) ? styles.hideDOM : styles.showDOM}>
-        {(this.sequencer.isPlayingRecord === false)
-          ? <button
+        {(this.sequencer.isPlayingRecord === false) ?
+          <button
             className={`${styles.icon} ${styles.menuIcon} ${(hidden === true) ? '' : styles.displayHide}`}
             onTouchTap={() => this.toggleHidden()}
           >
             <img src={mi1} alt="menu" />
-          </button> : <button
+          </button> :
+          <button
             className={`${styles.icon} ${styles.menuIcon}`}
             onClick={() => console.log('Exit Playing Record Button clicked')}
             onTouchTap={() => this.exitPlayRecord()}
           >
             <img src={mi2} alt="close" />
           </button>}
-        {(playing)
-          ? <button
+        {(playing) ?
+          <button
             className={`${styles.icon} ${styles.toggleIcon} ${(hidden === true) ? '' : styles.displayHide}`}
             onTouchTap={() => this.stopSequencer()}
           >
             <img src={mi3} alt="pause" />
-          </button> : <button
+          </button> :
+          <button
             className={`${styles.icon} ${styles.toggleIcon} ${(hidden === true) ? '' : styles.displayHide}`}
             onTouchTap={() => this.startSequencer()}
           >
@@ -1060,10 +1056,11 @@ class DrumMachine extends Component {
           <div className={styles.colorMenu}>
             {/* 1 */}
             <div className={`${styles.row1} ${styles.row}`}>
-              {(this.sequencer.recording === true)
-                ? <div>
+              {(this.sequencer.recording === true) ?
+                <div>
                   recording...
-                </div> : <div className={styles.row1BtnWrap}>
+                </div> :
+                <div className={styles.row1BtnWrap}>
                   <button
                     className={styles.row1l}
                     onClick={() => console.log('Start Button clicked')}
@@ -1175,9 +1172,8 @@ class DrumMachine extends Component {
                   className={styles.chainLi}
                   style={{ color: '#d8b98a' }}
                   onTouchTap={() => this.setCurrentChainElementAtLast()}
-                >
-    								+
-    							</div>
+                > +
+                </div>
               </div>
             </div>
             {/* 6 */}

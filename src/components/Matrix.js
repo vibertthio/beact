@@ -73,7 +73,7 @@ class Matrix extends Component {
           `${styles.matrix}
           ${(idle === true) ? styles.idle : ''}`}
       >
-        {data.map((row, i) =>
+        {data.map((row, i) => (
           <div
             key={uuid4()}
             className={
@@ -81,7 +81,7 @@ class Matrix extends Component {
             }
           >
             {row.map((d, j) =>
-              <button
+              (<button
                 key={uuid4()}
                 className={
                   `${styles.rect}
@@ -92,21 +92,16 @@ class Matrix extends Component {
                   }
                 onMouseEnter={() => this.mouseEnter(i, j)}
                 onTouchTap={() => onClick(i, j)}
-              />,
-              )}
-          </div>,
-        )}
+              />))}
+          </div>
+        ))}
       </div>
     );
   }
 }
 
 Matrix.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.arrayOf(
-      PropTypes.number,
-    ).isRequired,
-  ).isRequired,
+  data: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number).isRequired).isRequired,
   playing: PropTypes.bool.isRequired,
   currentBeat: PropTypes.number.isRequired,
   onClick: PropTypes.func.isRequired,
