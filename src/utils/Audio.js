@@ -80,7 +80,8 @@ export class Sequencer {
           const vel = (Math.random() * 0.5) + 0.5;
           // convert velocity(gain) to volume
           this.samples.volume.value = 10 * Math.log10(vel);
-          this.samples._players[this.notes[i]].start(time, 0, '32n');
+          // this.samples._players[this.notes[i]].start(time, 0, '32n');
+          this.samples._players[this.notes[i]].start(time, 0, 0.5);
           nowPlayingAni.push(i);
         }
         if (i === 7) {

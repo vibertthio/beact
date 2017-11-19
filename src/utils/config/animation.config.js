@@ -104,7 +104,7 @@ const sequencerAnimationsSet = [
     ],
     { animation: prism, options: [3] },
     { animation: strikes },
-    { animation: flyImage, options: [samuri, 0.5] },
+    { animation: flyImage, options: [samuri, 0.4] },
     // { animation: randomPiston },
     { animation: randomPiston },
     { animation: splashColorful },
