@@ -10,7 +10,7 @@ export default function singleStaticImage(
   ) {
   let playing = false;
   let originalScale;
-
+  let rotateDest = { rotation: 0.25 };
   /**
   * [setup description]
   * @return {[type]} [description]
@@ -43,49 +43,49 @@ export default function singleStaticImage(
 
     const aniOpacity = new TWEEN.Tween(shape)
       .to({ opacity: 0 }, duration)
-      .onStart(() => {
-        console.log('opa start');
-      })
-      .easing(TWEEN.Easing.Circular.Out)
-      .onStop(() => {
-        shape.opacity = 0;
-      });
+      .easing(TWEEN.Easing.Circular.Out);
+
+    const aniRotation = new TWEEN.Tween(shape)
+      .to(rotateDest, duration)
+      .easing(TWEEN.Easing.Exponential.Out);
 
     const ani = new TWEEN.Tween(shape)
       .to({ scale: targetRatio }, duration)
       .onStart(() => {
         targetRatio = originalScale * (1 + (0.5 * Math.random()));
-        aniOpacity.start();
+        aniRotation.start();
       })
       .easing(TWEEN.Easing.Exponential.Out)
       .onComplete(() => {
-        shape.scale = originalScale;
+        aniOpacity.start();
       })
       .onStop(() => {
-        shape.scale = originalScale;
-        aniOpacity.stop();
+        aniRotation.stop();
       });
 
-    return { shape, ani };
+    return { shape, ani, aniOpacity };
   }
 
-  let { shape, ani } = setup();
+  let { shape, ani, aniOpacity } = setup();
 
   // methods
   const resize = () => {
     two.remove(shape);
-    ({ shape, ani } = setup());
+    ({ shape, ani, aniOpacity } = setup());
   };
 
   const reset = () => {
     ani.stop();
+    aniOpacity.stop();
     shape.scale = originalScale;
+    rotateDest.rotation *= (Math.random(1) > 0.5) ? 1 : -1;
   };
 
   const start = () => {
     reset();
     playing = true;
     shape.opacity = 1;
+    shape.rotation = 0;
     ani.start();
   };
 

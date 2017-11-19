@@ -78,7 +78,13 @@ function Animation() {
 
   const triggerKeyAnimation = (index) => {
     const i = index % keyAnimations.length;
-    keyAnimations[i].start();
+    if (Array.isArray(keyAnimations[i])) {
+      keyAnimations[i].forEach((a) => {
+        a.start();
+      });
+    } else {
+      keyAnimations[i].start();
+    }
   };
 
   // index of clicked element in each column
