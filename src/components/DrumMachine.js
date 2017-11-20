@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { WindowResizeListener } from 'react-window-resize-listener';
 import uuid4 from 'uuid/v4';
 import axios from 'axios';
 import key from 'keymaster';
@@ -38,13 +37,7 @@ for (let i = 0; i < 26; i += 1) {
 }
 keys = keys.join(', ');
 
-/**
- * DrumMachine
- */
 class DrumMachine extends Component {
-  /**
-   * [constructor description]
-   */
   constructor() {
     super();
     const data = [];
@@ -72,10 +65,10 @@ class DrumMachine extends Component {
       recordTitle: '',
       currentPlayingRecord: [],
       currentPlayingRecordElement: 0,
-      keyStartTimeCorrection: 0,
+      // keyStartTimeCorrection: 0,
 	    hidden: true,
 	    wait: true,
-	    idle: false,
+	    // idle: false,
 	    currentSample: 'A',
 			narutoBool: false,
 			hover: { i: -1, j: -1 },
@@ -130,14 +123,11 @@ class DrumMachine extends Component {
 		this.hideSpinner = this.hideSpinner.bind(this);
 		this.showDOM = this.showDOM.bind(this);
 		// this.showLogo = this.showLogo.bind(this);
+		this.handleResize = this.handleResize.bind(this);
 
 		this.toggleNarutoBool = this.toggleNarutoBool.bind(this);
   }
 
-  /**
-   * [componentDidMount description]
-	 * get patterns & records
-   */
   componentDidMount() {
     this.detectKeyboard();
     this.ani = Animation();
@@ -167,38 +157,30 @@ class DrumMachine extends Component {
 	   */
 	  const outShowDOM = this.hideSpinner;
     // const outShowLogo = this.showLogo;
-		/**
-	   * [startTimer description]
-	   */
 		function startTimer() {
 			fadeoutID = window.setTimeout(outShowDOM, 3500);
 		}
 		startTimer();
+
+    window.addEventListener('resize', this.handleResize);
   }
 
-  /**
-   * [setCurrentBeat description]
-   * @param {number} currentBeat
-   */
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleResize);
+  }
+
   setCurrentBeat(currentBeat) {
     this.setState({
       currentBeat,
     });
   }
 
-  /**
-   * [setCurrentChainAtLast description]
-   */
   setCurrentChainElementAtLast() {
     this.sequencer.isPlayingChain = false;
     this.sequencer.isPlayingRecord = false;
     this.setState({ currentChainElement: '' });
   }
 
-	/**
-   * [setCurrentChainElementIndex description]
-   * @param  {number} id for currentChainElementIndex
-   */
   setCurrentChainElementIndex(id) {
 		for (let i = 0; i < this.state.drumNoteChain.length; i += 1) {
 			if (id === this.state.drumNoteChain[i].id) {
@@ -208,15 +190,10 @@ class DrumMachine extends Component {
 		}
 	}
 
-  /**
-  * @param  {String} id width of window
-   * [setCurrentChainAtHere description]
-   */
   setCurrentChainElementAtHere(id) {
     this.sequencer.isPlayingChain = false;
     this.sequencer.isPlayingRecord = false;
-    const drumNoteChain = this.state.drumNoteChain;
-    const data = this.state.data;
+    const { drumNoteChain, data } = this.state;
     for (let k = 0; k < drumNoteChain.length; k += 1) {
       if (drumNoteChain[k].id === id) {
         for (let i = 0; i < 16; i += 1) {
@@ -230,22 +207,13 @@ class DrumMachine extends Component {
 		this.setCurrentChainElementIndex(id);
   }
 
-  /**
-  * @param  {String} sample width of window
-   * [deleteRecord description]
-   */
   setSample(sample) {
     this.sequencer.currentSample = sample;
     this.setState({ currentSample: sample });
   }
 
-	/**
-   * [clearClicked description]
-   * @param  {number} i first index
-   * @param  {number} j second index
-   */
 	clearClicked() {
-		const data = this.state.data;
+		const { data } = this.state;
 		let i;
 		let j;
 		for (i = 0; i < 16; i += 1) {
@@ -258,13 +226,8 @@ class DrumMachine extends Component {
 		});
 	}
 
-  /**
-   * [clearClicked description]
-   * @param  {number} i first index
-   * @param  {number} j second index
-   */
 	randomClicked() {
-		const data = this.state.data;
+		const { data } = this.state;
 		for (let i = 0; i < 16; i += 1) {
 			for (let j = 0; j < 8; j += 1) {
 				data[i][j] = (Math.random() > 0.8) ? 1 : 0;
@@ -275,10 +238,6 @@ class DrumMachine extends Component {
 		});
 	}
 
-	/**
-   * [toggleNarutoBool description]
-   * @param  {bool} narutoBool
-   */
 	toggleNarutoBool() {
 		if (this.state.narutoBool) {
 			this.keyboard.startNormal();
@@ -292,42 +251,24 @@ class DrumMachine extends Component {
 		});
 	}
 
-  /**
-   * [handleClick description]
-   * @param  {number} i first index
-   * @param  {number} j second index
-   */
   handleClick(i, j) {
-    const data = this.state.data;
+		const { data } = this.state;
     data[i][j] = (data[i][j] === 0) ? 1 : 0;
     this.setState({
       data,
     });
   }
 
-	/**
-   * [handleHover description]
-   * @param  {number} i first index
-   * @param  {number} j second index
-   */
   handleHover(i, j) {
     this.setState({
       hover: { i, j },
     });
   }
 
-  /**
-   * [handleResize description]
-   * @param  {number} w width of window
-   * @param  {number} h height of window
-   */
-  handleResize(w, h) {
-    this.ani.resize(w, h);
+  handleResize() {
+    this.ani.resize(window.innerWidth, window.innerHeight);
   }
 
-  /**
-   * [startSequence description]
-   */
   startSequencer() {
     this.sequencer.start();
     this.setState({
@@ -338,9 +279,6 @@ class DrumMachine extends Component {
     }
   }
 
-  /**
-   * [stopSequencer description]
-   */
   stopSequencer() {
     if (this.sequencer.recording !== true) {
       this.sequencer.stop();
@@ -351,9 +289,6 @@ class DrumMachine extends Component {
     }
   }
 
-  /**
-   * [recordSequencer description]
-   */
   recordSequencer() {
     if (this.state.recordTitle === '') {
       alert('Please give your record a title');
@@ -378,46 +313,27 @@ class DrumMachine extends Component {
     }
   }
 
-  /**
-  * @param  {object} event width of window
-   * [playPattern description]
-   */
   handleRecordTitleChange(event) {
     this.setState({ recordTitle: event.target.value });
   }
 
-  /**
-   * [saveRecord description]
-   */
   saveRecord() {
     // add title as a paramater (feature)
-    this.sequencer.saveRecord(this.keyboard.saveRecord,
+    this.sequencer.saveRecord(
+			this.keyboard.saveRecord,
       this.keyboard.storeRecord,
-      this.state.recordTitle);
+      this.state.recordTitle,
+		);
   }
 
-  /**
-  * @param  {Array} records width of window
-   * [storeDrumRecord description]
-	 * when using Recorder
-   */
   storeDrumRecord(records) {
     this.setState({ drumRecords: records });
   }
 
-  /**
-  * @param  {Array} records width of window
-   * [storeKeyRecord description]
-	 * When using Recorder
-   */
   storeKeyRecord(records) {
     this.setState({ keyRecords: records });
   }
 
-  /**
-  * @param  {Array} record width of window
-   * [playRecord description]
-   */
   playRecord(record) {
 		this.setState({ hidden: true });
     this.sequencer.isPlayingChain = false;
@@ -425,16 +341,18 @@ class DrumMachine extends Component {
     this.keyboard.isPlayingRecord = true;
     this.stopSequencer();
     this.exitPattern();
-    const data = this.state.data;
+		const { data } = this.state;
     for (let i = 0; i < 16; i += 1) {
       for (let j = 0; j < 8; j += 1) {
         data[i][j] = record.content[0][i][j];
       }
     }
-    this.setState({ data,
+    this.setState({
+			data,
       currentPlayingRecord: record.content,
       currentPlayingRecordElement: 0,
-      keyStartTimeCorrection: record.startTime });
+      // keyStartTimeCorrection: record.startTime,
+		});
     for (let i = 0; i < this.state.keyRecords.length; i += 1) {
       if (this.state.keyRecords[i].id === record.id) {
         this.startSequencer();
@@ -443,65 +361,51 @@ class DrumMachine extends Component {
     }
   }
 
-  /**
-   * [exitPlayRecord description]
-   */
   exitPlayRecord() {
     if (this.sequencer.isPlayingRecord === true) {
       this.sequencer.isPlayingRecord = false;
       this.keyboard.isPlayingRecord = false;
-      const data = this.state.data;
+			const { data } = this.state;
       for (let i = 0; i < 16; i += 1) {
         for (let j = 0; j < 8; j += 1) {
           data[i][j] = 0;
         }
       }
+      this.keyboard.clearSchedule(this.state.keyRecords[this.state.currentPlayingRecordElement]);
       this.setState({ data, currentPlayingRecord: [], currentPlayingRecordElement: 0 });
-      this.keyboard.clearSchedule();
       this.stopSequencer();
     }
 		this.setState({ hidden: false });
   }
 
-  /**
-  * @param  {Number} recordId width of window
-   * [deleteRecord description]
-   */
   deleteRecord(recordId) {
     axios.delete(`/api/notes/${recordId}`)
-     .then(
-       axios.get('/api/notes')
+     .then(axios.get('/api/notes')
          .then((res) => {
            this.setState({ drumRecords: res.data });
          })
          .catch((err) => {
            console.log(err);
-         }),
-     )
+         }))
      .catch((err) => {
        console.log(err);
      });
      axios.delete(`/api/keys/${recordId}`)
-      .then(
-        axios.get('/api/keys')
+      .then(axios.get('/api/keys')
           .then((res) => {
             this.setState({ keyRecords: res.data });
           })
           .catch((err) => {
             console.log(err);
-          }),
-      )
+          }))
       .catch((err) => {
         console.log(err);
       });
     console.log(recordId);
   }
 
-  /**
-   * [playNextRecordElement description]
-   */
   playNextRecordElement() {
-    const data = this.state.data;
+		const { data } = this.state;
     let stopDrum = false;
     let num = this.state.currentPlayingRecordElement;
     num += 1;
@@ -521,17 +425,10 @@ class DrumMachine extends Component {
     this.setState({ currentPlayingRecordElement: num, data });
   }
 
-  /**
-  * @param  {object} event width of window
-   * [playPattern description]
-   */
   handleTitleChange(event) {
     this.setState({ patternTitle: event.target.value });
   }
 
-  /**
-   * [savePattern description]
-   */
   savePattern() {
     if (this.state.patternTitle !== '') {
       axios.post('/api/patterns', {
@@ -539,15 +436,13 @@ class DrumMachine extends Component {
         content: this.state.data,
         id: uuid4(),
       })
-        .then(
-          axios.get('/api/patterns')
+        .then(axios.get('/api/patterns')
             .then((res) => {
               this.setState({ patternLists: res.data });
             })
             .catch((err) => {
               console.log(err);
-            }),
-        )
+            }))
         .catch(err => console.log(err));
       this.setState({ patternTitle: '' });
     } else {
@@ -556,15 +451,11 @@ class DrumMachine extends Component {
     }
   }
 
-  /**
-  * @param  {object} pattern width of window
-   * [playPattern description]
-   */
   playPattern(pattern) {
     this.sequencer.isPlayingRecord = false;
     this.sequencer.isPlayingChain = false;
     this.stopSequencer();
-    const data = this.state.data;
+		const { data } = this.state;
     for (let i = 0; i < 16; i += 1) {
       for (let j = 0; j < 8; j += 1) {
         data[i][j] = pattern.content[i][j];
@@ -577,48 +468,38 @@ class DrumMachine extends Component {
     this.startSequencer();
   }
 
-  /**
-   * [editPattern description]
-   */
   editPattern() {
     if (this.state.patternTitle !== '') {
       axios.put(`/api/patterns/${this.state.currentPatternId}`, {
         title: this.state.patternTitle,
         content: this.state.data,
       })
-			.then(
-				axios.get('/api/patterns')
+			.then(axios.get('/api/patterns')
 					.then((res) => {
 						this.setState({ patternLists: res.data });
 					})
 					.catch((err) => {
 						console.log(err);
-					}),
-			)
+					}))
       .catch(err => console.log(err));
     } else {
       axios.put(`/api/patterns/${this.state.currentPatternId}`, {
         content: this.state.data,
       })
-			.then(
-				axios.get('/api/patterns')
+			.then(axios.get('/api/patterns')
 					.then((res) => {
 						this.setState({ patternLists: res.data });
 					})
 					.catch((err) => {
 						console.log(err);
-					}),
-			)
+					}))
       .catch(err => console.log(err));
     }
   }
 
-  /**
-   * [exitPattern description]
-   */
   exitPattern() {
     if (this.state.currentPatternId !== '') {
-      const data = this.state.data;
+			const { data } = this.state;
       for (let i = 0; i < 16; i += 1) {
         for (let j = 0; j < 8; j += 1) {
           data[i][j] = 0;
@@ -629,21 +510,16 @@ class DrumMachine extends Component {
     }
   }
 
-  /**
-   * [deleteCurrentPattern description]
-   */
   deleteCurrentPattern() {
     if (this.state.currentPatternId !== '') {
       axios.delete(`/api/patterns/${this.state.currentPatternId}`)
-       .then(
-         axios.get('/api/patterns')
+       .then(axios.get('/api/patterns')
            .then((res) => {
              this.setState({ patternLists: res.data });
            })
            .catch((err) => {
              console.log(err);
-           }),
-       )
+           }))
        .catch((err) => {
          console.log(err);
        });
@@ -652,35 +528,26 @@ class DrumMachine extends Component {
     }
   }
 
-  /**
-  * @param  {Number} id width of window
-   * [deletePattern description]
-   */
   deletePattern(id) {
     if (id === this.state.currentPatternId) {
       this.deleteCurrentPattern();
     } else {
       axios.delete(`/api/patterns/${id}`)
-       .then(
-         axios.get('/api/patterns')
+       .then(axios.get('/api/patterns')
            .then((res) => {
              this.setState({ patternLists: res.data });
            })
            .catch((err) => {
              console.log(err);
-           }),
-       )
+           }))
        .catch((err) => {
          console.log(err);
        });
     }
   }
 
-  /**
-   * [updateChain description]
-   */
   updateChain() {
-    const drumNoteChain = this.state.drumNoteChain;
+		const { drumNoteChain } = this.state;
     const data = [[0, 0, 0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 0, 0],
@@ -716,14 +583,11 @@ class DrumMachine extends Component {
     this.setState({ drumNoteChain });
   }
 
-  /**
-   * [deleteCurrentChainElement description]
-   */
   deleteCurrentChainElement() {
     if (this.state.currentChainElement !== '') {
-      const drumNoteChain = this.state.drumNoteChain;
-      const newDrumNoteChain = drumNoteChain.filter(
-        element => element.id !== this.state.currentChainElement);
+      const { drumNoteChain } = this.state;
+      const newDrumNoteChain = drumNoteChain.filter(element =>
+				element.id !== this.state.currentChainElement);
       drumNoteChain.pop();
       for (let k = 0; k < drumNoteChain.length; k += 1) {
         drumNoteChain[k].id = newDrumNoteChain[k].id;
@@ -739,16 +603,13 @@ class DrumMachine extends Component {
     }
   }
 
-  /**
-   * [playChain description]
-   */
   playChain() {
     if (this.state.drumNoteChain.length > 0) {
       this.sequencer.isPlayingRecord = false;
       this.sequencer.isPlayingChain = true;
       this.stopSequencer();
       this.exitPattern();
-      const data = this.state.data;
+      const { data } = this.state;
       for (let i = 0; i < 16; i += 1) {
         for (let j = 0; j < 8; j += 1) {
           data[i][j] = this.state.drumNoteChain[0].data[i][j];
@@ -759,13 +620,10 @@ class DrumMachine extends Component {
     }
   }
 
-  /**
-   * [exitChain description]
-   */
   exitChain() {
     if (this.sequencer.isPlayingChain === true) {
       this.sequencer.isPlayingChain = false;
-      const data = this.state.data;
+			const { data } = this.state;
       for (let i = 0; i < 16; i += 1) {
         for (let j = 0; j < 8; j += 1) {
           data[i][j] = 0;
@@ -776,9 +634,6 @@ class DrumMachine extends Component {
     }
   }
 
-  /**
-   * [playNextChainElement description]
-   */
   playNextChainElement() {
     let num = this.state.currentPlayingChainElement;
     num += 1;
@@ -786,7 +641,7 @@ class DrumMachine extends Component {
     if (num === this.state.drumNoteChain.length) {
       num = 0;
     }
-    const data = this.state.data;
+		const { data } = this.state;
     for (let i = 0; i < 16; i += 1) {
       for (let j = 0; j < 8; j += 1) {
         data[i][j] = this.state.drumNoteChain[num].data[i][j];
@@ -795,10 +650,6 @@ class DrumMachine extends Component {
     this.setState({ currentPlayingChainElement: num, data });
   }
 
-  /**
-   * @param  {Array} column width of window
-   * [playDrumAni description]
-   */
   playDrumAni(column) {
     for (let i = 0; i < column.length; i += 1) {
       // this.ani.triggerSequencerAnimation(
@@ -808,9 +659,6 @@ class DrumMachine extends Component {
     }
   }
 
-  /**
-   * [detectKeyboard description]
-   */
   detectKeyboard() {
     key(keys, (e, h) => {
 			const index = animationKey2IndexMapping[h.shortcut];
@@ -876,7 +724,7 @@ class DrumMachine extends Component {
 		// loading presets
 		key('1, 2, 3, 4, 5, 6, 7, 8', (e, h) => {
 			const index = h.shortcut.charCodeAt(0) - 49;
-			const data = this.state.data;
+			const { data } = this.state;
 			for (let i = 0; i < 16; i += 1) {
 				for (let j = 0; j < 8; j += 1) {
 					data[i][j] = presets[index][i][j];
@@ -888,9 +736,6 @@ class DrumMachine extends Component {
 		});
   }
 
-  /**
-   * [hideSpinner description]
-   */
 	hideSpinner() {
 		const spinner = document.getElementById('spinner');
 		spinner.classList.add('loaded');
@@ -908,9 +753,6 @@ class DrumMachine extends Component {
 		fadeoutID = window.setTimeout(this.showDOM, 3000);
  	}
 
-  /**
-   * [showDOM description]
-   */
 	showDOM() {
 		const rootDiv = document.getElementById('root');
 		rootDiv.classList.add('fullHeight');
@@ -920,19 +762,12 @@ class DrumMachine extends Component {
     this.ani.setSequencerAnimationsCustomSettings();
 	}
 
-	/**
-   * [toggleHidden description]
-   */
   toggleHidden() {
     this.setState({
       hidden: !this.state.hidden,
     });
   }
 
-  /**
-   * [renderPatterns description]
-   * @return {Element}
-   */
   renderPatterns() {
 		const { patternLists } = this.state;
     return patternLists.map(pattern => (
@@ -946,10 +781,6 @@ class DrumMachine extends Component {
       </div>));
   }
 
-  /**
-   * [renderRecords description]
-   * @return {Element}
-   */
   renderRecords() {
 		const { drumRecords } = this.state;
     return drumRecords.map(drumRecord => (
@@ -958,20 +789,19 @@ class DrumMachine extends Component {
           <span className={styles.listText}>{drumRecord.title}</span>
         </button>
         <button
-          className={styles.renderedListX} onTouchTap={() => this.deleteRecord(drumRecord.id)}
+          className={styles.renderedListX}
+          onTouchTap={() => this.deleteRecord(drumRecord.id)}
         >
           <span className={styles.listXBtn}>X</span>
         </button>
       </div>));
   }
 
-  /**
-   * [renderChain description]
-   * @return {Element}
-   */
   renderChain() {
-		const { drumNoteChain, currentPlayingChainElement,
-			currentChainElement, currentChainElementIndex } = this.state;
+		const {
+			drumNoteChain, currentPlayingChainElement,
+			currentChainElement, currentChainElementIndex,
+		} = this.state;
     return drumNoteChain.map((chainElement, i) => (
       <div
         key={chainElement.id}
@@ -991,34 +821,34 @@ class DrumMachine extends Component {
     ));
   }
 
-  /**
-   * [render description]
-   * @return {Element}
-   */
   render() {
-		const { data, hover, hidden, wait, playing, narutoBool } = this.state;
+		const {
+			data, hover, hidden, wait, playing, narutoBool,
+		} = this.state;
     return (
       <div className={(wait === true) ? styles.hideDOM : styles.showDOM}>
-        {(this.sequencer.isPlayingRecord === false)
-          ? <button
+        {(this.sequencer.isPlayingRecord === false) ?
+          <button
             className={`${styles.icon} ${styles.menuIcon} ${(hidden === true) ? '' : styles.displayHide}`}
             onTouchTap={() => this.toggleHidden()}
           >
             <img src={mi1} alt="menu" />
-          </button> : <button
+          </button> :
+          <button
             className={`${styles.icon} ${styles.menuIcon}`}
             onClick={() => console.log('Exit Playing Record Button clicked')}
             onTouchTap={() => this.exitPlayRecord()}
           >
             <img src={mi2} alt="close" />
           </button>}
-        {(playing)
-          ? <button
+        {(playing) ?
+          <button
             className={`${styles.icon} ${styles.toggleIcon} ${(hidden === true) ? '' : styles.displayHide}`}
             onTouchTap={() => this.stopSequencer()}
           >
             <img src={mi3} alt="pause" />
-          </button> : <button
+          </button> :
+          <button
             className={`${styles.icon} ${styles.toggleIcon} ${(hidden === true) ? '' : styles.displayHide}`}
             onTouchTap={() => this.startSequencer()}
           >
@@ -1065,10 +895,11 @@ class DrumMachine extends Component {
           <div className={styles.colorMenu}>
             {/* 1 */}
             <div className={`${styles.row1} ${styles.row}`}>
-              {(this.sequencer.recording === true)
-                ? <div>
+              {(this.sequencer.recording === true) ?
+                <div>
                   recording...
-                </div> : <div className={styles.row1BtnWrap}>
+                </div> :
+                <div className={styles.row1BtnWrap}>
                   <button
                     className={styles.row1l}
                     onClick={() => console.log('Start Button clicked')}
@@ -1180,9 +1011,8 @@ class DrumMachine extends Component {
                   className={styles.chainLi}
                   style={{ color: '#d8b98a' }}
                   onTouchTap={() => this.setCurrentChainElementAtLast()}
-                >
-    								+
-    							</div>
+                > +
+                </div>
               </div>
             </div>
             {/* 6 */}
@@ -1249,12 +1079,10 @@ class DrumMachine extends Component {
           onHover={(i, j) => this.handleHover(i, j)}
         />
         <div className={styles.animation} id="animation" />
-        <WindowResizeListener
-          onResize={w => this.handleResize(w.windowWidth, w.windowHeight)}
-        />
         <div>
           <input
-            type="text" id="one"
+            type="text"
+            id="one"
             onKeyPress={this.detectKeyboard}
           />
         </div>

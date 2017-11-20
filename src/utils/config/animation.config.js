@@ -48,7 +48,7 @@ import doubleImage from 'animations/naruto/doubleImage';
 Image import
 ******/
 // vapor
-import landscape from 'vapor/landscape.jpg';
+import landscape from 'vapor/landscape.png';
 import sculpture from 'vapor/sculpture-02.png';
 
 // naruto
@@ -90,10 +90,10 @@ const sequencerAnimationsSet = [
     [
       // play multiple animations at the same time!
       { animation: fade, options: [0] },
-      { animation: singleStaticImage, options: [heart, 0.8, 0.4] },
+      { animation: singleStaticImage, options: [heart, 0.6] },
     ],
     [
-      { animation: singleFlashImage, options: [cube, 0.9, 0.3] },
+      { animation: singleFlashImage, options: [cube, 1.0] },
       { animation: prism, options: [6, 1, 600, 1] },
       { animation: prism, options: [6, 1, 900, 1] },
     ],
@@ -104,7 +104,7 @@ const sequencerAnimationsSet = [
     ],
     { animation: prism, options: [3] },
     { animation: strikes },
-    { animation: flyImage, options: [samuri, 0.5] },
+    { animation: flyImage, options: [samuri, 0.25] },
     // { animation: randomPiston },
     { animation: randomPiston },
     { animation: splashColorful },
@@ -123,7 +123,7 @@ const sequencerAnimationsSet = [
   //   { animation: brush, options: [4] },
   // ],
   [
-    { animation: flashImage, options: [landscape] },
+    { animation: flashImage, options: [landscape, 0.8] },
     { animation: popImage, options: [sculpture, 4.5] },
     { animation: timer },
     { animation: prism, options: [3] },
@@ -167,9 +167,13 @@ const keyAnimationsSet = [
   [
     { animation: flash, options: [1] },
     { animation: corona },
-    { animation: split },
+    // { animation: split },
+    // { animation: sunrise },
+    { animation: singleStaticImage, options: [heart, 0.6] },
+    { animation: flyImage, options: [samuri, 0.25] },
     { animation: sunrise },
-    { animation: moon },
+    // { animation: sunrise },
+    // { animation: moon },
     { animation: piston, options: [4] },
     { animation: bubbles },
     { animation: strike },
