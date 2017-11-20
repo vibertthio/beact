@@ -63,8 +63,7 @@ export class Sequencer {
           const vel = (Math.random() * 0.5) + 0.5;
           // convert velocity(gain) to volume
           this.samples.volume.value = 10 * Math.log10(vel);
-          // const nowTime = now();
-          // console.log('nowTime: ', nowTime);
+          // console.log('nowTime: ', now());
           // console.log('Transport.seconds: ', Transport.seconds);
           // console.log('time: ', time);
           this.samples._players[this.notes[i]].start(time, 0, 0.5);
@@ -272,6 +271,7 @@ export class Keyboard {
     const currentTime = Transport.seconds;
     for (let i = 0; i < record.content.length; i += 1) {
       const time = currentTime + (record.content[i].time - record.startTime);
+      this.samples._players[this.notes[record.content[i].key]].mute = false;
       this.samples._players[this.notes[record.content[i].key]].start(time);
       Transport.schedule(() => {
         aniTrigger(record.content[i].key);
@@ -279,10 +279,14 @@ export class Keyboard {
     }
   }
 
-  clearSchedule() {
-     const time = Transport.seconds + 1;
-     this.samples.stopAll(time);
-     Transport.cancel(time);
+  clearSchedule(record) {
+     // const time = Transport.seconds + 1;
+     this.samples.stopAll();
+     for (let j = 0; j < record.content.length; j += 1) {
+       this.samples._players[this.notes[record.content[j].key]].mute = true;
+     }
+     Transport.cancel();
+     // Transport.cancel(time);
      // this.samples.stopAll([time]);
      // Transport.cancel([time]);
     }

@@ -364,8 +364,8 @@ class DrumMachine extends Component {
           data[i][j] = 0;
         }
       }
+      this.keyboard.clearSchedule(this.state.keyRecords[this.state.currentPlayingRecordElement]);
       this.setState({ data, currentPlayingRecord: [], currentPlayingRecordElement: 0 });
-      this.keyboard.clearSchedule();
       this.stopSequencer();
     }
 		this.setState({ hidden: false });
