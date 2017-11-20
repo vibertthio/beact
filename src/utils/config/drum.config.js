@@ -1,16 +1,6 @@
 const drumNotes =  Array.from(Array(8).keys()).map((i) => (i + 1).toString());
 const drumUrls = [
   {
-    1: './assets/audio/porn/kick.mp3',
-    2: './assets/audio/porn/clap.mp3',
-    3: './assets/audio/porn/perc.mp3',
-    4: './assets/audio/porn/perc-gong.mp3',
-    5: './assets/audio/porn/bass.mp3',
-    6: './assets/audio/porn/vocal.mp3',
-    7: './assets/audio/porn/synth.mp3',
-    8: './assets/audio/porn/zheng.mp3',
-  },
-  {
     1: './assets/audio/chillsaxiao/kick.mp3',
     2: './assets/audio/chillsaxiao/snare.mp3',
     3: './assets/audio/chillsaxiao/dn.mp3',
@@ -59,6 +49,16 @@ const drumUrls = [
     6: './assets/audio/drum/everything/vocal-2.mp3',
     7: './assets/audio/drum/everything/vocal-3.mp3',
     8: './assets/audio/drum/everything/vocal-4.mp3',
+  },
+  {
+    1: './assets/audio/porn/kick.mp3',
+    2: './assets/audio/porn/clap.mp3',
+    3: './assets/audio/porn/perc.mp3',
+    4: './assets/audio/porn/perc-gong.mp3',
+    5: './assets/audio/porn/bass.mp3',
+    6: './assets/audio/porn/vocal.mp3',
+    7: './assets/audio/porn/synth.mp3',
+    8: './assets/audio/porn/zheng.mp3',
   },
   // {
   //   1: './assets/audio/drum/let-go/kick.mp3',
