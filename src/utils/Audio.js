@@ -1,4 +1,4 @@
-import { Sequence, Transport, Players } from 'tone';
+import { Sequence, Transport, Players, now } from 'tone';
 import axios from 'axios';
 import uuid4 from 'uuid/v4';
 import { keysUrls, keysNotes } from './config/keys.config';
@@ -42,17 +42,12 @@ export class Sequencer {
     this.startTime = 0;
     this.currentSampleIndex = 0;
     this.storeRecord = record => storeRecord(record);
-
     this.loadSamples();
     this.checkStart = false;
     // this.nowPlayingAni = [];
     this.saveRecord = this.saveRecord.bind(this);
-
-    // now playing column
     this.sequence = new Sequence((time, col) => {
-      // console.log('column Transport.seconds', Transport.seconds);
       this.beat = col;
-
       setCurrentBeat(this.beat);
 
       // 16 columns, each column: ex. [1, 0, 0, 0, 1, 1, 0, 1]
@@ -61,7 +56,6 @@ export class Sequencer {
       for (let i = 0; i < this.notes.length; i += 1) {
         if (col === 0 && i === 0 && this.checkStart === false && this.recording === true) {
           this.checkStart = true;
-          // console.log('startTime Transport.seconds', Transport.seconds);
           this.startTime = Transport.seconds;
         }
         // make sure no play while loading
@@ -69,14 +63,15 @@ export class Sequencer {
           const vel = (Math.random() * 0.5) + 0.5;
           // convert velocity(gain) to volume
           this.samples.volume.value = 10 * Math.log10(vel);
-          // this.samples._players[this.notes[i]].start(time, 0, '32n');
+          // const nowTime = now();
+          // console.log('nowTime: ', nowTime);
+          // console.log('Transport.seconds: ', Transport.seconds);
+          // console.log('time: ', time);
           this.samples._players[this.notes[i]].start(time, 0, 0.5);
           nowPlayingAni.push(i);
         }
-        if (i === 7) {
-          playDrumAni(nowPlayingAni);
-        }
       }
+      playDrumAni(nowPlayingAni);
 
       if (this.recording === true) {
         if (this.recordMatrix.length < 16) {
@@ -277,7 +272,7 @@ export class Keyboard {
     const currentTime = Transport.seconds;
     for (let i = 0; i < record.content.length; i += 1) {
       const time = currentTime + (record.content[i].time - record.startTime);
-      this.samples._players[this.notes[record.content[i].key]].start(time + 0.6);
+      this.samples._players[this.notes[record.content[i].key]].start(time);
       Transport.schedule(() => {
         aniTrigger(record.content[i].key);
       }, time);
