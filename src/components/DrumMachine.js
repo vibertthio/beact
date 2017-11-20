@@ -259,12 +259,6 @@ class DrumMachine extends Component {
     });
   }
 
-  handleHover(i, j) {
-    this.setState({
-      hover: { i, j },
-    });
-  }
-
   handleResize() {
     this.ani.resize(window.innerWidth, window.innerHeight);
   }
