@@ -10,12 +10,9 @@ class Matrix extends Component {
     this.state = {
       idle: false,
       hover: { i: -1, j: -1 },
-      isDown: false,
     };
     this.setIdle = this.setIdle.bind(this);
     this.mouseEnter = this.mouseEnter.bind(this);
-    this.mouseDown = this.mouseDown.bind(this);
-    this.setIsDown = this.setIsDown.bind(this);
   }
 
   componentDidMount() {
@@ -28,29 +25,16 @@ class Matrix extends Component {
     });
   }
 
-  setIsDown(isDown) {
-    this.setState({
-      isDown,
-    });
-  }
-
-  mouseEnter(i, j) {
-    const { isDown } = this.state;
+  mouseEnter(e, i, j) {
     const { onClick } = this.props;
     this.setIdle(false);
     this.setState({
       hover: { i, j },
     });
-    if (isDown) {
-      console.log(`dragclicking ${i}, ${j}`);
+    // only when dragging
+    if (e.buttons === 1) {
       onClick(i, j);
     }
-  }
-
-  mouseDown(i, j) {
-    const { onClick } = this.props;
-    onClick(i, j);
-    this.setIsDown(true);
   }
 
   componentWillUnmout() {
@@ -62,7 +46,7 @@ class Matrix extends Component {
 
   render() {
 		const { idle, hover } = this.state;
-    const { data } = this.props;
+    const { data, onClick } = this.props;
     return (
       <div
         className={
@@ -86,9 +70,8 @@ class Matrix extends Component {
                    ${data[i][j] === 1 ? styles.clicked : ''}
 									 ${(hover.i === i && hover.j === j) ? styles.hover : ''}`
                   }
-                onMouseEnter={() => this.mouseEnter(i, j)}
-                onMouseDown={() => this.mouseDown(i, j)}
-                onMouseUp={() => this.setIsDown(false)}
+                onMouseEnter={e => this.mouseEnter(e, i, j)}
+                onMouseDown={() => onClick(i, j)}
                 // onTouchTap={() => onClick(i, j)}
               />))}
           </div>))}
