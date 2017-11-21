@@ -1,4 +1,4 @@
-import { Sequence, Transport, Players, now } from 'tone';
+import { Sequence, Transport, Players } from 'tone';
 import axios from 'axios';
 import uuid4 from 'uuid/v4';
 import { keysUrls, keysNotes } from './config/keys.config';
