@@ -1,19 +1,5 @@
-import defaultImgUrl from 'vapor/landscape.jpg';
+import defaultImgUrl from 'vapor/landscape.png';
 
-/**
- * Animation #0, Veil
- * it will have two direction(u/d), which will be decided randomly
- * @param  {objct} Two
- * @param  {object} two instance of two
- * @param  {object} TWEEN the library for tweening
- * @param  {object} colors color pallete
- * @param  {array} animations It's the stack of animations
- * @param  {string} imgUrl the src of image
- * @param  {number} [textureScale = 1]
- * @param  {number} [shapeScale = 1]
- * @param  {number} [opacity = 1]
- * @param  {number} [duration = 400]
- */
 export default function flashImage(
   Two,
   two,
@@ -22,12 +8,10 @@ export default function flashImage(
   animations,
   imgUrl = defaultImgUrl,
   textureScale = 1,
-  shapeScale = 1,
-  opacity = 1,
   duration = 400,
   ) {
   let playing = false;
-  const param = { t: 0 };
+  let originalScale;
 
   /**
   * [setup description]
@@ -35,32 +19,53 @@ export default function flashImage(
   */
   function setup() {
     // const length = Math.min(two.width, two.height);
-    const shape = two.makeRectangle(
+    // const shape = two.makeRectangle(
+    //   two.width * 0.5,
+    //   two.height * 0.5,
+    //   two.width * shapeScale,
+    //   two.height * shapeScale,
+    // );
+    // const texture = new Two.Texture(imgUrl, two.width * shapeScale, two.height * shapeScale);
+    // shape.visible = 0;
+    // shape.fill = texture;
+    // shape.noStroke();
+    //
+
+
+    const shape = two.makeSprite(
+      imgUrl,
       two.width * 0.5,
       two.height * 0.5,
-      two.width * shapeScale,
-      two.height * shapeScale,
     );
-    const texture = new Two.Texture(imgUrl);
-    shape.visible = 0;
-    shape.fill = texture;
-    shape.noStroke();
 
-    const originalScale = (textureScale * two.height) / 500;
-    let targetRatio;
-    texture.scale = originalScale;
+    originalScale = (textureScale * two.height) / 400;
+    shape.scale = originalScale;
+    shape.opacity = 0;
+    let targetRatio = originalScale * (1 + (0.5 * Math.random()));
 
-    const ani = new TWEEN.Tween(param)
-      .to({ t: 1 }, duration)
-      .easing(TWEEN.Easing.Circular.Out)
-      .onStart(() => { targetRatio = 0.2 * Math.random(); })
-      .onUpdate((t) => {
-        texture.scale = originalScale * (1 + (targetRatio * t));
-        shape.visible = Math.random() > 0.5;
-        // shape.visible = true;
+    const aniOpacity = new TWEEN.Tween(shape)
+      .to({ opacity: 0 }, duration)
+      .onStart(() => {
+        console.log('opa start');
       })
+      .easing(TWEEN.Easing.Circular.Out)
+      .onStop(() => {
+        shape.opacity = 0;
+      });
+
+    const ani = new TWEEN.Tween(shape)
+      .to({ scale: targetRatio }, duration)
+      .onStart(() => {
+        targetRatio = originalScale * (1 + (0.5 * Math.random()));
+        aniOpacity.start();
+      })
+      .easing(TWEEN.Easing.Exponential.Out)
       .onComplete(() => {
-        shape.visible = false;
+        shape.scale = originalScale;
+      })
+      .onStop(() => {
+        shape.scale = originalScale;
+        aniOpacity.stop();
       });
 
     return { shape, ani };
@@ -76,11 +81,13 @@ export default function flashImage(
 
   const reset = () => {
     ani.stop();
+    shape.scale = originalScale;
   };
 
   const start = () => {
     reset();
     playing = true;
+    shape.opacity = 1;
     ani.start();
   };
 

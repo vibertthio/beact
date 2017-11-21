@@ -22,7 +22,6 @@ export default function singleFlashImage(
   animations,
   imgUrl = defaultImgUrl,
   textureScale = 1,
-  shapeScale = 1,
   opacity = 1,
   duration = 200,
   ) {
@@ -52,10 +51,11 @@ export default function singleFlashImage(
       .easing(TWEEN.Easing.Circular.Out)
       .onStart(() => {
         targetRatio = 0.15;
+        shape.visible = true;
         // targetRatio = 0.2 * Math.random();
       })
       .onUpdate((t) => {
-        shape.scale = originalScale * (1 + (targetRatio * t));
+        // shape.scale = originalScale * (1 + (targetRatio * t));
         shape.visible = Math.random() > 0.25;
         // shape.visible = true;
       })

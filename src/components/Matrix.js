@@ -4,13 +4,7 @@ import uuid4 from 'uuid/v4';
 import styles from '../styles/Matrix.css';
 import idleDetection from '../utils/IdleDetection';
 
-/**
- * [className description]
- */
 class Matrix extends Component {
-  /**
-   * [constructor description]
-   */
   constructor() {
     super();
     this.state = {
@@ -21,26 +15,28 @@ class Matrix extends Component {
     this.mouseEnter = this.mouseEnter.bind(this);
   }
 
-  /**
-   * [componentDidMount description]
-   */
   componentDidMount() {
     this.timer = idleDetection(this.setIdle);
   }
 
-  /**
-   * [setIdle description]
-   * @param {Boolean} isIdle [description]
-   */
   setIdle(isIdle) {
     this.setState({
       idle: isIdle,
     });
   }
 
-  /**
-   * [componentWillUnmout description]
-   */
+  mouseEnter(e, i, j) {
+    const { onClick } = this.props;
+    this.setIdle(false);
+    this.setState({
+      hover: { i, j },
+    });
+    // only when dragging
+    if (e.buttons === 1) {
+      onClick(i, j);
+    }
+  }
+
   componentWillUnmout() {
     this.setState({
       idle: true,
@@ -48,24 +44,8 @@ class Matrix extends Component {
     this.timer.deleteTimer();
   }
 
-  /**
-   * [mouseEnter description]
-   * @param {number} i [description]
-   * @param {number} j [description]
-   */
-  mouseEnter(i, j) {
-    this.setIdle(false);
-    this.setState({
-      hover: { i, j },
-    });
-  }
-
-  /**
-   * [render description]
-   * @return {Element} [description]
-   */
   render() {
-		const { hover, idle } = this.state;
+		const { idle, hover } = this.state;
     const { data, onClick } = this.props;
     return (
       <div
@@ -73,14 +53,14 @@ class Matrix extends Component {
           `${styles.matrix}
           ${(idle === true) ? styles.idle : ''}`}
       >
-        {data.map((row, i) =>
+        {data.map((row, i) => (
           <div
             key={uuid4()}
             className={
               `${styles.row}`
             }
           >
-            {row.map((d, j) =>
+            {row.map((d, j) => (
               <button
                 key={uuid4()}
                 className={
@@ -90,23 +70,18 @@ class Matrix extends Component {
                    ${data[i][j] === 1 ? styles.clicked : ''}
 									 ${(hover.i === i && hover.j === j) ? styles.hover : ''}`
                   }
-                onMouseEnter={() => this.mouseEnter(i, j)}
-                onTouchTap={() => onClick(i, j)}
-              />,
-              )}
-          </div>,
-        )}
+                onMouseEnter={e => this.mouseEnter(e, i, j)}
+                onMouseDown={() => onClick(i, j)}
+                // onTouchTap={() => onClick(i, j)}
+              />))}
+          </div>))}
       </div>
     );
   }
 }
 
 Matrix.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.arrayOf(
-      PropTypes.number,
-    ).isRequired,
-  ).isRequired,
+  data: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number).isRequired).isRequired,
   playing: PropTypes.bool.isRequired,
   currentBeat: PropTypes.number.isRequired,
   onClick: PropTypes.func.isRequired,

@@ -1,101 +1,92 @@
-import defaultImgUrl from 'vapor/landscape.jpg';
-
-/**
- * Animation #0, Veil
- * it will have two direction(u/d), which will be decided randomly
- * @param  {objct} Two
- * @param  {object} two instance of two
- * @param  {object} TWEEN the library for tweening
- * @param  {object} colors color pallete
- * @param  {array} animations It's the stack of animations
- * @param  {string} imgUrl the src of image
- * @param  {number} [textureScale = 1]
- * @param  {number} [spriteScale = 1]
- * @param  {number} [opacity = 1]
- * @param  {number} [duration = 400]
- */
 export default function singleStaticImage(
   Two,
   two,
   TWEEN,
   colors,
   animations,
-  imgUrl = defaultImgUrl,
+  imgUrl,
   textureScale = 1,
-  spriteScale = 1.3,
-  opacity = 1,
   duration = 400,
   ) {
   let playing = false;
-  let param = { t: 0, op: 1 };
-
+  let originalScale;
+  let rotateDest = { rotation: 0.25 };
   /**
   * [setup description]
   * @return {[type]} [description]
   */
   function setup() {
+    // const length = Math.min(two.width, two.height);
+    // const shape = two.makeRectangle(
+    //   two.width * 0.5,
+    //   two.height * 0.5,
+    //   two.width * shapeScale,
+    //   two.height * shapeScale,
+    // );
+    // const texture = new Two.Texture(imgUrl, two.width * shapeScale, two.height * shapeScale);
+    // shape.visible = 0;
+    // shape.fill = texture;
+    // shape.noStroke();
+    //
+
+
     const shape = two.makeSprite(
       imgUrl,
       two.width * 0.5,
       two.height * 0.5,
     );
-    shape.scale = (textureScale * two.height) / 3000;
-    shape.opacity = 0;
 
-    const originalScale = (textureScale * two.height) / 500;
+    originalScale = (textureScale * two.height) / 400;
     shape.scale = originalScale;
-    let targetRatio;
-    let rotateRatio;
+    shape.opacity = 0;
+    let targetRatio = originalScale * (1 + (0.5 * Math.random()));
 
-    const aniOut = new TWEEN.Tween(param)
-      .to({ opa: 0 }, duration * 1.5)
-      .easing(TWEEN.Easing.Exponential.Out)
-      .onUpdate((t) => {
-        shape.opacity = 1 - t;
-      })
-      .onComplete(() => {
+    const aniOpacity = new TWEEN.Tween(shape)
+      .to({ opacity: 0 }, duration)
+      .easing(TWEEN.Easing.Circular.Out);
 
-      });
+    const aniRotation = new TWEEN.Tween(shape)
+      .to(rotateDest, duration)
+      .easing(TWEEN.Easing.Exponential.Out);
 
-    const aniIn = new TWEEN.Tween(param)
-      .to({ t: 1 }, duration)
-      .easing(TWEEN.Easing.Circular.Out)
+    const ani = new TWEEN.Tween(shape)
+      .to({ scale: targetRatio }, duration)
       .onStart(() => {
-        targetRatio = 0.15;
-        rotateRatio = (Math.random() > 0.5) ? 0.05 : -0.05;
+        targetRatio = originalScale * (1 + (0.5 * Math.random()));
+        aniRotation.start();
       })
-      .onUpdate((t) => {
-        shape.scale = originalScale * (1 + (targetRatio * t));
-        shape.rotation = Math.PI * rotateRatio * t;
-        shape.visible = true;
-      })
+      .easing(TWEEN.Easing.Exponential.Out)
       .onComplete(() => {
-        // shape.visible = false;
-        aniOut.start();
+        aniOpacity.start();
+      })
+      .onStop(() => {
+        aniRotation.stop();
       });
 
-    return { shape, aniIn, aniOut };
+    return { shape, ani, aniOpacity };
   }
 
-  let { shape, aniIn, aniOut } = setup();
+  let { shape, ani, aniOpacity } = setup();
 
   // methods
   const resize = () => {
     two.remove(shape);
-    ({ shape, aniIn, aniOut } = setup());
+    ({ shape, ani, aniOpacity } = setup());
   };
 
   const reset = () => {
-    param = { t: 0, op: 1 };
-    shape.opacity = 1;
-    aniIn.stop();
-    aniOut.stop();
+    ani.stop();
+    aniOpacity.stop();
+    shape.scale = originalScale;
+    rotateDest.rotation *= (Math.random(1) > 0.5) ? 1 : -1;
   };
 
   const start = () => {
     reset();
     playing = true;
-    aniIn.start();
+    shape.opacity = 1;
+    shape.rotation = 0;
+    ani.start();
   };
 
   const EXPORT = {

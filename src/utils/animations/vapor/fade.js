@@ -39,9 +39,10 @@ export default function fade(
     );
     console.log('setup!');
     shape.visible = true;
+    shape.opacity = 1;
     // shape.visible = false;
     shape.noStroke();
-    shape.fill = colors[0];
+    [shape.fill] = colors;
 
     let twn;
     switch (mode) {
@@ -57,18 +58,9 @@ export default function fade(
       default:
         break;
     }
-    const ani = new TWEEN.Tween(param)
-      .to({ t: 1 }, duration)
-      .easing(twn)
-      .onStart(() => { shape.visible = true; })
-      .onUpdate((t) => {
-        shape.opacity = t;
-        // shape.opacity = 1 - t;
-      })
-      .onComplete(() => {
-        shape.visible = true;
-        // shape.visible = false;
-      });
+    const ani = new TWEEN.Tween(shape)
+      .to({ opacity: 1 }, duration)
+      .easing(twn);
 
     return { shape, ani };
   }
@@ -88,6 +80,7 @@ export default function fade(
   const start = () => {
     reset();
     playing = true;
+    shape.opacity = 0;
     ani.start();
   };
 
