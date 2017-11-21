@@ -31,8 +31,10 @@ class Matrix extends Component {
     this.setState({
       hover: { i, j },
     });
-    // only when dragging
-    if (e.buttons === 1) {
+    // console.log(`e.buttons: ${e.buttons}`);
+    // console.log(`e.nativeEvent.which: ${e.nativeEvent.which}`);
+    // only when dragging; polyfilling safari, which doesn't support e.buttons
+    if ((e.buttons === undefined && e.nativeEvent.which === 1) || e.buttons === 1) {
       onClick(i, j);
     }
   }
