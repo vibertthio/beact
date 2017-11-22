@@ -30,6 +30,7 @@ import narutoG from '../assets/images/material-icon/narutoG2.png';
 
 let fadeoutID;
 let logoID;
+let hintID;
 let keys = '';
 keys = new Array(26);
 for (let i = 0; i < 26; i += 1) {
@@ -122,6 +123,7 @@ class DrumMachine extends Component {
     this.toggleHidden = this.toggleHidden.bind(this);
 		this.hideSpinner = this.hideSpinner.bind(this);
 		this.showDOM = this.showDOM.bind(this);
+		this.hideHint = this.hideHint.bind(this);
 		// this.showLogo = this.showLogo.bind(this);
 		this.handleResize = this.handleResize.bind(this);
 
@@ -754,6 +756,7 @@ class DrumMachine extends Component {
 
     // wait till this time
     this.ani.setSequencerAnimationsCustomSettings();
+		hintID = window.setTimeout(this.hideHint, 5000);
 	}
 
   toggleHidden() {
@@ -761,6 +764,13 @@ class DrumMachine extends Component {
       hidden: !this.state.hidden,
     });
   }
+
+  // eslint-disable-next-line class-methods-use-this
+	hideHint() {
+		const hm = document.getElementById(styles.hintMask);
+		hm.style.display = 'none';
+		window.clearTimeout(hintID);
+	}
 
   renderPatterns() {
 		const { patternLists } = this.state;
@@ -821,6 +831,13 @@ class DrumMachine extends Component {
 		} = this.state;
     return (
       <div className={(wait === true) ? styles.hideDOM : styles.showDOM}>
+        <div id={styles.hintMask}>
+          <div>
+            <div>1. Open your speaker.</div>
+            <div>2. You can press any keys, arrows, space...</div>
+            <div>3. Click the grids on drum-pad.</div>
+          </div>
+        </div>
         {(this.sequencer.isPlayingRecord === false) ?
           <button
             className={`${styles.icon} ${styles.menuIcon} ${(hidden === true) ? '' : styles.displayHide}`}

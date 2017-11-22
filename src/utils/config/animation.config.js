@@ -83,7 +83,7 @@ import heart from 'yuen/heart.png';
 import cube from 'yuen/cube.png';
 import hand from 'yuen/hand.png';
 
-import samuri from 'images/animations/samuri.png';
+import samurai from 'images/animations/samurai.png';
 
 const sequencerAnimationsSet = [
   [
@@ -104,7 +104,7 @@ const sequencerAnimationsSet = [
     ],
     { animation: prism, options: [3] },
     { animation: strikes },
-    { animation: flyImage, options: [samuri, 0.25] },
+    { animation: flyImage, options: [samurai, 0.25] },
     // { animation: randomPiston },
     { animation: randomPiston },
     { animation: splashColorful },
@@ -170,7 +170,7 @@ const keyAnimationsSet = [
     // { animation: split },
     // { animation: sunrise },
     { animation: singleStaticImage, options: [heart, 0.6] },
-    { animation: flyImage, options: [samuri, 0.25] },
+    { animation: flyImage, options: [samurai, 0.25] },
     { animation: sunrise },
     // { animation: sunrise },
     // { animation: moon },
