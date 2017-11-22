@@ -66,7 +66,8 @@ export class Sequencer {
           // console.log('nowTime: ', now());
           // console.log('Transport.seconds: ', Transport.seconds);
           // console.log('time: ', time);
-          this.samples._players[this.notes[i]].start(time, 0, 0.5);
+          // this.samples._players[this.notes[i]].start(time, 0, 0.5);
+          this.samples._players[this.notes[i]].start(time);
           nowPlayingAni.push(i);
         }
       }
