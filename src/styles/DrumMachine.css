@@ -281,6 +281,7 @@
   justify-content: center;
   height: 50%;
   background: #73676b;
+  margin: 0;
 }
 
 .row3l button:hover, .row3m button:hover {
