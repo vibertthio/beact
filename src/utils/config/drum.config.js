@@ -53,8 +53,8 @@ const drumUrls = [
   {
     1: './assets/audio/porn/kick.mp3',
     2: './assets/audio/porn/clap.mp3',
-    3: './assets/audio/porn/perc.mp3',
-    4: './assets/audio/porn/perc-gong.mp3',
+    3: './assets/audio/porn/perc-gong.mp3',
+    4: './assets/audio/porn/perc-short.mp3',
     5: './assets/audio/porn/bass.mp3',
     6: './assets/audio/porn/vocal.mp3',
     7: './assets/audio/porn/synth.mp3',
