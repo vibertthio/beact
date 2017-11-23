@@ -70,7 +70,7 @@ class DrumMachine extends Component {
 	    hidden: true,
 	    wait: true,
 	    // idle: false,
-	    currentSample: 'A',
+	    // currentSample: 'A',
 			narutoBool: false,
 			hover: { i: -1, j: -1 },
     };
@@ -107,7 +107,7 @@ class DrumMachine extends Component {
     this.playDrumAni = this.playDrumAni.bind(this);
 
     this.detectKeyboard = this.detectKeyboard.bind(this);
-		this.setSample = this.setSample.bind(this);
+		// this.setSample = this.setSample.bind(this);
 
     this.sequencer = new Sequencer(
 	    this.state.data,
@@ -209,10 +209,10 @@ class DrumMachine extends Component {
 		this.setCurrentChainElementIndex(id);
   }
 
-  setSample(sample) {
-    this.sequencer.currentSample = sample;
-    this.setState({ currentSample: sample });
-  }
+  // setSample(sample) {
+  //   this.sequencer.currentSample = sample;
+  //   this.setState({ currentSample: sample });
+  // }
 
 	clearClicked() {
 		const { data } = this.state;

@@ -235,7 +235,7 @@ export class Keyboard {
 
   playKey() {
     console.log(`key: ${this.currentKey}`);
-    console.log('key Transport.seconds: ', Transport.seconds);
+    // console.log('key Transport.seconds: ', Transport.seconds);
     if (this.currentKey !== null && !this.loadingSamples) {
       // find each Tone.player in Tone.Players.
       this.samples._players[this.notes[this.currentKey]].start();
