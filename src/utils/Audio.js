@@ -226,7 +226,7 @@ export class Keyboard {
     this.notes = keysNotes;
     this.storeRecord = record => storeRecord(record);
     this.samples = new Players(keysUrls[0]).toMaster();
-    this.samples.volume.value = -5;
+    this.samples.volume.value = 2;
     this.samples.fadeOut = 0.1;
     this.recording = false;
     this.saveRecord = this.saveRecord.bind(this);
