@@ -48,8 +48,7 @@ export default function doubleImage(
         opacity,
         duration,
         ratios[i],
-      ),
-    );
+      ));
     return {
       shapes,
     };

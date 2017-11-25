@@ -726,10 +726,14 @@ class DrumMachine extends Component {
 					data[i][j] = presets[index][i][j];
 				}
 			}
+
 			this.setState({
 				data,
 			});
 		});
+
+		// toggle menu
+		key('shift+m', () => this.setState({ hidden: !this.state.hidden }));
   }
 
 	hideSpinner() {
