@@ -10,10 +10,6 @@ import {
   keyAnimationsSet,
 } from 'config/animation.config';
 
-/**
- * [animation description]
- * @return {[type]} [description]
- */
 function Animation() {
   /**
    * setup

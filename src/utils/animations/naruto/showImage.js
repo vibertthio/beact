@@ -65,7 +65,7 @@ export default function flashImage(
       })
       .onUpdate((t) => {
         // texture.scale = originalScale * (1 + (targetRatio * t));
-        shape.scale = originalScale * (1 + (targetRatio * t));
+        shape.scale = originalScale * (1 + (targetRatio * t.t));
         // shape.visible = Math.random() > 0.5;
       })
       .onComplete(() => {
