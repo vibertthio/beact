@@ -311,7 +311,7 @@ function toRGB(o) {
   return `rgb(${Math.round(o.r)},${Math.round(o.g)},${Math.round(o.b)}`;
 }
 
-const pallete = [
+const palette = [
   [
     { r: 215, g: 205, b: 190 }, // background
     { r: 100, g: 200, b: 175 }, // middleground
@@ -473,7 +473,7 @@ const animationDrum2IndexMapping = [
 
 
 export {
-  pallete,
+  palette,
   TWO_PI,
   cos,
   sin,

@@ -11,7 +11,7 @@ import {
  * @param  {objct} Two
  * @param  {object} two instance of two
  * @param  {object} TWEEN the library for tweening
- * @param  {object} colors color pallete
+ * @param  {object} colors color palette
  * @param  {array} animations It's the stack of animations
  * @param  {number} [index = 3]
  * @param  {number} [opacity = 1]

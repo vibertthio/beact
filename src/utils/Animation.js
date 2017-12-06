@@ -3,7 +3,7 @@ import Two from 'two.js/build/two';
 import TWEEN from '@tweenjs/tween.js';
 import {
   toRGB,
-  pallete,
+  palette,
   animationKey2IndexMapping,
   sequencerAnimationsSet,
   sequencerCustomSettings,
@@ -22,7 +22,7 @@ function Animation() {
   const sequencerAnimations = [];
   let currentKeyAnimationsIndex = 0;
   let currentSequencerAnimationsIndex = 2;
-  const colors = pallete[2].map(toRGB);
+  const colors = palette[2].map(toRGB);
   const canvas = document.getElementById('animation');
   const params = { fullscreen: true };
   // const params = { type: Two.Types.canvas, fullscreen: true };

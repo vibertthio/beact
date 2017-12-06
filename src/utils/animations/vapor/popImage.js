@@ -6,7 +6,7 @@ import sculpture from 'vapor/sculpture-02.png';
  * @param  {objct} Two
  * @param  {object} two instance of two
  * @param  {object} TWEEN the library for tweening
- * @param  {object} colors color pallete
+ * @param  {object} colors color palette
  * @param  {array} animations It's the stack of animations
  * @param  {string} imgUrl the src of image
  * @param  {number} [scale = 0.5]
