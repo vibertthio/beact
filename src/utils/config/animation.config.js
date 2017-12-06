@@ -144,10 +144,14 @@ const sequencerAnimationsSet = [
   ],
 ];
 
-const setBackgroundImage = () => {
+const sequencerBackgroundsSet = [
+  bg, '', ''
+]
+
+const setBackgroundImage = idx => {
   console.log('set background');
   const s = document.body.style;
-  s.backgroundImage = "url('bg.jpg')";
+  s.backgroundImage = `url(${sequencerBackgroundsSet[idx]})`;
 };
 const setBackgroundColor = () => {
   console.log('set background none');

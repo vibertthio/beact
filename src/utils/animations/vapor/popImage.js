@@ -63,7 +63,9 @@ export default function veil(
     };
   }
 
-  let { playing, shape, aniIn, aniOut } = setup();
+  let {
+    playing, shape, aniIn, aniOut,
+  } = setup();
 
   /**
    * [setDirection description]
@@ -81,7 +83,9 @@ export default function veil(
   const resize = () => {
     setDirection();
     two.remove(shape);
-    ({ playing, shape, aniIn, aniOut } = setup());
+    ({
+      playing, shape, aniIn, aniOut,
+    } = setup());
   };
 
   const reset = () => {

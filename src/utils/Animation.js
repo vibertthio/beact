@@ -60,7 +60,7 @@ function Animation() {
   };
 
   const setSequencerAnimationsCustomSettings = () => {
-    sequencerCustomSettings[currentSequencerAnimationsIndex]();
+    sequencerCustomSettings[currentSequencerAnimationsIndex](currentSequencerAnimationsIndex);
   };
 
   const setKeyAnimation = () => {

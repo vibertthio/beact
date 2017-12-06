@@ -726,7 +726,6 @@ class DrumMachine extends Component {
 					data[i][j] = presets[index][i][j];
 				}
 			}
-
 			this.setState({
 				data,
 			});
