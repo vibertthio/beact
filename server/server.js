@@ -33,7 +33,10 @@ if (process.env.NODE_ENV === 'dev') {
 
 mongoose.Promise = global.Promise;
 if (process.env.NODE_ENV !== 'test') {
-  mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/Beact');
+  mongoose.connect(
+    process.env.MONGODB_URI || 'mongodb://localhost/Beact',
+    { useMongoClient: true },
+  );
 }
 
 server.use(bodyParser.json());
