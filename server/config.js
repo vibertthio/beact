@@ -1,4 +1,4 @@
-const env = process.env;
+const { env } = process;
 
 export const nodeEnv = env.NODE_ENV || 'development';
 
