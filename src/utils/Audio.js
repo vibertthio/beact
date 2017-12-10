@@ -165,7 +165,7 @@ export class Sequencer {
     this.samples.fadeOut = 0.4;
   }
 
-  saveRecord(saveKeyboardRecord, storeKeyboardRecord, recordTitle) {
+  saveRecord(saveKeyboardRecord, storeKeyboardRecord, recordTitle, bpm) {
     this.checkStart = false;
     // console.log(`ready to save this.recordFull: ${this.recordFull}`);
     // console.log(`now this.recordMatrix: ${this.recordMatrix}`);
@@ -184,6 +184,7 @@ export class Sequencer {
         title: recordTitle,
         content: this.recordFull,
         startTime: this.startTime,
+        bpm,
       })
       .then(saveKeyboardRecord(temperId, this.startTime))
       .then(
@@ -326,15 +327,13 @@ export class Keyboard {
 	}
 }
 
-const changeBPM = (value) => {
-  const target = (Transport.bpm.value + value).toFixed();
-  if (target > 70 && target < 300) {
-    Transport.bpm.value = target;
-    console.log(`bpm:${Transport.bpm.value}`);
-  }
+const toBPM = (val) => {
+  const target = val.toFixed();
+  Transport.bpm.value = target;
+  console.log(`bpm:${Transport.bpm.value}`);
 };
 
 export {
-  changeBPM,
+  toBPM,
   presets,
 };
