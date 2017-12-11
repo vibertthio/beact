@@ -329,7 +329,7 @@ export class Keyboard {
 
 const toBPM = (val) => {
   const target = val.toFixed();
-  Transport.bpm.value = target;
+  Transport.bpm.rampTo(target, 1);
   console.log(`bpm:${Transport.bpm.value}`);
 };
 
