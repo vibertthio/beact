@@ -5,7 +5,7 @@ import key from 'keymaster';
 
 import styles from '../styles/DrumMachine.css';
 import Matrix from './Matrix';
-import { Sequencer, Keyboard, toBPM, presets } from '../utils/Audio';
+import { Sequencer, Keyboard, toBPM, rampToBPM, presets } from '../utils/Audio';
 import Animation, { animationKey2IndexMapping } from '../utils/Animation';
 import menu1 from '../assets/images/menu/menu1.svg';
 import menu2 from '../assets/images/menu/menu2.svg';
@@ -681,13 +681,13 @@ class DrumMachine extends Component {
     key('up', () => {
       const { bpm } = this.state;
       if (bpm > 70 && bpm < 300) {
-        this.setState({ bpm: bpm + 30 }, () => toBPM(this.state.bpm));
+        this.setState({ bpm: bpm + 10 }, () => rampToBPM(this.state.bpm));
       }
     });
     key('down', () => {
       const { bpm } = this.state;
       if (bpm > 70 && bpm < 300) {
-        this.setState({ bpm: bpm - 30 }, () => toBPM(this.state.bpm));
+        this.setState({ bpm: bpm - 10 }, () => rampToBPM(this.state.bpm));
       }
     });
 
