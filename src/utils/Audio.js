@@ -327,19 +327,12 @@ export class Keyboard {
 	}
 }
 
-const toBPM = (val) => {
+const toBPM = (val, rampTime) => {
   const target = val.toFixed();
-  Transport.bpm.rampTo(target, 0.1);
-};
-
-// smoothly ramp to bpm (1 second)
-const rampToBPM = (val) => {
-  const target = val.toFixed();
-  Transport.bpm.rampTo(target, 1);
+  Transport.bpm.rampTo(target, rampTime);
 };
 
 export {
   toBPM,
-  rampToBPM,
   presets,
 };

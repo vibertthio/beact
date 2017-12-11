@@ -5,7 +5,7 @@ import key from 'keymaster';
 
 import styles from '../styles/DrumMachine.css';
 import Matrix from './Matrix';
-import { Sequencer, Keyboard, toBPM, rampToBPM, presets } from '../utils/Audio';
+import { Sequencer, Keyboard, toBPM, presets } from '../utils/Audio';
 import Animation, { animationKey2IndexMapping } from '../utils/Animation';
 import menu1 from '../assets/images/menu/menu1.svg';
 import menu2 from '../assets/images/menu/menu2.svg';
@@ -333,7 +333,7 @@ class DrumMachine extends Component {
   }
 
   playRecord(record) {
-    toBPM(record.bpm);
+    toBPM(record.bpm, 0.1);
     this.setState({ hidden: true });
     this.sequencer.isPlayingChain = false;
     this.sequencer.isPlayingRecord = true;
@@ -373,7 +373,7 @@ class DrumMachine extends Component {
       this.keyboard.clearSchedule(this.state.keyRecords[this.state.currentPlayingRecordElement]);
       this.setState({ data, currentPlayingRecord: [], currentPlayingRecordElement: 0 });
       this.stopSequencer();
-      toBPM(this.state.bpm);
+      toBPM(this.state.bpm, 0.1);
     }
 		this.setState({ hidden: false });
   }
@@ -681,13 +681,13 @@ class DrumMachine extends Component {
     key('up', () => {
       const { bpm } = this.state;
       if (bpm > 70 && bpm < 300) {
-        this.setState({ bpm: bpm + 10 }, () => rampToBPM(this.state.bpm));
+        this.setState({ bpm: bpm + 10 }, () => toBPM(this.state.bpm, 1));
       }
     });
     key('down', () => {
       const { bpm } = this.state;
       if (bpm > 70 && bpm < 300) {
-        this.setState({ bpm: bpm - 10 }, () => rampToBPM(this.state.bpm));
+        this.setState({ bpm: bpm - 10 }, () => toBPM(this.state.bpm, 1));
       }
     });
 
