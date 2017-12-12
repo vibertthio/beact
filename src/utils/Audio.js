@@ -1,4 +1,4 @@
-import { Sequence, Transport, Players } from 'tone';
+import { Sequence, Transport, Players, now } from 'tone';
 import axios from 'axios';
 import uuid4 from 'uuid/v4';
 import { keysUrls, keysNotes } from './config/keys.config';
@@ -56,7 +56,7 @@ export class Sequencer {
       for (let i = 0; i < this.notes.length; i += 1) {
         if (col === 0 && i === 0 && this.checkStart === false && this.recording === true) {
           this.checkStart = true;
-          this.startTime = Transport.seconds;
+          this.startTime = now();
         }
         // make sure no play while loading
         if (column[i] === 1 && !this.loadingSamples) {
@@ -165,7 +165,7 @@ export class Sequencer {
     this.samples.fadeOut = 0.4;
   }
 
-  saveRecord(saveKeyboardRecord, storeKeyboardRecord, recordTitle) {
+  saveRecord(saveKeyboardRecord, storeKeyboardRecord, recordTitle, bpm) {
     this.checkStart = false;
     // console.log(`ready to save this.recordFull: ${this.recordFull}`);
     // console.log(`now this.recordMatrix: ${this.recordMatrix}`);
@@ -184,6 +184,7 @@ export class Sequencer {
         title: recordTitle,
         content: this.recordFull,
         startTime: this.startTime,
+        bpm,
       })
       .then(saveKeyboardRecord(temperId, this.startTime))
       .then(
@@ -240,7 +241,7 @@ export class Keyboard {
       // find each Tone.player in Tone.Players.
       this.samples._players[this.notes[this.currentKey]].start();
       if (this.recording === true) {
-        const time = Transport.seconds;
+        const time = now();
         this.record.push({ time, key: this.currentKey });
         console.log(`keyBoardRecord: ${this.record}`);
       }
@@ -269,7 +270,7 @@ export class Keyboard {
   }
 
   playRecord(record, aniTrigger) {
-    const currentTime = Transport.seconds;
+    const currentTime = now();
     for (let i = 0; i < record.content.length; i += 1) {
       const time = currentTime + (record.content[i].time - record.startTime);
       this.samples._players[this.notes[record.content[i].key]].mute = false;
@@ -326,15 +327,12 @@ export class Keyboard {
 	}
 }
 
-const changeBPM = (value) => {
-  const target = (Transport.bpm.value + value).toFixed();
-  if (target > 70 && target < 300) {
-    Transport.bpm.value = target;
-    console.log(`bpm:${Transport.bpm.value}`);
-  }
+const toBPM = (val, rampTime) => {
+  const target = val.toFixed();
+  Transport.bpm.rampTo(target, rampTime);
 };
 
 export {
-  changeBPM,
+  toBPM,
   presets,
 };

@@ -5,7 +5,7 @@ import key from 'keymaster';
 
 import styles from '../styles/DrumMachine.css';
 import Matrix from './Matrix';
-import { Sequencer, Keyboard, changeBPM, presets } from '../utils/Audio';
+import { Sequencer, Keyboard, toBPM, presets } from '../utils/Audio';
 import Animation, { animationKey2IndexMapping } from '../utils/Animation';
 import menu1 from '../assets/images/menu/menu1.svg';
 import menu2 from '../assets/images/menu/menu2.svg';
@@ -66,13 +66,14 @@ class DrumMachine extends Component {
       recordTitle: '',
       currentPlayingRecord: [],
       currentPlayingRecordElement: 0,
+      hidden: true,
+      wait: true,
+      bpm: 120,
+      narutoBool: false,
+      hover: { i: -1, j: -1 },
+      // idle: false,
+      // currentSample: 'A',
       // keyStartTimeCorrection: 0,
-	    hidden: true,
-	    wait: true,
-	    // idle: false,
-	    // currentSample: 'A',
-			narutoBool: false,
-			hover: { i: -1, j: -1 },
     };
 
     this.setCurrentBeat = this.setCurrentBeat.bind(this);
@@ -316,9 +317,10 @@ class DrumMachine extends Component {
   saveRecord() {
     // add title as a paramater (feature)
     this.sequencer.saveRecord(
-			this.keyboard.saveRecord,
+      this.keyboard.saveRecord,
       this.keyboard.storeRecord,
       this.state.recordTitle,
+      this.state.bpm,
 		);
   }
 
@@ -331,7 +333,8 @@ class DrumMachine extends Component {
   }
 
   playRecord(record) {
-		this.setState({ hidden: true });
+    toBPM(record.bpm, 0.1);
+    this.setState({ hidden: true });
     this.sequencer.isPlayingChain = false;
     this.sequencer.isPlayingRecord = true;
     this.keyboard.isPlayingRecord = true;
@@ -370,6 +373,7 @@ class DrumMachine extends Component {
       this.keyboard.clearSchedule(this.state.keyRecords[this.state.currentPlayingRecordElement]);
       this.setState({ data, currentPlayingRecord: [], currentPlayingRecordElement: 0 });
       this.stopSequencer();
+      toBPM(this.state.bpm, 0.1);
     }
 		this.setState({ hidden: false });
   }
@@ -674,12 +678,18 @@ class DrumMachine extends Component {
 		});
 
 		// speed
-		key('up', () => {
-			changeBPM(10);
-		});
-		key('down', () => {
-			changeBPM(-10);
-		});
+    key('up', () => {
+      const { bpm } = this.state;
+      if (bpm > 70 && bpm < 300) {
+        this.setState({ bpm: bpm + 10 }, () => toBPM(this.state.bpm, 1));
+      }
+    });
+    key('down', () => {
+      const { bpm } = this.state;
+      if (bpm > 70 && bpm < 300) {
+        this.setState({ bpm: bpm - 10 }, () => toBPM(this.state.bpm, 1));
+      }
+    });
 
 		// change sound bank
 		key('right', () => {
