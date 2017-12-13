@@ -285,11 +285,8 @@ export class Keyboard {
   clearSchedule(record) {
      Transport.cancel();
      for (let i = 0; i < record.content.length; i += 1) {
-       // const time = this.recordStartTime + (record.content[i].time - record.startTime);
-       this.samples.get(record.content[i].key).stop();
+       this.samples.get(record.content[i].key).disconnect();
      }
-     // this.samples.stopAll([time]);
-     // Transport.cancel([time]);
   }
 
 	changeSampleSet(up) {
