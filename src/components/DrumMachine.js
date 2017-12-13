@@ -65,7 +65,8 @@ class DrumMachine extends Component {
       keyRecords: [], // record keyboard
       recordTitle: '',
       currentPlayingRecord: [],
-      currentPlayingRecordElement: 0,
+      currentPlayingRecordIdx: -1,
+      currentPlayingRecordElement: 0, // index in drumRecords
       hidden: true,
       wait: true,
       bpm: 120,
@@ -354,8 +355,10 @@ class DrumMachine extends Component {
 		});
     for (let i = 0; i < this.state.keyRecords.length; i += 1) {
       if (this.state.keyRecords[i].id === record.id) {
+        this.setState({ currentPlayingRecordIdx: i });
         this.startSequencer();
         this.keyboard.playRecord(this.state.keyRecords[i], this.ani.triggerKeyAnimation);
+        break;
       }
     }
   }
@@ -370,8 +373,13 @@ class DrumMachine extends Component {
           data[i][j] = 0;
         }
       }
-      this.keyboard.clearSchedule(this.state.keyRecords[this.state.currentPlayingRecordElement]);
-      this.setState({ data, currentPlayingRecord: [], currentPlayingRecordElement: 0 });
+      this.keyboard.clearSchedule(this.state.keyRecords[this.state.currentPlayingRecordIdx]);
+      this.setState({
+        data,
+        currentPlayingRecord: [],
+        currentPlayingRecordElement: 0,
+        currentPlayingRecordIdx: -1,
+      });
       this.stopSequencer();
       toBPM(this.state.bpm, 0.1);
     }
