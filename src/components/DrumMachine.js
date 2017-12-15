@@ -683,7 +683,7 @@ class DrumMachine extends Component {
       if (!this.state.playing) {
         this.startSequencer();
         if (this.sequencer.isPlayingRecord) {
-          this.keyboard.playRecord(
+          this.keyboard.contPlayRecord(
             this.state.keyRecords[currentPlayingRecordIdx],
             this.ani.triggerKeyAnimation,
           );

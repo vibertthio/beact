@@ -274,8 +274,7 @@ export class Keyboard {
   playRecord(record, aniTrigger) {
     this.recordStartTime = now();
     for (let i = 0; i < record.content.length; i += 1) {
-      const time = this.recordStartTime +
-      (record.content[i].time - record.startTime - this.passedTime);
+      const time = this.recordStartTime + (record.content[i].time - record.startTime);
       this.samples.get(record.content[i].key).start(time).toMaster();
       Transport.schedule(() => {
         aniTrigger(record.content[i].key);
@@ -285,11 +284,25 @@ export class Keyboard {
 
   pauseRecord(record) {
     this.passedTime = now() - this.recordStartTime;
+    Transport.cancel(); // clear ani
     for (let i = 0; i < record.content.length; i += 1) {
+      const time = this.recordStartTime + (record.content[i].time - record.startTime);
       this.samples.get(record.content[i].key).disconnect();
     }
-    Transport.cancel(); // clear ani
     console.log('this.passedTime: ', this.passedTime);
+  }
+
+  contPlayRecord(record, aniTrigger) {
+    for (let i = 0; i < record.content.length; i += 1) {
+      const contTime = record.content[i].time - record.startTime - this.passedTime;
+      // to determine whether the key is played or not
+      if (contTime > 0) {
+        this.samples.get(record.content[i].key).start(now() + contTime).toMaster();
+        Transport.schedule(() => {
+          aniTrigger(record.content[i].key);
+        }, contTime);
+      }
+    }
   }
 
   clearSchedule(record) {
