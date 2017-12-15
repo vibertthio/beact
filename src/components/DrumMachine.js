@@ -367,7 +367,8 @@ class DrumMachine extends Component {
     if (this.sequencer.isPlayingRecord === true) {
       this.sequencer.isPlayingRecord = false;
       this.keyboard.isPlayingRecord = false;
-			const { data } = this.state;
+      this.keyboard.passedTime = 0;
+      const { data } = this.state;
       for (let i = 0; i < 16; i += 1) {
         for (let j = 0; j < 8; j += 1) {
           data[i][j] = 0;
@@ -676,14 +677,24 @@ class DrumMachine extends Component {
 			this.keyboard.playKey();
     });
 
-		// start / stop
-		key('space', () => {
-			if (!this.state.playing) {
-				this.startSequencer();
-			} else {
-				this.stopSequencer();
-			}
-		});
+    // start / stop
+    key('space', () => {
+      const { currentPlayingRecordIdx } = this.state;
+      if (!this.state.playing) {
+        this.startSequencer();
+        if (this.sequencer.isPlayingRecord) {
+          this.keyboard.playRecord(
+            this.state.keyRecords[currentPlayingRecordIdx],
+            this.ani.triggerKeyAnimation,
+          );
+        }
+      } else {
+        this.stopSequencer();
+        if (this.sequencer.isPlayingRecord) {
+          this.keyboard.pauseRecord(this.state.keyRecords[currentPlayingRecordIdx]);
+        }
+      }
+    });
 
 		// speed
     key('up', () => {

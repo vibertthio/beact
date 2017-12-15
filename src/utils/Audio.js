@@ -63,11 +63,7 @@ export class Sequencer {
           const vel = (Math.random() * 0.5) + 0.5;
           // convert velocity(gain) to volume
           this.samples.volume.value = 10 * Math.log10(vel);
-          // console.log('nowTime: ', now());
-          // console.log('Transport.seconds: ', Transport.seconds);
-          // console.log('time: ', time);
-          // this.samples._players[this.notes[i]].start(time, 0, 0.5);
-          this.samples._players[this.notes[i]].start(time);
+          this.samples.get(i).start().toMaster();
           nowPlayingAni.push(i);
         }
       }
@@ -132,7 +128,6 @@ export class Sequencer {
 
   stop() {
     this.playing = false;
-    // this.isPlayingRecord = false;
     this.sequence.stop();
   }
 
@@ -161,7 +156,10 @@ export class Sequencer {
     this.loadingSamples = true;
     this.samples = new Players(drumUrls[this.currentSampleIndex], () => {
       this.loadingSamples = false;
-    }).toMaster();
+    });
+    for (let i = 0; i < Object.keys(drumUrls[this.currentSampleIndex]).length; i += 1) {
+      this.samples.add(i, drumUrls[this.currentSampleIndex][i + 1]);
+    }
     this.samples.volume.value = -2;
     this.samples.fadeOut = 0.4;
   }
@@ -221,6 +219,7 @@ export class Keyboard {
   samples: Object;
   recording: Boolean;
 	loadingSamples: Boolean;
+  // isPlayingRecord: Boolean;
 
   constructor(storeRecord) {
     this.currentKey = null;
@@ -237,6 +236,7 @@ export class Keyboard {
     this.saveRecord = this.saveRecord.bind(this);
     this.currentSampleIndex = 0;
     this.recordStartTime = 0;
+    this.passedTime = 0;
   }
 
   playKey() {
@@ -274,12 +274,22 @@ export class Keyboard {
   playRecord(record, aniTrigger) {
     this.recordStartTime = now();
     for (let i = 0; i < record.content.length; i += 1) {
-      const time = this.recordStartTime + (record.content[i].time - record.startTime);
+      const time = this.recordStartTime +
+      (record.content[i].time - record.startTime - this.passedTime);
       this.samples.get(record.content[i].key).start(time).toMaster();
       Transport.schedule(() => {
         aniTrigger(record.content[i].key);
       }, time);
     }
+  }
+
+  pauseRecord(record) {
+    this.passedTime = now() - this.recordStartTime;
+    for (let i = 0; i < record.content.length; i += 1) {
+      this.samples.get(record.content[i].key).disconnect();
+    }
+    Transport.cancel(); // clear ani
+    console.log('this.passedTime: ', this.passedTime);
   }
 
   clearSchedule(record) {
