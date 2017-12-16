@@ -277,6 +277,7 @@ export class Keyboard {
       const time = this.recordStartTime + (record.content[i].time - record.startTime);
       this.samples.get(record.content[i].key).start(time).toMaster();
       Transport.schedule(() => {
+        // this.samples.get(record.content[i].key).start(now()).toMaster();
         aniTrigger(record.content[i].key);
       }, time);
     }
@@ -286,7 +287,7 @@ export class Keyboard {
     this.passedTime = now() - this.recordStartTime;
     Transport.cancel(); // clear ani
     for (let i = 0; i < record.content.length; i += 1) {
-      const time = this.recordStartTime + (record.content[i].time - record.startTime);
+      // const time = this.recordStartTime + (record.content[i].time - record.startTime);
       this.samples.get(record.content[i].key).disconnect();
     }
     console.log('this.passedTime: ', this.passedTime);
@@ -306,44 +307,43 @@ export class Keyboard {
   }
 
   clearSchedule(record) {
-     Transport.cancel();
-     for (let i = 0; i < record.content.length; i += 1) {
-       this.samples.get(record.content[i].key).disconnect();
-     }
+    Transport.cancel();
+    for (let i = 0; i < record.content.length; i += 1) {
+      this.samples.get(record.content[i].key).disconnect();
+    }
   }
 
-	changeSampleSet(up) {
-	  this.currentSampleIndex =
-	    (this.currentSampleIndex + (up ? 1 : -1)) % keysUrls.length;
-	  if (this.currentSampleIndex < 0) {
-	    this.currentSampleIndex += keysUrls.length;
-	  }
-
-	  console.log(this.currentSampleIndex);
-	  this.loadSamples();
-	}
+  changeSampleSet(up) {
+    this.currentSampleIndex =
+      (this.currentSampleIndex + (up ? 1 : -1)) % keysUrls.length;
+    if (this.currentSampleIndex < 0) {
+      this.currentSampleIndex += keysUrls.length;
+    }
+    console.log(this.currentSampleIndex);
+    this.loadSamples();
+  }
 
   startNaruto() {
-	  this.currentSampleIndex = 1;
-	  console.log(this.currentSampleIndex);
-	  this.loadSamples();
-	}
+    this.currentSampleIndex = 1;
+    console.log(this.currentSampleIndex);
+    this.loadSamples();
+  }
 
-	startNormal() {
-		this.currentSampleIndex = 0;
-		console.log(this.currentSampleIndex);
-		this.loadSamples();
-	}
+  startNormal() {
+    this.currentSampleIndex = 0;
+    console.log(this.currentSampleIndex);
+    this.loadSamples();
+  }
 
-	loadSamples() {
-	  console.log(`start loading key sound bank : ${this.currentSampleIndex}`);
-	  this.loadingSamples = true;
+  loadSamples() {
+    console.log(`start loading key sound bank : ${this.currentSampleIndex}`);
+    this.loadingSamples = true;
     this.samples = new Players(keysUrls[this.currentSampleIndex], () => {
       this.loadingSamples = false;
     }).toMaster();
     this.samples.volume.value = -2;
     this.samples.fadeOut = 0.4;
-	}
+  }
 }
 
 const toBPM = (val, rampTime) => {
