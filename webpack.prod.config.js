@@ -58,6 +58,7 @@ module.exports = {
       allChunks: true
     }),
     new HtmlWebpackPlugin({
+      title: 'Beact',
       template: './src/template.html',
       files: {
         css: ['style.css'],
