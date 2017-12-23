@@ -60,7 +60,7 @@ module.exports = {
     }),
     new DashboardPlugin(),
     new HtmlWebpackPlugin({
-      title: 'Beact',
+      title: 'Beact (dev)',
       template: './src/template.html',
       files: {
         css: ['style.css'],
