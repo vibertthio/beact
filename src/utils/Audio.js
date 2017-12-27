@@ -19,7 +19,7 @@ export class Sequencer {
   isPlayingChain: Boolean;
   recordMatrix: Array;
   recordFull: Array;
-  isPlayingRecord: Array;
+  isPlayingRecord: Boolean;
   nowPlayingAni: Array;
   startTime: Number;
 
@@ -132,6 +132,7 @@ export class Sequencer {
 
   stop() {
     this.playing = false;
+    // this.isPlayingRecord = false;
     this.sequence.stop();
   }
 
@@ -226,24 +227,26 @@ export class Keyboard {
     this.record = [];
     this.notes = keysNotes;
     this.storeRecord = record => storeRecord(record);
-    this.samples = new Players(keysUrls[0]).toMaster();
+    this.samples = new Players(keysUrls[0]);
+    for (let i = 0; i < Object.keys(keysUrls[0]).length; i += 1) {
+      this.samples.add(i, keysUrls[0][i + 1]);
+    }
     this.samples.volume.value = 2;
     this.samples.fadeOut = 0.1;
     this.recording = false;
     this.saveRecord = this.saveRecord.bind(this);
-		this.currentSampleIndex = 0;
+    this.currentSampleIndex = 0;
+    this.recordStartTime = 0;
   }
 
   playKey() {
     console.log(`key: ${this.currentKey}`);
-    // console.log('key Transport.seconds: ', Transport.seconds);
     if (this.currentKey !== null && !this.loadingSamples) {
-      // find each Tone.player in Tone.Players.
-      this.samples._players[this.notes[this.currentKey]].start();
+      this.samples.get(this.currentKey).start().toMaster();
       if (this.recording === true) {
         const time = now();
         this.record.push({ time, key: this.currentKey });
-        console.log(`keyBoardRecord: ${this.record}`);
+        console.log('keyBoardRecord: ', this.record);
       }
       this.currentKey = null;
     }
@@ -258,7 +261,6 @@ export class Keyboard {
   }
 
   saveRecord(recordId, startTime) {
-    console.log(`record startTime: ${startTime}`);
     const keyBoardRecord = {
       content: this.record,
       id: recordId,
@@ -270,11 +272,10 @@ export class Keyboard {
   }
 
   playRecord(record, aniTrigger) {
-    const currentTime = now();
+    this.recordStartTime = now();
     for (let i = 0; i < record.content.length; i += 1) {
-      const time = currentTime + (record.content[i].time - record.startTime);
-      this.samples._players[this.notes[record.content[i].key]].mute = false;
-      this.samples._players[this.notes[record.content[i].key]].start(time);
+      const time = this.recordStartTime + (record.content[i].time - record.startTime);
+      this.samples.get(record.content[i].key).start(time).toMaster();
       Transport.schedule(() => {
         aniTrigger(record.content[i].key);
       }, time);
@@ -282,16 +283,11 @@ export class Keyboard {
   }
 
   clearSchedule(record) {
-     // const time = Transport.seconds + 1;
-     this.samples.stopAll();
-     for (let j = 0; j < record.content.length; j += 1) {
-       this.samples._players[this.notes[record.content[j].key]].mute = true;
-     }
      Transport.cancel();
-     // Transport.cancel(time);
-     // this.samples.stopAll([time]);
-     // Transport.cancel([time]);
-    }
+     for (let i = 0; i < record.content.length; i += 1) {
+       this.samples.get(record.content[i].key).disconnect();
+     }
+  }
 
 	changeSampleSet(up) {
 	  this.currentSampleIndex =

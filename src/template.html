@@ -5,105 +5,106 @@
     <meta name="viewport"             content="width=device-width, initial-scale=1" />
     <meta name="description"          content="DJ and VJ all by yourself in seconds !" />
     <meta property="og:url"           content="https://beact.herokuapp.com/" />
-		<meta property="og:type"          content="music.song" />
-		<meta property="og:title"         content="Beact" />
-		<meta property="og:description"   content="DJ and VJ all by yourself in seconds !" />
-		<meta property="og:image"         content="https://github.com/vibertthio/beact/blob/master/assets/images/b1.png" />
+    <meta property="og:type"          content="music.song" />
+    <meta property="og:title"         content="Beact" />
+    <meta property="og:description"   content="DJ and VJ all by yourself in seconds !" />
+    <meta property="og:image"         content="https://github.com/vibertthio/beact/blob/master/assets/images/b1.png" />
 
     <link rel="shortcut icon" href="flash.ico">
-		<style>
-			html, body {
-				background-color: rgba(39, 6, 54, 1);
-				-webkit-background-size: cover;
-				-moz-background-size: cover;
-				-o-background-size: cover;
-				background-size: cover;
-			}
+    <title><%= htmlWebpackPlugin.options.title %></title>
+    <style>
+      html, body {
+        background-color: rgba(39, 6, 54, 1);
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+      }
 
-			#loadingTitle {
-				color: #eecdcc;
-				font-family: "";
-				/*font-family: "Open Sans";*/
-				font-style: italic;
-				font-weight: 700;
-				font-size: 10em;
-				font-variant: normal;
-				text-align: center;
-				margin-top: .4em;
-				transition: opacity 1s ease-out;
-			}
+      #loadingTitle {
+        color: #eecdcc;
+        font-family: "";
+        /*font-family: "Open Sans";*/
+        font-style: italic;
+        font-weight: 700;
+        font-size: 10em;
+        font-variant: normal;
+        text-align: center;
+        margin-top: .4em;
+        transition: opacity 1s ease-out;
+      }
 
-			#spinner {
-				margin: 10% auto;
-				width: 120px;
-				height: 120px;
-				position: relative;
-				text-align: center;
-				-webkit-animation: sk-rotate 2.0s infinite linear;
-				animation: sk-rotate 2.0s infinite linear;
-			}
+      #spinner {
+        margin: 10% auto;
+        width: 120px;
+        height: 120px;
+        position: relative;
+        text-align: center;
+        -webkit-animation: sk-rotate 2.0s infinite linear;
+        animation: sk-rotate 2.0s infinite linear;
+      }
 
-			.dot1, .dot2 {
-				width: 60%;
-				height: 60%;
-				display: inline-block;
-				position: absolute;
-				top: 0;
-				background-color: #eecdcc;
-				border-radius: 100%;
-				-webkit-animation: sk-bounce 2.0s infinite ease-in-out;
-				animation: sk-bounce 2.0s infinite ease-in-out;
-			}
+      .dot1, .dot2 {
+        width: 60%;
+        height: 60%;
+        display: inline-block;
+        position: absolute;
+        top: 0;
+        background-color: #eecdcc;
+        border-radius: 100%;
+        -webkit-animation: sk-bounce 2.0s infinite ease-in-out;
+        animation: sk-bounce 2.0s infinite ease-in-out;
+      }
 
-			.dot2 {
-				top: auto;
-				bottom: 0;
-				-webkit-animation-delay: -1.0s;
-				animation-delay: -1.0s;
-			}
+      .dot2 {
+        top: auto;
+        bottom: 0;
+        -webkit-animation-delay: -1.0s;
+        animation-delay: -1.0s;
+      }
 
-			@-webkit-keyframes sk-rotate { 100% { -webkit-transform: rotate(360deg) }}
-			@keyframes sk-rotate { 100% { transform: rotate(360deg); -webkit-transform: rotate(360deg) }}
+      @-webkit-keyframes sk-rotate { 100% { -webkit-transform: rotate(360deg) }}
+      @keyframes sk-rotate { 100% { transform: rotate(360deg); -webkit-transform: rotate(360deg) }}
 
-			@-webkit-keyframes sk-bounce {
-				0%, 100% { -webkit-transform: scale(0.0) }
-				50% { -webkit-transform: scale(1.0) }
-			}
+      @-webkit-keyframes sk-bounce {
+        0%, 100% { -webkit-transform: scale(0.0) }
+        50% { -webkit-transform: scale(1.0) }
+      }
 
-			@keyframes sk-bounce {
-				0%, 100% {
-					transform: scale(0.0);
-					-webkit-transform: scale(0.0);
-				} 50% {
-					transform: scale(1.0);
-					-webkit-transform: scale(1.0);
-				}
-			}
-			.loaded {
-				opacity: 0;
-			}
-			.fullHeight {
-				height: 100%;
-			}
-	    .beactLogoWrap {
-	      z-index: -1;
-	      position: fixed;
-				top: 25%;
-				height: 50%;
-				width: 100%;
-	      display: flex;
-	      justify-content: center;
-	      align-items: center;
-	    }
-			.beactLogo {
-				opacity: 0;
-				height: 100%;
-				transition: opacity 1s ease-out;
-			}
-			.showLogo {
-	      z-index: 0;
-				opacity: 0.6;
-			}
+      @keyframes sk-bounce {
+        0%, 100% {
+        transform: scale(0.0);
+        -webkit-transform: scale(0.0);
+	      } 50% {
+        transform: scale(1.0);
+        -webkit-transform: scale(1.0);
+        }
+      }
+      .loaded {
+        opacity: 0;
+      }
+      .fullHeight {
+        height: 100%;
+      }
+      .beactLogoWrap {
+        z-index: -1;
+        position: fixed;
+        top: 25%;
+        height: 50%;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .beactLogo {
+        opacity: 0;
+        height: 100%;
+        transition: opacity 1s ease-out;
+      }
+      .showLogo {
+        z-index: 0;
+        opacity: 0.6;
+      }
       @media only screen and (max-height: 767px) {
         #loadingTitle {
           font-size: 7em;
@@ -119,7 +120,6 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <title>Beact</title>
   </head>
   <body>
     <div id="root"></div>
