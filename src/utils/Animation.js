@@ -17,7 +17,7 @@ function Animation() {
   const keyAnimations = [];
   const sequencerAnimations = [];
   let currentKeyAnimationsIndex = 0;
-  let currentSequencerAnimationsIndex = 2;
+  let currentSequencerAnimationsIndex = 0;
   const colors = palette[2].map(toRGB);
   const canvas = document.getElementById('animation');
   const params = { fullscreen: true };
