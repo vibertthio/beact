@@ -20,10 +20,10 @@ export default function singleStaticImage(
     // const shape = two.makeRectangle(
     //   two.width * 0.5,
     //   two.height * 0.5,
-    //   two.width * shapeScale,
-    //   two.height * shapeScale,
+    //   two.width * 0.2,
+    //   two.height * 0.2,
     // );
-    // const texture = new Two.Texture(imgUrl, two.width * shapeScale, two.height * shapeScale);
+    // const texture = new Two.Texture(imgUrl, two.width * 0.2, two.height * 0.2);
     // shape.visible = 0;
     // shape.fill = texture;
     // shape.noStroke();

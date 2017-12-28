@@ -69,7 +69,6 @@ module.exports = {
       filename: 'index.html',
     }),
     new CopyWebpackPlugin([
-      { from: 'src/utils/autotrack.js' },
       { from: 'src/assets/audio', to: 'assets/audio' },
       { from: 'src/assets/images/logo.png' },
       { from: 'src/assets/images/ico/flash.ico' },

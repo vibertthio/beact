@@ -35,18 +35,22 @@ export default function makeGlimmer(
     const anis = [];
 
 		const circles = range(amount).map(() => {
-			const r = Math.floor(
-        min(two.width, two.height) *
+			const r = Math.floor(min(two.width, two.height) *
         ((1 + (Math.random() * 0.5)) / 40));
       const delay = Math.random() * duration * 0.5;
 			const circle = two.makeCircle(two.width * Math.random(), two.height * Math.random(), r);
       circle.noFill();
       circle.linewidth = 0;
+      circle.visible = false;
       anis.push(new TWEEN.Tween(circle)
         .to({ scale: 1, linewidth: 0 }, duration * 1.5)
         .easing(TWEEN.Easing.Sinusoidal.Out)
-        .delay(delay),
-      );
+        .onComplete(() => {
+          circle.visible = false;
+        })
+        .onStop(() => {
+          circle.visible = false;
+        }));
 
       if (longest < delay) {
         longest = delay;
@@ -82,6 +86,7 @@ export default function makeGlimmer(
     ani.stop();
     for (let i = 0; i < circles.length; i += 1) {
       const c = circles[i];
+      c.visible = false;
       c.translation.set(two.width * Math.random(), two.height * Math.random());
       c.stroke = colors[i % colors.length];
       c.scale = (Math.random() * 0.5) + 0.2;
@@ -92,6 +97,10 @@ export default function makeGlimmer(
   const start = () => {
     reset();
     playing = true;
+    for (let i = 0; i < circles.length; i += 1) {
+      const c = circles[i];
+      c.visible = true;
+    }
     ani.start();
   };
 

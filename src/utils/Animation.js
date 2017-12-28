@@ -20,8 +20,8 @@ function Animation() {
   let currentSequencerAnimationsIndex = 0;
   const colors = palette[2].map(toRGB);
   const canvas = document.getElementById('animation');
-  const params = { fullscreen: true };
-  // const params = { type: Two.Types.canvas, fullscreen: true };
+  const isSafari = /Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor);
+  const params = isSafari ? { type: Two.Types.canvas, fullscreen: true } : { fullscreen: true };
   const two = new Two(params).appendTo(canvas);
   two.bind('update', () => { TWEEN.update(); }).play();
 
