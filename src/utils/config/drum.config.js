@@ -2,9 +2,9 @@ const drumNotes =  Array.from(Array(8).keys()).map((i) => (i + 1).toString());
 const drumUrls = [
   {
     1: './assets/audio/dusa/seq/kick.mp3',
-    2: './assets/audio/dusa/seq/hh.mp3',
+    2: './assets/audio/dusa/seq/crash.mp3',
     3: './assets/audio/dusa/seq/snare.mp3',
-    4: './assets/audio/dusa/seq/crash.mp3',
+    4: './assets/audio/dusa/seq/hh.mp3',
     5: './assets/audio/dusa/seq/key1.mp3',
     6: './assets/audio/dusa/seq/key2.mp3',
     7: './assets/audio/dusa/seq/key5.mp3',
