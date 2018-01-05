@@ -1089,7 +1089,7 @@ class DrumMachine extends Component {
             </div>
             {/* 9 */}
             <div className={`${styles.row9} ${styles.row}`}>
-              <span>by Vibert, Joey, Scya, 2017</span>
+              <span>by Vibert, Joey, Scya, 2018</span>
             </div>
           </div>
         </div>
