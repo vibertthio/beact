@@ -176,13 +176,12 @@
 
 .colorMenu {
   display: grid;
-  grid-template-rows: 1.2fr 5% 0.5fr 0.5fr 5% 0.5fr 0.5fr 5% 1fr 5% 7%;
+  grid-template-rows: 1fr 5% 0.5fr 0.5fr 5% 0.5fr 0.5fr 5% 1fr 5% 7%;
   grid-template-columns: repeat(10, 10%);
   height: 100%;
 }
 
 .colorMenu button {
-  /*width: 100%;*/
   border: none;
   outline: none;
   cursor: pointer;
@@ -268,111 +267,60 @@
   grid-area: 10 / 1 / span 1 / span 10;
 }
 
+.noFuncRow {
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  background-color: #b1788f;
+}
+
+.noFuncRow > img {
+  height: 50%;
+}
+
 .gscontributors {
   grid-area: 11 / 1 / span 1 / span 10;
+  background-color: #724a59;
+}
+
+.btnCont {
+  display: grid;
+  grid-template: 1fr / 1fr;
+}
+
+.btnCont > button {
+  grid-area: 1 / 1 / span 1 / span 1;
+  background-color: #73676b;
+}
+
+.btnCont > button:hover {
+  background-color: #725862;;
+}
+
+.btnCont > button > img {
+  width: 50%;
+  height: 50%;
+}
+
+.gsstartRecord > button {
+  background-color: #78b19a;
+}
+
+.gsstartRecord > button:hover {
+  background-color: #83d3b3;
+}
+
+.gsstartRecord .recordingBtn {
+  background-color: #953d3d;
+}
+
+.gsstartRecord .recordingBtn:hover {
+  background-color: #e23434;
 }
 
 /* grid-system ^ */
 
-/* .row1BtnWrap {
-  height: 100%;
-  width: 100%;
-}
-
-.row1 button {
-  width: calc(48%);
-  height: 100%;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.row1l {
-  background: #78b19a;
-  float: left;
-}
-
-.row1r {
-  background: #b19a78;
-  float: right;
-}
-
-.row1 button::after {
-  position: absolute;
-  top: 0;
-  content: '';
-  height: 100%;
-  width: 100%;
-}
-
-.row1l::after {
-  right: 0;
-  z-index: 1;
-  background: #78b19a;
-  transform-origin: bottom right;
-  transform: skewX(-20deg);
-}
-
-.row1r::after {
-  right: 0;
-  background: #b19a78;
-  transform-origin: top left;
-  transform: skewX(-20deg);
-}
-
-.row1l:hover, .row1l:hover::after {
-  background: #83d3b3;
-}
-
-.row1r:hover, .row1r:hover::after {
-  background: #d8b98a;
-}
-
-.row1 button img {
-  z-index: 2;
-  height: 40%;
-}
-
-.row3l {
-  display: flex;
-  flex-direction: column;
-  width: 30%;
-  height: 100%;
-}
-
-.row3l button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 50%;
-  background: #73676b;
-  margin: 0;
-}
-
-.row3l button:hover, .row3m button:hover {
-  background: #725862;
-}
-
-.row3l button img, .row3m button img {
-  height: 50%;
-  width: 50%;
-}
-
-.row3m {
-  height: 100%;
-  width: 30%;
-}
-
-.row3m button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  width: 100%;
-  background: #73676b;
-}
-
+/*
 .row3r {
   display: flex;
   flex-direction: column;
@@ -481,24 +429,6 @@
   background: #73676b;
 }
 
-.startRecordBtn {
-  width: 100%;
-  height: 100%;
-  background: #78b19a;
-}
-
-.startRecordBtn:hover {
-  background: #83d3b3;
-}
-
-.recordingBtn {
-  background: rgb(149, 61, 61);
-}
-
-.recordingBtn:hover {
-  background: rgb(226, 52, 52);
-}
-
 .startRecordBtn img {
   width: 50%;
   height: 50%;
@@ -581,6 +511,61 @@
   align-items: center;
   background: #724a59;
   height: 7%;
+} */
+
+/* .gssubGrid button {
+  width: calc(48%);
+  height: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gsstartSeq {
+  background: #78b19a;
+  float: left;
+}
+
+.gsstopSeq {
+  background: #b19a78;
+  float: right;
+}
+
+.gssubGrid button::after {
+  position: absolute;
+  top: 0;
+  content: '';
+  height: 100%;
+  width: 100%;
+}
+
+.gsstartSeq::after {
+  right: 0;
+  z-index: 1;
+  background: #78b19a;
+  transform-origin: bottom right;
+  transform: skewX(-20deg);
+}
+
+.gsstopSeq::after {
+  right: 0;
+  background: #b19a78;
+  transform-origin: top left;
+  transform: skewX(-20deg);
+}
+
+.gsstartSeq:hover, .gsstartSeq:hover::after {
+  background: #83d3b3;
+}
+
+.gsstopSeq:hover, .gsstopSeq:hover::after {
+  background: #d8b98a;
+}
+
+.gssubGrid button img {
+  z-index: 2;
+  height: 40%;
 } */
 
 ::-webkit-scrollbar {
