@@ -50,33 +50,35 @@ class Matrix extends Component {
 		const { idle, hover } = this.state;
     const { data, onClick } = this.props;
     return (
-      <div
-        className={
-          `${styles.matrix}
-          ${(idle === true) ? styles.idle : ''}`}
-      >
-        {data.map((row, i) => (
-          <div
-            key={uuid4()}
-            className={
-              `${styles.row}`
-            }
-          >
-            {row.map((d, j) => (
-              <button
-                key={uuid4()}
-                className={
-                  `${styles.rect}
-                   ${(i === this.props.currentBeat) && this.props.playing ?
-                    styles.current : ''}
-                   ${data[i][j] === 1 ? styles.clicked : ''}
-									 ${(hover.i === i && hover.j === j) ? styles.hover : ''}`
-                  }
-                onMouseEnter={e => this.mouseEnter(e, i, j)}
-                onMouseDown={() => onClick(i, j)}
-                // onTouchTap={() => onClick(i, j)}
-              />))}
-          </div>))}
+      <div className={`${styles.cont}`}>
+        <div
+          className={
+            `${styles.matrix}
+            ${(idle === true) ? styles.idle : ''}`}
+        >
+          {data.map((col, i) => (
+            <div
+              key={uuid4()}
+              className={
+                `${styles.col}`
+              }
+            >
+              {col.map((d, j) => (
+                <button
+                  key={uuid4()}
+                  className={
+                    `${styles.rect}
+                     ${(i === this.props.currentBeat) && this.props.playing ?
+                      styles.current : ''}
+                     ${data[i][j] === 1 ? styles.clicked : ''}
+                     ${(hover.i === i && hover.j === j) ? styles.hover : ''}`
+                    }
+                  onMouseEnter={e => this.mouseEnter(e, i, j)}
+                  onMouseDown={() => onClick(i, j)}
+                  // onTouchTap={() => onClick(i, j)}
+                />))}
+            </div>))}
+        </div>
       </div>
     );
   }
