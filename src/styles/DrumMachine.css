@@ -175,8 +175,9 @@
 }
 
 .colorMenu {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: 1.2fr 5% 0.5fr 0.5fr 5% 0.5fr 0.5fr 5% 1fr 5% 7%;
+  grid-template-columns: repeat(10, 10%);
   height: 100%;
 }
 
@@ -192,21 +193,88 @@
   width: 40%;
 }
 
-/* general row */
+/* grid-system */
 
-.row3, .row5, .row7 {
-  height: 19%;
-  display: flex;
+.gssubGrid {
+  display: grid;
+  grid-area: 1 / 1 / span 1 / span 10;
 }
 
-
-/* row1 */
-
-.row1 {
-  height: 16%;
+.gsstartSeq {
+  grid-area: 1 / 1 / span 1 / span 5;
 }
 
-.row1BtnWrap {
+.gsstopSeq {
+  grid-area: 1 / 6 / span 1 / span 5;
+}
+
+.gspatternIcon {
+  grid-area: 2 / 1 / span 1 / span 10;
+}
+
+.gssavePattern {
+  grid-area: 3 / 1 / span 1 / span 3;
+}
+
+.gsexitPattern {
+  grid-area: 4 / 1 / span 1 / span 3;
+}
+
+.gseditPattern {
+  grid-area: 3 / 4 / span 2 / span 3;
+}
+
+.gspatternList {
+  grid-area: 3 / 7 / span 2 / span 4;
+}
+
+.gschainIcon {
+  grid-area: 5 / 1 / span 1 / span 10;
+}
+
+.gsstartChain {
+  grid-area: 6 / 1 / span 1 / span 3;
+}
+
+.gsexitChain {
+  grid-area: 7 / 1 / span 1 / span 3;
+}
+
+.gsupdateChain {
+  grid-area: 6 / 4 / span 1 / span 3;
+}
+
+.gsdeleteCurrentChain {
+  grid-area: 7 / 4 / span 1 / span 3;
+}
+
+.gschainList {
+  grid-area: 6 / 7 / span 2 / span 4;
+}
+
+.gsrecordIcon {
+  grid-area: 8 / 1 / span 1 / span 10;
+}
+
+.gsstartRecord {
+  grid-area: 9 / 1 / span 1 / span 6;
+}
+
+.gsrecordList {
+  grid-area: 9 / 7 / span 1 / span 4;
+}
+
+.gsprojectName {
+  grid-area: 10 / 1 / span 1 / span 10;
+}
+
+.gscontributors {
+  grid-area: 11 / 1 / span 1 / span 10;
+}
+
+/* grid-system ^ */
+
+/* .row1BtnWrap {
   height: 100%;
   width: 100%;
 }
@@ -265,8 +333,6 @@
   z-index: 2;
   height: 40%;
 }
-
-/* row3 */
 
 .row3l {
   display: flex;
@@ -342,8 +408,6 @@
   margin: 0;
 }
 
-/* row4 */
-
 .chain {
   display: block;
   max-width:179px;
@@ -351,8 +415,6 @@
   width: auto;
   height: auto;
 }
-
-/* row5 */
 
 .row5l, .row5m {
   display: flex;
@@ -410,8 +472,6 @@
 .chainIndex {
   padding-left: 10%;
 }
-
-/* row7 */
 
 .row7l {
   display: flex;
@@ -503,8 +563,6 @@
   opacity: 0;
 }
 
-/* even row (2, 4, 6, 8) */
-
 .evenrow {
   display: flex;
   align-items: center;
@@ -517,15 +575,13 @@
   height: 70%;
 }
 
-/* row9 */
-
 .row9 {
   display: flex;
   justify-content: center;
   align-items: center;
   background: #724a59;
   height: 7%;
-}
+} */
 
 ::-webkit-scrollbar {
   width: 0.5em;

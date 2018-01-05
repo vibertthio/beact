@@ -925,20 +925,18 @@ class DrumMachine extends Component {
 				  }
         >
           <div className={styles.colorMenu}>
-            {/* 1 */}
-            <div className={`${styles.row1} ${styles.row}`}>
-              {(this.sequencer.recording === true) ?
-                <div>
-                  recording...
-                </div> :
-                <div className={styles.row1BtnWrap}>
+            {(this.sequencer.recording === true) ?
+              <div>recording...</div> :
+              <div className={`${styles.gssubGrid}`}>
+                <div className={`${styles.gsstartSeq}`}>
                   <button
-                    className={styles.row1l}
                     onClick={() => console.log('Start Button clicked')}
                     onTouchTap={() => this.startSequencer()}
                   >
                     <img src={menu1} alt="Start Button" />
                   </button>
+                </div>
+                <div className={`${styles.gsstopSeq}`}>
                   <button
                     className={styles.row1r}
                     onClick={() => console.log('Stop Button clicked')}
@@ -946,149 +944,126 @@ class DrumMachine extends Component {
                   >
                     <img src={menu2} alt="Stop Button" />
                   </button>
-                </div>}
+                </div>
+              </div>}
+            <div className={`${styles.gspatternIcon}`}>
+              {/* <img src={menu3} alt="Patten Icon" /> */}
             </div>
-            {/* 2 */}
-            <div className={`${styles.evenrow} ${styles.row}`}>
-              <img src={menu3} alt="Patten Icon" />
-            </div>
-            {/* 3 */}
-            <div className={`${styles.row3} ${styles.row}`}>
-              <div className={styles.row3l}>
-                <button
-                  className={styles.row3lu}
-                  onClick={() => console.log('Save New Pattern clicked')}
-                  onTouchTap={() => this.savePattern()}
-                >
-                  <img src={menu4} alt="Save New Pattern" />
-                </button>
-                <button
-                  className={styles.row3ld}
-                  onClick={() => console.log('Exit Pattern clicked')}
-                  onTouchTap={() => this.exitPattern()}
-                >
-                  <img src={menu9} alt="Exit Pattern" />
-                </button>
-              </div>
-              <div className={styles.row3m}>
-                <button
-                  onClick={() => console.log('update pattern')}
-                  onTouchTap={() => this.editPattern()}
-                >
-                  <img src={menu8} alt="Update Pattern" />
-                </button>
-              </div>
-              <div className={styles.row3r}>
-                <div className={styles.row3ru}>
-                  <input
-                    type="text"
-                    className={styles.row3input}
-                    value={this.state.patternTitle}
-                    onChange={this.handleTitleChange}
-                    placeholder="input pattern name..."
-                  />
-                </div>
-                <div className={styles.row3rd}>
-                  {this.renderPatterns()}
-                </div>
-              </div>
-            </div>
-            {/* 4 */}
-            <div className={`${styles.evenrow} ${styles.row}`}>
-              <img className={styles.chain} src={menu6} alt="Chain Icon" />
-            </div>
-            {/* 5 */}
-            <div className={`${styles.row5} ${styles.row}`}>
-              <div className={styles.row5l}>
-                <div className={styles.row5lu}>
-                  <button
-                    onClick={() => console.log('Play Chain Button clicked')}
-                    onTouchTap={() => this.playChain()}
-                  >
-                    <img src={menu1} alt="Play Chain Button" />
-                  </button>
-                </div>
-                <div className={styles.row5ld}>
-                  <button
-                    onClick={() => console.log('Exit Chain Button Chain clicked')}
-                    onTouchTap={() => this.exitChain()}
-                  >
-                    <img src={menu9} alt="Exit Chain Button Chain Index" />
-                  </button>
-                </div>
-              </div>
-              <div className={styles.row5m}>
-                <div className={styles.row5mu}>
-                  <button
-                    onClick={() => console.log('Update Chain Button clicked')}
-                    onTouchTap={() => this.updateChain()}
-                  >
-                    <img src={menu7} alt="Update Chain Button" />
-                  </button>
-                </div>
-                <div className={styles.row5md}>
-                  <button
-                    onClick={() => console.log('Delete Current Chain Element Button clicked')}
-                    onTouchTap={() => this.deleteCurrentChainElement()}
-                  >
-                    <img src={menu5} alt="Delete Current Chain Element Button" />
-                  </button>
-                </div>
-              </div>
-              <div className={styles.row5r}>
-                {(this.state.drumNoteChain.length === 0)
-                  ? <div>HEAD</div>
-                  : this.renderChain()}
-                <div
-                  className={styles.chainLi}
-                  style={{ color: '#d8b98a' }}
-                  onTouchTap={() => this.setCurrentChainElementAtLast()}
-                > +
-                </div>
-              </div>
-            </div>
-            {/* 6 */}
-            <div className={`${styles.evenrow} ${styles.row}`}>
-              <img src={menu10} alt="Record Icon" />
-            </div>
-            {/* 7 */}
-            <div className={`${styles.row7} ${styles.row}`}>
-              <div className={styles.row7l}>
-                <button
-                  className={
-                    `${styles.startRecordBtn}
-                     ${(this.sequencer.recording === true) ? styles.recordingBtn : ''}`}
-                  onClick={() => console.log('Record Button clicked')}
-                  onTouchTap={() => this.recordSequencer()}
-                >
-                  <img src={menu11} alt="Record Button" />
-                </button>
-              </div>
-              <div
-                className={
-                `${styles.row3r}
-                 ${(this.sequencer.recording === true) ? styles.displayHide : ''}`}
+            <div className={`${styles.gssavePattern}`}>
+              <button
+                onClick={() => console.log('Save New Pattern clicked')}
+                onTouchTap={() => this.savePattern()}
               >
-                <div className={styles.row3ru}>
-                  <input
-                    type="text"
-                    className={styles.row3input}
-                    value={this.state.recordTitle}
-                    onChange={this.handleRecordTitleChange}
-                    placeholder="input record name..."
-                  />
-                </div>
-                <div className={styles.row3rd}>
-                  {this.renderRecords()}
-                </div>
+                <img src={menu4} alt="Save New Pattern" />
+              </button>
+            </div>
+            <div className={`${styles.gsexitPattern}`}>
+              <button
+                onClick={() => console.log('Exit Pattern clicked')}
+                onTouchTap={() => this.exitPattern()}
+              >
+                <img src={menu9} alt="Exit Pattern" />
+              </button>
+            </div>
+            <div className={`${styles.gseditPattern}`}>
+              <button
+                onClick={() => console.log('update pattern')}
+                onTouchTap={() => this.editPattern()}
+              >
+                <img src={menu8} alt="Update Pattern" />
+              </button>
+            </div>
+            <div className={`${styles.gspatternList}`}>
+              <div className={styles.row3ru}>
+                <input
+                  type="text"
+                  className={styles.row3input}
+                  value={this.state.patternTitle}
+                  onChange={this.handleTitleChange}
+                  placeholder="input pattern name..."
+                />
+              </div>
+              <div className={styles.row3rd}>
+                {this.renderPatterns()}
               </div>
             </div>
-            {/* 8 */}
-            <div className={`${styles.evenrow} ${styles.row}`}>
+            <div className={`${styles.gschainIcon}`}>
+              {/* <img className={styles.chain} src={menu6} alt="Chain Icon" /> */}
+            </div>
+            <div className={`${styles.gsstartChain}`}>
+              <button
+                onClick={() => console.log('Play Chain Button clicked')}
+                onTouchTap={() => this.playChain()}
+              >
+                <img src={menu1} alt="Play Chain Button" />
+              </button>
+            </div>
+            <div className={`${styles.gsexitChain}`}>
+              <button
+                onClick={() => console.log('Exit Chain Button Chain clicked')}
+                onTouchTap={() => this.exitChain()}
+              >
+                <img src={menu9} alt="Exit Chain Button Chain Index" />
+              </button>
+            </div>
+            <div className={`${styles.gsupdateChain}`}>
+              <button
+                onClick={() => console.log('Update Chain Button clicked')}
+                onTouchTap={() => this.updateChain()}
+              >
+                <img src={menu7} alt="Update Chain Button" />
+              </button>
+            </div>
+            <div className={`${styles.gsdeleteCurrentChain}`}>
+              <button
+                onClick={() => console.log('Delete Current Chain Element Button clicked')}
+                onTouchTap={() => this.deleteCurrentChainElement()}
+              >
+                <img src={menu5} alt="Delete Current Chain Element Button" />
+              </button>
+            </div>
+            <div className={`${styles.gschainList}`}>
+              {(this.state.drumNoteChain.length === 0)
+                ? <div>HEAD</div>
+                : this.renderChain()}
+              <div
+                className={styles.chainLi}
+                style={{ color: '#d8b98a' }}
+                onTouchTap={() => this.setCurrentChainElementAtLast()}
+              > +
+              </div>
+            </div>
+            <div className={`${styles.gsrecordIcon}`}>
+              {/* <img src={menu10} alt="Record Icon" /> */}
+            </div>
+            <div className={`${styles.gsstartRecord}`}>
+              <button
+                className={
+                  `${styles.startRecordBtn}
+                   ${(this.sequencer.recording === true) ? styles.recordingBtn : ''}`}
+                onClick={() => console.log('Record Button clicked')}
+                onTouchTap={() => this.recordSequencer()}
+              >
+                <img src={menu11} alt="Record Button" />
+              </button>
+            </div>
+            <div className={
+              `${styles.gsrecordList}
+               ${(this.sequencer.recording === true) ? styles.displayHide : ''}`}
+            >
+              <input
+                type="text"
+                className={styles.row3input}
+                value={this.state.recordTitle}
+                onChange={this.handleRecordTitleChange}
+                placeholder="input record name..."
+              />
+              {this.renderRecords()}
+            </div>
+            <div className={`${styles.gsprojectName}`}>
               <span>Beact</span>
             </div>
-            {/* 9 */}
-            <div className={`${styles.row9} ${styles.row}`}>
+            <div className={`${styles.gscontributors}`}>
               <span>by Vibert, Joey, Scya, 2018</span>
             </div>
           </div>
