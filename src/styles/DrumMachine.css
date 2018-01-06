@@ -279,6 +279,30 @@
 
 .gschainList {
   grid-area: 6 / 7 / span 2 / span 4;
+  display: grid;
+  grid-template: 0.5em 1fr 0.5em / 0.5em 1fr 0.5em;
+}
+
+.chainCont {
+  grid-area: 2 / 2 / span 1 / span 1;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.chainCont > div > div {
+  cursor: pointer;
+  padding-left: 5px;
+}
+
+.currentPlayingItem {
+  background-color: #d8b98a;
+}
+
+.newChainItem {
+  color: #d8b98a;
+  opacity: 0.5;
+  padding-left: 5px;
+  cursor: pointer;
 }
 
 .gsrecordIcon {
@@ -354,53 +378,6 @@
 .gsstartRecord .recordingBtn:hover {
   background-color: #e23434;
 }
-
-/* grid-system ^ */
-
-/*
-.row5r {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 3% 3% 3% -3%;
-  width: 40%;
-  height: 80%;
-  overflow-x: hidden;
-}
-
-.chainLi {
-  width: 70%;
-  height: 85%;
-  margin: 0 0 0 10%;
-  cursor: pointer;
-  background: #724a59;
-}
-
-.currentPlayingItem {
-  background-color: #d8b98a;
-}
-
-.chainIndex {
-  padding-left: 10%;
-}
-
-
-.listWrap {
-  width: 100%;
-  height: 32%;
-  margin: -5% 0 0 0;
-}
-
-.renderedLi {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  width: 90%;
-  margin: 0 0% 0 13%;
-  margin: 0 0 0 6%;
-}
-
-
 
 /* .gssubGrid button {
   width: calc(48%);

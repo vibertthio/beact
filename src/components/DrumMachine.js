@@ -18,6 +18,7 @@ import menu8 from '../assets/images/menu/menu8.svg';
 import menu9 from '../assets/images/menu/menu9.svg';
 import menu10 from '../assets/images/menu/menu10.svg';
 import menu11 from '../assets/images/menu/menu11.svg';
+import menu12 from '../assets/images/menu/menu12.svg';
 import menuLogo from '../assets/images/logo.png';
 import mi1 from '../assets/images/material-icon/ic_menu_white_24dp_2x.png';
 import mi2 from '../assets/images/material-icon/ic_close_white_24dp_2x.png';
@@ -794,7 +795,7 @@ class DrumMachine extends Component {
 	}
 
   renderPatterns() {
-		const { patternLists } = this.state;
+    const { patternLists } = this.state;
     return patternLists.map(pattern => (
       <div className={styles.renderedLi} key={pattern.id}>
         <button className={styles.renderedLiTitle} onTouchTap={() => this.playPattern(pattern)}>
@@ -807,7 +808,7 @@ class DrumMachine extends Component {
   }
 
   renderRecords() {
-		const { drumRecords } = this.state;
+    const { drumRecords } = this.state;
     return drumRecords.map(drumRecord => (
       <div className={styles.renderedLi} key={drumRecord.id}>
         <button className={styles.renderedLiTitle} onTouchTap={() => this.playRecord(drumRecord)}>
@@ -823,23 +824,16 @@ class DrumMachine extends Component {
   }
 
   renderChain() {
-		const {
-			drumNoteChain, currentPlayingChainElement,
-			currentChainElement, currentChainElementIndex,
-		} = this.state;
+    const {
+      drumNoteChain, currentPlayingChainElement,
+      currentChainElement, currentChainElementIndex,
+    } = this.state;
     return drumNoteChain.map((chainElement, i) => (
       <div
         key={chainElement.id}
-        className={styles.chainLi}
-        style={{ color: '#d8b98a' }}
         onTouchTap={() => this.setCurrentChainElementAtHere(chainElement.id)}
       >
-        <div
-          className={
-           `${styles.chainItem}
-            ${(i === currentPlayingChainElement) ? styles.currentPlayingItem : ''}`
-          }
-        >
+        <div className={(i === currentPlayingChainElement) ? styles.currentPlayingItem : ''}>
           <span className={styles.chainIndex}>{i + 1}{(currentChainElement !== '' && currentChainElementIndex === i) ? 'V' : ''}</span>
         </div>
       </div>
@@ -903,7 +897,6 @@ class DrumMachine extends Component {
 						 ${(hidden === true) ? '' : styles.displayHide}`
 					}
           onTouchTap={() => this.randomClicked()}
-          style={{ color: '#eecdcc' }}
         >
           <img src={mi6} alt="shuffle" />
         </button>
@@ -1007,7 +1000,9 @@ class DrumMachine extends Component {
                 onClick={() => console.log('Update Chain Button clicked')}
                 onTouchTap={() => this.updateChain()}
               >
-                <img src={menu7} alt="Update Chain Button" />
+                {(this.state.currentChainElement !== '')
+                ? <img src={menu7} alt="Update Chain Item Button" />
+                : <img src={menu12} alt="Add Chain Item Button" />}
               </button>
             </div>
             <div className={`${styles.gsdeleteCurrentChain} ${styles.btnCont}`}>
@@ -1019,14 +1014,13 @@ class DrumMachine extends Component {
               </button>
             </div>
             <div className={`${styles.gschainList}`}>
-              {(this.state.drumNoteChain.length === 0)
-                ? <div>HEAD</div>
-                : this.renderChain()}
-              <div
-                className={styles.chainLi}
-                style={{ color: '#d8b98a' }}
-                onTouchTap={() => this.setCurrentChainElementAtLast()}
-              > +
+              <div className={styles.chainCont}>
+                {this.renderChain()}
+                <div
+                  className={styles.newChainItem}
+                  onTouchTap={() => this.setCurrentChainElementAtLast()}
+                > {this.state.drumNoteChain.length + 1}
+                </div>
               </div>
             </div>
             <div className={`${styles.gsrecordIcon} ${styles.noFuncRow}`}>
@@ -1049,7 +1043,7 @@ class DrumMachine extends Component {
                 type="text"
                 value={this.state.recordTitle}
                 onChange={this.handleRecordTitleChange}
-                placeholder="input record name..."
+                placeholder=" input record name..."
               />
               <div className={styles.listCont}>
                 {this.renderRecords()}
