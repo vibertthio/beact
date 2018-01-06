@@ -300,10 +300,15 @@
 .btnCont > button > img {
   width: 50%;
   height: 50%;
+  max-height: 40px;
 }
 
 .gsstartRecord > button {
   background-color: #78b19a;
+}
+
+.gsstartRecord > button > img {
+  max-height: 60px;
 }
 
 .gsstartRecord > button:hover {
@@ -364,37 +369,6 @@
   height: auto;
 }
 
-.row5l, .row5m {
-  display: flex;
-  flex-direction: column;
-  width: 30%;
-  height: 100%;
-}
-
-.row5lu, .row5ld, .row5mu, .row5md {
-  display: flex;
-  height: 50%;
-  background: #73676b;
-}
-
-.row5l div button, .row5m div button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  width: 100%;
-  background: #73676b;
-}
-
-.row5l div button:hover, .row5m div button:hover {
-  background: #725862;
-}
-
-.row5l div button img, .row5m div button img {
-  height: 50%;
-  width: 50%;
-}
-
 .row5r {
   display: flex;
   flex-direction: column;
@@ -419,19 +393,6 @@
 
 .chainIndex {
   padding-left: 10%;
-}
-
-.row7l {
-  display: flex;
-  flex-direction: column;
-  width: 60%;
-  height: 100%;
-  background: #73676b;
-}
-
-.startRecordBtn img {
-  width: 50%;
-  height: 50%;
 }
 
 .row7r {
@@ -492,26 +453,6 @@
   visibility: hidden;
   opacity: 0;
 }
-
-.evenrow {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #b1788f;
-  height: 5%;
-}
-
-.evenrow img {
-  height: 70%;
-}
-
-.row9 {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #724a59;
-  height: 7%;
-} */
 
 /* .gssubGrid button {
   width: calc(48%);
