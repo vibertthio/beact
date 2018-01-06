@@ -201,10 +201,12 @@
 
 .gsstartSeq {
   grid-area: 1 / 1 / span 1 / span 5;
+  position: relative;
 }
 
 .gsstopSeq {
   grid-area: 1 / 6 / span 1 / span 5;
+  position: relative;
 }
 
 .gspatternIcon {
@@ -381,23 +383,24 @@
   background-color: #e23434;
 }
 
-/* .gssubGrid button {
-  width: calc(48%);
+.gssubGrid button {
+  width: 87%;
   height: 100%;
-  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.gsstartSeq {
+.gsstartSeq > button {
   background: #78b19a;
-  float: left;
+  position: absolute;
+  left: 0;
 }
 
-.gsstopSeq {
+.gsstopSeq > button {
   background: #b19a78;
-  float: right;
+  position: absolute;
+  right: 0;
 }
 
 .gssubGrid button::after {
@@ -408,7 +411,7 @@
   width: 100%;
 }
 
-.gsstartSeq::after {
+.gsstartSeq > button::after {
   right: 0;
   z-index: 1;
   background: #78b19a;
@@ -416,25 +419,24 @@
   transform: skewX(-20deg);
 }
 
-.gsstopSeq::after {
+.gsstopSeq > button::after {
   right: 0;
   background: #b19a78;
   transform-origin: top left;
   transform: skewX(-20deg);
 }
 
-.gsstartSeq:hover, .gsstartSeq:hover::after {
+.gsstartSeq > button:hover, .gsstartSeq > button:hover::after {
   background: #83d3b3;
 }
 
-.gsstopSeq:hover, .gsstopSeq:hover::after {
+.gsstopSeq > button:hover, .gsstopSeq > button:hover::after {
   background: #d8b98a;
 }
 
 .gssubGrid button img {
   z-index: 2;
-  height: 40%;
-} */
+}
 
 ::-webkit-scrollbar {
   width: 0.5em;
