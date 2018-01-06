@@ -798,11 +798,11 @@ class DrumMachine extends Component {
     const { patternLists } = this.state;
     return patternLists.map(pattern => (
       <div className={styles.renderedLi} key={pattern.id}>
-        <button className={styles.renderedLiTitle} onTouchTap={() => this.playPattern(pattern)}>
-          <span className={styles.listText}>{pattern.title}</span>
+        <button onTouchTap={() => this.playPattern(pattern)}>
+          <span>{pattern.title}</span>
         </button>
-        <button className={styles.renderedListX} onTouchTap={() => this.deletePattern(pattern.id)}>
-          <span className={styles.listXBtn}>X</span>
+        <button onTouchTap={() => this.deletePattern(pattern.id)}>
+          <span>X</span>
         </button>
       </div>));
   }
@@ -811,14 +811,11 @@ class DrumMachine extends Component {
     const { drumRecords } = this.state;
     return drumRecords.map(drumRecord => (
       <div className={styles.renderedLi} key={drumRecord.id}>
-        <button className={styles.renderedLiTitle} onTouchTap={() => this.playRecord(drumRecord)}>
-          <span className={styles.listText}>{drumRecord.title}</span>
+        <button onTouchTap={() => this.playRecord(drumRecord)}>
+          <span>{drumRecord.title}</span>
         </button>
-        <button
-          className={styles.renderedListX}
-          onTouchTap={() => this.deleteRecord(drumRecord.id)}
-        >
-          <span className={styles.listXBtn}>X</span>
+        <button onTouchTap={() => this.deleteRecord(drumRecord.id)}>
+          <span>X</span>
         </button>
       </div>));
   }
