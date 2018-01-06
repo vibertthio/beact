@@ -194,65 +194,65 @@
 
 /* grid-system */
 
-.gssubGrid {
+.subGrid {
   display: grid;
   grid-area: 1 / 1 / span 1 / span 10;
 }
 
-.gsstartSeq {
+.startSeq {
   grid-area: 1 / 1 / span 1 / span 5;
   position: relative;
 }
 
-.gsstopSeq {
+.stopSeq {
   grid-area: 1 / 6 / span 1 / span 5;
   position: relative;
 }
 
-.gspatternIcon {
+.patternIcon {
   grid-area: 2 / 1 / span 1 / span 10;
 }
 
-.gssavePattern {
+.savePattern {
   grid-area: 3 / 1 / span 1 / span 3;
 }
 
-.gsexitPattern {
+.exitPattern {
   grid-area: 4 / 1 / span 1 / span 3;
 }
 
-.gseditPattern {
+.editPattern {
   grid-area: 3 / 4 / span 2 / span 3;
 }
 
-.gspatternList {
+.patternList {
   grid-area: 3 / 7 / span 2 / span 4;
   display: grid;
   grid-template: 0.5em 1fr 0.5em 3fr 0.5em / 0.5em 1fr 0.5em;
   min-height: 0;
 }
 
-.gschainIcon {
+.chainIcon {
   grid-area: 5 / 1 / span 1 / span 10;
 }
 
-.gsstartChain {
+.startChain {
   grid-area: 6 / 1 / span 1 / span 3;
 }
 
-.gsexitChain {
+.exitChain {
   grid-area: 7 / 1 / span 1 / span 3;
 }
 
-.gsupdateChain {
+.updateChain {
   grid-area: 6 / 4 / span 1 / span 3;
 }
 
-.gsdeleteCurrentChain {
+.deleteCurrentChain {
   grid-area: 7 / 4 / span 1 / span 3;
 }
 
-.gschainList {
+.chainList {
   grid-area: 6 / 7 / span 2 / span 4;
   display: grid;
   grid-template: 0.5em 1fr 0.5em / 0.5em 1fr 0.5em;
@@ -280,22 +280,22 @@
   cursor: pointer;
 }
 
-.gsrecordIcon {
+.recordIcon {
   grid-area: 8 / 1 / span 1 / span 10;
 }
 
-.gsstartRecord {
+.startRecord {
   grid-area: 9 / 1 / span 1 / span 6;
 }
 
-.gsrecordList {
+.recordList {
   grid-area: 9 / 7 / span 1 / span 4;
   display: grid;
   grid-template: 0.5em 1fr 0.5em 3fr 0.5em / 0.5em 1fr 0.5em;
   min-height: 0;
 }
 
-.gspatternList > input, .gsrecordList > input {
+.patternList > input, .recordList > input {
   grid-area: 2 / 2 / span 1 / span 1;
   border: 2px solid white;
   border-radius: 0.5em;
@@ -303,7 +303,7 @@
   width: calc(100% - 6px);
 }
 
-.gspatternList .listCont, .gsrecordList .listCont {
+.patternList .listCont, .recordList .listCont {
   grid-area: 4 / 2 / span 1 / span 1;
   overflow-y: auto;
   overflow-x: hidden;
@@ -323,7 +323,7 @@
   background-color: #d8b98a;
 }
 
-.gsprojectName {
+.projectName {
   grid-area: 10 / 1 / span 1 / span 10;
 }
 
@@ -338,7 +338,7 @@
   height: 50%;
 }
 
-.gscontributors {
+.contributors {
   grid-area: 11 / 1 / span 1 / span 10;
   background-color: #724a59;
 }
@@ -363,27 +363,27 @@
   max-height: 40px;
 }
 
-.gsstartRecord > button {
+.startRecord > button {
   background-color: #78b19a;
 }
 
-.gsstartRecord > button > img {
+.startRecord > button > img {
   max-height: 60px;
 }
 
-.gsstartRecord > button:hover {
+.startRecord > button:hover {
   background-color: #83d3b3;
 }
 
-.gsstartRecord .recordingBtn {
+.startRecord .recordingBtn {
   background-color: #953d3d;
 }
 
-.gsstartRecord .recordingBtn:hover {
+.startRecord .recordingBtn:hover {
   background-color: #e23434;
 }
 
-.gssubGrid button {
+.subGrid button {
   width: 92%;
   height: 100%;
   display: flex;
@@ -391,19 +391,19 @@
   justify-content: center;
 }
 
-.gsstartSeq > button {
+.startSeq > button {
   background: #78b19a;
   position: absolute;
   left: 0;
 }
 
-.gsstopSeq > button {
+.stopSeq > button {
   background: #b19a78;
   position: absolute;
   right: 0;
 }
 
-.gssubGrid button::after {
+.subGrid button::after {
   position: absolute;
   top: 0;
   content: '';
@@ -411,7 +411,7 @@
   width: 100%;
 }
 
-.gsstartSeq > button::after {
+.startSeq > button::after {
   right: 0;
   z-index: 1;
   background: #78b19a;
@@ -419,22 +419,22 @@
   transform: skewX(-20deg);
 }
 
-.gsstopSeq > button::after {
+.stopSeq > button::after {
   right: 0;
   background: #b19a78;
   transform-origin: top left;
   transform: skewX(-20deg);
 }
 
-.gsstartSeq > button:hover, .gsstartSeq > button:hover::after {
+.startSeq > button:hover, .startSeq > button:hover::after {
   background: #83d3b3;
 }
 
-.gsstopSeq > button:hover, .gsstopSeq > button:hover::after {
+.stopSeq > button:hover, .stopSeq > button:hover::after {
   background: #d8b98a;
 }
 
-.gssubGrid button img {
+.subGrid button img {
   z-index: 2;
 }
 

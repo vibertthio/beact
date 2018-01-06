@@ -68,7 +68,7 @@ class DrumMachine extends Component {
       currentPlayingRecord: [],
       currentPlayingRecordIdx: -1,
       currentPlayingRecordElement: 0, // index in drumRecords
-      hidden: false,
+      hidden: true,
       wait: true,
       bpm: 120,
       narutoBool: false,
@@ -917,8 +917,8 @@ class DrumMachine extends Component {
           <div className={styles.colorMenu}>
             {(this.sequencer.recording === true) ?
               <div>recording...</div> :
-              <div className={`${styles.gssubGrid}`}>
-                <div className={`${styles.gsstartSeq} ${styles.btnCont}`} title="Start Sequencer">
+              <div className={`${styles.subGrid}`}>
+                <div className={`${styles.startSeq} ${styles.btnCont}`} title="Start Sequencer">
                   <button
                     onClick={() => console.log('Start Button clicked')}
                     onTouchTap={() => this.startSequencer()}
@@ -926,7 +926,7 @@ class DrumMachine extends Component {
                     <img src={menu1} alt="Start Button" />
                   </button>
                 </div>
-                <div className={`${styles.gsstopSeq} ${styles.btnCont}`} title="Stop Sequencer">
+                <div className={`${styles.stopSeq} ${styles.btnCont}`} title="Stop Sequencer">
                   <button
                     onClick={() => console.log('Stop Button clicked')}
                     onTouchTap={() => this.stopSequencer()}
@@ -935,10 +935,10 @@ class DrumMachine extends Component {
                   </button>
                 </div>
               </div>}
-            <div className={`${styles.gspatternIcon} ${styles.noFuncRow}`}>
+            <div className={`${styles.patternIcon} ${styles.noFuncRow}`}>
               <img src={menu3} alt="Patten Icon" />
             </div>
-            <div className={`${styles.gssavePattern} ${styles.btnCont}`} title="Save Pattern">
+            <div className={`${styles.savePattern} ${styles.btnCont}`} title="Save Pattern">
               <button
                 onClick={() => console.log('Save New Pattern clicked')}
                 onTouchTap={() => this.savePattern()}
@@ -946,7 +946,7 @@ class DrumMachine extends Component {
                 <img src={menu4} alt="Save New Pattern" />
               </button>
             </div>
-            <div className={`${styles.gsexitPattern} ${styles.btnCont}`} title="Exit Pattern Mode">
+            <div className={`${styles.exitPattern} ${styles.btnCont}`} title="Exit Pattern Mode">
               <button
                 onClick={() => console.log('Exit Pattern clicked')}
                 onTouchTap={() => this.exitPattern()}
@@ -954,7 +954,7 @@ class DrumMachine extends Component {
                 <img src={menu9} alt="Exit Pattern" />
               </button>
             </div>
-            <div className={`${styles.gseditPattern} ${styles.btnCont}`} title="Update Pattern">
+            <div className={`${styles.editPattern} ${styles.btnCont}`} title="Update Pattern">
               <button
                 onClick={() => console.log('update pattern')}
                 onTouchTap={() => this.editPattern()}
@@ -962,7 +962,7 @@ class DrumMachine extends Component {
                 <img src={menu8} alt="Update Pattern" />
               </button>
             </div>
-            <div className={`${styles.gspatternList}`}>
+            <div className={`${styles.patternList}`}>
               <input
                 type="text"
                 value={this.state.patternTitle}
@@ -973,10 +973,10 @@ class DrumMachine extends Component {
                 {this.renderPatterns()}
               </div>
             </div>
-            <div className={`${styles.gschainIcon} ${styles.noFuncRow}`}>
+            <div className={`${styles.chainIcon} ${styles.noFuncRow}`}>
               <img src={menu6} alt="Chain Icon" />
             </div>
-            <div className={`${styles.gsstartChain} ${styles.btnCont}`} title="Start Chain">
+            <div className={`${styles.startChain} ${styles.btnCont}`} title="Start Chain">
               <button
                 onClick={() => console.log('Play Chain Button clicked')}
                 onTouchTap={() => this.playChain()}
@@ -984,7 +984,7 @@ class DrumMachine extends Component {
                 <img src={menu1} alt="Play Chain Button" />
               </button>
             </div>
-            <div className={`${styles.gsexitChain} ${styles.btnCont}`} title="Exit Chain Mode">
+            <div className={`${styles.exitChain} ${styles.btnCont}`} title="Exit Chain Mode">
               <button
                 onClick={() => console.log('Exit Chain Button Chain clicked')}
                 onTouchTap={() => this.exitChain()}
@@ -993,7 +993,7 @@ class DrumMachine extends Component {
               </button>
             </div>
             <div
-              className={`${styles.gsupdateChain} ${styles.btnCont}`}
+              className={`${styles.updateChain} ${styles.btnCont}`}
               title={(this.state.currentChainElement !== '') ? 'Update Chain Item' : 'Add Chain Item'}
             >
               <button
@@ -1005,7 +1005,7 @@ class DrumMachine extends Component {
                 : <img src={menu12} alt="Add Chain Item Button" />}
               </button>
             </div>
-            <div className={`${styles.gsdeleteCurrentChain} ${styles.btnCont}`} title="Delete Current Chain Item">
+            <div className={`${styles.deleteCurrentChain} ${styles.btnCont}`} title="Delete Current Chain Item">
               <button
                 onClick={() => console.log('Delete Current Chain Element Button clicked')}
                 onTouchTap={() => this.deleteCurrentChainElement()}
@@ -1013,7 +1013,7 @@ class DrumMachine extends Component {
                 <img src={menu5} alt="Delete Current Chain Element Button" />
               </button>
             </div>
-            <div className={`${styles.gschainList}`}>
+            <div className={`${styles.chainList}`}>
               <div className={styles.chainCont}>
                 {this.renderChain()}
                 <div
@@ -1023,11 +1023,11 @@ class DrumMachine extends Component {
                 </div>
               </div>
             </div>
-            <div className={`${styles.gsrecordIcon} ${styles.noFuncRow}`}>
+            <div className={`${styles.recordIcon} ${styles.noFuncRow}`}>
               <img src={menu10} alt="Record Icon" />
             </div>
             <div
-              className={`${styles.gsstartRecord} ${styles.btnCont}`}
+              className={`${styles.startRecord} ${styles.btnCont}`}
               title={(this.sequencer.recording === true) ? 'Stop Recorder' : 'Start Recorder'}
             >
               <button
@@ -1039,7 +1039,7 @@ class DrumMachine extends Component {
               </button>
             </div>
             <div className={
-              `${styles.gsrecordList}
+              `${styles.recordList}
                ${(this.sequencer.recording === true) ? styles.displayHide : ''}`}
             >
               <input
@@ -1052,10 +1052,10 @@ class DrumMachine extends Component {
                 {this.renderRecords()}
               </div>
             </div>
-            <div className={`${styles.gsprojectName} ${styles.noFuncRow}`}>
+            <div className={`${styles.projectName} ${styles.noFuncRow}`}>
               <span>Beact</span>
             </div>
-            <div className={`${styles.gscontributors} ${styles.noFuncRow}`}>
+            <div className={`${styles.contributors} ${styles.noFuncRow}`}>
               <span>by Vibert, Joey, Scya, 2018</span>
             </div>
           </div>
