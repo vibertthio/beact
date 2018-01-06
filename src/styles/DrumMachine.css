@@ -225,6 +225,36 @@
 
 .gspatternList {
   grid-area: 3 / 7 / span 2 / span 4;
+  display: grid;
+  grid-template: 0.5em 1fr 0.5em 3fr 0.5em / 0.5em 1fr 0.5em;
+}
+
+.gspatternList > input, .gsrecordList > input {
+  grid-area: 2 / 2 / span 1 / span 1;
+  border: 2px solid white;
+  border-radius: 0.5em;
+  background: transparent;
+  width: calc(100% - 6px);
+}
+
+.listCont {
+  grid-area: 4 / 2 / span 1 / span 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.listCont > .renderedLi {
+  display: grid;
+  grid-template: 1fr / 9fr 1fr;
+}
+
+.listCont > .renderedLi > button {
+  background-color: transparent;
+  text-align: left;
+}
+
+.renderedLi:hover {
+  background-color: #d8b98a;
 }
 
 .gschainIcon {
@@ -261,6 +291,8 @@
 
 .gsrecordList {
   grid-area: 9 / 7 / span 1 / span 4;
+  display: grid;
+  grid-template: 0.5em 1fr 0.5em 3fr 0.5em / 0.5em 1fr 0.5em;
 }
 
 .gsprojectName {
@@ -326,49 +358,6 @@
 /* grid-system ^ */
 
 /*
-.row3r {
-  display: flex;
-  flex-direction: column;
-  width: 40%;
-  background: #724a59;
-}
-
-.row3ru {
-  display: flex;
-  justify-content: center;
-  height: 20%;
-  border: 3px solid white;
-  border-radius: 0.5em;
-  margin: 0.5em 5% 0;
-}
-
-.row3input {
-  border:none;
-  background: transparent;
-  outline: 0;
-  width: 90%;
-  background: #724a59;
-}
-
-.row3rd {
-  height: 80%;
-  margin: 3% 7% 3% -3%;
-  overflow: auto;
-  overflow-x: hidden;
-}
-
-.row3rd ul {
-  margin: 0;
-}
-
-.chain {
-  display: block;
-  max-width:179px;
-  max-height:26px;
-  width: auto;
-  height: auto;
-}
-
 .row5r {
   display: flex;
   flex-direction: column;
@@ -395,28 +384,6 @@
   padding-left: 10%;
 }
 
-.row7r {
-  display: flex;
-  flex-direction: column;
-  width: 40%;
-  margin: 3% 3% 3% -3%;
-  overflow: auto;
-}
-
-.row7input {
-  border:none;
-  background: transparent;
-  outline: 0;
-  width: 90%;
-  background: #724a59;
-}
-
-.row7rd {
-  height: 80%;
-  margin: 3% 0 3% 3%;
-  overflow: auto;
-  overflow-x: hidden;
-}
 
 .listWrap {
   width: 100%;
@@ -433,26 +400,7 @@
   margin: 0 0 0 6%;
 }
 
-.renderedLi:hover {
-  background-color: #d8b98a;
-}
 
-.renderedLiTitle {
-  text-align: left;
-  width: 70%;
-  background: transparent;
-}
-
-.renderedListX {
-  text-align: left;
-  width: 30%;
-  background: transparent;
-}
-
-.invisible {
-  visibility: hidden;
-  opacity: 0;
-}
 
 /* .gssubGrid button {
   width: calc(48%);

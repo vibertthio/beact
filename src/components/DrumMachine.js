@@ -67,7 +67,7 @@ class DrumMachine extends Component {
       currentPlayingRecord: [],
       currentPlayingRecordIdx: -1,
       currentPlayingRecordElement: 0, // index in drumRecords
-      hidden: true,
+      hidden: false,
       wait: true,
       bpm: 120,
       narutoBool: false,
@@ -938,7 +938,6 @@ class DrumMachine extends Component {
                 </div>
                 <div className={`${styles.gsstopSeq} ${styles.btnCont}`}>
                   <button
-                    className={styles.row1r}
                     onClick={() => console.log('Stop Button clicked')}
                     onTouchTap={() => this.stopSequencer()}
                   >
@@ -976,15 +975,16 @@ class DrumMachine extends Component {
             <div className={`${styles.gspatternList}`}>
               <input
                 type="text"
-                className={styles.row3input}
                 value={this.state.patternTitle}
                 onChange={this.handleTitleChange}
-                placeholder="input pattern name..."
+                placeholder=" input pattern name..."
               />
-              {this.renderPatterns()}
+              <div className={styles.listCont}>
+                {this.renderPatterns()}
+              </div>
             </div>
             <div className={`${styles.gschainIcon} ${styles.noFuncRow}`}>
-              <img className={styles.chain} src={menu6} alt="Chain Icon" />
+              <img src={menu6} alt="Chain Icon" />
             </div>
             <div className={`${styles.gsstartChain} ${styles.btnCont}`}>
               <button
@@ -1047,12 +1047,13 @@ class DrumMachine extends Component {
             >
               <input
                 type="text"
-                className={styles.row3input}
                 value={this.state.recordTitle}
                 onChange={this.handleRecordTitleChange}
                 placeholder="input record name..."
               />
-              {this.renderRecords()}
+              <div className={styles.listCont}>
+                {this.renderRecords()}
+              </div>
             </div>
             <div className={`${styles.gsprojectName} ${styles.noFuncRow}`}>
               <span>Beact</span>
