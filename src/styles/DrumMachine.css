@@ -338,6 +338,10 @@
   height: 50%;
 }
 
+.chainIcon > img {
+  height: 35%;
+}
+
 .contributors {
   grid-area: 11 / 1 / span 1 / span 10;
   background-color: #724a59;
