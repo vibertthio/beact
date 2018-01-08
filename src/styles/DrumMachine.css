@@ -473,7 +473,7 @@
   .subGrid .stopSeq {
     grid-area: 2 / 1 / span 1 / span 1;
   }
-  .startSeq > button, .stopSeq > button {
+  .subGrid > div > button {
     width: 100%;
   }
   .startSeq > button::after, .stopSeq > button::after {
