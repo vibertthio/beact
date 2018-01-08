@@ -2,6 +2,7 @@ module.exports = [
   {
     test: /\.css$/,
     use: [
+      { loader: 'sass-loader' },
       { loader: 'style-loader' },
       {
         loader: 'css-loader?url=false',

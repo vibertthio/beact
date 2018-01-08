@@ -1,0 +1,58 @@
+$grey: #585f60
+$pink: #eecdcc
+$horizontal: 'only screen and (min-aspect-ratio: 1/1)'
+$vertical: 'only screen and (max-aspect-ratio: 1/1)'
+
+.cont
+  display: grid
+  grid-template: 0.2em 1fr 0.2em / 0.2em 1fr 0.2em
+  height: 100%
+  .idle
+    opacity: 0
+  .matrix
+    display: grid
+    grid-area: 2 / 2 / span 1 / span 1
+    transition: opacity 0.1s ease-out
+    @media #{$horizontal}
+      grid-template: 1fr / repeat(16, 1fr)
+      grid-column-gap: 0.2em
+      .col
+        grid-template: repeat(8, 1fr) / 1fr
+        grid-row-gap: 0.2em
+    @media #{$vertical}
+      grid-template: repeat(16, 1fr) / 1fr
+      grid-row-gap: 0.2em
+      .col
+        grid-template: 1fr / repeat(8, 1fr)
+        grid-column-gap: 0.2em
+    .col
+      display: grid
+      .rect
+        background-color: $grey
+        transition: opacity 0.1s ease-in
+        opacity: 0.1
+        outline: none
+        border: none
+      .current
+        background-color: $pink
+      .clicked
+        background-color: #ccedee
+        opacity: 0.3
+      .clicked.current
+        animation-name: stretch
+        animation-duration: 0.2s
+        animation-timing-function: ease-out
+      .hover
+        cursor: pointer
+        opacity: 0.4
+
+@keyframes stretch
+  0%
+    transform: scale(1)
+    background-color: none
+  50%
+    transform: scale(0.6)
+    background-color: none
+  100%
+    transform: scale(1.8)
+    background-color: pink
