@@ -456,20 +456,27 @@
 }
 
 @media only screen and (max-height: 500px) {
-  .evenrow, .row3, .row5, .row7, .row9 {
+  .colorMenu {
+    grid-template: 1fr / 1fr;
+  }
+  .colorMenu > div:nth-child(n + 2) {
     display: none;
   }
-  .row1 {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
+  .subGrid {
+    grid-area: 1 / 1 / span 1 / span 1;
+    display: grid;
+    grid-template: 1fr 1fr / 1fr;
+  }
+  .subGrid .startSeq {
+    grid-area: 1 / 1 / span 1 / span 1;
+  }
+  .subGrid .stopSeq {
+    grid-area: 2 / 1 / span 1 / span 1;
+  }
+  .startSeq > button, .stopSeq > button {
     width: 100%;
   }
-  .row1 button {
-    width: 100%;
-    height: 50%;
-  }
-  .row1l::after, .row1r::after {
+  .startSeq > button::after, .stopSeq > button::after {
     transform: none;
   }
 }
