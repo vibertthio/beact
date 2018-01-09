@@ -1,4 +1,5 @@
 @import vars
+@import icons
 @import menu
 
 .hideDOM
@@ -16,57 +17,19 @@
       padding: 10px
       border-radius: 5px
       background-color: $current-color
-  .icon
-    display: flex
-    justify-content: center
-    align-items: center
-    position: fixed
-    width: 30px
-    height: 30px
-    cursor: pointer
-    background-color: transparent
-    border: none
-    outline: none
-    z-index: 2
-    img
-      width: 25px
-      height: 25px
-    &:hover
-      border-radius: 50%
-      background-color: $icon-hover-color
-  .menuIcon
-    top: 2em
-    left: 2.6em
-  .toggleIcon
-    top: 5em
-    left: 2.5em
-  .clearIcon
-    top: 1.9em
-    right: 2em
-  .randomIcon
-    top: 5em
-    right: 2em
-  .narutoIcon
-    top: 8.4em
-    right: 2em
-    .glow
-      -webkit-filter: drop-shadow(1px 2px 3.3px $glow-color)
-      filter: drop-shadow(1px 2px 3.3px $glow-color)
   .displayHide
     visibility: hidden
     opacity: 0
   .menu
     position: fixed
-    width: 40%
     height: 100%
     z-index: 1
-    background-color: #724a59
+    background-color: $menu-bg-color
     transition: all .7s ease-in-out
   .toggleMenu
     margin-left: 0%
   .mask
     position: fixed
-    width: 60%
     display: flex
     align-items: center
     justify-content: center
@@ -85,7 +48,6 @@
     position: absolute
     top: 0
     z-index: -1
-
 
 =menu-rwd($width)
   .showDOM

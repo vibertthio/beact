@@ -1,0 +1,38 @@
+@import vars
+
+.icon
+  display: flex
+  justify-content: center
+  align-items: center
+  position: fixed
+  width: 30px
+  height: 30px
+  cursor: pointer
+  background-color: transparent
+  border: none
+  outline: none
+  z-index: 2
+  img
+    width: 25px
+    height: 25px
+  &:hover
+    border-radius: 50%
+    background-color: $icon-hover-color
+.menuIcon
+  top: 2em
+  left: 2em
+.toggleIcon
+  top: calc(2em + 25px + 1.5em)
+  left: 2em
+.clearIcon
+  top: 2em
+  right: 2em
+.randomIcon
+  top: calc(2em + 25px + 1.5em)
+  right: 2em
+.narutoIcon
+  top: calc(2em + 25px + 1.5em + 25px + 1.5em)
+  right: 2em
+  .glow
+    -webkit-filter: drop-shadow(1px 2px 3.3px $glow-color)
+    filter: drop-shadow(1px 2px 3.3px $glow-color)
