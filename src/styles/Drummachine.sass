@@ -2,10 +2,21 @@
 @import partials/icons
 @import partials/menu
 
+=menu-rwd($width)
+  .menu
+    width: $width
+  .toggleRevMenu
+    margin-left: - $width
+  .mask
+    width: 100% - $width
+  .showMask
+    margin-left: $width
+
 .hideDOM
   display: none
 .showDOM
   height: 100%
+
   #hintMask
     position: fixed
     height: 100%
@@ -44,24 +55,11 @@
       width: 40%
   .hideMask
     margin-left: 100%
+  @media #{$horizontal}
+    @include menu-rwd(40%)
+  @media #{$vertical}
+    @include menu-rwd(80%)
   .animation
     position: absolute
     top: 0
     z-index: -1
-
-=menu-rwd($width)
-  .showDOM
-    .menu
-      width: $width
-    .toggleRevMenu
-      margin-left: - $width
-    .mask
-      width: 100% - $width
-    .showMask
-      margin-left: $width
-
-@media #{$horizontal}
-  @include menu-rwd(40%)
-
-@media #{$vertical}
-  @include menu-rwd(80%)
