@@ -158,4 +158,7 @@ npm run deploy
 ## 7. Credits and Inspirations
   * crazi ass library [tone.js](https://tonejs.github.io/) and [two.js](https://two.js.org/)
   * original idea from amazing [patatap](http://patatap.com/)
-  * music samples from amazing [stepkit](http://jxnblk.com/stepkit/)
+  * visual artworks from [Yu En Lin](https://www.facebook.com/profile.php?id=100001842687286)
+  * audio samples from [理化兄弟 pcb.com.tw](https://www.pcb.com.tw/)
+  * audio samples from [DUSA](https://soundcloud.com/dusafuca)
+  * audio samples from amazing [stepkit](http://jxnblk.com/stepkit/)
