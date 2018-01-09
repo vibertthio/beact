@@ -66,6 +66,7 @@
     margin-left: 0%
   .mask
     position: fixed
+    width: 60%
     display: flex
     align-items: center
     justify-content: center
@@ -87,14 +88,15 @@
 
 
 =menu-rwd($width)
-  .menu
-    width: $width
-  .toggleRevMenu
-    margin-left: - $width
-  .mask
-    width: 100% - $width
-  .showMask
-  margin-left: $width
+  .showDOM
+    .menu
+      width: $width
+    .toggleRevMenu
+      margin-left: - $width
+    .mask
+      width: 100% - $width
+    .showMask
+      margin-left: $width
 
 @media #{$horizontal}
   @include menu-rwd(40%)
