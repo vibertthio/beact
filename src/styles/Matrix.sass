@@ -1,7 +1,4 @@
-$grey: #585f60
-$pink: #eecdcc
-$horizontal: 'only screen and (min-aspect-ratio: 1/1)'
-$vertical: 'only screen and (max-aspect-ratio: 1/1)'
+@import vars
 
 .cont
   display: grid
@@ -28,15 +25,15 @@ $vertical: 'only screen and (max-aspect-ratio: 1/1)'
     .col
       display: grid
       .rect
-        background-color: $grey
+        background-color: $rect-color
         transition: opacity 0.1s ease-in
         opacity: 0.1
         outline: none
         border: none
       .current
-        background-color: $pink
+        background-color: $current-color
       .clicked
-        background-color: #ccedee
+        background-color: $clicked-color
         opacity: 0.3
       .clicked.current
         animation-name: stretch
@@ -55,4 +52,4 @@ $vertical: 'only screen and (max-aspect-ratio: 1/1)'
     background-color: none
   100%
     transform: scale(1.8)
-    background-color: pink
+    background-color: $stretch-color

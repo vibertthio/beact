@@ -1,0 +1,202 @@
+@import vars
+
+.colorMenu
+  display: grid
+  grid-template-rows: 1fr 5% 0.5fr 0.5fr 5% 0.5fr 0.5fr 5% 1fr 5% 7%
+  grid-template-columns: repeat(10, 10%)
+  height: 100%
+  button
+    border: none
+    outline: none
+    cursor: pointer
+    transition: all 0.3s ease-in-out
+  .subGrid
+    display: grid
+    grid-area: 1 / 1 / span 1 / span 10
+    .btnCont
+      display: grid
+      grid-template: 1fr / 1fr
+      button
+        width: 92%
+        height: 100%
+        display: flex
+        align-items: center
+        justify-content: center
+        position: absolute
+        img
+          z-index: 2
+        &::after
+          position: absolute
+          top: 0
+          content: ''
+          height: 100%
+          width: 100%
+    .startSeq
+      grid-area: 1 / 1 / span 1 / span 5
+      position: relative
+      button
+        background-color: $start-color
+        left: 0
+        &::after
+          right: 0
+          z-index: 1
+          background-color: $start-color
+          transform-origin: bottom right
+          transform: skewX(-20deg)
+        &:hover
+          background-color: $start-hover-color
+          &::after
+            background-color: $start-hover-color
+    .stopSeq
+      grid-area: 1 / 6 / span 1 / span 5
+      position: relative
+      button
+        background-color: $stop-color
+        right: 0
+        &::after
+          right: 0
+          background: #b19a78
+          transform-origin: top left
+          transform: skewX(-20deg)
+        &:hover
+          background-color: $stop-hover-color
+          &::after
+            background-color: $stop-hover-color
+  .btnCont
+    display: grid
+    grid-template: 1fr / 1fr
+    button
+      grid-area: 1 / 1 / span 1 / span 1
+      background-color: $btn-bg-color
+      img
+        width: 50%
+        height: 40%
+        max-height: 40px
+      &:hover
+        background-color: $btn-hover-color
+  .noFuncRow
+    display: grid
+    justify-items: center
+    align-items: center
+    background-color: #b1788f
+    img
+      height: 50%
+  .patternIcon
+    grid-area: 2 / 1 / span 1 / span 10
+  .savePattern
+    grid-area: 3 / 1 / span 1 / span 3
+  .exitPattern
+    grid-area: 4 / 1 / span 1 / span 3
+  .editPattern
+    grid-area: 3 / 4 / span 2 / span 3
+  .patternList
+    grid-area: 3 / 7 / span 2 / span 4
+    display: grid
+    grid-template: 0.5em 1fr 0.5em 3fr 0.5em / 0.5em 1fr 0.5em
+    min-height: 0
+    input
+      grid-area: 2 / 2 / span 1 / span 1
+      border: 2px solid white
+      border-radius: 0.5em
+      background: transparent
+      width: calc(100% - 6px)
+    .listCont
+      grid-area: 4 / 2 / span 1 / span 1
+      overflow-y: auto
+      overflow-x: hidden
+      .renderedLi
+        display: grid
+        grid-template: 1fr / 9fr 1fr
+        button
+          background-color: transparent
+          text-align: left
+        &:hover
+          background-color: $stop-hover-color
+  .chainIcon
+    grid-area: 5 / 1 / span 1 / span 10
+    img
+      height: 35%
+  .startChain
+    grid-area: 6 / 1 / span 1 / span 3
+  .exitChain
+    grid-area: 7 / 1 / span 1 / span 3
+  .updateChain
+    grid-area: 6 / 4 / span 1 / span 3
+  .deleteCurrentChain
+    grid-area: 7 / 4 / span 1 / span 3
+  .chainList
+    grid-area: 6 / 7 / span 2 / span 4
+    display: grid
+    grid-template: 0.5em 1fr 0.5em / 0.5em 1fr 0.5em
+    .chainCont
+      grid-area: 2 / 2 / span 1 / span 1
+      overflow-x: hidden
+      overflow-y: auto
+      > div > div
+        cursor: pointer
+        padding-left: 5px
+      div .currentPlayingItem
+        background-color: $stop-hover-color
+      .newChainItem
+        color: #d8b98a
+        opacity: 0.5
+        padding-left: 5px
+        cursor: pointer
+  .recordIcon
+    grid-area: 8 / 1 / span 1 / span 10
+  .startRecord
+    grid-area: 9 / 1 / span 1 / span 6
+    button
+      background-color: $start-color
+      img
+        max-height: 60px
+      &:hover
+        background-color: $start-hover-color
+    .recordingBtn
+      background-color: $record-color
+      &:hover
+        background-color: $record-hover-color
+  .recordList
+    grid-area: 9 / 7 / span 1 / span 4
+    @extend .patternList
+  .projectName
+    grid-area: 10 / 1 / span 1 / span 10
+  .contributors
+    grid-area: 11 / 1 / span 1 / span 10
+    background-color: $menu-bg-color
+
+@media only screen and (max-height: 500px)
+  .colorMenu
+    grid-template: 1fr / 1fr
+    .subGrid
+      grid-area: 1 / 1 / span 1 / span 1
+      display: grid
+      grid-template: 1fr 1fr / 1fr
+      div button
+        width: 100%
+      .startSeq
+        grid-area: 1 / 1 / span 1 / span 1
+        button
+          &::after
+            transform: none
+      .stopSeq
+        grid-area: 2 / 1 / span 1 / span 1
+        button
+          &::after
+            transform: none
+    > div
+      &:nth-child(n + 2)
+        display: none
+
+// ::-webkit-scrollbar
+//   width: 0.5em
+//   background-color: $icon-hover-color
+//
+// ::-webkit-scrollbar-thumb
+//   background-color: $start-color
+//
+// ::-webkit-input-placeholder,
+// ::-moz-placeholder,
+// :-ms-input-placeholder,
+// :-moz-placeholder
+//   color: $start-color

@@ -3,7 +3,7 @@ import uuid4 from 'uuid/v4';
 import axios from 'axios';
 import key from 'keymaster';
 
-import styles from '../styles/DrumMachine.css';
+import styles from '../styles/DrumMachine.sass';
 import Matrix from './Matrix';
 import { Sequencer, Keyboard, toBPM, presets } from '../utils/Audio';
 import Animation, { animationKey2IndexMapping } from '../utils/Animation';
@@ -831,7 +831,7 @@ class DrumMachine extends Component {
         onTouchTap={() => this.setCurrentChainElementAtHere(chainElement.id)}
       >
         <div className={(i === currentPlayingChainElement) ? styles.currentPlayingItem : ''}>
-          <span className={styles.chainIndex}>{i + 1}{(currentChainElement !== '' && currentChainElementIndex === i) ? 'V' : ''}</span>
+          <span>{i + 1}{(currentChainElement !== '' && currentChainElementIndex === i) ? 'V' : ''}</span>
         </div>
       </div>
     ));

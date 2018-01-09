@@ -2,7 +2,6 @@ module.exports = [
   {
     test: /\.css$/,
     use: [
-      { loader: 'sass-loader' },
       { loader: 'style-loader' },
       {
         loader: 'css-loader?url=false',
@@ -13,6 +12,21 @@ module.exports = [
       },
     ],
     exclude: ['node_modules']
+  },
+  {
+    test: /\.sass$/,
+    use: [
+      { loader: 'style-loader' },
+      {
+        loader: 'css-loader?url=false',
+        options: {
+          module: true,
+          localIdentName: '[name]__[local]--[hash:base64:5]',
+        },
+      },
+      { loader: 'sass-loader' },
+    ],
+    exclude: ['node_modules'],
   },
   {
     test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,

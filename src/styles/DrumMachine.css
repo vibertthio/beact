@@ -143,29 +143,6 @@
   }
 }
 
-.menuBtn {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.control {
-  display: flex;
-  width: 20em;
-  margin: 0.3em auto;
-  justify-content: center;
-}
-
-.btn {
-  text-align: center;
-  width: 5em;
-  height: 2em;
-  font-style: italic;
-  margin: 1em;
-  background-color: #eecdcc;
-  padding-top: 0.5em;
-  cursor: pointer;
-}
-
 /* animation */
 
 .animation {
@@ -358,7 +335,7 @@
 }
 
 .btnCont > button:hover {
-  background-color: #725862;;
+  background-color: #725862;
 }
 
 .btnCont > button > img {
