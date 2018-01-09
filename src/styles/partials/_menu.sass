@@ -164,9 +164,7 @@
   .contributors
     grid-area: 11 / 1 / span 1 / span 10
     background-color: $menu-bg-color
-
-@media only screen and (max-height: 500px)
-  .colorMenu
+  @media only screen and (max-height: 500px)
     grid-template: 1fr / 1fr
     .subGrid
       grid-area: 1 / 1 / span 1 / span 1
@@ -188,15 +186,12 @@
       &:nth-child(n + 2)
         display: none
 
-// ::-webkit-scrollbar
-//   width: 0.5em
-//   background-color: $icon-hover-color
-//
-// ::-webkit-scrollbar-thumb
-//   background-color: $start-color
-//
-// ::-webkit-input-placeholder,
-// ::-moz-placeholder,
-// :-ms-input-placeholder,
-// :-moz-placeholder
-//   color: $start-color
+::-webkit-scrollbar
+  width: 0.5em
+  background-color: $icon-hover-color
+
+::-webkit-scrollbar-thumb
+  background-color: $start-color
+
+::-webkit-input-placeholder, ::-moz-placeholder, :-ms-input-placeholder, :-moz-placeholder
+  color: $start-color
