@@ -1,6 +1,6 @@
 {
   "name": "beact",
-  "version": "0.0.0",
+  "version": "0.0.3",
   "description": "making audio/visual with react and tone.js",
   "main": "''",
   "scripts": {
