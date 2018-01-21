@@ -123,7 +123,7 @@ class DrumMachine extends Component {
 
     this.keyboard = new Keyboard(this.storeKeyRecord);
 
-    // this.toggleHidden = this.toggleHidden.bind(this);
+    this.toggleHidden = this.toggleHidden.bind(this);
 		// this.hideSpinner = this.hideSpinner.bind(this);
 		// this.showDOM = this.showDOM.bind(this);
 		// this.hideHint = this.hideHint.bind(this);
@@ -781,11 +781,11 @@ class DrumMachine extends Component {
 	// 	hintID = window.setTimeout(this.hideHint, 5000);
 	// }
   //
-  // toggleHidden() {
-  //   this.setState({
-  //     hidden: !this.state.hidden,
-  //   });
-  // }
+  toggleHidden() {
+    this.setState({
+      hidden: !this.state.hidden,
+    });
+  }
 
   // eslint-disable-next-line class-methods-use-this
 	// hideHint() {
@@ -842,7 +842,11 @@ class DrumMachine extends Component {
 			data, hover, hidden, wait, playing, narutoBool,
 		} = this.state;
     return (
-      <div className={(wait === true) ? styles.hideDOM : styles.showDOM}>
+      <div>
+        {wait === true ?
+          <div className={styles.spinner} /> :
+          <div className={styles.showDOM}>
+
         {/* <div id={styles.hintMask}>
           <div>
             <div>1. Open your speaker.</div>
@@ -1085,6 +1089,8 @@ class DrumMachine extends Component {
             onKeyPress={this.detectKeyboard}
           />
         </div>
+			</div>}
+
       </div>
     );
   }
