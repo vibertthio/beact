@@ -29,9 +29,9 @@ import mi6 from '../assets/images/material-icon/ic_shuffle_white_24dp_2x.png';
 import narutoW from '../assets/images/material-icon/narutoW.png';
 import narutoG from '../assets/images/material-icon/narutoG2.png';
 
-let fadeoutID;
-let logoID;
-let hintID;
+// let fadeoutID;
+// let logoID;
+// let hintID;
 let keys = '';
 keys = new Array(26);
 for (let i = 0; i < 26; i += 1) {
@@ -69,7 +69,7 @@ class DrumMachine extends Component {
       currentPlayingRecordIdx: -1,
       currentPlayingRecordElement: 0, // index in drumRecords
       hidden: true,
-      wait: true,
+      wait: false,
       bpm: 120,
       narutoBool: false,
       hover: { i: -1, j: -1 },
@@ -123,10 +123,10 @@ class DrumMachine extends Component {
 
     this.keyboard = new Keyboard(this.storeKeyRecord);
 
-    this.toggleHidden = this.toggleHidden.bind(this);
-		this.hideSpinner = this.hideSpinner.bind(this);
-		this.showDOM = this.showDOM.bind(this);
-		this.hideHint = this.hideHint.bind(this);
+    // this.toggleHidden = this.toggleHidden.bind(this);
+		// this.hideSpinner = this.hideSpinner.bind(this);
+		// this.showDOM = this.showDOM.bind(this);
+		// this.hideHint = this.hideHint.bind(this);
 		// this.showLogo = this.showLogo.bind(this);
 		this.handleResize = this.handleResize.bind(this);
 
@@ -160,12 +160,12 @@ class DrumMachine extends Component {
 		/**
 	   * hide loading spinner and wait 3.5s after DOM is loaded.
 	   */
-	  const outShowDOM = this.hideSpinner;
-    // const outShowLogo = this.showLogo;
-		function startTimer() {
-			fadeoutID = window.setTimeout(outShowDOM, 3500);
-		}
-		startTimer();
+	  // const outShowDOM = this.hideSpinner;
+    // // const outShowLogo = this.showLogo;
+		// function startTimer() {
+		// 	fadeoutID = window.setTimeout(outShowDOM, 3500);
+		// }
+		// startTimer();
 
     window.addEventListener('resize', this.handleResize);
   }
@@ -754,45 +754,45 @@ class DrumMachine extends Component {
 		key('shift+m', () => this.setState({ hidden: !this.state.hidden }));
   }
 
-	hideSpinner() {
-		const spinner = document.getElementById('spinner');
-		spinner.classList.add('loaded');
- 		const loadingTitle = document.getElementById('loadingTitle');
- 		loadingTitle.classList.add('loaded');
-		const logo = document.getElementById('beactLogo');
-		logo.classList.add('showLogo');
-		const showLogo = () => {
-			const beactLogo = document.getElementById('beactLogo');
-			beactLogo.classList.remove('showLogo');
-			window.clearTimeout(logoID);
-		};
-		logoID = window.setTimeout(showLogo, 2000);
- 		window.clearTimeout(fadeoutID);
-		fadeoutID = window.setTimeout(this.showDOM, 3000);
- 	}
+	// hideSpinner() {
+	// 	const spinner = document.getElementById('spinner');
+	// 	spinner.classList.add('loaded');
+ 	// 	const loadingTitle = document.getElementById('loadingTitle');
+ 	// 	loadingTitle.classList.add('loaded');
+	// 	const logo = document.getElementById('beactLogo');
+	// 	logo.classList.add('showLogo');
+	// 	const showLogo = () => {
+	// 		const beactLogo = document.getElementById('beactLogo');
+	// 		beactLogo.classList.remove('showLogo');
+	// 		window.clearTimeout(logoID);
+	// 	};
+	// 	logoID = window.setTimeout(showLogo, 2000);
+ 	// 	window.clearTimeout(fadeoutID);
+	// 	fadeoutID = window.setTimeout(this.showDOM, 3000);
+ 	// }
 
-	showDOM() {
-		const rootDiv = document.getElementById('root');
-		rootDiv.classList.add('fullHeight');
-		this.setState({ wait: false });
-
-    // wait till this time
-    this.ani.setSequencerAnimationsCustomSettings();
-		hintID = window.setTimeout(this.hideHint, 5000);
-	}
-
-  toggleHidden() {
-    this.setState({
-      hidden: !this.state.hidden,
-    });
-  }
+	// showDOM() {
+	// 	const rootDiv = document.getElementById('root');
+	// 	rootDiv.classList.add('fullHeight');
+	// 	this.setState({ wait: false });
+  //
+  //   // wait till this time
+  //   this.ani.setSequencerAnimationsCustomSettings();
+	// 	hintID = window.setTimeout(this.hideHint, 5000);
+	// }
+  //
+  // toggleHidden() {
+  //   this.setState({
+  //     hidden: !this.state.hidden,
+  //   });
+  // }
 
   // eslint-disable-next-line class-methods-use-this
-	hideHint() {
-		const hm = document.getElementById(styles.hintMask);
-		hm.style.display = 'none';
-		window.clearTimeout(hintID);
-	}
+	// hideHint() {
+	// 	const hm = document.getElementById(styles.hintMask);
+	// 	hm.style.display = 'none';
+	// 	window.clearTimeout(hintID);
+	// }
 
   renderPatterns() {
     const { patternLists } = this.state;
@@ -843,13 +843,13 @@ class DrumMachine extends Component {
 		} = this.state;
     return (
       <div className={(wait === true) ? styles.hideDOM : styles.showDOM}>
-        <div id={styles.hintMask}>
+        {/* <div id={styles.hintMask}>
           <div>
             <div>1. Open your speaker.</div>
             <div>2. You can press any keys, arrows, space...</div>
             <div>3. Click the grids on drum-pad.</div>
           </div>
-        </div>
+        </div> */}
         {(this.sequencer.isPlayingRecord === false) ?
           <button
             className={`${styles.icon} ${styles.menuIcon} ${(hidden === true) ? '' : styles.displayHide}`}
