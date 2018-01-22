@@ -21,26 +21,26 @@ export default function flashImage(
   animations,
   imgUrl = defaultImgUrl,
   scale = 1,
-  opacity = 1,
-  ) {
+  opacity = 1
+) {
   const playing = true;
 
   /**
-  * [setup description]
-  */
+   * [setup description]
+   */
   function setup() {
     const shape = two.makeRectangle(
       two.width * 0.5,
       two.height * 0.5,
       two.width,
-      two.height,
+      two.height
     );
     const texture = new Two.Texture(imgUrl);
     shape.visible = true;
     shape.fill = texture;
     shape.noStroke();
 
-    const originalScale = (scale * two.height) / 500;
+    const originalScale = scale * two.height / 500;
     texture.scale = originalScale;
     texture.opacity = opacity;
   }

@@ -29,7 +29,7 @@ export class Sequencer {
     playNextChainElement,
     storeRecord,
     playNextRecordElement,
-    playDrumAni,
+    playDrumAni
   ) {
     this.matrix = matrix;
     this.number = 0;
@@ -46,74 +46,83 @@ export class Sequencer {
     this.checkStart = false;
     // this.nowPlayingAni = [];
     this.saveRecord = this.saveRecord.bind(this);
-    this.sequence = new Sequence((time, col) => {
-      this.beat = col;
-      setCurrentBeat(this.beat);
+    this.sequence = new Sequence(
+      (time, col) => {
+        this.beat = col;
+        setCurrentBeat(this.beat);
 
-      // 16 columns, each column: ex. [1, 0, 0, 0, 1, 1, 0, 1]
-      const column = this.matrix[col];
-      const nowPlayingAni = [];
-      for (let i = 0; i < this.notes.length; i += 1) {
-        if (col === 0 && i === 0 && this.checkStart === false && this.recording === true) {
-          this.checkStart = true;
-          this.startTime = now();
-        }
-        // make sure no play while loading
-        if (column[i] === 1 && !this.loadingSamples) {
-          const vel = (Math.random() * 0.5) + 0.5;
-          // convert velocity(gain) to volume
-          this.samples.volume.value = 10 * Math.log10(vel);
-          // console.log('nowTime: ', now());
-          // console.log('Transport.seconds: ', Transport.seconds);
-          // console.log('time: ', time);
-          // this.samples._players[this.notes[i]].start(time, 0, 0.5);
-          this.samples._players[this.notes[i]].start(time);
-          nowPlayingAni.push(i);
-        }
-      }
-      playDrumAni(nowPlayingAni);
-
-      if (this.recording === true) {
-        if (this.recordMatrix.length < 16) {
-          this.recordMatrix.push(column);
-          if (this.recordMatrix.length === 16) {
-            const recordMatrix = [
-              [0, 0, 0, 0, 0, 0, 0, 0],
-              [0, 0, 0, 0, 0, 0, 0, 0],
-              [0, 0, 0, 0, 0, 0, 0, 0],
-              [0, 0, 0, 0, 0, 0, 0, 0],
-              [0, 0, 0, 0, 0, 0, 0, 0],
-              [0, 0, 0, 0, 0, 0, 0, 0],
-              [0, 0, 0, 0, 0, 0, 0, 0],
-              [0, 0, 0, 0, 0, 0, 0, 0],
-              [0, 0, 0, 0, 0, 0, 0, 0],
-              [0, 0, 0, 0, 0, 0, 0, 0],
-              [0, 0, 0, 0, 0, 0, 0, 0],
-              [0, 0, 0, 0, 0, 0, 0, 0],
-              [0, 0, 0, 0, 0, 0, 0, 0],
-              [0, 0, 0, 0, 0, 0, 0, 0],
-              [0, 0, 0, 0, 0, 0, 0, 0],
-              [0, 0, 0, 0, 0, 0, 0, 0],
-            ];
-            for (let i = 0; i < 16; i += 1) {
-              for (let j = 0; j < 8; j += 1) {
-                recordMatrix[i][j] = this.recordMatrix[i][j];
-              }
-            }
-            this.recordFull.push(recordMatrix);
-            // console.log(`recordFull: ${this.recordFull}`);
-            this.recordMatrix = [];
+        // 16 columns, each column: ex. [1, 0, 0, 0, 1, 1, 0, 1]
+        const column = this.matrix[col];
+        const nowPlayingAni = [];
+        for (let i = 0; i < this.notes.length; i += 1) {
+          if (
+            col === 0 &&
+            i === 0 &&
+            this.checkStart === false &&
+            this.recording === true
+          ) {
+            this.checkStart = true;
+            this.startTime = now();
+          }
+          // make sure no play while loading
+          if (column[i] === 1 && !this.loadingSamples) {
+            const vel = Math.random() * 0.5 + 0.5;
+            // convert velocity(gain) to volume
+            this.samples.volume.value = 10 * Math.log10(vel);
+            // console.log('nowTime: ', now());
+            // console.log('Transport.seconds: ', Transport.seconds);
+            // console.log('time: ', time);
+            // this.samples._players[this.notes[i]].start(time, 0, 0.5);
+            this.samples._players[this.notes[i]].start(time);
+            nowPlayingAni.push(i);
           }
         }
-      }
+        playDrumAni(nowPlayingAni);
 
-      if (col === 15 && this.isPlayingChain === true) {
-        playNextChainElement();
-      }
-      if (col === 15 && this.isPlayingRecord === true) {
-        playNextRecordElement();
-      }
-    }, Array.from(Array(this.matrix.length).keys()), '16n');
+        if (this.recording === true) {
+          if (this.recordMatrix.length < 16) {
+            this.recordMatrix.push(column);
+            if (this.recordMatrix.length === 16) {
+              const recordMatrix = [
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+              ];
+              for (let i = 0; i < 16; i += 1) {
+                for (let j = 0; j < 8; j += 1) {
+                  recordMatrix[i][j] = this.recordMatrix[i][j];
+                }
+              }
+              this.recordFull.push(recordMatrix);
+              // console.log(`recordFull: ${this.recordFull}`);
+              this.recordMatrix = [];
+            }
+          }
+        }
+
+        if (col === 15 && this.isPlayingChain === true) {
+          playNextChainElement();
+        }
+        if (col === 15 && this.isPlayingRecord === true) {
+          playNextRecordElement();
+        }
+      },
+      Array.from(Array(this.matrix.length).keys()),
+      '16n'
+    );
     Transport.start();
   }
 
@@ -180,34 +189,38 @@ export class Sequencer {
       this.recordFull.push(this.recordMatrix);
     }
     if (this.recordFull.length > 0) {
-      axios.post('/api/notes', {
-        id: temperId,
-        title: recordTitle,
-        content: this.recordFull,
-        startTime: this.startTime,
-        bpm,
-      })
-      .then(saveKeyboardRecord(temperId, this.startTime))
-      .then(
-        this.recordFull = [],
-        this.recordMatrix = [],
-      )
-      .then(axios.get('/api/notes')
-          .then((res) => {
-            this.storeRecord(res.data);
-            temperId = uuid4();
-          })
-          .catch((err) => {
-            console.log(err);
-          }))
-      .then(axios.get('/api/keys')
-          .then((res) => {
-            storeKeyboardRecord(res.data);
-          })
-          .catch((err) => {
-            console.log(err);
-          }))
-      .catch(err => console.log(err));
+      axios
+        .post('/api/notes', {
+          id: temperId,
+          title: recordTitle,
+          content: this.recordFull,
+          startTime: this.startTime,
+          bpm,
+        })
+        .then(saveKeyboardRecord(temperId, this.startTime))
+        .then((this.recordFull = []), (this.recordMatrix = []))
+        .then(
+          axios
+            .get('/api/notes')
+            .then(res => {
+              this.storeRecord(res.data);
+              temperId = uuid4();
+            })
+            .catch(err => {
+              console.log(err);
+            })
+        )
+        .then(
+          axios
+            .get('/api/keys')
+            .then(res => {
+              storeKeyboardRecord(res.data);
+            })
+            .catch(err => {
+              console.log(err);
+            })
+        )
+        .catch(err => console.log(err));
     } else {
       console.log('you should at least play one rounds of drum');
     }
@@ -220,7 +233,7 @@ export class Keyboard {
   notes: Array<String>;
   samples: Object;
   recording: Boolean;
-	loadingSamples: Boolean;
+  loadingSamples: Boolean;
 
   constructor(storeRecord) {
     this.currentKey = null;
@@ -242,7 +255,10 @@ export class Keyboard {
   playKey() {
     console.log(`key: ${this.currentKey}`);
     if (this.currentKey !== null && !this.loadingSamples) {
-      this.samples.get(this.currentKey).start().toMaster();
+      this.samples
+        .get(this.currentKey)
+        .start()
+        .toMaster();
       if (this.recording === true) {
         const time = now();
         this.record.push({ time, key: this.currentKey });
@@ -266,16 +282,19 @@ export class Keyboard {
       id: recordId,
       startTime,
     };
-    axios.post('/api/keys', keyBoardRecord)
-      .catch(err => console.log(err));
+    axios.post('/api/keys', keyBoardRecord).catch(err => console.log(err));
     this.record = [];
   }
 
   playRecord(record, aniTrigger) {
     this.recordStartTime = now();
     for (let i = 0; i < record.content.length; i += 1) {
-      const time = this.recordStartTime + (record.content[i].time - record.startTime);
-      this.samples.get(record.content[i].key).start(time).toMaster();
+      const time =
+        this.recordStartTime + (record.content[i].time - record.startTime);
+      this.samples
+        .get(record.content[i].key)
+        .start(time)
+        .toMaster();
       Transport.schedule(() => {
         aniTrigger(record.content[i].key);
       }, time);
@@ -283,44 +302,44 @@ export class Keyboard {
   }
 
   clearSchedule(record) {
-     Transport.cancel();
-     for (let i = 0; i < record.content.length; i += 1) {
-       this.samples.get(record.content[i].key).disconnect();
-     }
+    Transport.cancel();
+    for (let i = 0; i < record.content.length; i += 1) {
+      this.samples.get(record.content[i].key).disconnect();
+    }
   }
 
-	changeSampleSet(up) {
-	  this.currentSampleIndex =
-	    (this.currentSampleIndex + (up ? 1 : -1)) % keysUrls.length;
-	  if (this.currentSampleIndex < 0) {
-	    this.currentSampleIndex += keysUrls.length;
-	  }
+  changeSampleSet(up) {
+    this.currentSampleIndex =
+      (this.currentSampleIndex + (up ? 1 : -1)) % keysUrls.length;
+    if (this.currentSampleIndex < 0) {
+      this.currentSampleIndex += keysUrls.length;
+    }
 
-	  console.log(this.currentSampleIndex);
-	  this.loadSamples();
-	}
+    console.log(this.currentSampleIndex);
+    this.loadSamples();
+  }
 
   startNaruto() {
-	  this.currentSampleIndex = 1;
-	  console.log(this.currentSampleIndex);
-	  this.loadSamples();
-	}
+    this.currentSampleIndex = 1;
+    console.log(this.currentSampleIndex);
+    this.loadSamples();
+  }
 
-	startNormal() {
-		this.currentSampleIndex = 0;
-		console.log(this.currentSampleIndex);
-		this.loadSamples();
-	}
+  startNormal() {
+    this.currentSampleIndex = 0;
+    console.log(this.currentSampleIndex);
+    this.loadSamples();
+  }
 
-	loadSamples() {
-	  console.log(`start loading key sound bank : ${this.currentSampleIndex}`);
-	  this.loadingSamples = true;
+  loadSamples() {
+    console.log(`start loading key sound bank : ${this.currentSampleIndex}`);
+    this.loadingSamples = true;
     this.samples = new Players(keysUrls[this.currentSampleIndex], () => {
       this.loadingSamples = false;
     }).toMaster();
     this.samples.volume.value = -2;
     this.samples.fadeOut = 0.4;
-	}
+  }
 }
 
 const toBPM = (val, rampTime) => {
@@ -328,7 +347,4 @@ const toBPM = (val, rampTime) => {
   Transport.bpm.rampTo(target, rampTime);
 };
 
-export {
-  toBPM,
-  presets,
-};
+export { toBPM, presets };

@@ -1,8 +1,4 @@
-import {
-  TWO_PI,
-  min,
-  range,
-} from 'config/animation.config';
+import { TWO_PI, min, range } from 'config/animation.config';
 
 /**
  * Animation #24, Corona
@@ -21,8 +17,8 @@ export default function corona(
   colors,
   animations,
   opacity = 1,
-  duration = 250,
-  ) {
+  duration = 250
+) {
   let playing = false;
   const amount = 24;
   const last = amount - 1;
@@ -35,7 +31,7 @@ export default function corona(
    * @return {[type]} [description]
    */
   function setup() {
-    const circles = range(amount).map((i) => {
+    const circles = range(amount).map(i => {
       const pct = i / last;
 
       const circle = two.makePolygon(radius, 0, bubbleRadius, 3);
@@ -50,18 +46,16 @@ export default function corona(
     group.translation.set(two.width * 0.5, two.height * 0.5);
     group.visible = false;
     const aniOuts = circles.map((c, i) => {
-      const next =
-        (!circles[i + 1]) ?
-        TWO_PI : (circles[i + 1].destination);
+      const next = !circles[i + 1] ? TWO_PI : circles[i + 1].destination;
 
       return new TWEEN.Tween(c)
-        .to({ theta: next }, duration / (amount - (i)))
+        .to({ theta: next }, duration / (amount - i))
         .onUpdate(() => {
           const theta = direction ? c.theta : -c.theta;
           const x = radius * Math.cos(theta);
           const y = radius * Math.sin(theta);
           c.translation.set(x, y);
-          circles[i].rotation = theta + (TWO_PI * 0.25);
+          circles[i].rotation = theta + TWO_PI * 0.25;
         })
         .onComplete(() => {
           circles[i].visible = false;
@@ -85,7 +79,7 @@ export default function corona(
           const x = radius * Math.cos(theta);
           const y = radius * Math.sin(theta);
           c.translation.set(x, y);
-          circles[i].rotation = theta + (TWO_PI * 0.25);
+          circles[i].rotation = theta + TWO_PI * 0.25;
         })
         .onComplete(() => {
           if (i >= last) {
@@ -98,9 +92,8 @@ export default function corona(
           next.theta = c.theta;
           next.translation.copy(c.translation);
           tween.start();
-        }),
+        })
     );
-
 
     const aniOut = {
       stop: () => {

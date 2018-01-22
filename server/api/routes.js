@@ -1,7 +1,7 @@
 import DrumsController from './controllers/drums_controller';
 import KeysController from './controllers/keys_controller';
 
-module.exports = (server) => {
+module.exports = server => {
   server.post('/api/notes', DrumsController.create);
   server.put('/api/notes/:id', DrumsController.edit);
   server.delete('/api/notes/:id', DrumsController.delete);

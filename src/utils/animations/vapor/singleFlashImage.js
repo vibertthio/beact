@@ -23,24 +23,20 @@ export default function singleFlashImage(
   imgUrl = defaultImgUrl,
   textureScale = 1,
   opacity = 1,
-  duration = 200,
-  ) {
+  duration = 200
+) {
   let playing = false;
   const param = { t: 0 };
 
   /**
-  * [setup description]
-  * @return {[type]} [description]
-  */
+   * [setup description]
+   * @return {[type]} [description]
+   */
   function setup() {
     // const length = Math.min(two.width, two.height);
-    const shape = two.makeSprite(
-      imgUrl,
-      two.width * 0.52,
-      two.height * 0.6,
-    );
+    const shape = two.makeSprite(imgUrl, two.width * 0.52, two.height * 0.6);
 
-    const originalScale = (textureScale * two.height) / 500;
+    const originalScale = textureScale * two.height / 500;
     shape.opacity = 1;
     shape.scale = originalScale;
     shape.visible = false;
@@ -54,7 +50,7 @@ export default function singleFlashImage(
         shape.visible = true;
         // targetRatio = 0.2 * Math.random();
       })
-      .onUpdate((t) => {
+      .onUpdate(t => {
         // shape.scale = originalScale * (1 + (targetRatio * t));
         shape.visible = Math.random() > 0.25;
         // shape.visible = true;

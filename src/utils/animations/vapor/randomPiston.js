@@ -19,8 +19,8 @@ export default function piston(
   animations,
   amount = 1,
   opacity = 1,
-  duration = 200,
-  ) {
+  duration = 200
+) {
   const param = { ending: 0, beginning: 0 };
   const origin = { x: two.width * 0.5, y: two.height * 0.5 };
   let begin;
@@ -36,9 +36,9 @@ export default function piston(
   }
 
   /**
-  * [setup description]
-  * @return {[type]} [description]
-  */
+   * [setup description]
+   * @return {[type]} [description]
+   */
   function setup() {
     let playing = false;
 
@@ -48,10 +48,10 @@ export default function piston(
     const group = two.makeGroup();
     group.translation.set(two.width * 0.5, two.height * 0.5);
 
-    const shapes = range(amt).map((i) => {
-      const d = (h / amt) - (h / (amt * 3));
+    const shapes = range(amt).map(i => {
+      const d = h / amt - h / (amt * 3);
       const x = 0;
-      const y = (-h / 2) + ((i + 1) * (h / (amt + 1)));
+      const y = -h / 2 + (i + 1) * (h / (amt + 1));
 
       const shape = two.makeRectangle(x, y, w, d);
       shape.fill = colors[5];
@@ -115,7 +115,7 @@ export default function piston(
     aniOut.stop();
 
     if (Math.random() < 0.5) {
-      amt = Math.floor(1 + (7 * Math.random()));
+      amt = Math.floor(1 + 7 * Math.random());
       console.log(`new amt: ${amt}`);
       group.remove(shapes);
       two.remove(group);
@@ -142,14 +142,9 @@ export default function piston(
       s.vertices[3].x = begin;
     }
 
-
     setPosition();
-    group.translation.set(
-      origin.x,
-      origin.y,
-    );
+    group.translation.set(origin.x, origin.y);
   };
-
 
   const start = () => {
     reset();

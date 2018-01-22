@@ -1,8 +1,4 @@
-import {
-  TWO_PI,
-  min,
-  lerp,
-} from 'config/animation.config';
+import { TWO_PI, min, lerp } from 'config/animation.config';
 
 /**
  * Animation #19, Moon
@@ -21,8 +17,8 @@ export default function moon(
   colors,
   animations,
   opacity = 1,
-  duration = 500,
-  ) {
+  duration = 500
+) {
   let playing = false;
   const amount = 42;
   const half = amount * 0.5;
@@ -39,7 +35,7 @@ export default function moon(
       two.width * 0.5,
       two.height * 0.5,
       radius,
-      amount,
+      amount
     );
     shape.fill = colors[2];
     shape.noStroke();
@@ -60,16 +56,16 @@ export default function moon(
     const aniOut = new TWEEN.Tween(param)
       .to({ beginning: 0 }, duration)
       .easing(TWEEN.Easing.Sinusoidal.Out)
-      .onUpdate((t) => {
+      .onUpdate(t => {
         for (let i = 0; i < half; i += 1) {
-          points[i].y = lerp(points[i].y, -(destinations[i].y), t);
+          points[i].y = lerp(points[i].y, -destinations[i].y, t);
         }
       });
 
     const aniIn = new TWEEN.Tween(param)
       .to({ ending: 1.0 }, duration)
       .easing(TWEEN.Easing.Sinusoidal.In)
-      .onUpdate((t) => {
+      .onUpdate(t => {
         for (let i = half; i < amount; i += 1) {
           points[i].y = lerp(points[i].y, destinations[i].y, t);
         }

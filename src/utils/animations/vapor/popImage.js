@@ -22,8 +22,8 @@ export default function veil(
   imgUrl = sculpture,
   scale = 1,
   opacity = 1,
-  duration = 400,
-  ) {
+  duration = 400
+) {
   const origin = { x: two.width * 0.5, y: two.height * 1.5 };
   const destIn = { y: two.height * 0.5 };
   const destOut = { y: two.height * -0.5 };
@@ -35,12 +35,8 @@ export default function veil(
   function setup() {
     let playing = false;
 
-    const shape = two.makeSprite(
-      imgUrl,
-      two.width * 0.5,
-      two.height * 0.5,
-    );
-    shape.scale = (scale * two.height) / 3000;
+    const shape = two.makeSprite(imgUrl, two.width * 0.5, two.height * 0.5);
+    shape.scale = scale * two.height / 3000;
     shape.opacity = 0;
 
     const aniOut = new TWEEN.Tween(shape.translation)
@@ -63,17 +59,15 @@ export default function veil(
     };
   }
 
-  let {
-    playing, shape, aniIn, aniOut,
-  } = setup();
+  let { playing, shape, aniIn, aniOut } = setup();
 
   /**
    * [setDirection description]
    */
   function setDirection() {
-    const direction = (Math.random() > 0.5);
+    const direction = Math.random() > 0.5;
     // origin.x = two.width * 0.5;
-    origin.x = two.width * (0.3 + (0.4 * Math.random()));
+    origin.x = two.width * (0.3 + 0.4 * Math.random());
     origin.y = two.height * (direction ? 1.8 : -0.8);
     destIn.y = two.height * 0.5;
     destOut.y = two.height * (direction ? -0.8 : 1.8);
@@ -83,9 +77,7 @@ export default function veil(
   const resize = () => {
     setDirection();
     two.remove(shape);
-    ({
-      playing, shape, aniIn, aniOut,
-    } = setup());
+    ({ playing, shape, aniIn, aniOut } = setup());
   };
 
   const reset = () => {
@@ -94,10 +86,7 @@ export default function veil(
     aniOut.stop();
     setDirection();
     shape.opacity = 0;
-    shape.translation.set(
-      origin.x,
-      origin.y,
-    );
+    shape.translation.set(origin.x, origin.y);
   };
 
   const start = () => {

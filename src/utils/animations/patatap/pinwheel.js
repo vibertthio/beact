@@ -1,8 +1,4 @@
-import {
-  TWO_PI,
-  min,
-  range,
-} from 'config/animation.config';
+import { TWO_PI, min, range } from 'config/animation.config';
 
 /**
  * Animation #16, Pinwheel
@@ -21,8 +17,8 @@ export default function pinwheel(
   colors,
   animations,
   opacity = 1,
-  duration = 300,
-  ) {
+  duration = 300
+) {
   let playing = false;
   let distance = two.height / 5;
   const amount = 8;
@@ -39,7 +35,7 @@ export default function pinwheel(
       two.width * 0.5,
       two.height * 0.5,
       distance,
-      amount,
+      amount
     );
     shape.fill = colors[3];
     shape.noStroke();
@@ -55,13 +51,13 @@ export default function pinwheel(
         playing = false;
       });
 
-    range(amount).forEach((i) => {
+    range(amount).forEach(i => {
       const index = i + 1;
       const center = Math.PI * (index / amount);
       const parallel = [];
-      range(amount).forEach((j) => {
+      range(amount).forEach(j => {
         const pct = min(j / index, 1.0);
-        const theta = (pct * endAngle) + startAngle + center + drift;
+        const theta = pct * endAngle + startAngle + center + drift;
         const p = points[j];
         const xpos = distance * Math.cos(theta);
         const ypos = distance * Math.sin(theta);
@@ -92,8 +88,8 @@ export default function pinwheel(
         }
       },
       stop: () => {
-        sequence.forEach((p) => {
-          p.forEach((t) => {
+        sequence.forEach(p => {
+          p.forEach(t => {
             t.stop();
           });
         });
@@ -119,11 +115,8 @@ export default function pinwheel(
 
   const reset = () => {
     playing = false;
-    points.forEach((p) => {
-      p.set(
-        distance * Math.cos(startAngle),
-        distance * Math.sin(startAngle),
-      );
+    points.forEach(p => {
+      p.set(distance * Math.cos(startAngle), distance * Math.sin(startAngle));
     });
     shape.visible = false;
     shape.rotation = Math.random() * TWO_PI;

@@ -24,15 +24,15 @@ export default function flashImage(
   scale = 1,
   opacity = 1,
   duration = 400,
-  ratio = 0.5,
-  ) {
+  ratio = 0.5
+) {
   let playing = false;
   const param = { t: 0 };
 
   /**
-  * [setup description]
-  * @return {[type]} [description]
-  */
+   * [setup description]
+   * @return {[type]} [description]
+   */
   function setup() {
     // const shape = two.makeRectangle(
     //   two.width * 0.5,
@@ -44,15 +44,11 @@ export default function flashImage(
     // shape.visible = 0;
     // shape.fill = texture;
     // shape.noStroke();
-    const shape = two.makeSprite(
-      imgUrl,
-      two.width * 0.5,
-      two.height * 0.5,
-    );
-    shape.scale = (scale * two.height) / 3000;
+    const shape = two.makeSprite(imgUrl, two.width * 0.5, two.height * 0.5);
+    shape.scale = scale * two.height / 3000;
     shape.visible = 0;
 
-    const originalScale = (scale * two.height) / 500;
+    const originalScale = scale * two.height / 500;
     let targetRatio;
     // texture.scale = originalScale;
 
@@ -63,9 +59,9 @@ export default function flashImage(
         targetRatio = ratio;
         shape.visible = 1;
       })
-      .onUpdate((t) => {
+      .onUpdate(t => {
         // texture.scale = originalScale * (1 + (targetRatio * t));
-        shape.scale = originalScale * (1 + (targetRatio * t.t));
+        shape.scale = originalScale * (1 + targetRatio * t.t);
         // shape.visible = Math.random() > 0.5;
       })
       .onComplete(() => {

@@ -20,18 +20,26 @@ function Animation() {
   let currentSequencerAnimationsIndex = 0;
   const colors = palette[2].map(toRGB);
   const canvas = document.getElementById('animation');
-  const isSafari = /Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor);
-  const params = isSafari ? { type: Two.Types.canvas, fullscreen: true } : { fullscreen: true };
+  const isSafari =
+    /Safari/.test(navigator.userAgent) &&
+    /Apple Computer/.test(navigator.vendor);
+  const params = isSafari
+    ? { type: Two.Types.canvas, fullscreen: true }
+    : { fullscreen: true };
   const two = new Two(params).appendTo(canvas);
-  two.bind('update', () => { TWEEN.update(); }).play();
+  two
+    .bind('update', () => {
+      TWEEN.update();
+    })
+    .play();
 
   // set includes both key and sequencer animations.
   const setAnimation = (index, set, animation) => {
-    const i = index % (set.length);
+    const i = index % set.length;
     set[i].forEach((s, j) => {
       if (Array.isArray(s)) {
         animation.push([]);
-        s.forEach((a) => {
+        s.forEach(a => {
           const opt = a.options ? a.options : [];
           const param = [Two, two, TWEEN, colors, animation[j]];
           // elements in animation array are filled in animation files
@@ -51,31 +59,29 @@ function Animation() {
     setAnimation(
       currentSequencerAnimationsIndex,
       sequencerAnimationsSet,
-      sequencerAnimations,
+      sequencerAnimations
     );
   };
 
   const setSequencerAnimationsCustomSettings = () => {
-    sequencerCustomSettings[currentSequencerAnimationsIndex](currentSequencerAnimationsIndex);
+    sequencerCustomSettings[currentSequencerAnimationsIndex](
+      currentSequencerAnimationsIndex
+    );
   };
 
   const setKeyAnimation = () => {
     keyAnimations.splice(0, keyAnimations.length);
-    setAnimation(
-      currentKeyAnimationsIndex,
-      keyAnimationsSet,
-      keyAnimations,
-    );
+    setAnimation(currentKeyAnimationsIndex, keyAnimationsSet, keyAnimations);
   };
 
   const reset = () => {
     two.clear();
   };
 
-  const triggerKeyAnimation = (index) => {
+  const triggerKeyAnimation = index => {
     const i = index % keyAnimations.length;
     if (Array.isArray(keyAnimations[i])) {
-      keyAnimations[i].forEach((a) => {
+      keyAnimations[i].forEach(a => {
         a.start();
       });
     } else {
@@ -84,10 +90,10 @@ function Animation() {
   };
 
   // index of clicked element in each column
-  const triggerSequencerAnimation = (index) => {
+  const triggerSequencerAnimation = index => {
     const i = index % sequencerAnimations.length;
     if (Array.isArray(sequencerAnimations[i])) {
-      sequencerAnimations[i].forEach((a) => {
+      sequencerAnimations[i].forEach(a => {
         a.start();
       });
     } else {
@@ -100,23 +106,23 @@ function Animation() {
     two.renderer.setSize(w, h);
     two.width = w;
     two.height = h;
-    sequencerAnimations.forEach((ani) => {
+    sequencerAnimations.forEach(ani => {
       if (Array.isArray(ani)) {
-        ani.forEach((a) => {
+        ani.forEach(a => {
           a.resize();
         });
       } else {
         ani.resize();
       }
     });
-    keyAnimations.forEach((ani) => {
+    keyAnimations.forEach(ani => {
       ani.resize();
     });
   };
 
-  const changeSequencerAnimations = (up) => {
+  const changeSequencerAnimations = up => {
     const n = sequencerAnimationsSet.length;
-    currentSequencerAnimationsIndex += (up ? 1 : -1);
+    currentSequencerAnimationsIndex += up ? 1 : -1;
     if (currentSequencerAnimationsIndex < 0) {
       currentSequencerAnimationsIndex += n;
     } else if (currentSequencerAnimationsIndex > n - 1) {
@@ -128,9 +134,9 @@ function Animation() {
     setKeyAnimation();
   };
 
-	const changeKeyAnimations = (up) => {
+  const changeKeyAnimations = up => {
     const n = keyAnimations.length;
-    currentKeyAnimationsIndex += (up ? 1 : -1);
+    currentKeyAnimationsIndex += up ? 1 : -1;
     if (currentKeyAnimationsIndex < 0) {
       currentKeyAnimationsIndex += n;
     } else if (currentKeyAnimationsIndex > n - 1) {
@@ -148,7 +154,7 @@ function Animation() {
     setKeyAnimation();
   };
 
-	const startNormal = () => {
+  const startNormal = () => {
     currentKeyAnimationsIndex = 0;
     reset();
     setSequencerAnimations();
@@ -162,16 +168,14 @@ function Animation() {
     triggerKeyAnimation,
     triggerSequencerAnimation,
     changeSequencerAnimations,
-		changeKeyAnimations,
+    changeKeyAnimations,
     resize,
     startNaruto,
-		startNormal,
+    startNormal,
     setSequencerAnimationsCustomSettings,
   };
 }
 
-export {
-	animationKey2IndexMapping,
-};
+export { animationKey2IndexMapping };
 
 export default Animation;

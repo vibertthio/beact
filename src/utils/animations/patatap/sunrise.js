@@ -17,8 +17,8 @@ export default function sunrise(
   colors,
   animations,
   opacity = 1,
-  duration = 400,
-  ) {
+  duration = 400
+) {
   let playing = false;
   const origin = { x: two.width * 0.5, y: two.height * 1.5 };
   const dest = { y: two.height * 0.5 };
@@ -34,9 +34,9 @@ export default function sunrise(
     }
 
     if (Math.random() > 0.5) {
-      origin.y = two.height * (-0.5);
+      origin.y = two.height * -0.5;
     } else {
-      origin.y = two.height * (1.5);
+      origin.y = two.height * 1.5;
     }
 
     dest.y = two.height * 0.5;
@@ -89,10 +89,7 @@ export default function sunrise(
     aniIn.stop();
     aniOut.stop();
     setOrigin();
-    circle.translation.set(
-      origin.x,
-      origin.y,
-    );
+    circle.translation.set(origin.x, origin.y);
   };
 
   const start = () => {

@@ -1,8 +1,4 @@
-import {
-  TWO_PI,
-  min,
-  map,
-} from 'config/animation.config';
+import { TWO_PI, min, map } from 'config/animation.config';
 
 /**
  * Animation #22, Sinewave
@@ -21,8 +17,8 @@ export default function sinewave(
   colors,
   animations,
   opacity = 1,
-  duration = 400,
-  ) {
+  duration = 400
+) {
   let playing = false;
   const amount = 200;
   let points;
@@ -37,13 +33,10 @@ export default function sinewave(
     for (let i = 0; i < amount; i += 1) {
       const v = points[i];
       const pct = i / amount;
-      const theta = (TWO_PI * phi * pct) + offset;
+      const theta = TWO_PI * phi * pct + offset;
       const w = two.width * 0.5;
       const h = two.height * 0.33;
-      v.set(
-        map(pct, 0, 1, -w / 2, w / 2),
-        h * Math.sin(theta),
-      );
+      v.set(map(pct, 0, 1, -w / 2, w / 2), h * Math.sin(theta));
     }
   }
   /**
@@ -52,12 +45,7 @@ export default function sinewave(
    */
   function setup() {
     // first hemisphere
-    const shape = two.makePolygon(
-      two.width * 0.5,
-      two.height * 0.5,
-      0,
-      amount,
-    );
+    const shape = two.makePolygon(two.width * 0.5, two.height * 0.5, 0, amount);
     points = shape.vertices;
     shape.noFill();
     shape.stroke = colors[4];
@@ -74,8 +62,7 @@ export default function sinewave(
       .easing(TWEEN.Easing.Sinusoidal.In)
       .onComplete(() => {
         shape.visible = false;
-      })
-      ;
+      });
 
     const aniIn = new TWEEN.Tween(shape)
       .to({ ending: 1.0 }, duration)
@@ -104,7 +91,7 @@ export default function sinewave(
     shape.visible = false;
     shape.beginning = 0;
     shape.ending = 0;
-    shape.rotation = (Math.random() > 0.5 ? 0 : Math.PI);
+    shape.rotation = Math.random() > 0.5 ? 0 : Math.PI;
     setPoints();
     aniIn.stop();
     aniOut.stop();

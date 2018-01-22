@@ -1,10 +1,4 @@
-import {
-  TWO_PI,
-  cos,
-  sin,
-  min,
-  range,
-} from 'config/animation.config';
+import { TWO_PI, cos, sin, min, range } from 'config/animation.config';
 
 /**
  * Animation #15, Timer
@@ -23,8 +17,8 @@ export default function timer(
   colors,
   animations,
   opacity = 1,
-  duration = 400,
-  ) {
+  duration = 400
+) {
   let playing = false;
   let direction = true;
   const amount = 32;
@@ -36,18 +30,13 @@ export default function timer(
    * @return {[type]} [description]
    */
   function setup() {
-    const points = range(amount).map((i) => {
+    const points = range(amount).map(i => {
       const pct = i / (amount - 1);
       const theta = pct * TWO_PI;
-      return new Two.Anchor(
-        radius * cos(theta),
-        radius * sin(theta),
-      );
+      return new Two.Anchor(radius * cos(theta), radius * sin(theta));
     });
 
-    points.push(
-      points[0].clone(),
-    );
+    points.push(points[0].clone());
     // test
     // const linearGradient = two.makeLinearGradient(
     //   two.width / 2,
@@ -106,7 +95,7 @@ export default function timer(
    * [setDirection description]
    */
   function setDirection() {
-    direction = (Math.random() > 0.5);
+    direction = Math.random() > 0.5;
     shape.rotation = Math.random() * TWO_PI;
   }
 

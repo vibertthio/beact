@@ -1,20 +1,15 @@
-import {
-  min,
-  range,
-  lerp,
-  map,
-} from 'config/animation.config';
+import { min, range, lerp, map } from 'config/animation.config';
 
 /**
-* Animation #13, Splash Colorful
-* @param  {objct} Two
-* @param  {object} two instance of two
-* @param  {object} TWEEN the library for tweening
-* @param  {object} colors color palette
-* @param  {array} animations It's the stack of animations
-* @param  {number} [opacity = 1]
-* @param  {number} [duration = 1000]
-*/
+ * Animation #13, Splash Colorful
+ * @param  {objct} Two
+ * @param  {object} two instance of two
+ * @param  {object} TWEEN the library for tweening
+ * @param  {object} colors color palette
+ * @param  {array} animations It's the stack of animations
+ * @param  {number} [opacity = 1]
+ * @param  {number} [duration = 1000]
+ */
 export default function splashColorful(
   Two,
   two,
@@ -22,8 +17,8 @@ export default function splashColorful(
   colors,
   animations,
   opacity = 1,
-  duration = 1000,
-  ) {
+  duration = 1000
+) {
   let playing = false;
   const amount = 32;
   const param = { t: 0 };
@@ -31,9 +26,9 @@ export default function splashColorful(
   const destinations = [];
 
   /**
-  * [setup description]
-  * @return {[type]} [description]
-  */
+   * [setup description]
+   * @return {[type]} [description]
+   */
   function setup() {
     const rMin = min(two.width, two.height) * (12 / 900);
     const rMax = min(two.width, two.height) * (20 / 900);
@@ -41,7 +36,7 @@ export default function splashColorful(
     const group = two.makeGroup();
     group.translation.set(two.width * 0.5, two.height * 0.5);
 
-    circles = range(amount).map((i) => {
+    circles = range(amount).map(i => {
       const r = Math.round(map(Math.random(), 0, 1, rMin, rMax));
       const circle = two.makeCircle(0, 0, r);
       circle.fill = colors[i % colors.length];
@@ -55,21 +50,21 @@ export default function splashColorful(
     group.visible = false;
 
     const ani = new TWEEN.Tween(param)
-    .to({ t: 1.0 }, duration)
-    .easing(TWEEN.Easing.Sinusoidal.Out)
-    .onUpdate(() => {
-      const t = param.t;
-      for (let i = 0; i < amount; i += 1) {
-        const c = circles[i];
-        const d = destinations[i];
-        const x = lerp(c.translation.x, d.x, t);
-        const y = lerp(c.translation.y, d.y, t);
-        c.translation.set(x, y);
-      }
-    })
-    .onComplete(() => {
-      group.visible = false;
-    });
+      .to({ t: 1.0 }, duration)
+      .easing(TWEEN.Easing.Sinusoidal.Out)
+      .onUpdate(() => {
+        const t = param.t;
+        for (let i = 0; i < amount; i += 1) {
+          const c = circles[i];
+          const d = destinations[i];
+          const x = lerp(c.translation.x, d.x, t);
+          const y = lerp(c.translation.y, d.y, t);
+          c.translation.set(x, y);
+        }
+      })
+      .onComplete(() => {
+        group.visible = false;
+      });
 
     return {
       group,
@@ -111,12 +106,12 @@ export default function splashColorful(
       oy = two.height * 1.125;
     }
 
-    const theta = Math.atan2((two.height * 0.5) - oy, (two.width * 0.5) - ox);
+    const theta = Math.atan2(two.height * 0.5 - oy, two.width * 0.5 - ox);
     const deviation = map(Math.random(), 0, 1, Math.PI / 4, Math.PI / 2);
     param.t = 0;
     for (let i = 0; i < amount; i += 1) {
       const c = circles[i];
-      const t = theta + (((Math.random() * 2) - 1) * deviation);
+      const t = theta + (Math.random() * 2 - 1) * deviation;
       const a = Math.random() * two.height;
       const x = a * Math.cos(t);
       const y = a * Math.sin(t);
@@ -128,7 +123,6 @@ export default function splashColorful(
 
     group.translation.set(ox, oy);
   };
-
 
   const start = () => {
     reset();

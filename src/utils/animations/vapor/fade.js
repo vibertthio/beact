@@ -1,4 +1,3 @@
-
 /**
  * Animation #9, 10, 11, Fade
  * it will have two direction(u/d), which will be decided randomly
@@ -21,21 +20,21 @@ export default function fade(
   index = 0,
   opacity = 1,
   duration = 400,
-  mode = 0,
-  ) {
+  mode = 0
+) {
   let playing = false;
   const param = { t: 0 };
 
   /**
-  * [setup description]
-  * @return {[type]} [description]
-  */
+   * [setup description]
+   * @return {[type]} [description]
+   */
   function setup() {
     const shape = two.makeRectangle(
       two.width * 0.5,
       two.height * 0.5,
       two.width,
-      two.height,
+      two.height
     );
     console.log('setup!');
     shape.visible = true;
@@ -58,9 +57,7 @@ export default function fade(
       default:
         break;
     }
-    const ani = new TWEEN.Tween(shape)
-      .to({ opacity: 1 }, duration)
-      .easing(twn);
+    const ani = new TWEEN.Tween(shape).to({ opacity: 1 }, duration).easing(twn);
 
     return { shape, ani };
   }

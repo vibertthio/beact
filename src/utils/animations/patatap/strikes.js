@@ -2,16 +2,16 @@ import { range } from 'config/animation.config';
 import strike from './strike';
 
 /**
-* Animation #20, Strike
-* @param  {objct} Two
-* @param  {object} two instance of two
-* @param  {object} TWEEN the library for tweening
-* @param  {object} colors color palette
-* @param  {array} animations It's the stack of animations
-* @param  {amount} [amount = 2]
-* @param  {number} [opacity = 1]
-* @param  {number} [duration = 200]
-*/
+ * Animation #20, Strike
+ * @param  {objct} Two
+ * @param  {object} two instance of two
+ * @param  {object} TWEEN the library for tweening
+ * @param  {object} colors color palette
+ * @param  {array} animations It's the stack of animations
+ * @param  {amount} [amount = 2]
+ * @param  {number} [opacity = 1]
+ * @param  {number} [duration = 200]
+ */
 export default function strikes(
   Two,
   two,
@@ -20,8 +20,8 @@ export default function strikes(
   animations,
   amount = 2,
   opacity = 1,
-  duration = 200,
-  ) {
+  duration = 200
+) {
   let playing = false;
 
   /**
@@ -31,15 +31,7 @@ export default function strikes(
   function setup() {
     const shapes = [];
     range(amount).forEach(() =>
-      strike(
-        Two,
-        two,
-        TWEEN,
-        colors,
-        shapes,
-        opacity,
-        duration,
-      ),
+      strike(Two, two, TWEEN, colors, shapes, opacity, duration)
     );
     return {
       shapes,

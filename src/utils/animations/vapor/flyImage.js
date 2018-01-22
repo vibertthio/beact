@@ -23,8 +23,8 @@ export default function flyImage(
   imgUrl = sculpture,
   scale = 1,
   opacity = 1,
-  duration = 400,
-  ) {
+  duration = 400
+) {
   const origin = { x: 0, y: 0 };
   const destIn = { x: 0, y: 0 };
   const destOut = { x: 0, y: 0 };
@@ -36,12 +36,8 @@ export default function flyImage(
   function setup() {
     let playing = false;
 
-    const shape = two.makeSprite(
-      imgUrl,
-      origin.x,
-      origin.y,
-    );
-    shape.scale = (scale * Math.min(two.height, two.width)) / 300;
+    const shape = two.makeSprite(imgUrl, origin.x, origin.y);
+    shape.scale = scale * Math.min(two.height, two.width) / 300;
     shape.opacity = 0;
 
     const aniOut = new TWEEN.Tween(shape.translation)
@@ -53,7 +49,9 @@ export default function flyImage(
       });
     const aniIn = new TWEEN.Tween(shape.translation)
       .to(destIn, duration)
-      .onStart(() => { playing = true; })
+      .onStart(() => {
+        playing = true;
+      })
       .easing(TWEEN.Easing.Exponential.Out)
       .onComplete(() => {
         aniOut.start();
@@ -72,9 +70,9 @@ export default function flyImage(
    * [setDirection description]
    */
   function setDirection() {
-    const direction = (Math.random() > 0.5);
+    const direction = Math.random() > 0.5;
     // origin.x = two.width * 0.5;
-    origin.x = two.width * (0.3 + (0.4 * Math.random()));
+    origin.x = two.width * (0.3 + 0.4 * Math.random());
     origin.y = two.height * (direction ? 1.8 : -0.8);
     destIn.y = two.height * 0.5;
     destOut.y = two.height * (direction ? -0.8 : 1.8);
@@ -83,13 +81,13 @@ export default function flyImage(
     const distance = Math.round(map(rando, 0, 1, two.height * 0.5, two.width));
     let theta;
     theta = Math.random() * TWO_PI;
-    shape.rotation = theta + (Math.PI * 0.5);
-    origin.x = (distance * Math.cos(theta)) + (two.width * 0.5);
-    origin.y = (distance * Math.sin(theta)) + (two.height * 0.5);
+    shape.rotation = theta + Math.PI * 0.5;
+    origin.x = distance * Math.cos(theta) + two.width * 0.5;
+    origin.y = distance * Math.sin(theta) + two.height * 0.5;
 
-    theta += Math.PI * (1 + (0.3 * rando));
-    destOut.x = (distance * Math.cos(theta)) + (two.width * 0.5);
-    destOut.y = (distance * Math.sin(theta)) + (two.height * 0.5);
+    theta += Math.PI * (1 + 0.3 * rando);
+    destOut.x = distance * Math.cos(theta) + two.width * 0.5;
+    destOut.y = distance * Math.sin(theta) + two.height * 0.5;
     destIn.x = (origin.x + destOut.x) * 0.5;
     destIn.y = (origin.y + destOut.y) * 0.5;
   }
@@ -105,10 +103,7 @@ export default function flyImage(
     aniOut.stop();
     setDirection();
     shape.opacity = 0;
-    shape.translation.set(
-      origin.x,
-      origin.y,
-    );
+    shape.translation.set(origin.x, origin.y);
   };
 
   const start = () => {

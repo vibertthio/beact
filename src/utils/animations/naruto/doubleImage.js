@@ -3,18 +3,18 @@ import defaultImgUrl2 from 'vapor/sculpture-01.jpg';
 import showImage from './showImage';
 
 /**
-* Animation for Naruto, double image
-* @param  {objct} Two
-* @param  {object} two instance of two
-* @param  {object} TWEEN the library for tweening
-* @param  {object} colors color palette
-* @param  {array} animations It's the stack of animations
-* @param  {array} imgUrls
-* @param  {amount} [scales = [1, 0.1]]
-* @param  {number} [opacity = 1]
-* @param  {number} [duration = 200]
-* @param  {number} [ratios = [0.5, 0.2]]
-*/
+ * Animation for Naruto, double image
+ * @param  {objct} Two
+ * @param  {object} two instance of two
+ * @param  {object} TWEEN the library for tweening
+ * @param  {object} colors color palette
+ * @param  {array} animations It's the stack of animations
+ * @param  {array} imgUrls
+ * @param  {amount} [scales = [1, 0.1]]
+ * @param  {number} [opacity = 1]
+ * @param  {number} [duration = 200]
+ * @param  {number} [ratios = [0.5, 0.2]]
+ */
 export default function doubleImage(
   Two,
   two,
@@ -23,11 +23,11 @@ export default function doubleImage(
   animations,
   imgUrls = [defaultImgUrl1, defaultImgUrl2],
   // scales = [0.4, 0.5],
-	scales = [0.4, 0.55],
+  scales = [0.4, 0.55],
   opacity = 1,
   duration = 400,
-  ratios = [1, 0.2],
-  ) {
+  ratios = [1, 0.2]
+) {
   let playing = false;
 
   /**
@@ -47,8 +47,9 @@ export default function doubleImage(
         scales[i],
         opacity,
         duration,
-        ratios[i],
-      ));
+        ratios[i]
+      )
+    );
     return {
       shapes,
     };

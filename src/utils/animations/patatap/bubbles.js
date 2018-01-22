@@ -1,8 +1,4 @@
-import {
-  TWO_PI,
-  range,
-  min,
-} from 'config/animation.config';
+import { TWO_PI, range, min } from 'config/animation.config';
 
 /**
  * Animation #23, Bubbles
@@ -21,8 +17,8 @@ export default function bubbles(
   colors,
   animations,
   opacity = 1,
-  duration = 250,
-  ) {
+  duration = 250
+) {
   let playing = false;
   const amount = 24;
   const last = amount - 1;
@@ -33,15 +29,13 @@ export default function bubbles(
   /**
    * [setPoints description]
    */
-  function setCircles() {
-
-  }
+  function setCircles() {}
   /**
    * [setup description]
    * @return {[type]} [description]
    */
   function setup() {
-    const circles = range(amount).map((i) => {
+    const circles = range(amount).map(i => {
       const pct = i / last;
       const circle = two.makeCircle(radius, 0, bubbleRadius);
       circle.theta = 0;
@@ -55,12 +49,10 @@ export default function bubbles(
     group.translation.set(two.width * 0.5, two.height * 0.5);
     group.visible = false;
     const aniOuts = circles.map((c, i) => {
-      const next =
-        (!circles[i + 1]) ?
-        TWO_PI : (circles[i + 1].destination);
+      const next = !circles[i + 1] ? TWO_PI : circles[i + 1].destination;
 
       return new TWEEN.Tween(c)
-        .to({ theta: next }, duration / (amount - (i)))
+        .to({ theta: next }, duration / (amount - i))
         .onUpdate(() => {
           const theta = direction ? c.theta : -c.theta;
           const x = radius * Math.cos(theta);
@@ -101,9 +93,8 @@ export default function bubbles(
           next.theta = c.theta;
           next.translation.copy(c.translation);
           tween.start();
-        }),
+        })
     );
-
 
     const aniOut = {
       stop: () => {
@@ -119,7 +110,6 @@ export default function bubbles(
         aniIns.forEach(a => a.stop());
       },
     };
-
 
     return {
       group,

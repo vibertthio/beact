@@ -1,8 +1,4 @@
-import {
-  TWO_PI,
-  min,
-  map,
-} from 'config/animation.config';
+import { TWO_PI, min, map } from 'config/animation.config';
 
 /**
  * Animation #21, Zigzag
@@ -21,8 +17,8 @@ export default function zigzag(
   colors,
   animations,
   opacity = 1,
-  duration = 200,
-  ) {
+  duration = 200
+) {
   let playing = false;
   const amount = 120;
   let phi = 6;
@@ -77,15 +73,9 @@ export default function zigzag(
 
     // left or right
     if (Math.random() > 0.5) {
-      shape.translation.set(
-        two.width * 0.85,
-        two.height * 0.5,
-      );
+      shape.translation.set(two.width * 0.85, two.height * 0.5);
     } else {
-      shape.translation.set(
-        two.width * 0.15,
-        two.height * 0.5,
-      );
+      shape.translation.set(two.width * 0.15, two.height * 0.5);
     }
 
     const index = Math.random() * 4;
@@ -109,8 +99,8 @@ export default function zigzag(
       const p = points[i];
       const pct = i / amount;
       const theta =
-        Math.abs(((((2 * ((pct * TWO_PI * phi) + offset)) / Math.PI) - 1) % 4) - 2) - 1;
-      const x = (theta * w) / 2;
+        Math.abs((2 * (pct * TWO_PI * phi + offset) / Math.PI - 1) % 4 - 2) - 1;
+      const x = theta * w / 2;
       const y = map(pct, 0, 1, -h / 2, h / 2);
       p.set(x, y);
     }

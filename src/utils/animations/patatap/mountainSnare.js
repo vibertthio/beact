@@ -16,8 +16,8 @@ export default function moutainSnare(
   colors,
   animations,
   opacity = 1,
-  duration = 300,
-  ) {
+  duration = 300
+) {
   let playing = false;
   const origin = { x: 0, y: 0 };
   const dest = { y: 0 };
@@ -29,7 +29,7 @@ export default function moutainSnare(
   function setup() {
     const low = two.height * 0.6;
     const high = two.height * 0.4;
-    const shift = two.width * (0.4 + ((Math.random()) * 0.3));
+    const shift = two.width * (0.4 + Math.random() * 0.3);
 
     const points = [
       new Two.Anchor(0, two.height * 1.2),
@@ -39,14 +39,13 @@ export default function moutainSnare(
       new Two.Anchor(two.width, two.height * 1.2),
     ];
 
-
     const shape = two.makePath(points, false);
     shape.opacity = 0;
     shape.noStroke();
     shape.fill = colors[2];
     origin.x = shape.translation.x;
     origin.y = shape.translation.y;
-    dest.y = shape.translation.y + (two.height * 0.1);
+    dest.y = shape.translation.y + two.height * 0.1;
 
     const aniOpacity = new TWEEN.Tween(shape)
       .to({ opacity: 0 }, duration * 2)
@@ -79,10 +78,10 @@ export default function moutainSnare(
    */
   function setDirection() {
     shape.translation.set(origin.x, origin.y);
-    shape.vertices[1].y = two.height * (0.2 - (0.1 * Math.random()));
-    shape.vertices[2].y = two.height * (-0.4 - (0.2 * Math.random()));
-    shape.vertices[2].x = two.width * (0.4 - ((Math.random()) * 0.4));
-    shape.vertices[3].y = two.height * (-0.1 + (-0.1 * Math.random()));
+    shape.vertices[1].y = two.height * (0.2 - 0.1 * Math.random());
+    shape.vertices[2].y = two.height * (-0.4 - 0.2 * Math.random());
+    shape.vertices[2].x = two.width * (0.4 - Math.random() * 0.4);
+    shape.vertices[3].y = two.height * (-0.1 + -0.1 * Math.random());
   }
 
   // methods

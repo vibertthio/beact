@@ -1,4 +1,3 @@
-
 /**
  * Animation #9, 10, 11, Flash
  * it will have two direction(u/d), which will be decided randomly
@@ -19,34 +18,34 @@ export default function crossline(
   animations,
   index = 0,
   opacity = 1,
-  duration = 400,
-  ) {
+  duration = 400
+) {
   let playing = false;
   const param = { t: 0 };
 
   /**
-  * [setup description]
-  * @return {[type]} [description]
-  */
+   * [setup description]
+   * @return {[type]} [description]
+   */
   function setup() {
     const lineA = two.makeLine(
-			Math.random() * two.width,
+      Math.random() * two.width,
       0,
       Math.random() * two.width,
-      two.height,
+      two.height
     );
     lineA.visible = 0;
-		lineA.linewidth = 4;
+    lineA.linewidth = 4;
     lineA.stroke = 'rgb(255, 255, 255)';
 
-		const lineB = two.makeLine(
-			0,
-			Math.random() * two.width,
-			two.width,
+    const lineB = two.makeLine(
+      0,
       Math.random() * two.width,
+      two.width,
+      Math.random() * two.width
     );
     lineB.visible = 0;
-		lineB.linewidth = 4;
+    lineB.linewidth = 4;
     lineB.stroke = 'rgb(255, 255, 255)';
 
     const ani = new TWEEN.Tween(param)
@@ -54,11 +53,11 @@ export default function crossline(
       .easing(TWEEN.Easing.Linear.None)
       .onUpdate(() => {
         lineA.visible = Math.random() > 0.5;
-				lineB.visible = Math.random() > 0.5;
+        lineB.visible = Math.random() > 0.5;
       })
       .onComplete(() => {
         lineA.visible = 0;
-				lineB.visible = 0;
+        lineB.visible = 0;
       });
     return { lineA, lineB, ani };
   }
@@ -73,7 +72,7 @@ export default function crossline(
 
   const reset = () => {
     ani.stop();
-		resize();
+    resize();
   };
 
   const start = () => {

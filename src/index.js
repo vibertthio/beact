@@ -17,7 +17,7 @@ if (module.hot) {
     </AppContainer>
   );
 
-  module.hot.addStatusHandler((status) => {
+  module.hot.addStatusHandler(status => {
     // React to the current status...
     console.log(`status : ${status}`);
   });

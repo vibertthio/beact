@@ -1,20 +1,15 @@
-import {
-  TWO_PI,
-  min,
-  lerp,
-  map,
-} from 'config/animation.config';
+import { TWO_PI, min, lerp, map } from 'config/animation.config';
 
 /**
-* Animation #20, Strike
-* @param  {objct} Two
-* @param  {object} two instance of two
-* @param  {object} TWEEN the library for tweening
-* @param  {object} colors color palette
-* @param  {array} animations It's the stack of animations
-* @param  {number} [opacity = 1]
-* @param  {number} [duration = 200]
-*/
+ * Animation #20, Strike
+ * @param  {objct} Two
+ * @param  {object} two instance of two
+ * @param  {object} TWEEN the library for tweening
+ * @param  {object} colors color palette
+ * @param  {array} animations It's the stack of animations
+ * @param  {number} [opacity = 1]
+ * @param  {number} [duration = 200]
+ */
 export default function strike(
   Two,
   two,
@@ -22,8 +17,8 @@ export default function strike(
   colors,
   animations,
   opacity = 1,
-  duration = 200,
-  ) {
+  duration = 200
+) {
   let playing = false;
   const amount = 32;
   let distance = min(two.width, two.height) * 0.5;
@@ -41,7 +36,7 @@ export default function strike(
       two.width * 0.5,
       two.height * 0.5,
       distance,
-      amount,
+      amount
     );
     points = line.vertices;
     line.noFill();
@@ -52,13 +47,19 @@ export default function strike(
     const aniOut = new TWEEN.Tween(line)
       .to({ beginning: 1.0 }, duration)
       .easing(TWEEN.Easing.Circular.Out)
-      .onComplete(() => { line.visible = false; });
+      .onComplete(() => {
+        line.visible = false;
+      });
 
     const aniIn = new TWEEN.Tween(line)
       .to({ ending: 1.0 }, duration)
       .easing(TWEEN.Easing.Circular.In)
-      .onStart(() => { line.visible = true; })
-      .onComplete(() => { aniOut.start(); });
+      .onStart(() => {
+        line.visible = true;
+      })
+      .onComplete(() => {
+        aniOut.start();
+      });
 
     return {
       line,
@@ -90,7 +91,7 @@ export default function strike(
     startPoint.x = distance * Math.cos(theta);
     startPoint.y = distance * Math.sin(theta);
 
-    theta += Math.PI * (1 + (0.3 * rando));
+    theta += Math.PI * (1 + 0.3 * rando);
     endPoint.x = distance * Math.cos(theta);
     endPoint.y = distance * Math.sin(theta);
 

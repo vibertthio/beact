@@ -16,9 +16,9 @@ export default function wipe(
   colors,
   animations,
   opacity = 1,
-  duration = 400,
-  ) {
-  const origin = { x: two.width * (-0.5), y: two.height * 0.5 };
+  duration = 400
+) {
+  const origin = { x: two.width * -0.5, y: two.height * 0.5 };
   const destIn = { x: two.width * 0.5 };
   const destOut = { x: two.width * 1.5 };
 
@@ -26,7 +26,7 @@ export default function wipe(
    * [setDirection description]
    */
   function setDirection() {
-    const direction = (Math.random() > 0.5);
+    const direction = Math.random() > 0.5;
     origin.x = two.width * (direction ? 1.5 : -0.5);
     origin.y = two.height * 0.5;
     destIn.x = two.width * 0.5;
@@ -40,12 +40,7 @@ export default function wipe(
   function setup() {
     let playing = false;
 
-    const shape = two.makeRectangle(
-      origin.x,
-      origin.y,
-      two.width,
-      two.height,
-    );
+    const shape = two.makeRectangle(origin.x, origin.y, two.width, two.height);
     shape.opacity = 0;
     shape.noStroke();
     shape.fill = colors[3];
@@ -85,10 +80,7 @@ export default function wipe(
     aniOut.stop();
     setDirection();
     shape.opacity = 0;
-    shape.translation.set(
-      origin.x,
-      origin.y,
-    );
+    shape.translation.set(origin.x, origin.y);
   };
 
   const start = () => {

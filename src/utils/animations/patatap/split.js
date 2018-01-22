@@ -1,10 +1,4 @@
-import {
-  TWO_PI,
-  cos,
-  sin,
-  min,
-  ease,
-} from 'config/animation.config';
+import { TWO_PI, cos, sin, min, ease } from 'config/animation.config';
 
 /**
  * Animation #18, Split
@@ -23,8 +17,8 @@ export default function split(
   colors,
   animations,
   opacity = 1,
-  duration = 500,
-  ) {
+  duration = 500
+) {
   let playing = false;
   let distance = two.height / 5;
   const amount = 30;
@@ -75,18 +69,24 @@ export default function split(
       .to({ beginning: 0 }, duration)
       .easing(TWEEN.Easing.Circular.Out)
       .delay(duration * 0.5)
-      .onUpdate((t) => {
-        shapes[0].translation.y =
-          ease(shapes[0].translation.y, shapes[0].origin.y + distance, 0.3);
-        shapes[1].translation.y =
-          ease(shapes[1].translation.y, shapes[1].origin.y - distance, 0.3);
+      .onUpdate(t => {
+        shapes[0].translation.y = ease(
+          shapes[0].translation.y,
+          shapes[0].origin.y + distance,
+          0.3
+        );
+        shapes[1].translation.y = ease(
+          shapes[1].translation.y,
+          shapes[1].origin.y - distance,
+          0.3
+        );
         group.opacity = 1 - t;
       });
 
     const aniIn = new TWEEN.Tween(param)
       .to({ ending: 1.0 }, duration)
       .easing(TWEEN.Easing.Circular.In)
-      .onUpdate((t) => {
+      .onUpdate(t => {
         group.visible = Math.random() < t;
       })
       .onComplete(() => {

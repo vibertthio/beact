@@ -1,10 +1,4 @@
-import {
-  TWO_PI,
-  cos,
-  sin,
-  max,
-  range,
-} from 'config/animation.config';
+import { TWO_PI, cos, sin, max, range } from 'config/animation.config';
 
 /**
  * Animation #3, 4
@@ -25,8 +19,8 @@ export default function prism(
   animations,
   index = 3,
   opacity = 1,
-  duration = 500,
-  ) {
+  duration = 500
+) {
   const origin = { x: two.width * 0.5, y: two.height * 0.5 };
   const dest = { scale: max(two.width, two.height) / 40 };
 
@@ -39,9 +33,9 @@ export default function prism(
   }
 
   /**
-  * [setup description]
-  * @return {[type]} [description]
-  */
+   * [setup description]
+   * @return {[type]} [description]
+   */
   function setup() {
     const playing = false;
 
@@ -49,19 +43,14 @@ export default function prism(
     const rPolygon = 100;
     const rCircle = 3;
 
-    const shape = two.makePolygon(
-      0,
-      0,
-      rPolygon,
-      sides,
-    );
+    const shape = two.makePolygon(0, 0, rPolygon, sides);
     shape.stroke = colors[6];
     shape.linewidth = 1;
     shape.noFill();
 
-    const circles = range(sides).map((i) => {
+    const circles = range(sides).map(i => {
       const pct = (i + 0.5) / sides;
-      const theta = (TWO_PI * pct) + (Math.PI / 2);
+      const theta = TWO_PI * pct + Math.PI / 2;
       const x = 2 * rPolygon * cos(theta);
       const y = 2 * rPolygon * sin(theta);
       const circle = two.makeCircle(x, y, rCircle);
@@ -69,7 +58,6 @@ export default function prism(
       circle.noStroke();
       return circle;
     });
-
 
     const group = two.makeGroup(shape).add(circles);
     group.scale = 0;
@@ -99,10 +87,7 @@ export default function prism(
     ani.stop();
     setPosition();
     group.scale = 0;
-    group.translation.set(
-      origin.x,
-      origin.y,
-    );
+    group.translation.set(origin.x, origin.y);
   };
 
   const start = () => {

@@ -34,7 +34,10 @@ class Matrix extends Component {
     // console.log(`e.buttons: ${e.buttons}`);
     // console.log(`e.nativeEvent.which: ${e.nativeEvent.which}`);
     // only when dragging; polyfilling safari, which doesn't support e.buttons
-    if ((e.buttons === undefined && e.nativeEvent.which === 1) || e.buttons === 1) {
+    if (
+      (e.buttons === undefined && e.nativeEvent.which === 1) ||
+      e.buttons === 1
+    ) {
       onClick(i, j);
     }
   }
@@ -47,37 +50,34 @@ class Matrix extends Component {
   }
 
   render() {
-		const { idle, hover } = this.state;
+    const { idle, hover } = this.state;
     const { data, onClick } = this.props;
     return (
       <div className={`${styles.cont}`}>
         <div
-          className={
-            `${styles.matrix}
-            ${(idle === true) ? styles.idle : ''}`}
+          className={`${styles.matrix}
+            ${idle === true ? styles.idle : ''}`}
         >
           {data.map((col, i) => (
-            <div
-              key={uuid4()}
-              className={
-                `${styles.col}`
-              }
-            >
+            <div key={uuid4()} className={`${styles.col}`}>
               {col.map((d, j) => (
                 <button
                   key={uuid4()}
-                  className={
-                    `${styles.rect}
-                     ${(i === this.props.currentBeat) && this.props.playing ?
-                      styles.current : ''}
+                  className={`${styles.rect}
+                     ${
+                       i === this.props.currentBeat && this.props.playing
+                         ? styles.current
+                         : ''
+                     }
                      ${data[i][j] === 1 ? styles.clicked : ''}
-                     ${(hover.i === i && hover.j === j) ? styles.hover : ''}`
-                    }
+                     ${hover.i === i && hover.j === j ? styles.hover : ''}`}
                   onMouseEnter={e => this.mouseEnter(e, i, j)}
                   onMouseDown={() => onClick(i, j)}
                   // onTouchTap={() => onClick(i, j)}
-                />))}
-            </div>))}
+                />
+              ))}
+            </div>
+          ))}
         </div>
       </div>
     );
@@ -85,7 +85,8 @@ class Matrix extends Component {
 }
 
 Matrix.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number).isRequired).isRequired,
+  data: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number).isRequired)
+    .isRequired,
   playing: PropTypes.bool.isRequired,
   currentBeat: PropTypes.number.isRequired,
   onClick: PropTypes.func.isRequired,

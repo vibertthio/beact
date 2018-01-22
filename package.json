@@ -11,7 +11,10 @@
     "build": "npm-run-all build:*",
     "start": "node public/server.js",
     "predeploy": "npm run build",
-    "deploy": "./deploy.sh"
+    "deploy": "./deploy.sh",
+    "lint": "eslint .",
+    "lint:fix": "npm run lint -- --fix",
+    "precommit": "lint-staged"
   },
   "author": "Vibert Thio",
   "license": "MIT",
@@ -52,14 +55,18 @@
     "eslint": "^4.11.0",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint-plugin-prettier": "^2.5.0",
     "eslint-plugin-react": "^7.4.0",
     "extract-text-webpack-plugin": "^v3.0.2",
     "file-loader": "^1.1.5",
     "gh-pages": "^1.0.0",
     "html-webpack-plugin": "^2.26.0",
+    "husky": "^0.14.3",
     "imports-loader": "^0.7.1",
+    "lint-staged": "^6.0.1",
     "lodash-webpack-plugin": "^0.11.4",
     "node-sass": "^4.7.2",
     "nodemon": "^1.11.0",
@@ -78,5 +85,11 @@
     "webpack-dashboard": "^1.0.2",
     "webpack-dev-middleware": "^1.11.0",
     "webpack-hot-middleware": "^2.13.2"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ]
   }
 }

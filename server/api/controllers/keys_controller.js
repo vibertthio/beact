@@ -1,7 +1,6 @@
 import { Key } from '../models/Key';
 
 module.exports = {
-
   create(req, res, next) {
     const keyProps = req.body;
     Key.create(keyProps)

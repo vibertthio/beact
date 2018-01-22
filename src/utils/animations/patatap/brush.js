@@ -19,8 +19,8 @@ export default function brush(
   animations,
   amount = 4,
   opacity = 1,
-  duration = 200,
-  ) {
+  duration = 200
+) {
   const param = { ending: 0, beginning: 0 };
   const origin = { x: two.width * 0.5, y: two.height * 0.5 };
   let begin;
@@ -35,9 +35,9 @@ export default function brush(
   }
 
   /**
-  * [setup description]
-  * @return {[type]} [description]
-  */
+   * [setup description]
+   * @return {[type]} [description]
+   */
   function setup() {
     let playing = false;
 
@@ -47,10 +47,10 @@ export default function brush(
     const group = two.makeGroup();
     group.translation.set(two.width * 0.5, two.height * 0.5);
 
-    const shapes = range(amount).map((i) => {
-      const d = (h / amount) * 0.3;
+    const shapes = range(amount).map(i => {
+      const d = h / amount * 0.3;
       const x = 0;
-      const y = (-h / 2) + ((i + 1) * (h / (amount + 1)));
+      const y = -h / 2 + (i + 1) * (h / (amount + 1));
 
       const shape = two.makeRectangle(x, y, w, d);
       const linearGradient = two.makeLinearGradient(
@@ -59,7 +59,7 @@ export default function brush(
         -two.width / 5,
         two.height / 2,
         new Two.Stop(0, colors[2]),
-        new Two.Stop(1, colors[4]),
+        new Two.Stop(1, colors[4])
       );
       shape.fill = linearGradient;
       // shape.fill = colors[5];
@@ -143,12 +143,8 @@ export default function brush(
     aniOut.stop();
     setPosition();
     group.rotation = Math.PI * 0.18;
-    group.translation.set(
-      origin.x,
-      origin.y,
-    );
+    group.translation.set(origin.x, origin.y);
   };
-
 
   const start = () => {
     reset();

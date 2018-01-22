@@ -1,4 +1,3 @@
-
 /**
  * Animation #9, 10, 11, Flash
  * it will have two direction(u/d), which will be decided randomly
@@ -19,21 +18,21 @@ export default function flash(
   animations,
   index = 0,
   opacity = 1,
-  duration = 400,
-  ) {
+  duration = 400
+) {
   let playing = false;
   const param = { t: 0 };
 
   /**
-  * [setup description]
-  * @return {[type]} [description]
-  */
+   * [setup description]
+   * @return {[type]} [description]
+   */
   function setup() {
     const shape = two.makeRectangle(
       two.width * 0.5,
       two.height * 0.5,
       two.width,
-      two.height,
+      two.height
     );
     shape.visible = 0;
     shape.noStroke();

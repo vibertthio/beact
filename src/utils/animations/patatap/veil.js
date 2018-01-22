@@ -16,8 +16,8 @@ export default function veil(
   colors,
   animations,
   opacity = 1,
-  duration = 400,
-  ) {
+  duration = 400
+) {
   const origin = { x: two.width * 0.5, y: two.height * 1.5 };
   const destIn = { y: two.height * 0.5 };
   const destOut = { y: two.height * -0.5 };
@@ -29,12 +29,7 @@ export default function veil(
   function setup() {
     let playing = false;
 
-    const shape = two.makeRectangle(
-      origin.x,
-      origin.y,
-      two.width,
-      two.height,
-    );
+    const shape = two.makeRectangle(origin.x, origin.y, two.width, two.height);
     shape.opacity = 0;
     shape.noStroke();
     shape.fill = colors[1];
@@ -65,7 +60,7 @@ export default function veil(
    * [setDirection description]
    */
   function setDirection() {
-    const direction = (Math.random() > 0.5);
+    const direction = Math.random() > 0.5;
     origin.x = two.width * 0.5;
     origin.y = two.height * (direction ? 1.5 : -0.5);
     destIn.y = two.height * 0.5;
@@ -85,10 +80,7 @@ export default function veil(
     aniOut.stop();
     setDirection();
     shape.opacity = 0;
-    shape.translation.set(
-      origin.x,
-      origin.y,
-    );
+    shape.translation.set(origin.x, origin.y);
   };
 
   const start = () => {

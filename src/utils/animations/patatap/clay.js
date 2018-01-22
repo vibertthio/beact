@@ -1,20 +1,15 @@
-import {
-  TWO_PI,
-  range,
-  angleBetween,
-  lerp,
-} from 'config/animation.config';
+import { TWO_PI, range, angleBetween, lerp } from 'config/animation.config';
 
 /**
-* Animation #8, Clay
-* @param  {objct} Two
-* @param  {object} two instance of two
-* @param  {object} TWEEN the library for tweening
-* @param  {object} colors color palette
-* @param  {array} animations It's the stack of animations
-* @param  {number} [opacity = 1]
-* @param  {number} [duration = 1000]
-*/
+ * Animation #8, Clay
+ * @param  {objct} Two
+ * @param  {object} two instance of two
+ * @param  {object} TWEEN the library for tweening
+ * @param  {object} colors color palette
+ * @param  {array} animations It's the stack of animations
+ * @param  {number} [opacity = 1]
+ * @param  {number} [duration = 1000]
+ */
 export default function clay(
   Two,
   two,
@@ -22,21 +17,21 @@ export default function clay(
   colors,
   animations,
   opacity = 1,
-  duration = 1000,
-  ) {
+  duration = 1000
+) {
   let playing = false;
-  const amount = (Math.floor(Math.random()) * 8) + 8;
+  const amount = Math.floor(Math.random()) * 8 + 8;
   const param = { ending: 0 };
   let points = [];
   const destinations = [];
   let distance = two.height;
 
   /**
-  * [setup description]
-  * @return {[type]} [description]
-  */
+   * [setup description]
+   * @return {[type]} [description]
+   */
   function setup() {
-    points = range(amount).map((i) => {
+    points = range(amount).map(i => {
       const pct = i / amount;
       const theta = TWO_PI * pct;
       const x = distance * Math.sin(theta);
@@ -87,7 +82,7 @@ export default function clay(
     shape.visible = false;
     const impact = new Two.Vector(
       Math.random() * two.width,
-      Math.random() * two.height,
+      Math.random() * two.height
     );
     let x;
     let y;
@@ -137,9 +132,9 @@ export default function clay(
       v.set(distance * Math.cos(ptheta), distance * Math.sin(ptheta));
       const theta = angleBetween(v, impact) - ptheta;
       const d = v.distanceTo(impact);
-      const a = (10 * distance) / Math.sqrt(d);
-      x = (a * Math.cos(theta)) + v.x;
-      y = (a * Math.sin(theta)) + v.y;
+      const a = 10 * distance / Math.sqrt(d);
+      x = a * Math.cos(theta) + v.x;
+      y = a * Math.sin(theta) + v.y;
       destinations[i].set(x, y);
     }
 

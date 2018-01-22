@@ -1,4 +1,3 @@
-
 /**
  * Animation #9, 10, 11, Flash
  * it will have two direction(u/d), which will be decided randomly
@@ -19,142 +18,149 @@ export default function firework(
   animations,
   index = 0,
   opacity = 1,
-  duration = 400,
-  ) {
+  duration = 400
+) {
   let playing = false;
   const param = { t: 0 };
 
   /**
-  * [setup description]
-  * @return {[type]} [description]
-  */
+   * [setup description]
+   * @return {[type]} [description]
+   */
   function setup() {
-		const w = two.width;
-		const h = two.height;
-		const r = 15;
-		const g = 3;
-		let v = 0;
+    const w = two.width;
+    const h = two.height;
+    const r = 15;
+    const g = 3;
+    let v = 0;
 
-		let xA = (0.5 * w);
-		let yA = (0.75 * h);
-		let xB = (0.5 * w);
-		let yB = (0.75 * h);
-		let xC = (0.5 * w);
-		let yC = (0.75 * h);
-		let xD = (0.5 * w);
-		let yD = (0.75 * h);
-		let xE = (0.5 * w);
-		let yE = (0.75 * h);
-		let xF = (0.5 * w);
-		let yF = (0.75 * h);
-		let xG = (0.5 * w);
-		let yG = (0.75 * h);
+    let xA = 0.5 * w;
+    let yA = 0.75 * h;
+    let xB = 0.5 * w;
+    let yB = 0.75 * h;
+    let xC = 0.5 * w;
+    let yC = 0.75 * h;
+    let xD = 0.5 * w;
+    let yD = 0.75 * h;
+    let xE = 0.5 * w;
+    let yE = 0.75 * h;
+    let xF = 0.5 * w;
+    let yF = 0.75 * h;
+    let xG = 0.5 * w;
+    let yG = 0.75 * h;
 
-		const circleA = two.makeCircle(
-			xA,
-			yA,
-			r,
-		);
-		const circleB = two.makeCircle(
-			xB,
-			yB,
-			r,
-		);
-		const circleC = two.makeCircle(
-			xC,
-			yC,
-			r,
-		);
-		const circleD = two.makeCircle(
-			xD,
-			yD,
-			r,
-		);
-		const circleE = two.makeCircle(
-			xE,
-			yE,
-			r,
-		);
-		const circleF = two.makeCircle(
-			xF,
-			yF,
-			r,
-		);
-		const circleG = two.makeCircle(
-			xG,
-			yG,
-			r,
-		);
+    const circleA = two.makeCircle(xA, yA, r);
+    const circleB = two.makeCircle(xB, yB, r);
+    const circleC = two.makeCircle(xC, yC, r);
+    const circleD = two.makeCircle(xD, yD, r);
+    const circleE = two.makeCircle(xE, yE, r);
+    const circleF = two.makeCircle(xF, yF, r);
+    const circleG = two.makeCircle(xG, yG, r);
     circleA.fill = 'rgb(255, 105, 255)';
-		circleB.fill = 'rgb(25, 255, 255)';
-		circleC.fill = 'rgb(255, 255, 255)';
-		circleD.fill = 'rgb(255, 255, 25)';
-		circleE.fill = 'rgb(25, 125, 25)';
-		circleF.fill = 'rgb(25, 255, 185)';
-		circleG.fill = 'rgb(150, 255, 25)';
-		const circles = [circleA, circleB, circleC, circleD, circleE, circleF, circleG];
+    circleB.fill = 'rgb(25, 255, 255)';
+    circleC.fill = 'rgb(255, 255, 255)';
+    circleD.fill = 'rgb(255, 255, 25)';
+    circleE.fill = 'rgb(25, 125, 25)';
+    circleF.fill = 'rgb(25, 255, 185)';
+    circleG.fill = 'rgb(150, 255, 25)';
+    const circles = [
+      circleA,
+      circleB,
+      circleC,
+      circleD,
+      circleE,
+      circleF,
+      circleG,
+    ];
 
-		for (let i = 0; i < circles.length; i += 1) {
-			circles[i].linewidth = 0;
-			circles[i].visible = 0;
-		}
+    for (let i = 0; i < circles.length; i += 1) {
+      circles[i].linewidth = 0;
+      circles[i].visible = 0;
+    }
 
     const ani = new TWEEN.Tween(param)
       .to({ t: 1 }, duration)
       .easing(TWEEN.Easing.Linear.None)
       .onUpdate(() => {
-				for (let i = 0; i < circles.length; i += 1) {
-					circles[i].visible = 1;
-				}
+        for (let i = 0; i < circles.length; i += 1) {
+          circles[i].visible = 1;
+        }
         v += g;
-				xA += 30;
-			  yA += v - 30;
-				xB += 20;
-			  yB += v - 40;
-				xC += 10;
-			  yC += v - 45;
-				xD += 0;
-			  yD += v - 50;
-				xE -= 30;
-			  yE += v - 30;
-				xF -= 20;
-			  yF += v - 40;
-				xG -= 10;
-			  yG += v - 45;
-				for (let i = 0; i < circles.length; i += 1) {
-					circles[i].scale -= 0.02;
-				}
-				circleA.translation.set(xA, yA);
-				circleB.translation.set(xB, yB);
-				circleC.translation.set(xC, yC);
-				circleD.translation.set(xD, yD);
-				circleE.translation.set(xE, yE);
-				circleF.translation.set(xF, yF);
-				circleG.translation.set(xG, yG);
+        xA += 30;
+        yA += v - 30;
+        xB += 20;
+        yB += v - 40;
+        xC += 10;
+        yC += v - 45;
+        xD += 0;
+        yD += v - 50;
+        xE -= 30;
+        yE += v - 30;
+        xF -= 20;
+        yF += v - 40;
+        xG -= 10;
+        yG += v - 45;
+        for (let i = 0; i < circles.length; i += 1) {
+          circles[i].scale -= 0.02;
+        }
+        circleA.translation.set(xA, yA);
+        circleB.translation.set(xB, yB);
+        circleC.translation.set(xC, yC);
+        circleD.translation.set(xD, yD);
+        circleE.translation.set(xE, yE);
+        circleF.translation.set(xF, yF);
+        circleG.translation.set(xG, yG);
       })
       .onComplete(() => {
         circleA.visible = 0;
-				circleB.visible = 0;
-				circleC.visible = 0;
-				circleD.visible = 0;
-				circleE.visible = 0;
-				circleF.visible = 0;
-				circleG.visible = 0;
+        circleB.visible = 0;
+        circleC.visible = 0;
+        circleD.visible = 0;
+        circleE.visible = 0;
+        circleF.visible = 0;
+        circleG.visible = 0;
       });
-    return { circleA, circleB, circleC, circleD, circleE, circleF, circleG, ani };
+    return {
+      circleA,
+      circleB,
+      circleC,
+      circleD,
+      circleE,
+      circleF,
+      circleG,
+      ani,
+    };
   }
 
-  let { circleA, circleB, circleC, circleD, circleE, circleF, circleG, ani } = setup();
+  let {
+    circleA,
+    circleB,
+    circleC,
+    circleD,
+    circleE,
+    circleF,
+    circleG,
+    ani,
+  } = setup();
 
   // methods
   const resize = () => {
     two.remove(circleA, circleB, circleC, circleD, circleE, circleF, circleG);
-    ({ circleA, circleB, circleC, circleD, circleE, circleF, circleG, ani } = setup());
+    ({
+      circleA,
+      circleB,
+      circleC,
+      circleD,
+      circleE,
+      circleF,
+      circleG,
+      ani,
+    } = setup());
   };
 
   const reset = () => {
-		resize();
-		ani.stop();
+    resize();
+    ani.stop();
   };
 
   const start = () => {

@@ -1,7 +1,6 @@
 import { Drum, DrumPattern } from '../models/Drum';
 
 module.exports = {
-
   create(req, res, next) {
     const noteProps = req.body;
 
