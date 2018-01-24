@@ -8,6 +8,8 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 var LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+var OpenBrowserPlugin = require('open-browser-webpack-plugin');
+
 
 const HOST = process.env.HOST || "127.0.0.1";
 const PORT = process.env.PORT || "8888";
@@ -74,5 +76,6 @@ module.exports = {
       { from: 'src/assets/images/ico/flash.ico' },
       { from: 'src/assets/images/animations/yuen/bg.jpg' },
     ]),
+		new OpenBrowserPlugin({ url: 'http://localhost:8080' }),
   ]
 };
