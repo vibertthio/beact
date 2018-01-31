@@ -1,16 +1,6 @@
 const drumNotes =  Array.from(Array(8).keys()).map((i) => (i + 1).toString());
 const drumUrls = [
   {
-    1: './assets/audio/dusa/seq/kick.mp3',
-    2: './assets/audio/dusa/seq/Crash.mp3',
-    3: './assets/audio/dusa/seq/snare.mp3',
-    4: './assets/audio/dusa/seq/HH.mp3',
-    5: './assets/audio/dusa/seq/key1.mp3',
-    6: './assets/audio/dusa/seq/Key2.mp3',
-    7: './assets/audio/dusa/seq/Key5.mp3',
-    8: './assets/audio/dusa/seq/Key6.mp3',
-  },
-  {
     1: './assets/audio/chillsaxiao/kick.mp3',
     2: './assets/audio/chillsaxiao/snare.mp3',
     3: './assets/audio/chillsaxiao/dn.mp3',
@@ -19,6 +9,16 @@ const drumUrls = [
     6: './assets/audio/chillsaxiao/man.mp3',
     7: './assets/audio/chillsaxiao/pad.mp3',
     8: './assets/audio/chillsaxiao/star.mp3',
+  },
+  {
+    1: './assets/audio/dusa/seq/kick.mp3',
+    2: './assets/audio/dusa/seq/Crash.mp3',
+    3: './assets/audio/dusa/seq/snare.mp3',
+    4: './assets/audio/dusa/seq/HH.mp3',
+    5: './assets/audio/dusa/seq/key1.mp3',
+    6: './assets/audio/dusa/seq/Key2.mp3',
+    7: './assets/audio/dusa/seq/Key5.mp3',
+    8: './assets/audio/dusa/seq/Key6.mp3',
   },
   {
     1: './assets/audio/drum/dusty/kick.mp3',

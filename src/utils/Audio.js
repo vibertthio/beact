@@ -1,6 +1,7 @@
-import { Sequence, Transport, Players, now } from 'tone';
+import Tone, { Sequence, Transport, Players, now } from 'tone';
 import axios from 'axios';
 import uuid4 from 'uuid/v4';
+import StartAudioContext from 'startaudiocontext';
 import { keysUrls, keysNotes } from './config/keys.config';
 import { drumUrls, drumNotes, presets } from './config/drum.config';
 
@@ -31,6 +32,8 @@ export class Sequencer {
     playNextRecordElement,
     playDrumAni,
   ) {
+    StartAudioContext(Tone.context);
+
     this.matrix = matrix;
     this.number = 0;
     this.playing = true;

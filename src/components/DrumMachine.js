@@ -166,7 +166,7 @@ class DrumMachine extends Component {
 			fadeoutID = window.setTimeout(outShowDOM, 3500);
 		}
 		startTimer();
-
+		this.startSequencer();
     window.addEventListener('resize', this.handleResize);
   }
 
