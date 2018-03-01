@@ -15,7 +15,7 @@ const drumUrls = [
     2: './assets/audio/dusa/seq/Crash.mp3',
     3: './assets/audio/dusa/seq/snare.mp3',
     4: './assets/audio/dusa/seq/HH.mp3',
-    5: './assets/audio/dusa/seq/key1.mp3',
+    5: './assets/audio/dusa/seq/Key1.mp3',
     6: './assets/audio/dusa/seq/Key2.mp3',
     7: './assets/audio/dusa/seq/Key5.mp3',
     8: './assets/audio/dusa/seq/Key6.mp3',
