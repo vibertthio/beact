@@ -4,7 +4,7 @@
   "description": "making audio/visual with react and tone.js",
   "main": "''",
   "scripts": {
-    "dev": "NODE_ENV=dev webpack-dashboard -- nodemon --exec babel-node server/server.js --ignore public/ --ignore src/",
+    "dev": "cross-env NODE_ENV=dev webpack-dashboard -- nodemon --exec babel-node server/server.js --ignore public/ --ignore src/",
     "prebuild": "rimraf public",
     "build:client": "webpack -d --config webpack.prod.config.js --colors",
     "build:server": "webpack --config webpack.server.config.js -p",
@@ -50,6 +50,7 @@
     "babel-preset-stage-2": "^6.24.1",
     "babel-runtime": "^6.22.0",
     "copy-webpack-plugin": "^4.0.1",
+    "cross-env": "^5.1.4",
     "css-loader": "0.28.7",
     "eslint": "^4.11.0",
     "eslint-config-airbnb": "^16.1.0",
