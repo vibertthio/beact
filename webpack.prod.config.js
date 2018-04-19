@@ -7,6 +7,7 @@ var WebpackCleanupPlugin = require('webpack-cleanup-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 var LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
+var UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 loaders.push({
 	test: /\.jsx?$/,
@@ -45,15 +46,17 @@ module.exports = {
         NODE_ENV: '"production"'
       }
     }),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false,
-        screw_ie8: true,
-        drop_console: true,
-        drop_debugger: true
-      }
-    }),
     new webpack.optimize.OccurrenceOrderPlugin(),
+    new UglifyJsPlugin({
+      cache: true,
+      parallel: true,
+      uglifyOptions: {
+        compress: false,
+        ecma: 6,
+        mangle: true,
+      },
+      sourceMap: true,
+    }),
     new ExtractTextPlugin({
       filename: 'style.css',
       allChunks: true
@@ -73,5 +76,5 @@ module.exports = {
       { from: 'src/assets/images/ico/flash.ico' },
 			{ from: 'src/assets/images/animations/yuen/bg.jpg' },
     ]),
-  ]
+  ],
 };

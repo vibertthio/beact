@@ -11,7 +11,7 @@
     "react",
     "stage-2",
     [
-      "babili",
+      "minify",
       {
         "evaluate": false,
         "mangle": false
