@@ -17,7 +17,7 @@
     <title>Beact</title>
     <style>
       html, body {
-        background-color: rgba(39, 6, 54, 1);
+        background-color: #270636;
         -webkit-background-size: cover;
         -moz-background-size: cover;
         -o-background-size: cover;
@@ -26,10 +26,11 @@
 
       #loadingTitle {
         color: #eecdcc;
-        font-family: "";
-        /*font-family: "Open Sans";*/
-        font-style: italic;
-        font-weight: 700;
+        /* font-family: ""; */
+        /* font-family: "Open Sans"; */
+        font-family: "monospace";
+        /* font-style: italic; */
+        font-weight: 100;
         font-size: 10em;
         font-variant: normal;
         text-align: center;
@@ -37,17 +38,28 @@
         transition: opacity 1s ease-out;
       }
 
+      #spinnerContainer {
+				margin: auto;
+				top: 45%;
+				left: 45%;
+        /* margin: 50% auto; */
+        width: 50px;
+        height: 50px;
+        /* width: 120px;
+        height: 120px; */
+        position: fixed;
+        text-align: center;
+      }
       #spinner {
-        margin: 10% auto;
-        width: 120px;
-        height: 120px;
+        width: 70px;
+        height: 70px;
         position: relative;
         text-align: center;
         -webkit-animation: sk-rotate 2.0s infinite linear;
         animation: sk-rotate 2.0s infinite linear;
       }
 
-      .dot1, .dot2 {
+      .dot1, .dot2, .dot3 {
         width: 60%;
         height: 60%;
         display: inline-block;
@@ -65,22 +77,27 @@
         -webkit-animation-delay: -1.0s;
         animation-delay: -1.0s;
       }
+      .dot3 {
+				left: 0;
+        -webkit-animation-delay: -0.5s;
+        animation-delay: -0.5s;
+      }
 
       @-webkit-keyframes sk-rotate { 100% { -webkit-transform: rotate(360deg) }}
-      @keyframes sk-rotate { 100% { transform: rotate(360deg); -webkit-transform: rotate(360deg) }}
+      @keyframes sk-rotate { 100% { transform: rotate(360deg); -webkit-transform: rotate(360deg); }}
 
       @-webkit-keyframes sk-bounce {
-        0%, 100% { -webkit-transform: scale(0.0) }
-        50% { -webkit-transform: scale(1.0) }
+        0%, 100% { -webkit-transform: scale(0.2) }
+        50% { -webkit-transform: scale(0.3) }
       }
 
       @keyframes sk-bounce {
         0%, 100% {
-        transform: scale(0.0);
-        -webkit-transform: scale(0.0);
+        transform: scale(0.2);
+        -webkit-transform: scale(0.2);
 	      } 50% {
-        transform: scale(1.0);
-        -webkit-transform: scale(1.0);
+        transform: scale(0.3);
+        -webkit-transform: scale(0.3);
         }
       }
       .loaded {
@@ -101,12 +118,12 @@
       }
       .beactLogo {
         opacity: 0;
-        height: 100%;
+        height: 20%;
         transition: opacity 1s ease-out;
       }
       .showLogo {
         z-index: 0;
-        opacity: 0.6;
+        opacity: 0.5;
       }
       @media only screen and (max-height: 767px) {
         #loadingTitle {
@@ -123,16 +140,19 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-  </head>
+  <link href="./style.css" rel="stylesheet"></head>
   <body>
     <div id="root"></div>
-		<div id="loadingTitle">Beact</div>
+		<!-- <div id="loadingTitle">Beact</div> -->
     <div class="beactLogoWrap">
       <img src="./logo.png" id="beactLogo" class="beactLogo" />
-    </div>
-		<div id="spinner">
-		  <div class="dot1"></div>
-		  <div class="dot2"></div>
+		</div>
+		<div id="spinnerContainer">
+			<div id="spinner">
+				<div class="dot1"></div>
+				<div class="dot2"></div>
+				<div class="dot3"></div>
+			</div>
 		</div>
     <div>
       <!-- ga -->
@@ -147,6 +167,6 @@
         console.warn = () => {}
       </script>
     </div>
-  <script type="text/javascript" src="./1705ab04c9513f5f3c54.bundle.js"></script></body>
+  <script type="text/javascript" src="./960361503ad7ba15da51.bundle.js"></script></body>
 
 </html>
