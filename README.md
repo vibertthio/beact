@@ -5,6 +5,9 @@
 # [Beact](https://beact.herokuapp.com/) &middot; [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
 > 🎸🎨 DJ / VJ all by yourself in seconds !
+
+Shout out to [Jono](https://jono.fyi/) who built [patatap](https://patatap.com/). The interaction and animations are strongly based on patatap but with sequencer and more audio/visual elements.
+
 - [demo](https://beact.herokuapp.com/) - It's deployed on Heroku, play it now!
 - [video](https://vimeo.com/226318485) - Short video of using Beact for performance!
 - [blog(vibert)](https://medium.com/@vibertthio/beact-audio-visual-art-in-react-44e9c757e40f) - vibert's words after creating Beact!
