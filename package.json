@@ -23,7 +23,7 @@
     "@tweenjs/tween.js": "17.1.1",
     "axios": "^0.17.1",
     "body-parser": "^1.17.2",
-    "express": "^4.15.3",
+    "express": "^4.17.3",
     "helmet": "^3.12.0",
     "image-size-loader": "^0.7.0",
     "keymaster": "^1.6.2",
